@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardHeader from "../layout/DashboardHeader";
 import DashboardSidebar from "../layout/DashboardSidebar";
+import EditCommunityProfile from "./EditCommunityProfile";
 import Landing from "./Landing";
 
 const DashboardRoutes = () => {
@@ -16,6 +17,7 @@ const DashboardRoutes = () => {
         <div className="lg:col-span-3 md:col-span-2 ">
           <Routes>
             <Route path="/" element={<Landing />} />
+            <Route path='/edit-community-profile' element={<EditCommunityProfile/>} />
           </Routes> 
         </div>
       </div>
