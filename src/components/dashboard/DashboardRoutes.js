@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardHeader from "../layout/DashboardHeader";
 import DashboardSidebar from "../layout/DashboardSidebar";
+import CollaborationOwnerView from "./CollaborationOwnerView";
 import CreateCollaboration from "./CreateCollaboration";
 import EditCommunityProfile from "./EditCommunityProfile";
 import Landing from "./Landing";
@@ -21,7 +22,8 @@ const DashboardRoutes = () => {
             <Route path="/" element={<Landing />} />
             <Route path='/edit-community-profile' element={<EditCommunityProfile/>} />
             <Route path='/my-collaborations' element={<MyCollaborations/>} />
-            <Route path='/create-collaborations' element={<CreateCollaboration/>} />
+            <Route path='/create-collaboration' element={<CreateCollaboration/>} />
+            <Route path='/collaboration' element={<CollaborationOwnerView/>} />
           </Routes> 
         </div>
       </div>
