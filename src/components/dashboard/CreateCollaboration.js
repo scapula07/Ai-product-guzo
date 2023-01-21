@@ -297,7 +297,7 @@ const CreateCollaboration = () => {
             or campaign.
           </div>
           {links && links.map((item,index)=> (
-            <div key={index} className='text-[10px] bg-gray-50 md:w-[400px] px-2 ' >
+            <div key={index} className='text-[13px] bg-gray-50 md:w-[400px] px-2 ' >
                 <div className="flex items-center justify-between ">
                <div> 
 
