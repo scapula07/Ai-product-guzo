@@ -2,8 +2,10 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardHeader from "../layout/DashboardHeader";
 import DashboardSidebar from "../layout/DashboardSidebar";
+import CreateCollaboration from "./CreateCollaboration";
 import EditCommunityProfile from "./EditCommunityProfile";
 import Landing from "./Landing";
+import MyCollaborations from "./MyCollaborations";
 
 const DashboardRoutes = () => {
   return (
@@ -18,6 +20,8 @@ const DashboardRoutes = () => {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path='/edit-community-profile' element={<EditCommunityProfile/>} />
+            <Route path='/my-collaborations' element={<MyCollaborations/>} />
+            <Route path='/create-collaborations' element={<CreateCollaboration/>} />
           </Routes> 
         </div>
       </div>
