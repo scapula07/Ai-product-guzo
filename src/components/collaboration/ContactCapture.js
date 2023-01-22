@@ -113,21 +113,7 @@ const ContactCapture = () => {
           </div>
 
 
-          <div className="w-full mt-4" >
-            <div className="text-[15px] text-[#114369] font-bold mb-1  " >Network</div>
-            <InputBase
-              sx={{
-                bgcolor: "#EBF1F5",
-                pl: 3,
-                fontSize: "14px",
-                borderRadius: "8px",
-                width: { md: "100%", xs: "100%" },
-                py: "3px",
-              }}
-              placeholder="Choose a network"
-              id="link_url"
-            />
-          </div>
+      
 
 
           <div className="w-full mt-4" >

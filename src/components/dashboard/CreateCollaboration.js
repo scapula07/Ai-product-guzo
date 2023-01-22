@@ -158,27 +158,7 @@ const CreateCollaboration = () => {
           </div>
         </div>
 
-        <div className="space-y-2">
-          <div className="text-[#114369] font-semibold text-[14px] ">
-            Collaboration Description{" "}
-            <span className="text-[#FF6060] font-thin text-[10px]  ">
-              (Required)
-            </span>
-          </div>
-          <div>
-            <InputBase
-              sx={{
-                bgcolor: "#EBF1F5",
-                pl: 3,
-                fontSize: "14px",
-                borderRadius: "8px",
-                width: { lg: "800px", md: "400px", xs: "100%" },
-                py: "3px",
-              }}
-              placeholder="Describe your project, event, or campaign in this field."
-            />
-          </div>
-        </div>
+        
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
@@ -204,6 +184,31 @@ const CreateCollaboration = () => {
           </div>
         </div>
 
+        <div className="space-y-2">
+          <div className="text-[#114369] font-semibold text-[14px] ">
+            The Need{" "}
+            <span className="text-[#FF6060] font-thin text-[10px]  ">
+              (Required)
+            </span>
+          </div>
+          <div>
+            <InputBase
+              sx={{
+                bgcolor: "#EBF1F5",
+                pl: 3,
+                fontSize: "14px",
+                borderRadius: "8px",
+                width: { lg: "800px", md: "400px", xs: "100%" },
+                py: "3px",
+              }}
+              multiline
+              rows={6}
+              placeholder="Clearly share how your partners can help? (Segment the needs based on category.)"
+            />
+          </div>
+        </div>
+
+        
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
             Support Documents{" "}
@@ -276,29 +281,7 @@ const CreateCollaboration = () => {
           )}
         </div>
 
-        <div className="space-y-2">
-          <div className="text-[#114369] font-semibold text-[14px] ">
-            The Need{" "}
-            <span className="text-[#FF6060] font-thin text-[10px]  ">
-              (Required)
-            </span>
-          </div>
-          <div>
-            <InputBase
-              sx={{
-                bgcolor: "#EBF1F5",
-                pl: 3,
-                fontSize: "14px",
-                borderRadius: "8px",
-                width: { lg: "800px", md: "400px", xs: "100%" },
-                py: "3px",
-              }}
-              multiline
-              rows={6}
-              placeholder="Clearly share how your partners can help? (Segment the needs based on category.)"
-            />
-          </div>
-        </div>
+       
 
         <div className="space-y-2">
           <div className="text-[#818181] font-semibold text-[14px] ">

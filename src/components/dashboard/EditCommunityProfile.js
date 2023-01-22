@@ -1,4 +1,4 @@
-import { KeyboardArrowDown, Launch } from "@mui/icons-material";
+import { CancelOutlined, KeyboardArrowDown, Launch } from "@mui/icons-material";
 import { Avatar, Button, Divider, InputBase, Link } from "@mui/material";
 import React, { useState } from "react";
 import ReactSelect from "react-select";
@@ -9,6 +9,7 @@ const EditCommunityProfile = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [openConnectPlatformModal, setOpenConnectPlatformModal] =
     useState(false);
+  const [tags, setTags] = useState([]);
   const style = {
     control: (base) => ({
       ...base,
@@ -209,6 +210,31 @@ const EditCommunityProfile = () => {
               (Required)
             </span>
           </div>
+
+          <div className="flex flex-wrap space-x-1" >
+            {tags &&
+              tags.map((item, index) => (
+                <div
+                  className="text-xs flex space-x-2 bg-[#24A0FD] py-1 border-[1px] w-fit rounded-[20px] px-2 text-white  "
+                  key={index}
+                >
+                  <div> {item.name} </div>
+                  <div
+                    className="text-red-900"
+                    onClick={() => {
+                      setTags(
+                        tags.filter((e) => {
+                          return e.name !== item.name;
+                        })
+                      );
+                    }}
+                  >
+                    {" "}
+                    <CancelOutlined sx={{ color: "", fontSize: "17px" }} />{" "}
+                  </div>
+                </div>
+              ))}
+          </div>
           <div>
             <InputBase
               sx={{
@@ -219,17 +245,51 @@ const EditCommunityProfile = () => {
                 width: "100%",
                 py: "3px",
               }}
-              placeholder="Add up to 5 tags here"
+              placeholder="Add  tags here"
               id="tags_input_feild"
-              onKeyUp={(e) => {
-                let str = document.getElementById("tags_input_feild").value;
-                if (e.which === 32) {
-                  document.getElementById("tags_input_feild").value = str
-                    .split(/[ ,]+/)
-                    .join(",");
-                }
-              }}
             />
+
+            <div className="mt-3">
+              <div
+                className="text-[10px] text-red-600 italic font-semibold"
+                id="tag_error"
+                hidden
+              >
+                Tag must be more than 5 character
+              </div>
+              <Button
+                onClick={() => {
+                  if (
+                    document.getElementById("tags_input_feild").value.length > 3
+                  ) {
+                    document.getElementById("tag_error").hidden = true;
+                    setTags([
+                      ...tags,
+                      {
+                        name: document.getElementById("tags_input_feild").value,
+                      },
+                    ]);
+                    document.getElementById("tags_input_feild").value = "";
+                  } else {
+                    document.getElementById("tag_error").hidden = false;
+                  }
+                }}
+                sx={{
+                  bgcolor: "#24A0FD",
+                  color: "white",
+                  fontSize: "12px",
+                  width: { md: "fit", xs: "fit" },
+                  textTransform: "none",
+                  borderRadius: "5px",
+                  ":hover": {
+                    bgcolor: "#24A0FD",
+                    color: "white",
+                  },
+                }}
+              >
+                Add Tag
+              </Button>
+            </div>
           </div>
         </div>
 

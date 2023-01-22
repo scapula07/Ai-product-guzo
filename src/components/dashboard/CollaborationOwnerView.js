@@ -98,29 +98,7 @@ const CollaborationOwnerView = () => {
               <div className="text-center font-[500] mt-[15px]">
                 Juneteenth Festival
               </div>
-              <div className="text-[14px] font-bold mt-[6px] text-center text-[#114369] ">
-                The Time
-              </div>
-
-              <div className="flex justify-between mt-2 text-[12px]  text-[#114369] font-semibold ">
-                <div>December 22, 2023 </div>
-                <div>7:00PM</div>
-              </div>
-
-              <div className="flex justify-between mt-2 text-[12px]  text-[#114369] font-semibold">
-                <div>December 22, 2023 </div>
-                <div>7:00PM</div>
-              </div>
-
-              <div className="text-[14px] font-bold mt-[6px] text-center text-[#114369] ">
-                The Location
-              </div>
-
-              <div className=" mt-2 text-[12px]  text-[#114369]  font-semibold ">
-                <div>DeLuxe Theater </div>
-                <div> 3303 Lyons Avenue</div>
-                <div>Houston, TX 77020</div>
-              </div>
+             
             </div>
           </div>
           <div className="md:col-span-3 bg-white md:shadow-lg shadow-gray-400 p-3 md:rounded-[20px] ">
