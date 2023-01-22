@@ -1,9 +1,10 @@
-import { Button } from "@mui/material";
+import { Button, Dialog } from "@mui/material";
 import React from "react";
 
-const ThankYouCard = () => {
+const ThankYouCard = ({open, setOpen}) => {
   return (
-    <div className="flex justify-center md:mt-[20vw] lg:mt-[10vw] mt-[50%]">
+   <Dialog open={open} setOpen={setOpen} >
+     <div className="flex justify-center ">
       <div className="bg-white lg:w-[70vw] md:rounded-[20px] md:shadow-lg py-[30px] px-[40px]  ">
         <div className="text-[#114369] font-bold text-[16px] text-center" >Thank you for using Guzo.  Join up today!</div>
 
@@ -12,7 +13,7 @@ const ThankYouCard = () => {
         </div>
 
 
-        <div className="text-[#114369] font-bold text-[12px] mt-2" >
+        <div className="text-[#114369] text-center font-bold text-[12px] mt-2" >
         Start collaborating with your community today!
         </div>
 
@@ -65,6 +66,7 @@ const ThankYouCard = () => {
         </div>
       </div>
     </div>
+   </Dialog>
   );
 };
 

@@ -1,7 +1,9 @@
 import { Button, InputBase } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import ThankYouCard from "../molecules/ThankYouCard";
 
 const ContactCapture = () => {
+    const [ openThankYouCard, setOpenThankYouCard] = useState(false)
   return (
     <div className="flex justify-center">
       <div className="bg-white lg:w-[70vw] rounded-[20px] shadow-lg py-[30px] px-[40px]  ">
@@ -142,7 +144,9 @@ const ContactCapture = () => {
 
 
          <div className="mt-3">
+            <ThankYouCard open={openThankYouCard} setOpen={setOpenThankYouCard}/>
          <Button
+         onClick={()=> setOpenThankYouCard(true)}
               sx={{
                 bgcolor: "#24A0FD",
                 border: "1px solid #24A0FD",

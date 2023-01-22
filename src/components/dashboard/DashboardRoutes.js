@@ -23,7 +23,7 @@ const DashboardRoutes = () => {
             <Route path='/edit-community-profile' element={<EditCommunityProfile/>} />
             <Route path='/my-collaborations' element={<MyCollaborations/>} />
             <Route path='/create-collaboration' element={<CreateCollaboration/>} />
-            <Route path='/collaboration' element={<CollaborationOwnerView/>} />
+            <Route path='/collaboration' element={<CollaborationOwnerView />} />
           </Routes> 
         </div>
       </div>

@@ -59,41 +59,7 @@ const AccountSettings = () => {
 
       <Divider sx={{ my: 3 }} />
       <div className="space-y-5">
-        <div className="space-y-2">
-          <div className="text-[#114369] font-semibold text-[14px] ">
-            Name (Required)
-            <span className="text-black font-thin text-[10px] "></span>
-          </div>
-          <div className="md:flex md:space-x-2 space-y-3 md:space-y-0 ">
-            <div>
-              <InputBase
-                sx={{
-                  bgcolor: "#EBF1F5",
-                  pl: 3,
-                  fontSize: "14px",
-                  borderRadius: "8px",
-                  width: { md: "300px", xs: "100%" },
-                  py: 1,
-                }}
-                placeholder="First Name"
-              />
-            </div>
-
-            <div>
-              <InputBase
-                sx={{
-                  bgcolor: "#EBF1F5",
-                  pl: 3,
-                  fontSize: "14px",
-                  borderRadius: "8px",
-                  width: { md: "300px", xs: "100%" },
-                  py: 1,
-                }}
-                placeholder="Last Name"
-              />
-            </div>
-          </div>
-        </div>
+       
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">

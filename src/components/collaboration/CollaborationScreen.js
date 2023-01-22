@@ -1,7 +1,9 @@
 import { Avatar, Button, InputBase } from "@mui/material";
 import React from "react";
+import { useNavigate, useNavigation } from "react-router-dom";
 
 const CollaborationScreen = () => {
+    const navigate = useNavigate()
   return (
     <div className="flex justify-center">
       <div className="bg-white lg:w-[70vw] rounded-[20px] shadow-lg py-[30px] px-[40px]  ">
@@ -100,7 +102,9 @@ const CollaborationScreen = () => {
                   color: "white",
                 },
               }}
-              
+              onClick={()=> {
+                navigate('/collaboration/contact-capture')
+              }}
             >
               Yes, Count me in!
             </Button>
@@ -140,6 +144,10 @@ const CollaborationScreen = () => {
                   bgcolor: "#24A0FD",
                   color: "white",
                 },
+              }}
+
+              onClick={()=> {
+                navigate('/collaboration/contact-capture')
               }}
               
             >

@@ -73,7 +73,7 @@ const CreateCollaboration = () => {
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
             Collaboration Photo{" "}
-            <span className="text-black font-thin text-[10px] ">
+            <span className="text-black font-normal text-[10px] ">
               (Optional)
             </span>
           </div>
@@ -139,7 +139,7 @@ const CreateCollaboration = () => {
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
             Collaboration Title{" "}
-            <span className="text-[#FF6060] font-thin text-[10px]  ">
+            <span className="text-[#FF6060] font-normal text-[10px]  ">
               (Required)
             </span>
           </div>
@@ -163,7 +163,7 @@ const CreateCollaboration = () => {
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
             Collaboration Description{" "}
-            <span className="text-[#FF6060] font-thin text-[10px]  ">
+            <span className="text-[#FF6060] font-normal text-[10px]  ">
               (Required)
             </span>
           </div>
@@ -187,7 +187,7 @@ const CreateCollaboration = () => {
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
             The Need{" "}
-            <span className="text-[#FF6060] font-thin text-[10px]  ">
+            <span className="text-[#FF6060] font-normal text-[10px]  ">
               (Required)
             </span>
           </div>
@@ -208,11 +208,11 @@ const CreateCollaboration = () => {
           </div>
         </div>
 
-        
+
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
             Support Documents{" "}
-            <span className="text-[#818181] font-thin text-[10px]  ">
+            <span className="text-[#818181] font-normal text-[10px]  ">
               (Optional)
             </span>
           </div>
@@ -286,7 +286,7 @@ const CreateCollaboration = () => {
         <div className="space-y-2">
           <div className="text-[#818181] font-semibold text-[14px] ">
             Support Links{" "}
-            <span className="text-[#FF6060] font-thin text-[10px]  ">
+            <span className="text-[#FF6060] font-normal text-[10px]  ">
               (Optional)
             </span>
           </div>
@@ -303,7 +303,7 @@ const CreateCollaboration = () => {
                 <div className="flex items-center justify-between ">
                   <div>
                     <div className="font-semibold">{item.url} </div>
-                    <div className=" font-thin ">{item.description} </div>
+                    <div className=" font-normal ">{item.description} </div>
                   </div>
 
                   <div>
@@ -403,7 +403,7 @@ const CreateCollaboration = () => {
           </div>
         </div>
 
-        <div className="space-y-2 text-[11px] font-thin">
+        <div className="space-y-2 text-[11px] font-normal">
           <div>
             {" "}
             Select “Public” to add this Collaboration to the Guzo Feed in
@@ -414,7 +414,7 @@ const CreateCollaboration = () => {
             the Guzo feed.
           </div>
 
-          <div className="font-thin text-[10px] mt-2">(Required)</div>
+          <div className="font-normal text-[10px] mt-2">(Required)</div>
 
           <div className="mt-3 flex space-x-2 font-normal ">
           <div
