@@ -4,9 +4,11 @@ import DashboardHeader from "../layout/DashboardHeader";
 import DashboardSidebar from "../layout/DashboardSidebar";
 import CollaborationOwnerView from "./CollaborationOwnerView";
 import CreateCollaboration from "./CreateCollaboration";
+import Discover from "./Discover";
 import EditCommunityProfile from "./EditCommunityProfile";
 import Landing from "./Landing";
 import MyCollaborations from "./MyCollaborations";
+import Teammates from "./Teammates";
 
 const DashboardRoutes = () => {
   return (
@@ -24,6 +26,8 @@ const DashboardRoutes = () => {
             <Route path='/my-collaborations' element={<MyCollaborations/>} />
             <Route path='/create-collaboration' element={<CreateCollaboration/>} />
             <Route path='/collaboration' element={<CollaborationOwnerView />} />
+            <Route path='/discover' element={<Discover />} />
+            <Route path='/teammates' element={<Teammates />} />
           </Routes> 
         </div>
       </div>
