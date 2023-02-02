@@ -1,5 +1,5 @@
 import { MoreHoriz, SearchOutlined } from '@mui/icons-material'
-import { Avatar, InputBase } from '@mui/material'
+import { Avatar, Divider, InputBase } from '@mui/material'
 import React from 'react'
 
 const MessageContacts = () => {
@@ -46,6 +46,7 @@ const MessageContacts = () => {
                   <MoreHoriz sx={{ color: "#24A0FD" }} />
                 </div>
               </div>
+              <Divider/>
 
               <div className="flex items-center">
                 <Avatar
@@ -69,6 +70,7 @@ const MessageContacts = () => {
                   <MoreHoriz sx={{ color: "#24A0FD" }} />
                 </div>
               </div>
+              <Divider/>
             </div>
           </div>
   )

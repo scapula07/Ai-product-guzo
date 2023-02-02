@@ -4,14 +4,23 @@ import DashboardHeader from "../layout/DashboardHeader";
 import DashboardSidebar from "../layout/DashboardSidebar";
 import AddTeammates from "./AddTeammates";
 import CollaborationOwnerView from "./CollaborationOwnerView";
+import CommunicationSetting from "./CommunicationSettings";
+import ContactGroups from "./ContactGroups";
+import Contacts from "./Contacts";
 import CreateCollaboration from "./CreateCollaboration";
+import CreateNewContact from "./CreateNewContact";
+import CreateNewEmail from "./CreateNewEmail";
+import CreateNewTextMessage from "./CreateNewTextMessage";
 import DirectMessages from "./DirectMessages";
 import Discover from "./Discover";
 import EditCommunityProfile from "./EditCommunityProfile";
 import EditTeammates from "./EditTeammates";
+import EmailSettings from "./EmailSettings";
 import Landing from "./Landing";
 import MyCollaborations from "./MyCollaborations";
 import Teammates from "./Teammates";
+import TextMessages from "./TextMessages";
+import TextMessageSettings from "./TextMessageSettings";
 
 const DashboardRoutes = () => {
   return (
@@ -34,6 +43,16 @@ const DashboardRoutes = () => {
             <Route path='/teammates/add' element={<AddTeammates />} />
             <Route path='/teammates/edit' element={<EditTeammates />} />
             <Route path='/direct-messages' element={<DirectMessages />} />
+            <Route path='/contacts' element={<Contacts />} />
+            <Route path='/contacts/go-neighborhood' element={<ContactGroups />} />
+            <Route path='/contacts/go-neighborhood/create-contact' element={<CreateNewContact />} />
+            <Route path='/textmessages' element={<TextMessages />} />
+            <Route path='/textmessages/create' element={<CreateNewTextMessage />} />
+            <Route path='/email' element={<TextMessages />} />
+            <Route path='/email/create' element={<CreateNewEmail />} />
+            <Route path='/communication-settings' element={<CommunicationSetting />} />
+            <Route path='/communication-settings/email' element={<EmailSettings />} />
+            <Route path='/communication-settings/text-message' element={<TextMessageSettings />} />
           </Routes> 
         </div>
       </div>
