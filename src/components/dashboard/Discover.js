@@ -1,6 +1,7 @@
 import { CalendarMonth, Dashboard, Language, MoreHoriz, People, Person } from "@mui/icons-material";
 import { Avatar, Button, Divider, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Discover = () => {
   const [active, setActive] = useState(0);
@@ -13,6 +14,7 @@ const Discover = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <div className="md:flex space-y-2 md:space-y-0 items-center">
@@ -34,6 +36,7 @@ const Discover = () => {
                 color: "white",
               },
             }}
+           onClick={()=> navigate('/dashboard/create-collaboration')}
           >
             Create Collaboration
           </Button>

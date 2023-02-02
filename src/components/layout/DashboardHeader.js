@@ -15,6 +15,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import DashboardResponsive from "./DashboardResponsive";
 
 const DashboardHeader = () => {
@@ -27,6 +28,7 @@ const DashboardHeader = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const navigate = useNavigate()
   return (
     <div>
       <div className="flex items-center justify-between lg:px-[97px] px-2 py-1 lg:py-[21px] ">
@@ -60,6 +62,7 @@ const DashboardHeader = () => {
           <div>
             <div className="relative cursor-pointer">
               <NotificationsOutlined
+              onClick={()=> navigate('/dashboard/notifications')}
                 sx={{
                   fontSize: { lg: "50px", xs: "25px" },
                   strokeWidth: "1px",
