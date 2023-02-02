@@ -18,6 +18,7 @@ import EditTeammates from "./EditTeammates";
 import EmailSettings from "./EmailSettings";
 import Landing from "./Landing";
 import MyCollaborations from "./MyCollaborations";
+import Notifications from "./Notifications";
 import Teammates from "./Teammates";
 import TextMessages from "./TextMessages";
 import TextMessageSettings from "./TextMessageSettings";
@@ -53,6 +54,7 @@ const DashboardRoutes = () => {
             <Route path='/communication-settings' element={<CommunicationSetting />} />
             <Route path='/communication-settings/email' element={<EmailSettings />} />
             <Route path='/communication-settings/text-message' element={<TextMessageSettings />} />
+            <Route path='/notifications' element={<Notifications />} />
           </Routes> 
         </div>
       </div>
