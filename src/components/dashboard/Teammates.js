@@ -9,11 +9,13 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import ReactSelect from "react-select";
+import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
 
 const Teammates = () => {
   const [active, setActive] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openSideMenu, setOpenSideMenu] = React.useState(false);
+  const [openDeleteTeammateModal, setOpenDeleteTeammateModal] =
+    React.useState(false);
   const open = Boolean(anchorEl);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const handleClick = (event) => {
@@ -38,6 +40,10 @@ const Teammates = () => {
   };
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
+      <DeleteTeammateModal
+        open={openDeleteTeammateModal}
+        setOpen={setOpenDeleteTeammateModal}
+      />
       <div className="md:flex space-y-2 md:space-y-0 items-center">
         <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
           Teammates
@@ -58,7 +64,7 @@ const Teammates = () => {
             }}
           >
             Add Teammates
-          </Button> 
+          </Button>
         </div>
       </div>
 
@@ -105,49 +111,46 @@ const Teammates = () => {
             }
           />
         </div>
-        
       </div>
 
-
-      <div className="mt-[5vw] space-y-[5vw] md:space-y-[15px] " >
+      <div className="mt-[5vw] space-y-[5vw] md:space-y-[15px] ">
         <div className="flex items-end">
-            <Avatar variant="square" src='/woman.png' sx={{ width:'90', height:'90', borderRadius:"5px" }}/>
+          <Avatar
+            variant="square"
+            src="/woman.png"
+            sx={{ width: "90", height: "90", borderRadius: "5px" }}
+          />
 
-            <div className="ml-6  flex-1" >
-                <div className=" font-bold text-[14px]  " >Kathy Payton ,<div className=" md:hidden font-thin text-[12px]" > Owner </div></div>
-                <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
-                <div className="hidden md:block font-thin text-[12px]" > Owner </div>
-                <div className="font-thin text-[12px]" > 24, Nov 2022 </div>
-                <div className=" font-bold text-[10px] bg-[#B9F6CA] w-fit text-[#2d7e57] px-4 py-[2px] rounded-md border-[#00C853] border-[1px] " > Connected </div>
-                </div>
+          <div className="ml-6  flex-1">
+            <div className=" font-bold text-[14px]  ">
+              Kathy Payton ,
+              <div className=" md:hidden font-thin text-[12px]"> Owner </div>
             </div>
-
-            <div>
-                <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg" ><MoreHoriz sx={{ color:'#24A0FD'}} /></div>
+            <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
+              <div className="hidden md:block font-thin text-[12px]">
+                {" "}
+                Owner{" "}
+              </div>
+              <div className="font-thin text-[12px]"> 24, Nov 2022 </div>
+              <div className=" font-bold text-[10px] bg-[#EBF1F5] w-fit text-[#818181] px-4 py-[2px] rounded-md border-[#818181] border-[1px] ">
+                {" "}
+                Pending{" "}
+              </div>
             </div>
-        </div>
+          </div>
 
-        <div className="flex items-end">
-            <Avatar variant="square" src='/woman.png' sx={{ width:'90', height:'90', borderRadius:"5px" }}/>
-
-            <div className="ml-6  flex-1" >
-                <div className=" font-bold text-[14px]  " >Kathy Payton ,<div className=" md:hidden font-thin text-[12px]" > Owner </div></div>
-                <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
-                <div className="hidden md:block font-thin text-[12px]" > Owner </div>
-                <div className="font-thin text-[12px]" > 24, Nov 2022 </div>
-                <div className=" font-bold text-[10px] bg-[#EBF1F5] w-fit text-[#818181] px-4 py-[2px] rounded-md border-[#818181] border-[1px] " > Pending </div>
-                </div>
+          <div>
+            <div
+              className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer"
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <MoreHoriz sx={{ color: "#24A0FD" }} />
             </div>
-
-            <div>
-                <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer"
-                 id="basic-button"
-                 aria-controls={open ? "basic-menu" : undefined}
-                 aria-haspopup="true"
-                 aria-expanded={open ? "true" : undefined}
-                 onClick={handleClick}
-                ><MoreHoriz sx={{ color:'#24A0FD'}} /></div>
-                <Menu
+            <Menu
               anchorEl={anchorEl}
               id="account-menu"
               open={open}
@@ -184,15 +187,50 @@ const Teammates = () => {
               anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
             >
               <MenuItem sx={{ fontSize: "10px", px: "15%" }}>
-               Edit Teammate Status
+                Edit Teammate Status
               </MenuItem>
-            
+
               <Divider sx={{ mx: "6%", my: "1px" }} />
-              <MenuItem sx={{ fontSize: "10px", px: "25%", color: "red" }}>
+              <MenuItem
+                sx={{ fontSize: "10px", px: "25%", color: "red" }}
+                onClick={() => setOpenDeleteTeammateModal(true)}
+              >
                 Delete teammate
               </MenuItem>
             </Menu>
+          </div>
+        </div>
+
+        <div className="flex items-end">
+          <Avatar
+            variant="square"
+            src="/woman.png"
+            sx={{ width: "90", height: "90", borderRadius: "5px" }}
+          />
+
+          <div className="ml-6  flex-1">
+            <div className=" font-bold text-[14px]  ">
+              Kathy Payton ,
+              <div className=" md:hidden font-thin text-[12px]"> Owner </div>
             </div>
+            <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
+              <div className="hidden md:block font-thin text-[12px]">
+                {" "}
+                Owner{" "}
+              </div>
+              <div className="font-thin text-[12px]"> 24, Nov 2022 </div>
+              <div className=" font-bold text-[10px] bg-[#B9F6CA] w-fit text-[#2d7e57] px-4 py-[2px] rounded-md border-[#00C853] border-[1px] ">
+                {" "}
+                Connected{" "}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg">
+              <MoreHoriz sx={{ color: "#24A0FD" }} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

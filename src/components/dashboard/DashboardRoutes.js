@@ -2,10 +2,13 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardHeader from "../layout/DashboardHeader";
 import DashboardSidebar from "../layout/DashboardSidebar";
+import AddTeammates from "./AddTeammates";
 import CollaborationOwnerView from "./CollaborationOwnerView";
 import CreateCollaboration from "./CreateCollaboration";
+import DirectMessages from "./DirectMessages";
 import Discover from "./Discover";
 import EditCommunityProfile from "./EditCommunityProfile";
+import EditTeammates from "./EditTeammates";
 import Landing from "./Landing";
 import MyCollaborations from "./MyCollaborations";
 import Teammates from "./Teammates";
@@ -28,6 +31,9 @@ const DashboardRoutes = () => {
             <Route path='/collaboration' element={<CollaborationOwnerView />} />
             <Route path='/discover' element={<Discover />} />
             <Route path='/teammates' element={<Teammates />} />
+            <Route path='/teammates/add' element={<AddTeammates />} />
+            <Route path='/teammates/edit' element={<EditTeammates />} />
+            <Route path='/direct-messages' element={<DirectMessages />} />
           </Routes> 
         </div>
       </div>
