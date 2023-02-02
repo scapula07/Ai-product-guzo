@@ -8,6 +8,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import CreateContactGroupModal from "../molecules/CreateContactGroupModal";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
@@ -39,6 +40,8 @@ const ContactGroups = () => {
       },
     }),
   };
+
+  const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <CreateContactGroupModal
@@ -63,6 +66,7 @@ const ContactGroups = () => {
                 color: "#24A0FD",
               },
             }}
+            onClick={()=>navigate('/dashboard/contacts')}
           >
             Back
           </Button>
@@ -84,7 +88,7 @@ const ContactGroups = () => {
                 color: "white",
               },
             }}
-            onClick={() => setOpenCreateContactGroupModal(true)}
+            onClick={()=>navigate('/dashboard/contacts/go-neighborhood/create-contact')}
           >
             Create New Contact Group
           </Button>

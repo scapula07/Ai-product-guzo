@@ -17,7 +17,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 
 const TextMessages = () => {
@@ -48,6 +48,7 @@ const TextMessages = () => {
       },
     }),
   };
+  const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <div className="md:flex space-y-2 md:space-y-0 items-center">
@@ -68,6 +69,7 @@ const TextMessages = () => {
                 color: "white",
               },
             }}
+            onClick={()=>navigate('/dashboard/textmessages/create')}
           >
             Create New Text Message
           </Button>
@@ -96,8 +98,8 @@ const TextMessages = () => {
             />
           </div>
 
-          <div className="text-[12px] border-[1px] border-[#E6E6E6] py-1 rounded-lg px-1 cursor-pointer">
-            <FilterAltOutlined /> <span className="hidden lg:block">Filter</span>
+          <div className="text-[12px] border-[1px] border-[#E6E6E6] py-1 rounded-lg px-1 cursor-pointer ">
+            <FilterAltOutlined /> <span className="hidden lg:inline">Filter</span>
           </div>
         </div>
       </div>

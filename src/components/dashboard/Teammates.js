@@ -8,6 +8,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
 
@@ -38,6 +39,7 @@ const Teammates = () => {
       },
     }),
   };
+  const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <DeleteTeammateModal
@@ -62,6 +64,7 @@ const Teammates = () => {
                 color: "white",
               },
             }}
+            onClick={()=>navigate('/dashboard/teammates/add')} 
           >
             Add Teammates
           </Button>

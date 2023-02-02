@@ -6,6 +6,7 @@ import {
 } from "@mui/icons-material";
 import { Avatar, Button, Divider, InputBase, Link } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 import ShareCollaborationModal from "../molecules/ShareCollaborationModal";
@@ -17,6 +18,7 @@ const CreateCollaboration = () => {
   const [links, setLinks] = useState([]);
 
   const [openShareCollaborationModal, setOpenCollaborationModal] = useState(false)
+  const navigate = useNavigate()
 
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
@@ -41,6 +43,7 @@ const CreateCollaboration = () => {
                   color: "#24A0FD",
                 },
               }}
+              onClick={()=>navigate('/dashboard/my-collaborations')} 
             >
               Cancel
             </Button>

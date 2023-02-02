@@ -6,6 +6,7 @@ import {
   } from "@mui/icons-material";
   import { Avatar, Button, Divider } from "@mui/material";
   import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
   import CollaborationCard from "../molecules/CollaborationCard";
   
   const MyCollaborations = () => {
@@ -19,6 +20,8 @@ import {
         setCollaborations([1,2,3,4,5,6])
      }
     }, [active])
+
+    const navigate = useNavigate()
     
     return (
       <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
@@ -40,6 +43,7 @@ import {
                   color: "white",
                 },
               }}
+              onClick={()=>navigate('/dashboard/create-collaboration')} 
             >
               Create Collaboration
             </Button>

@@ -6,8 +6,10 @@ import {
 } from "@mui/icons-material";
 import { Avatar, Button, Divider } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
+  const navigate = useNavigate()
   return (
     <div className="bg-white shadow-lg rounded-[18px] px-2 py-2 md:px-[95px] pb-10  md:py-[36px]">
       <div className="flex items-center">
@@ -28,6 +30,7 @@ const UserProfile = () => {
                 color: "white",
               },
             }}
+            onClick={()=>navigate('/user/edit-profile')} 
           >
             Edit Profile
           </Button>

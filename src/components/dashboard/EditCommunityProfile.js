@@ -1,6 +1,7 @@
 import { CancelOutlined, KeyboardArrowDown, Launch } from "@mui/icons-material";
 import { Avatar, Button, Divider, InputBase, Link } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 
@@ -23,6 +24,7 @@ const EditCommunityProfile = () => {
       },
     }),
   };
+  const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
       <div className="lg:flex items-center">
@@ -49,6 +51,7 @@ const EditCommunityProfile = () => {
                   color: "#24A0FD",
                 },
               }}
+              onClick={()=>navigate('/dashboard/collaboration')} 
             >
               Cancel
             </Button>

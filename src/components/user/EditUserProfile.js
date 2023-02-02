@@ -6,9 +6,11 @@ import {
 } from "@mui/icons-material";
 import { Avatar, Button, Divider, InputBase } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const EditUserProfile = () => {
     const [photo, setPhoto] = useState(null)
+    const navigate = useNavigate()
   return (
     <div className="bg-white shadow-lg rounded-[18px] px-2 py-2 md:px-[95px] pb-10  md:py-[36px]">
       <div className="lg:flex items-center">
@@ -32,6 +34,7 @@ const EditUserProfile = () => {
                   color: "#24A0FD",
                 },
               }}
+              onClick={()=>navigate('/user')} 
             >
               Cancel
             </Button>

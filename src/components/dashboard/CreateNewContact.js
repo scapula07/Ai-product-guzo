@@ -8,6 +8,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 
 const CreateNewContact = () => {
@@ -38,6 +39,7 @@ const CreateNewContact = () => {
       },
     }),
   };
+  const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <div className="md:flex space-y-2 md:space-y-0 items-center">
@@ -61,6 +63,7 @@ const CreateNewContact = () => {
                 color: "#24A0FD",
               },
             }}
+            onClick={()=>navigate('/dashboard/contacts/go-neighborhood')}
           >
             Cancel
           </Button>

@@ -1,6 +1,7 @@
 import { MoreHoriz } from "@mui/icons-material";
 import { Avatar, Button, Divider, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CollaborationOwnerView = () => {
   const [active, setActive] = useState(0);
@@ -13,6 +14,7 @@ const CollaborationOwnerView = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <div className="md:flex space-y-2 md:space-y-0 items-center">
@@ -52,6 +54,7 @@ const CollaborationOwnerView = () => {
                 color: "white",
               },
             }}
+            onClick={()=>navigate('/dashboard/edit-community-profile')} 
           >
             Edit Collaboration
           </Button>
@@ -306,7 +309,7 @@ const CollaborationOwnerView = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap  items-center space-y-2 lg:space-y-0  lg:space-x-5 mt-7 ">
+                <div className="flex flex-wrap  items-center space-y-2 lg:space-y-3  lg:space-x-0 mt-7 ">
                   <div className=" md:mt-0  ">
                     <Button
                       sx={{

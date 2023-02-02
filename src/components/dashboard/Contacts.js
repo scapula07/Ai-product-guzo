@@ -8,6 +8,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import CreateContactGroupModal from "../molecules/CreateContactGroupModal";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
@@ -38,6 +39,8 @@ const Contacts = () => {
       },
     }),
   };
+
+  const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
      <CreateContactGroupModal open={openCreateContactGroupModal} setOpen={setOpenCreateContactGroupModal}/>
@@ -112,7 +115,9 @@ const Contacts = () => {
       </div>
 
       <div className="space-y-3 mt-7">
-        <div className="flex items-center">
+        <div className="flex items-center cursor-pointer"
+        
+        >
           <Avatar
             variant="circular"
             src=""
@@ -121,11 +126,12 @@ const Contacts = () => {
               width: "45px",
               height: "45px",
             }}
+            onClick={()=>navigate('/dashboard/contacts/go-neighborhood')}
           >
             G
           </Avatar>
 
-          <div className="font-semibold text-[14px] ml-3 flex-1">
+          <div className="font-semibold text-[14px] ml-3 flex-1" onClick={()=>navigate('/dashboard/contacts/go-neighborhood')}>
             Go Neighborhoods
           </div>
 
@@ -195,7 +201,9 @@ const Contacts = () => {
 
         <Divider />
 
-        <div className="flex items-center">
+        <div className="flex items-center cursor-pointer"
+       
+        >
           <Avatar
             variant="circular"
             src=""
@@ -204,11 +212,12 @@ const Contacts = () => {
               width: "45px",
               height: "45px",
             }}
+            onClick={()=>navigate('/dashboard/contacts/go-neighborhood')}
           >
             J
           </Avatar>
 
-          <div className="font-semibold text-[14px] ml-3 flex-1">
+          <div className="font-semibold text-[14px] ml-3 flex-1"  onClick={()=>navigate('/dashboard/contacts/go-neighborhood')}>
             Juneteenth Festival
           </div>
 

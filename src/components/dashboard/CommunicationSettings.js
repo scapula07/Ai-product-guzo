@@ -17,7 +17,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 
 const CommunicationSetting = () => {
@@ -48,6 +48,7 @@ const CommunicationSetting = () => {
       },
     }),
   };
+  const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <div className="md:flex space-y-2 md:space-y-0 items-center">
@@ -59,12 +60,16 @@ const CommunicationSetting = () => {
       <Divider sx={{ my: 3 }} />
 
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
-        <div className="w-full cursor-pointer hover:opacity-70" >
+        <div className="w-full cursor-pointer hover:opacity-70" 
+         onClick={()=>navigate('/dashboard/communication-settings/text-message')} 
+        >
           <div className="bg-[#24A0FD] w-full h-[140px] rounded-lg " />
           <div className="text-center "> Text Message Settings</div>
         </div>
 
-        <div className="w-full cursor-pointer hover:opacity-70" >
+        <div className="w-full cursor-pointer hover:opacity-70" 
+         onClick={()=>navigate('/dashboard/communication-settings/email')} 
+        >
           <div className="bg-[#F9A0A0] w-full h-[140px] rounded-lg " />
           <div className="text-center "> Email Settings</div>
         </div>

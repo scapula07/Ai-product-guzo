@@ -1,7 +1,9 @@
 import { Avatar, Button } from '@mui/material'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const CollaborationCard = () => {
+  const navigate = useNavigate()
   return (
     <div className="shadow-lg py-[18px] px-[17px]">
     <div>
@@ -28,6 +30,7 @@ const CollaborationCard = () => {
             color: "white",
           },
         }}
+        onClick={()=>navigate('/dashboard/collaboration')} 
       >
         Manage
       </Button>

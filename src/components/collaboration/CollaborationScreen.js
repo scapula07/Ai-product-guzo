@@ -84,7 +84,7 @@ const CollaborationScreen = () => {
 
 
 
-          <div className="text-center  text-[19px] font-bold space-x-4 md:flex justify-center mt-4 text-[#114369] ">
+          <div className="text-center  text-[19px] font-bold  space-x-4 md:flex justify-center mt-4 text-[#114369] ">
       
 
           <Button

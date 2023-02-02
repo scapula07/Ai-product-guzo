@@ -15,6 +15,7 @@ import DirectMessages from "./DirectMessages";
 import Discover from "./Discover";
 import EditCommunityProfile from "./EditCommunityProfile";
 import EditTeammates from "./EditTeammates";
+import Email from "./Email";
 import EmailSettings from "./EmailSettings";
 import Landing from "./Landing";
 import MyCollaborations from "./MyCollaborations";
@@ -49,7 +50,7 @@ const DashboardRoutes = () => {
             <Route path='/contacts/go-neighborhood/create-contact' element={<CreateNewContact />} />
             <Route path='/textmessages' element={<TextMessages />} />
             <Route path='/textmessages/create' element={<CreateNewTextMessage />} />
-            <Route path='/email' element={<TextMessages />} />
+            <Route path='/email' element={<Email />} />
             <Route path='/email/create' element={<CreateNewEmail />} />
             <Route path='/communication-settings' element={<CommunicationSetting />} />
             <Route path='/communication-settings/email' element={<EmailSettings />} />
