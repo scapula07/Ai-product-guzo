@@ -4,7 +4,8 @@ import {
   KeyboardArrowDown,
   Launch,
 } from "@mui/icons-material";
-import { Avatar, Button, Divider, InputBase, Link } from "@mui/material";
+import { Avatar, Button, CircularProgress, Divider, InputBase, Link } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
@@ -12,13 +13,94 @@ import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 import ShareCollaborationModal from "../molecules/ShareCollaborationModal";
 
 const CreateCollaboration = () => {
+  const [loader, setLoader] = useState(false)
   const [photo, setPhoto] = useState(null);
   const [documents, setDocuments] = useState(null);
   const [type, setType] = useState("public");
   const [links, setLinks] = useState([]);
 
-  const [openShareCollaborationModal, setOpenCollaborationModal] = useState(false)
-  const navigate = useNavigate()
+  const [collaboration_id, setCollaborationId] = useState(null);
+
+  const [openShareCollaborationModal, setOpenCollaborationModal] =
+    useState(false);
+  const navigate = useNavigate();
+
+  const [collaboration, setCollaboration] = useState({
+    title: "",
+    description: "",
+    need: "",
+    is_public: true,
+  });
+
+  const createCollaboration = () => {
+    setLoader(true)
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .post(url + "/collaboration", collaboration)
+      .then((res) => {
+        console.log(res.data);
+        setCollaborationId(res.data._id);
+
+        //upload photo
+        let file = document.getElementById("hiddenfileinput").files[0];
+        let formdata = new FormData();
+        formdata.append("photo", file);
+        formdata.append("collaboration_id", res.data._id);
+        console.log(formdata);
+        axios
+          .post(url + "/collaboration/photo", formdata)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        //upload support document
+        let docs = document.getElementById("documents").files;
+        for (let index = 0; index < docs.length; index++) {
+          const item = docs[index];
+          console.log(item.name);
+          let formdata1 = new FormData();
+          formdata1.append("support-document", item);
+          formdata1.append("collaboration_id", res.data._id);
+          formdata1.append("filename", item.name);
+
+          console.log(formdata1);
+          axios
+            .post(url + "/collaboration/support-document", formdata1)
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+
+
+        //upload links 
+        axios
+        .post(url + "/collaboration/support-links", {
+          links: links,
+          collaboration_id: res.data._id
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+        setOpenCollaborationModal(true);
+        setLoader(false)
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoader(false)
+      });
+
+   
+  };
 
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
@@ -43,15 +125,21 @@ const CreateCollaboration = () => {
                   color: "#24A0FD",
                 },
               }}
-              onClick={()=>navigate('/dashboard/my-collaborations')} 
+              onClick={() => navigate("/dashboard/my-collaborations")}
             >
               Cancel
             </Button>
           </div>
           <div>
-            <ShareCollaborationModal open={openShareCollaborationModal} setOpen={setOpenCollaborationModal} />
-            <Button
-            onClick={()=> setOpenCollaborationModal(true)}
+            <ShareCollaborationModal
+              open={openShareCollaborationModal}
+              setOpen={setOpenCollaborationModal}
+            />
+            {loader ?
+            (<CircularProgress  sx={{ color:'white'}} />)
+            :
+            (<Button
+              onClick={createCollaboration}
               sx={{
                 bgcolor: "#24A0FD",
                 color: "white",
@@ -66,7 +154,9 @@ const CreateCollaboration = () => {
               }}
             >
               Create and Save
-            </Button>
+            </Button>)
+          }
+
           </div>
         </div>
       </div>
@@ -157,11 +247,13 @@ const CreateCollaboration = () => {
                 py: "3px",
               }}
               placeholder="e.g., Project Title, Event Title, Communication Campaign Title"
+              onChange={(e) => {
+                setCollaboration({ ...collaboration, title: e.target.value });
+              }}
+              value={collaboration.title}
             />
           </div>
         </div>
-
-        
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
@@ -183,6 +275,13 @@ const CreateCollaboration = () => {
               multiline
               rows={6}
               placeholder="Describe your project, event, or campaign in this field."
+              onChange={(e) => {
+                setCollaboration({
+                  ...collaboration,
+                  description: e.target.value,
+                });
+              }}
+              value={collaboration.description}
             />
           </div>
         </div>
@@ -207,10 +306,13 @@ const CreateCollaboration = () => {
               multiline
               rows={6}
               placeholder="Clearly share how your partners can help? (Segment the needs based on category.)"
+              onChange={(e) => {
+                setCollaboration({ ...collaboration, need: e.target.value });
+              }}
+              value={collaboration.need}
             />
           </div>
         </div>
-
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
@@ -283,8 +385,6 @@ const CreateCollaboration = () => {
             </Button>
           )}
         </div>
-
-       
 
         <div className="space-y-2">
           <div className="text-[#818181] font-semibold text-[14px] ">
@@ -420,10 +520,11 @@ const CreateCollaboration = () => {
           <div className="font-normal text-[10px] mt-2">(Required)</div>
 
           <div className="mt-3 flex space-x-2 font-normal ">
-          <div
-          onClick={()=> {
-            setType('public')
-          }}
+            <div
+              onClick={() => {
+                setType("public");
+                setCollaboration({ ...collaboration, is_public: true });
+              }}
               className={
                 type === "public"
                   ? "bg-[#24A0FD] text-white px-4 py-2 rounded-[8px] cursor-pointer "
@@ -433,8 +534,9 @@ const CreateCollaboration = () => {
               public
             </div>
             <div
-            onClick={()=> {
-                setType('private')
+              onClick={() => {
+                setType("private");
+                setCollaboration({ ...collaboration, is_public: false });
               }}
               className={
                 type === "private"
@@ -444,7 +546,6 @@ const CreateCollaboration = () => {
             >
               Private
             </div>
-            
           </div>
         </div>
       </div>

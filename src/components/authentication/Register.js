@@ -43,7 +43,7 @@ const Register = () => {
       localStorage.setItem('user' , JSON.stringify(res.data))
       setTimeout(() => {
         navigate('/dashboard/')
-      }, 2000);
+      }, 1000);
    
     })
     .catch((err) => {

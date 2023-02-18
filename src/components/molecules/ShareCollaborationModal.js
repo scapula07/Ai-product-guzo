@@ -4,7 +4,7 @@ import React from "react";
 const ShareCollaborationModal = ({ open, setOpen }) => {
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
-      <div className="px-5 py-6 text-center text-[14px] w-[30vw] font-bold  ">
+      <div className="px-5 py-6 text-center text-[14px] lg:w-[30vw] font-bold  ">
         <div>
           Share this link with others via email, text, social media or anywhere
           to invite them to collaborate...
