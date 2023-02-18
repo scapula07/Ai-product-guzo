@@ -1,7 +1,43 @@
 import { Avatar, Button, Divider, InputBase } from "@mui/material";
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate()
+  const loggedInUser =  JSON.parse(localStorage.getItem('user'))
+  if(loggedInUser){
+    navigate('/dashboard/')
+  }
+
+  const [user, setUser] = useState({
+    email: "",
+    password: ""
+  }) 
+
+  const login = async() => {
+   
+    let url = process.env.REACT_APP_BACKEND_URL
+    axios
+    .post(url+"/user/login", user)
+    .then((res) => {
+      console.log(res.data)
+      if(res.data.code){
+         document.getElementById('info').innerHTML = "( "+res.data.msg+" )"
+      }else{
+        localStorage.clear()
+      localStorage.setItem('user' , JSON.stringify(res.data))
+      setTimeout(() => {
+        navigate('/dashboard/')
+      }, 2000);
+      }
+   
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+        
+  }
   return (
     <div className="md:flex justify-center md:mt-[2vw] mt-[4vw] ">
       <div>
@@ -35,6 +71,14 @@ const Login = () => {
                     py: "3px",
                   }}
                   placeholder="your email"
+                  onChange={(e)=>{
+                    setUser(
+                      { ...user,
+                       email : e.target.value
+                      }
+                    )
+                  }}
+                  value={user.email}
                 />
               </div>
             </div>
@@ -46,6 +90,7 @@ const Login = () => {
               </div>
               <div>
                 <InputBase
+                  type='password'
                   sx={{
                     bgcolor: "#EBF1F5",
                     pl: 3,
@@ -55,6 +100,14 @@ const Login = () => {
                     py: "3px",
                   }}
                   placeholder="Your password"
+                  onChange={(e)=>{
+                    setUser(
+                      { ...user,
+                       password : e.target.value
+                      }
+                    )
+                  }}
+                  value={user.password}
                 />
               </div>
             </div>
@@ -62,6 +115,8 @@ const Login = () => {
             <div className="mt-4 text-[#24A0FD] underline text-[12px] cursor-pointer ">
             I forgot my password
             </div>
+
+            <div className="my-3 text-red-600 text-xs " id='info' > </div>
 
             <div className="flex justify-end mt-4" >
             <Button
@@ -80,6 +135,7 @@ const Login = () => {
                 color: "white",
               },
             }}
+            onClick={login}
           >
           Login
           </Button>

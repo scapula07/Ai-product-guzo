@@ -133,7 +133,15 @@ const DashboardHeader = () => {
                 Account Settings
               </MenuItem>
               <Divider sx={{ mx: "6%", my: "1px" }} />
-              <MenuItem sx={{ fontSize: "13px", px: "35%", color: "red" }}>
+              <MenuItem sx={{ fontSize: "13px", px: "35%", color: "red" }}
+              onClick={()=>{
+                localStorage.removeItem('user')
+                setTimeout(() => {
+                  navigate('/auth/login')
+                }, 2000);
+
+              }}
+              >
                 Log Out
               </MenuItem>
             </Menu>
