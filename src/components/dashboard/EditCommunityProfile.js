@@ -1,5 +1,6 @@
 import { CancelOutlined, KeyboardArrowDown, Launch } from "@mui/icons-material";
 import { Avatar, Button, Divider, InputBase, Link } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
@@ -7,6 +8,9 @@ import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 
 const EditCommunityProfile = () => {
   const [photo, setPhoto] = useState(null);
+  const [channels, setChannels] = useState([
+    
+  ]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [openConnectPlatformModal, setOpenConnectPlatformModal] =
     useState(false);
@@ -24,14 +28,104 @@ const EditCommunityProfile = () => {
       },
     }),
   };
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const [community, setCommunity] = useState(
+    JSON.parse(localStorage.getItem("community")) || null
+  );
+
+  const [communityData, setCommunityData] = useState({
+    user_id: JSON.parse(localStorage.getItem("user"))._id,
+    name: "",
+    description: "",
+  });
+
+  const createCommunity = async () => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .post(url + "/community", communityData)
+      .then((res) => {
+        console.log(res.data);
+        //community profile picture
+        let formdata = new FormData();
+        formdata.append("profile_picture", photo);
+        formdata.append("community_id", res.data._id);
+        axios
+          .post(url + "/community/upload-community-profile-picture", formdata)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        //community tags
+        for (let index = 0; index < tags.length; index++) {
+          const tag = tags[index];
+          console.log(tag);
+          axios
+            .post(url + "/community/add-community-tag", {
+              community_id: res.data._id,
+              name: tag.name,
+            })
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+
+        //community channels
+        for (let index = 0; index < channels.length; index++) {
+          const channel = channels[index];
+          console.log(channel);
+          axios
+            .post(url + "/community/add-community-channel", {
+              community_id: res.data._id,
+              digital_channel: channel.digital_channel,
+              size: channel.size,
+              platform_link: channel.platform_link,
+              is_verified: false,
+            })
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+
+       setCommunityData({
+          user_id: JSON.parse(localStorage.getItem("user"))._id,
+          name: "",
+          description: "",
+        });
+
+        setChannels([])
+        setTags([])
+        setPhoto(null)
+
+        
+      })
+
+      
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
       <div className="lg:flex items-center">
         <div className=" flex-1 text-[#114369] font-[600] text-xl ">
-          <div> Edit Community Profile</div>
+          <div>
+            {" "}
+            {!community ? "Create Community Profile" : "Edit Community Profile"}
+          </div>
           <div className="text-xs font-light text-dark">
-            Edit your community profile.
+            {!community
+              ? "Create your community profile"
+              : "Edit your community profile."}
           </div>
         </div>
 
@@ -51,7 +145,7 @@ const EditCommunityProfile = () => {
                   color: "#24A0FD",
                 },
               }}
-              onClick={()=>navigate('/dashboard/collaboration')} 
+              onClick={() => navigate("/dashboard/collaboration")}
             >
               Cancel
             </Button>
@@ -70,6 +164,7 @@ const EditCommunityProfile = () => {
                   color: "white",
                 },
               }}
+              onClick={createCommunity}
             >
               Save and Close
             </Button>
@@ -97,6 +192,13 @@ const EditCommunityProfile = () => {
                 py: "3px",
               }}
               placeholder="Community name"
+              value={communityData.name}
+              onChange={(e) => {
+                setCommunityData({
+                  ...communityData,
+                  name: e.target.value,
+                });
+              }}
             />
           </div>
         </div>
@@ -169,11 +271,18 @@ const EditCommunityProfile = () => {
                 py: "3px",
               }}
               placeholder="Community description"
+              value={communityData.description}
+              onChange={(e) => {
+                setCommunityData({
+                  ...communityData,
+                  description: e.target.value,
+                });
+              }}
             />
           </div>
         </div>
 
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
             Community category{" "}
             <span className="text-black font-thin text-[10px] ">
@@ -204,7 +313,7 @@ const EditCommunityProfile = () => {
               }}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
@@ -214,7 +323,7 @@ const EditCommunityProfile = () => {
             </span>
           </div>
 
-          <div className="flex flex-wrap space-x-1" >
+          <div className="flex flex-wrap space-x-1">
             {tags &&
               tags.map((item, index) => (
                 <div
@@ -321,6 +430,8 @@ const EditCommunityProfile = () => {
             <ConnectPlatformModal
               open={openConnectPlatformModal}
               setOpen={setOpenConnectPlatformModal}
+              channels={channels}
+              setChannels={setChannels}
             />
           </div>
           <div className="md:w-[55vw] lg:w-full w-[85vw] overflow-x-auto">
@@ -351,14 +462,15 @@ const EditCommunityProfile = () => {
                 <div className="col-span-2 py-2 text-center">Verified</div>
               </div>
 
-              <div className="grid grid-cols-9  items-center divide-x  bg-[#EBF1F5] text-black  px-3 ">
+              {channels && channels.map((item,index)=> (
+                <div className="grid grid-cols-9  items-center divide-x  bg-[#EBF1F5] text-black  px-3 " key={index} >
                 <div className="relative">
-                  <div className="text-center">1</div>
+                  <div className="text-center">{index+1}</div>
                 </div>
 
-                <div className="col-span-2 py-2 pl-4">Facebook</div>
+                <div className="col-span-2 py-2 pl-4">{item.digital_channel}</div>
 
-                <div className="col-span-2 py-2 pl-4">10,000</div>
+                <div className="col-span-2 py-2 pl-4">{item.size}</div>
 
                 <div className="col-span-2 py-2">
                   <span className="flex justify-center space-x-[2px]">
@@ -366,56 +478,14 @@ const EditCommunityProfile = () => {
                     <Launch
                       sx={{ fontSize: "", position: "relative", top: 2 }}
                     />{" "}
-                    https://www.facebook....
-                  </span>
-                </div>
-
-                <div className="col-span-2 py-2 text-center">Yes</div>
-              </div>
-
-              <div className="grid grid-cols-9  items-center divide-x   text-black  px-3 ">
-                <div className="relative">
-                  <div className="text-center">2</div>
-                </div>
-
-                <div className="col-span-2 py-2 pl-4">Instagram</div>
-
-                <div className="col-span-2 py-2 pl-4">3,500</div>
-
-                <div className="col-span-2 py-2">
-                  <span className="flex justify-center space-x-[2px]">
-                    {" "}
-                    <Launch
-                      sx={{ fontSize: "", position: "relative", top: 2 }}
-                    />{" "}
-                    https://www.instagram....
-                  </span>
-                </div>
-
-                <div className="col-span-2 py-2 text-center">Yes</div>
-              </div>
-
-              <div className="grid grid-cols-9  items-center divide-x  bg-[#EBF1F5] text-black  px-3 ">
-                <div className="relative">
-                  <div className="text-center">3</div>
-                </div>
-
-                <div className="col-span-2 py-2 pl-4">Website</div>
-
-                <div className="col-span-2 py-2 pl-4">n/a</div>
-
-                <div className="col-span-2 py-2">
-                  <span className="flex justify-center space-x-[2px]">
-                    {" "}
-                    <Launch
-                      sx={{ fontSize: "", position: "relative", top: 2 }}
-                    />{" "}
-                    https://www.thendka....
+                    {item.platform_link}
                   </span>
                 </div>
 
                 <div className="col-span-2 py-2 text-center">No</div>
               </div>
+
+              ))}
             </div>
           </div>
         </div>
