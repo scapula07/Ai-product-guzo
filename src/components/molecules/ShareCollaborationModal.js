@@ -1,7 +1,7 @@
 import { Button, Dialog, InputBase } from "@mui/material";
 import React from "react";
 
-const ShareCollaborationModal = ({ open, setOpen }) => {
+const ShareCollaborationModal = ({ open, setOpen, collaboration_id }) => {
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <div className="px-5 py-6 text-center text-[14px] lg:w-[30vw] font-bold  ">
@@ -24,7 +24,7 @@ const ShareCollaborationModal = ({ open, setOpen }) => {
               py: "3px",
             }}
             placeholder=""
-            value="www.guzo.io/projectxyz/12j3bhjk32"
+            value={"http://localhost:3000/collaboration/"+collaboration_id}
             endAdornment={
               <Button
                 sx={{
@@ -43,7 +43,7 @@ const ShareCollaborationModal = ({ open, setOpen }) => {
                 id='copy_btn'
 
                 onClick={()=>{
-                    navigator.clipboard.writeText("www.guzo.io/projectxyz/12j3bhjk32")
+                    navigator.clipboard.writeText("http://localhost:3000/collaboration/"+collaboration_id)
                     document.getElementById('copy_btn').innerHTML='Copied !'
                    setTimeout(() => {
                     document.getElementById('copy_btn').innerHTML='Copy'

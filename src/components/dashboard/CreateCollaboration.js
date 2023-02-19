@@ -4,7 +4,14 @@ import {
   KeyboardArrowDown,
   Launch,
 } from "@mui/icons-material";
-import { Avatar, Button, CircularProgress, Divider, InputBase, Link } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  Divider,
+  InputBase,
+  Link,
+} from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +20,7 @@ import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 import ShareCollaborationModal from "../molecules/ShareCollaborationModal";
 
 const CreateCollaboration = () => {
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [documents, setDocuments] = useState(null);
   const [type, setType] = useState("public");
@@ -24,8 +31,8 @@ const CreateCollaboration = () => {
   const [openShareCollaborationModal, setOpenCollaborationModal] =
     useState(false);
   const navigate = useNavigate();
-
   const [collaboration, setCollaboration] = useState({
+    user_id: JSON.parse(localStorage.getItem("user"))._id,
     title: "",
     description: "",
     need: "",
@@ -33,7 +40,17 @@ const CreateCollaboration = () => {
   });
 
   const createCollaboration = () => {
-    setLoader(true)
+    if (
+      collaboration.title.length < 2 ||
+      collaboration.description.length < 2 ||
+      collaboration.need.length < 2
+    ) {
+      document.getElementById("error_msg").innerHTML =
+        "(Fill in all required feilds appropriately)";
+      return;
+    }
+
+    setLoader(true);
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
       .post(url + "/collaboration", collaboration)
@@ -77,29 +94,36 @@ const CreateCollaboration = () => {
             });
         }
 
-
-        //upload links 
+        //upload links
         axios
-        .post(url + "/collaboration/support-links", {
-          links: links,
-          collaboration_id: res.data._id
-        })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          .post(url + "/collaboration/support-links", {
+            links: links,
+            collaboration_id: res.data._id,
+          })
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
 
+        setCollaboration({
+          user_id: JSON.parse(localStorage.getItem("user"))._id,
+          title: "",
+          description: "",
+          need: "",
+          is_public: true,
+        });
+        setPhoto(null);
+        setLinks([]);
+        setDocuments(null);
         setOpenCollaborationModal(true);
-        setLoader(false)
+        setLoader(false);
       })
       .catch((err) => {
         console.log(err);
-        setLoader(false)
+        setLoader(false);
       });
-
-   
   };
 
   return (
@@ -134,34 +158,35 @@ const CreateCollaboration = () => {
             <ShareCollaborationModal
               open={openShareCollaborationModal}
               setOpen={setOpenCollaborationModal}
+              collaboration_id={collaboration_id}
             />
-            {loader ?
-            (<CircularProgress  sx={{ color:'white'}} />)
-            :
-            (<Button
-              onClick={createCollaboration}
-              sx={{
-                bgcolor: "#24A0FD",
-                color: "white",
-                fontSize: "12px",
-                width: "175px",
-                textTransform: "none",
-                borderRadius: "5px",
-                ":hover": {
+            {loader ? (
+              <CircularProgress sx={{ color: "white" }} />
+            ) : (
+              <Button
+                onClick={createCollaboration}
+                sx={{
                   bgcolor: "#24A0FD",
                   color: "white",
-                },
-              }}
-            >
-              Create and Save
-            </Button>)
-          }
-
+                  fontSize: "12px",
+                  width: "175px",
+                  textTransform: "none",
+                  borderRadius: "5px",
+                  ":hover": {
+                    bgcolor: "#24A0FD",
+                    color: "white",
+                  },
+                }}
+              >
+                Create and Save
+              </Button>
+            )}
           </div>
         </div>
       </div>
 
       <Divider sx={{ my: 3 }} />
+      <div id="error_msg" className="text-xs text-red-500 text-center"></div>
       <div className="space-y-5">
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
