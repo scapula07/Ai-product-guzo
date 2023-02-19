@@ -86,7 +86,7 @@ const CollaborationScreen = () => {
 
                           <div
                             className="underline text-[#24A0FD]"
-                            onClick={() => window.open('https://'+item.link, "_blank")}
+                            onClick={() => window.open(item.link, "_blank")}
                           >
                             {item.link}
                           </div>
