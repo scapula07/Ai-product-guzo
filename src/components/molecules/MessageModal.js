@@ -50,7 +50,7 @@ function MessageModal(props) {
 
   return (
     <Root className="lg:hidden" >
-      <Global
+      <Global 
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
             height: `calc(50% - ${drawerBleeding}px)`,
