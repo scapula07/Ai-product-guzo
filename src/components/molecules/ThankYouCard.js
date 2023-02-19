@@ -10,7 +10,7 @@ const ThankYouCard = ({open, setOpen}) => {
 
         <div className="mt-10 flex justify-center " >
             <img src='/logo.png'/>
-        </div>
+        </div> 
 
 
         <div className="text-[#114369] text-center font-bold text-[12px] mt-2" >
