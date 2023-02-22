@@ -1,5 +1,6 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useNavigate, useNavigation } from "react-router-dom";
 import DashboardHeader from "../layout/DashboardHeader";
 import DashboardSidebar from "../layout/DashboardSidebar";
 import AddTeammates from "./AddTeammates";
@@ -25,6 +26,36 @@ import TextMessages from "./TextMessages";
 import TextMessageSettings from "./TextMessageSettings";
 
 const DashboardRoutes = () => {
+  let navigate = useNavigate()
+  const [community, setCommunity] = useState()
+
+  const getCommunity = async () => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/community/" + JSON.parse(localStorage.getItem("user"))._id)
+      .then((res) => {
+        console.log(res.data)
+        if (
+          !res.data ||
+          Object.keys(res.data).length === 0 ||
+          Object.getPrototypeOf(res.data) === Object.prototype
+        ) {
+          navigate('/dashboard/edit-community-profile')
+          return
+        } else {
+          setCommunity(res.data)
+          return
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getCommunity()
+  }, [])
+  
   return (
     <>
       <DashboardHeader />
@@ -38,7 +69,7 @@ const DashboardRoutes = () => {
             <Route path="/" element={<Landing />} />
             <Route path='/edit-community-profile' element={<EditCommunityProfile/>} />
             <Route path='/my-collaborations' element={<MyCollaborations/>} />
-            <Route path='/create-collaboration' element={<CreateCollaboration/>} />
+            <Route path='/create-collaboration' element={<CreateCollaboration community={community} />} />
             <Route path='/collaboration' element={<CollaborationOwnerView />} />
             <Route path='/discover' element={<Discover />} />
             <Route path='/teammates' element={<Teammates />} />

@@ -18,6 +18,7 @@ const CollaborationScreen = () => {
         //console.log(res.data)
         setCollaboration(res.data);
         setLoader(false);
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err);
@@ -43,7 +44,7 @@ const CollaborationScreen = () => {
           ) : (
             <div className="bg-white lg:w-[70vw] rounded-[20px] shadow-lg py-[30px] px-[40px]  ">
               <div className="text-center  text-[30px]  font-extrabold ">
-                <div>The Fifth Ward CRC </div>
+                <div>{collaboration._doc.community.name} </div>
 
                 <div className="font-semibold"> requests your support... </div>
               </div>
@@ -79,7 +80,7 @@ const CollaborationScreen = () => {
               <div>
                 <div>
                   {collaboration &&
-                    collaboration.collaborationSupportLinks.map(
+                    collaboration._doc.support_links.map(
                       (item, index) => (
                         <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] ">
                           {item.description}

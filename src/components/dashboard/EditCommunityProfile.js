@@ -1,17 +1,17 @@
 import { CancelOutlined, KeyboardArrowDown, Launch } from "@mui/icons-material";
-import { Avatar, Button, Divider, InputBase, Link } from "@mui/material";
+import { Avatar, Button, CircularProgress, Divider, InputBase, Link } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 
 const EditCommunityProfile = () => {
   const [photo, setPhoto] = useState(null);
-  const [channels, setChannels] = useState([
-    
-  ]);
+  const [fetchedPhoto, setFetchedPhoto] = useState("/picture_placeholder.png");
+  const [channels, setChannels] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [loader, setLoader] = useState(false);
   const [openConnectPlatformModal, setOpenConnectPlatformModal] =
     useState(false);
   const [tags, setTags] = useState([]);
@@ -30,9 +30,7 @@ const EditCommunityProfile = () => {
   };
   const navigate = useNavigate();
 
-  const [community, setCommunity] = useState(
-    JSON.parse(localStorage.getItem("community")) || null
-  );
+  const [community, setCommunity] = useState();
 
   const [communityData, setCommunityData] = useState({
     user_id: JSON.parse(localStorage.getItem("user"))._id,
@@ -41,9 +39,11 @@ const EditCommunityProfile = () => {
   });
 
   const createCommunity = async () => {
+    setLoader(true)
     let url = process.env.REACT_APP_BACKEND_URL;
+    console.log(channels);
     axios
-      .post(url + "/community", communityData)
+      .post(url + "/community", { ...communityData, tags, channels })
       .then((res) => {
         console.log(res.data);
         //community profile picture
@@ -54,66 +54,93 @@ const EditCommunityProfile = () => {
           .post(url + "/community/upload-community-profile-picture", formdata)
           .then((res) => {
             console.log(res.data);
+            getCommunity();
           })
           .catch((err) => {
             console.log(err);
           });
 
-        //community tags
-        for (let index = 0; index < tags.length; index++) {
-          const tag = tags[index];
-          console.log(tag);
-          axios
-            .post(url + "/community/add-community-tag", {
-              community_id: res.data._id,
-              name: tag.name,
-            })
-            .then((res) => {
-              console.log(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
+        // setCommunityData({
+        //   user_id: JSON.parse(localStorage.getItem("user"))._id,
+        //   name: "",
+        //   description: "",
+        // });
 
-        //community channels
-        for (let index = 0; index < channels.length; index++) {
-          const channel = channels[index];
-          console.log(channel);
-          axios
-            .post(url + "/community/add-community-channel", {
-              community_id: res.data._id,
-              digital_channel: channel.digital_channel,
-              size: channel.size,
-              platform_link: channel.platform_link,
-              is_verified: false,
-            })
-            .then((res) => {
-              console.log(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-
-       setCommunityData({
-          user_id: JSON.parse(localStorage.getItem("user"))._id,
-          name: "",
-          description: "",
-        });
-
-        setChannels([])
-        setTags([])
-        setPhoto(null)
-
-        
+        // setChannels([]);
+        // setTags([]);
+        // setPhoto(null);
       })
 
-      
       .catch((err) => {
         console.log(err);
       });
   };
+  const getCommunity = async () => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/community/" + JSON.parse(localStorage.getItem("user"))._id)
+      .then((res) => {
+        setLoader(false)
+        if (
+          res.data &&
+          Object.keys(res.data).length === 0 &&
+          Object.getPrototypeOf(res.data) === Object.prototype
+        ) {
+          setCommunity(null);
+        } else {
+          console.log(res.data);
+          let community = res.data;
+          localStorage.setItem("community", JSON.stringify(community));
+          setCommunity(community);
+          setCommunityData({
+            name: community.name,
+            description: community.description,
+          });
+          setFetchedPhoto(community.profile_picture);
+          setTags(community.tags);
+          setChannels(community.channels);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const editCommunity = async () => {
+    setLoader(true)
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .post(url + "/community/update-community", {
+        ...communityData,
+        community_id: community._id,
+        tags, channels
+      })
+      .then((res) => {
+        console.log(res.data);
+        //community profile picture
+        let formdata = new FormData();
+        formdata.append("profile_picture", photo);
+        formdata.append("community_id", res.data._id);
+        axios
+          .post(url + "/community/upload-community-profile-picture", formdata)
+          .then((res) => {
+            console.log(res.data);
+            getCommunity();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getCommunity();
+  }, []);
+
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
       <div className="lg:flex items-center">
@@ -151,23 +178,27 @@ const EditCommunityProfile = () => {
             </Button>
           </div>
           <div>
-            <Button
-              sx={{
-                bgcolor: "#24A0FD",
-                color: "white",
-                fontSize: "12px",
-                width: "175px",
-                textTransform: "none",
-                borderRadius: "5px",
-                ":hover": {
+            {loader ? (
+              <CircularProgress sx={{ color: "#24A0FD" }} />
+            ) : (
+              <Button
+                sx={{
                   bgcolor: "#24A0FD",
                   color: "white",
-                },
-              }}
-              onClick={createCommunity}
-            >
-              Save and Close
-            </Button>
+                  fontSize: "12px",
+                  width: "175px",
+                  textTransform: "none",
+                  borderRadius: "5px",
+                  ":hover": {
+                    bgcolor: "#24A0FD",
+                    color: "white",
+                  },
+                }}
+                onClick={!community ? createCommunity : editCommunity}
+              >
+                Save and Close
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -212,9 +243,8 @@ const EditCommunityProfile = () => {
           </div>
           <div>
             <Avatar
-              src={
-                photo ? URL.createObjectURL(photo) : "/picture_placeholder.png"
-              }
+              id="main_img"
+              src={photo ? URL.createObjectURL(photo) : fetchedPhoto}
               variant="square"
               sx={{ width: "156px", height: "156px" }}
             />
@@ -462,30 +492,35 @@ const EditCommunityProfile = () => {
                 <div className="col-span-2 py-2 text-center">Verified</div>
               </div>
 
-              {channels && channels.map((item,index)=> (
-                <div className="grid grid-cols-9  items-center divide-x  bg-[#EBF1F5] text-black  px-3 " key={index} >
-                <div className="relative">
-                  <div className="text-center">{index+1}</div>
-                </div>
+              {channels &&
+                channels.map((item, index) => (
+                  <div
+                    className="grid grid-cols-9  items-center divide-x  bg-[#EBF1F5] text-black  px-3 "
+                    key={index}
+                  >
+                    <div className="relative">
+                      <div className="text-center">{index + 1}</div>
+                    </div>
 
-                <div className="col-span-2 py-2 pl-4">{item.digital_channel}</div>
+                    <div className="col-span-2 py-2 pl-4">
+                      {item.digital_channel}
+                    </div>
 
-                <div className="col-span-2 py-2 pl-4">{item.size}</div>
+                    <div className="col-span-2 py-2 pl-4">{item.size}</div>
 
-                <div className="col-span-2 py-2">
-                  <span className="flex justify-center space-x-[2px]">
-                    {" "}
-                    <Launch
-                      sx={{ fontSize: "", position: "relative", top: 2 }}
-                    />{" "}
-                    {item.platform_link}
-                  </span>
-                </div>
+                    <div className="col-span-2 py-2">
+                      <span className="flex justify-center space-x-[2px]">
+                        {" "}
+                        <Launch
+                          sx={{ fontSize: "", position: "relative", top: 2 }}
+                        />{" "}
+                        {item.platform_link}
+                      </span>
+                    </div>
 
-                <div className="col-span-2 py-2 text-center">No</div>
-              </div>
-
-              ))}
+                    <div className="col-span-2 py-2 text-center">No</div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>

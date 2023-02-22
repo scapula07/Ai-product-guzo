@@ -19,7 +19,7 @@ import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 import ShareCollaborationModal from "../molecules/ShareCollaborationModal";
 
-const CreateCollaboration = () => {
+const CreateCollaboration = ({ community }) => {
   const [loader, setLoader] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [documents, setDocuments] = useState(null);
@@ -39,21 +39,30 @@ const CreateCollaboration = () => {
     is_public: true,
   });
 
+
   const createCollaboration = () => {
-    if (
-      collaboration.title.length < 2 ||
-      collaboration.description.length < 2 ||
-      collaboration.need.length < 2
-    ) {
-      document.getElementById("error_msg").innerHTML =
-        "(Fill in all required feilds appropriately)";
-      return;
-    }
+     if (
+       collaboration.title.length < 2 ||
+       collaboration.description.length < 2 ||
+       collaboration.need.length < 2
+     ) {
+       document.getElementById("error_msg").innerHTML =
+         "(Fill in all required feilds appropriately)";
+       return;
+     }
+
+    console.log(links);
 
     setLoader(true);
     let url = process.env.REACT_APP_BACKEND_URL;
+    let comm = {
+      id: community._id,
+      name: community.name,
+      profile_picture: community.profile_picture,
+    };
+    console.log(comm)
     axios
-      .post(url + "/collaboration", collaboration)
+      .post(url + "/collaboration", { ...collaboration, links, comm })
       .then((res) => {
         console.log(res.data);
         setCollaborationId(res.data._id);
@@ -80,6 +89,7 @@ const CreateCollaboration = () => {
           console.log(item.name);
           let formdata1 = new FormData();
           formdata1.append("support-document", item);
+          console.log(res.data._id)
           formdata1.append("collaboration_id", res.data._id);
           formdata1.append("filename", item.name);
 
@@ -94,31 +104,18 @@ const CreateCollaboration = () => {
             });
         }
 
-        //upload links
-        axios
-          .post(url + "/collaboration/support-links", {
-            links: links,
-            collaboration_id: res.data._id,
-          })
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
-        setCollaboration({
-          user_id: JSON.parse(localStorage.getItem("user"))._id,
-          title: "",
-          description: "",
-          need: "",
-          is_public: true,
-        });
-        setPhoto(null);
-        setLinks([]);
-        setDocuments(null);
-        setOpenCollaborationModal(true);
-        setLoader(false);
+         setCollaboration({
+           user_id: JSON.parse(localStorage.getItem("user"))._id,
+           title: "",
+           description: "",
+           need: "",
+           is_public: true,
+         });
+         setPhoto(null);
+         setLinks([]);
+         setDocuments(null);
+         setOpenCollaborationModal(true);
+         setLoader(false);
       })
       .catch((err) => {
         console.log(err);
@@ -430,7 +427,7 @@ const CreateCollaboration = () => {
               >
                 <div className="flex items-center justify-between ">
                   <div>
-                    <div className="font-semibold">{item.url} </div>
+                    <div className="font-semibold">{item.link} </div>
                     <div className=" font-normal ">{item.description} </div>
                   </div>
 
@@ -440,9 +437,9 @@ const CreateCollaboration = () => {
                       onClick={() => {
                         setLinks(
                           links.filter((k) => {
-                            console.log(k.url);
-                            console.log(item.url);
-                            return k.url !== item.url;
+                            console.log(k.link);
+                            console.log(item.link);
+                            return k.link !== item.link;
                           })
                         );
                       }}
@@ -507,9 +504,9 @@ const CreateCollaboration = () => {
               onClick={() => {
                 let description =
                   document.getElementById("link_description").value;
-                let url = document.getElementById("link_url").value;
+                let link = document.getElementById("link_url").value;
 
-                if (description.length < 5 || url.length < 5) {
+                if (description.length < 5 || link.length < 5) {
                   document.getElementById("link_error_text").hidden = false;
                 } else {
                   document.getElementById("link_error_text").hidden = true;
@@ -517,7 +514,7 @@ const CreateCollaboration = () => {
                     ...links,
                     {
                       description,
-                      url,
+                      link,
                     },
                   ]);
 
