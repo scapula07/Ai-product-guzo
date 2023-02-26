@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate, useNavigation } from "react-router-dom";
@@ -14,6 +15,7 @@ import CreateNewEmail from "./CreateNewEmail";
 import CreateNewTextMessage from "./CreateNewTextMessage";
 import DirectMessages from "./DirectMessages";
 import Discover from "./Discover";
+import EditCollaboration from "./EditCollaboration";
 import EditCommunityProfile from "./EditCommunityProfile";
 import EditTeammates from "./EditTeammates";
 import Email from "./Email";
@@ -28,22 +30,22 @@ import TextMessageSettings from "./TextMessageSettings";
 const DashboardRoutes = () => {
   let navigate = useNavigate()
   const [community, setCommunity] = useState()
+  const [loader, setLoader] = useState(true)
 
   const getCommunity = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
       .get(url + "/community/" + JSON.parse(localStorage.getItem("user"))._id)
       .then((res) => {
-        console.log(res.data)
         if (
-          !res.data ||
-          Object.keys(res.data).length === 0 ||
-          Object.getPrototypeOf(res.data) === Object.prototype
+          !res.data
         ) {
+          setLoader(false)
           navigate('/dashboard/edit-community-profile')
           return
         } else {
           setCommunity(res.data)
+          setLoader(false)
           return
         }
       })
@@ -58,19 +60,23 @@ const DashboardRoutes = () => {
   
   return (
     <>
-      <DashboardHeader />
+      <DashboardHeader community={community} />
       <div className="lg:grid md:grid md:grid-cols-3 lg:grid-cols-4 lg:gap-[60px] md:gap-3 md:px-5 lg:px-[98px] md:py-4 lg:py-[33px]">
         <div className="hidden lg:block md:block">
-        <DashboardSidebar />    
+        <DashboardSidebar community={community} />    
         </div>
 
-        <div className="lg:col-span-3 md:col-span-2 ">
+        {loader ? (<div className="flex justify-center mt-[50px]" >
+          <CircularProgress/>
+        </div>): (
+          <div className="lg:col-span-3 md:col-span-2 ">
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path='/edit-community-profile' element={<EditCommunityProfile/>} />
+            <Route path='/edit-community-profile' element={<EditCommunityProfile getCommunity0={getCommunity}/>} />
             <Route path='/my-collaborations' element={<MyCollaborations/>} />
             <Route path='/create-collaboration' element={<CreateCollaboration community={community} />} />
-            <Route path='/collaboration' element={<CollaborationOwnerView />} />
+            <Route path='/collaboration/:collaboration_id' element={<CollaborationOwnerView />} />
+            <Route path='/edit-collaboration/:collaboration_id' element={<EditCollaboration />} />
             <Route path='/discover' element={<Discover />} />
             <Route path='/teammates' element={<Teammates />} />
             <Route path='/teammates/add' element={<AddTeammates />} />
@@ -89,6 +95,7 @@ const DashboardRoutes = () => {
             <Route path='/notifications' element={<Notifications />} />
           </Routes> 
         </div>
+        )}
       </div>
     </>
   );

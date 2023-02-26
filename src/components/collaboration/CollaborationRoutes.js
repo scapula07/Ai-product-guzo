@@ -12,7 +12,7 @@ const CollaborationRoutes = () => {
         <div className="lg:col-span-4 md:col-span-3 ">
           <Routes>
             <Route path="/:collaboration_id" element={<CollaborationScreen />} />
-            <Route path="/contact-capture" element={<ContactCapture />} />
+            <Route path="/contact-capture/:collaboration_id" element={<ContactCapture />} />
           </Routes>
         </div>
       </div>

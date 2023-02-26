@@ -2,7 +2,7 @@ import { Avatar, Button } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const CollaborationCard = () => {
+const CollaborationCard = ({collaboration}) => {
   const navigate = useNavigate()
   return (
     <div className="shadow-lg py-[18px] px-[17px]">
@@ -10,12 +10,12 @@ const CollaborationCard = () => {
       {" "}
       <Avatar
         variant="square"
-        src="/logo2.png"
+        src={collaboration.photo}
         sx={{ width: "100%", height: "180px" }}
       />
     </div>
-    <div className="text-center font-[500] mt-[15px]">Juneteenth Festival</div>
-    <div className="text-xs font-[300] mt-[6px] text-center ">(Public)</div>
+    <div className="text-center font-[500] mt-[15px]">{collaboration.title}</div>
+    <div className="text-xs font-[300] mt-[6px] text-center ">({collaboration.is_public ? "public" : "private"})</div>
     <div className="mt-[10px]">
       <Button
         sx={{
@@ -30,7 +30,7 @@ const CollaborationCard = () => {
             color: "white",
           },
         }}
-        onClick={()=>navigate('/dashboard/collaboration')} 
+        onClick={()=>navigate('/dashboard/collaboration/'+collaboration._id)} 
       >
         Manage
       </Button>

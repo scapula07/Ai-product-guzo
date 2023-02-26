@@ -1,7 +1,10 @@
 import { Button, Dialog } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ThankYouCard = ({open, setOpen}) => {
+  const [user, setUser] = useState(localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user'))._id : null)
+  const navigate = useNavigate()
   return (
    <Dialog open={open} setOpen={setOpen} >
      <div className="flex justify-center ">
@@ -18,52 +21,90 @@ const ThankYouCard = ({open, setOpen}) => {
         </div>
 
 
+       {user ? (
+         <div className="text-center  text-[19px] font-bold space-x-4 md:flex justify-center mt-4 text-[#114369] ">
+      
+
+         <Button
+             sx={{
+               bgcolor: "#24A0FD",
+               border: "1px solid #24A0FD",
+               color: "white",
+               fontSize: "12px",
+               width: { md: "fit", xs: "fit" },
+               px: 2,
+               textTransform: "none",
+               borderRadius: "5px",
+               ":hover": {
+                 bgcolor: "#24A0FD",
+                 color: "white",
+               },
+             }}
+             onClick={()=> {
+              navigate('/dashboard/discover')
+             }}
+             
+           >
+            Back to dashboard
+           </Button>
+
+           
+           
+     
+       </div>
+       ): (
         <div className="text-center  text-[19px] font-bold space-x-4 md:flex justify-center mt-4 text-[#114369] ">
       
 
-          <Button
-              sx={{
+        <Button
+            sx={{
+              bgcolor: "#24A0FD",
+              border: "1px solid #24A0FD",
+              color: "white",
+              fontSize: "12px",
+              width: { md: "fit", xs: "fit" },
+              px: 2,
+              textTransform: "none",
+              borderRadius: "5px",
+              ":hover": {
                 bgcolor: "#24A0FD",
-                border: "1px solid #24A0FD",
                 color: "white",
-                fontSize: "12px",
-                width: { md: "fit", xs: "fit" },
-                px: 2,
-                textTransform: "none",
-                borderRadius: "5px",
-                ":hover": {
-                  bgcolor: "#24A0FD",
-                  color: "white",
-                },
-              }}
-              
-            >
-             Sign in
-            </Button>
+              },
+            }}
+            onClick={()=> {
+              navigate('/auth/login')
+             }}
+          >
+           Sign in
+          </Button>
 
-            <Button
-              sx={{
+          <Button
+            sx={{
+              bgcolor: "white",
+              border: "1px solid #24A0FD",
+              color: "#24A0FD",
+              fontSize: "12px",
+              width: { md: "fit", xs: "fit" },
+              px: 2,
+              textTransform: "none",
+              borderRadius: "5px",
+              ":hover": {
                 bgcolor: "white",
-                border: "1px solid #24A0FD",
                 color: "#24A0FD",
-                fontSize: "12px",
-                width: { md: "fit", xs: "fit" },
-                px: 2,
-                textTransform: "none",
-                borderRadius: "5px",
-                ":hover": {
-                  bgcolor: "white",
-                  color: "#24A0FD",
-                },
-              }}
-              
-            >
-              Join Today!
-            </Button>
-
+              },
+            }}
+            onClick={()=> {
+              navigate('/auth/register')
+             }}
             
-      
-        </div>
+          >
+            Join Today!
+          </Button>
+
+          
+    
+      </div>
+       )}
       </div>
     </div>
    </Dialog>

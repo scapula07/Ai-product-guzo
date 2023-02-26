@@ -18,7 +18,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardResponsive from "./DashboardResponsive";
 
-const DashboardHeader = () => {
+const DashboardHeader = ({community}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openSideMenu, setOpenSideMenu] = React.useState(false)
   const open = Boolean(anchorEl);
@@ -34,7 +34,7 @@ const DashboardHeader = () => {
       <div className="flex items-center justify-between lg:px-[97px] px-2 py-1 lg:py-[21px] ">
         <div className="md:hidden" >
           <MenuIcon onClick={()=> setOpenSideMenu(true)}/>
-          <DashboardResponsive open={openSideMenu} setOpen={setOpenSideMenu} />
+          <DashboardResponsive open={openSideMenu} setOpen={setOpenSideMenu} community={community} />
         </div>
         <div className="">
           <img

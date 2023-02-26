@@ -1,14 +1,65 @@
-import { Button, InputBase } from "@mui/material";
-import React, { useState } from "react";
+import { Button, CircularProgress, InputBase } from "@mui/material";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ThankYouCard from "../molecules/ThankYouCard";
 
 const ContactCapture = () => {
     const [ openThankYouCard, setOpenThankYouCard] = useState(false)
+    const {collaboration_id} = useParams()
+    const [loader, setLoader] = useState(true)
+    const [collaboration, setCollaboration] = useState({})
+
+    const [partner, setPartner] = useState({
+      user_id : localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user'))._id : null,
+      collaboration_id,
+      first_name : "",
+      last_name : "",
+      organization_name : "",
+      email : "",
+      phone_number : "",
+      message : "",
+    })
+
+    const getCollaboration = async() => {
+      let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/collaboration/"+collaboration_id)
+      .then((res) => {
+      setCollaboration(res.data)
+      setLoader(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoader(false);
+      });
+    }
+
+    useEffect(() => {
+      getCollaboration()
+    }, [])
+    
+
+    const createPartner = async() => {
+      let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .post(url + "/collaboration/partner", partner)
+      .then((res) => {
+        //console.log(res.data)
+        setLoader(false);
+        console.log(res.data)
+        setOpenThankYouCard(true)
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoader(false);
+      });
+    }
   return (
     <div className="flex justify-center">
       <div className="bg-white lg:w-[70vw] rounded-[20px] shadow-lg py-[30px] px-[40px]  ">
         <div className="text-center  text-[30px]  font-extrabold ">
-          <div>The Fifth Ward CRC </div>
+          <div>{collaboration._doc?.community.name} </div>
 
           <div className="font-semibold text-[14px] md:text-[25px]">
             {" "}
@@ -40,6 +91,10 @@ const ContactCapture = () => {
               }}
               placeholder="first name here ..."
               id="link_url"
+              onChange={(e)=> {
+                setPartner({...partner, first_name: e.target.value})
+              }}
+              value={partner.first_name}
             />
           </div>
 
@@ -58,6 +113,10 @@ const ContactCapture = () => {
               }}
               placeholder="last name here ..."
               id="link_url"
+              onChange={(e)=> {
+                setPartner({...partner, last_name: e.target.value})
+              }}
+              value={partner.last_name}
             />
           </div>
         </div>
@@ -76,6 +135,10 @@ const ContactCapture = () => {
               }}
               placeholder="e.g. Fitfh Ward CRC"
               id="link_url"
+              onChange={(e)=> {
+                setPartner({...partner, organization_name: e.target.value})
+              }}
+              value={partner.organization_name}
             />
           </div>
 
@@ -94,6 +157,10 @@ const ContactCapture = () => {
               }}
               placeholder="Email Address"
               id="link_url"
+              onChange={(e)=> {
+                setPartner({...partner, email: e.target.value})
+              }}
+              value={partner.email}
             />
           </div>
 
@@ -111,6 +178,10 @@ const ContactCapture = () => {
               }}
               placeholder="Phone number"
               id="link_url"
+              onChange={(e)=> {
+                setPartner({...partner, phone_number: e.target.value})
+              }}
+              value={partner.phone_number}
             />
           </div>
 
@@ -133,6 +204,10 @@ const ContactCapture = () => {
               rows={6}
               placeholder="Share a message..."
               id="link_url"
+              onChange={(e)=> {
+                setPartner({...partner, message: e.target.value})
+              }}
+              value={partner.message}
             />
           </div>
 
@@ -145,25 +220,27 @@ const ContactCapture = () => {
 
          <div className="mt-3">
             <ThankYouCard open={openThankYouCard} setOpen={setOpenThankYouCard}/>
-         <Button
-         onClick={()=> setOpenThankYouCard(true)}
-              sx={{
-                bgcolor: "#24A0FD",
-                border: "1px solid #24A0FD",
-                color: "white",
-                fontSize: "12px",
-                width: { md: "105px", xs: "fit" },
-                textTransform: "none",
-                borderRadius: "5px",
-                ":hover": {
-                  bgcolor: "#24A0FD",
-                  color: "white",
-                },
-              }}
-              
-            >
-              Submit
-            </Button>
+         {loader ? (<CircularProgress/>): (
+          <Button
+          onClick={createPartner}
+               sx={{
+                 bgcolor: "#24A0FD",
+                 border: "1px solid #24A0FD",
+                 color: "white",
+                 fontSize: "12px",
+                 width: { md: "105px", xs: "fit" },
+                 textTransform: "none",
+                 borderRadius: "5px",
+                 ":hover": {
+                   bgcolor: "#24A0FD",
+                   color: "white",
+                 },
+               }}
+               
+             >
+               Submit
+             </Button>
+         )}
          </div>
 
 

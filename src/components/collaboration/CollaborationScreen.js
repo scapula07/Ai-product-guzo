@@ -124,7 +124,7 @@ const CollaborationScreen = () => {
                 Will you collaborate us??
               </div>
 
-              <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] mb-2 ">
+              {/* <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] mb-2 ">
                 Please tell us your organizations name and let us know your
                 willingness to help.
               </div>
@@ -142,7 +142,7 @@ const CollaborationScreen = () => {
                   placeholder=""
                   id="link_description"
                 />
-              </div>
+              </div> */}
 
               <div className="text-center  text-[19px] font-bold  space-x-4 md:flex justify-center mt-4 text-[#114369] ">
                 <Button
@@ -161,7 +161,7 @@ const CollaborationScreen = () => {
                     },
                   }}
                   onClick={() => {
-                    navigate("/collaboration/contact-capture");
+                    navigate("/collaboration/contact-capture/"+collaboration._doc._id);
                   }}
                 >
                   Yes, Count me in!

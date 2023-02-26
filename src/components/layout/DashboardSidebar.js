@@ -26,12 +26,18 @@ import {
 import React from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
 
-const DashboardSidebar = () => {
+const DashboardSidebar = ({community,setOpen}) => {
   const navigate = useNavigate()
+  console.log(community)
   return (
     <div className="bg-white px-[24px] py-[20px] space-y-[64px] lg:h-screen rounded-[18px] lg:shadow-lg">
-      <div className="text-center text-[#114369] bg-[#D1DEE7] py-[21px] rounded-[16px]">
-        Fifth Ward CRC
+      <div className="text-center text-[#114369] bg-[#D1DEE7] py-[21px] rounded-[16px]"
+      onClick={()=> {
+        navigate('/dashboard/edit-community-profile')
+        setOpen(false)
+      }}
+      >
+        {community?.name}
       </div>
 
       <div className="text-center  bg-[#EBF1F5] py-[15px] rounded-[16px]">

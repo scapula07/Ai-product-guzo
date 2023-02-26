@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 
-const EditCommunityProfile = () => {
+const EditCommunityProfile = ({getCommunity0}) => {
   const [photo, setPhoto] = useState(null);
   const [fetchedPhoto, setFetchedPhoto] = useState("/picture_placeholder.png");
   const [channels, setChannels] = useState([]);
@@ -55,6 +55,7 @@ const EditCommunityProfile = () => {
           .then((res) => {
             console.log(res.data);
             getCommunity();
+            getCommunity0()
           })
           .catch((err) => {
             console.log(err);
