@@ -124,13 +124,13 @@ const DashboardSidebar = ({community,setOpen}) => {
                   <AlternateEmail sx={{ fontSize: "15px", mr: 1 }} /> Direct
                   Email
                 </div>
-                <div className={window.location.pathname.match('/dashboard/communication-settings/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
+                {/* <div className={window.location.pathname.match('/dashboard/communication-settings/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
                onClick={()=>navigate('/dashboard/communication-settings')} 
                 >
                   
                   <Settings sx={{ fontSize: "15px", mr: 1 }} />
                   Communication Settings
-                </div>
+                </div> */}
               </div>
             </AccordionDetails>
           </Accordion>
