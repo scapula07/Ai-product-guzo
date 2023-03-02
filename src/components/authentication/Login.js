@@ -1,14 +1,17 @@
 import { Avatar, Button, Divider, InputBase } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate()
   const loggedInUser =  JSON.parse(localStorage.getItem('user'))
-  if(loggedInUser){
-    navigate('/dashboard/')
-  }
+  useEffect(() => {
+    if(loggedInUser){
+      navigate('/dashboard/discover')
+    }
+  }, [])
+  
 
   const [user, setUser] = useState({
     email: "",
@@ -28,7 +31,7 @@ const Login = () => {
         localStorage.clear()
       localStorage.setItem('user' , JSON.stringify(res.data))
       setTimeout(() => {
-        navigate('/dashboard/')
+        navigate('/dashboard/discover')
       }, 1000);
       }
    
