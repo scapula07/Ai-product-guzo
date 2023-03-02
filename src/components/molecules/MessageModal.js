@@ -38,7 +38,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 function MessageModal(props) {
-  const { window, open, setOpen } = props;
+  const { window, open, setOpen, contactGroups } = props;
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -101,7 +101,7 @@ function MessageModal(props) {
         >
           <Puller />
           <Typography sx={{ p: 2, color: "text.secondary" }}>
-            2 Contacts
+            {contactGroups?.length} Contact Groups
           </Typography>
         </StyledBox>
         <StyledBox
@@ -112,7 +112,7 @@ function MessageModal(props) {
             overflow: "auto",
           }}
         >
-          <MessageContacts/>
+          <MessageContacts contactGroups={contactGroups}/>
         </StyledBox>
       </SwipeableDrawer>
     </Root>

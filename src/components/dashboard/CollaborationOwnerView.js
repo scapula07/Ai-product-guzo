@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import SelectContactGroupModal from "../molecules/SelectContactGroupModal";
 
 const CollaborationOwnerView = () => {
   const [active, setActive] = useState(0);
@@ -17,6 +18,11 @@ const CollaborationOwnerView = () => {
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
   const [collaboration, setCollaboration] = useState({});
   const [loader, setLoader] = useState(true);
+  const [openSelectContactGroupModal, setOpenSelectContactGroupModal] = useState(false)
+  const [contactGroups, setContactGroups] = useState([])
+  const [selectedContactGroup, setSelectedContactGroup] = useState({})
+
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -42,8 +48,26 @@ const CollaborationOwnerView = () => {
       });
   };
 
+
+
+  const getContactGroups = async() =>{
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/contact/"+JSON.parse(localStorage.getItem("user"))._id)
+      .then((res) => {
+       console.log(res.data)
+       setContactGroups(res.data)
+       
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   useEffect(() => {
     getCollaboration();
+    getContactGroups()
   }, []);
 
   return (
@@ -319,6 +343,9 @@ const CollaborationOwnerView = () => {
                 </div>
                 {collaboration.collaborationPartners.map((item, index) => (
                   <div key={index}>
+                    <SelectContactGroupModal open={openSelectContactGroupModal} setOpen={setOpenSelectContactGroupModal}
+                    contactGroups={contactGroups} contact={selectedContactGroup} setLoader={setLoader}
+                    />
                     <div className="md:flex items-start md:space-x-3 justify-between ">
                       <div className="flex items-center space-x-3">
                         <div>
@@ -362,12 +389,16 @@ const CollaborationOwnerView = () => {
                                 color: "#24A0FD",
                               },
                             }}
+                            onClick={()=>{
+                              setOpenSelectContactGroupModal(true)
+                              setSelectedContactGroup(item)
+                            }}
                           >
                             Save Contact
                           </Button>
                         </div>
 
-                        <div className=" md:mt-0  ">
+                        {/* <div className=" md:mt-0  ">
                           <Button
                             sx={{
                               bgcolor: "#24A0FD",
@@ -403,7 +434,7 @@ const CollaborationOwnerView = () => {
                           >
                             Decline
                           </Button>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                     <Divider sx={{ my: 3 }} />

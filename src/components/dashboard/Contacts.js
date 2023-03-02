@@ -7,18 +7,25 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import CreateContactGroupModal from "../molecules/CreateContactGroupModal";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
+import RenameContactGroupModal from "../molecules/RenameContactGroupModal";
 
 const Contacts = () => {
+  const [contactGroups, setContactGroups] = useState([])
   const [active, setActive] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openCreateContactGroupModal, setOpenCreateContactGroupModal] = useState(false)
   const open = Boolean(anchorEl);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [openRenameContactGroupModal, setOpenRenameContactGroupModal] = useState(false)
+  const [selectedContactId, setSelectedContactId] = useState()
+  const [name, setName] = useState('')
+ 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -40,10 +47,49 @@ const Contacts = () => {
     }),
   };
 
+
+  const getContactGroups = async() =>{
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/contact/"+JSON.parse(localStorage.getItem("user"))._id)
+      .then((res) => {
+       console.log(res.data)
+       setContactGroups(res.data)
+       
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+
+  const deleteContactGroup = async(id) => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/contact/delete-contact-group/"+id)
+      .then((res) => {
+       console.log(res.data)
+       getContactGroups()
+       
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+
+  
   const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
-     <CreateContactGroupModal open={openCreateContactGroupModal} setOpen={setOpenCreateContactGroupModal}/>
+     <CreateContactGroupModal open={openCreateContactGroupModal} setOpen={setOpenCreateContactGroupModal}
+     getContactGroups={getContactGroups}
+     />
+   
+     <RenameContactGroupModal open={openRenameContactGroupModal} setOpen={setOpenRenameContactGroupModal}
+     id={selectedContactId}  getContactGroups={getContactGroups} setName={setName} name={name} />
       <div className="md:flex space-y-2 md:space-y-0 items-center">
         <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
           Contact Groups
@@ -72,7 +118,7 @@ const Contacts = () => {
       <Divider sx={{ my: 3 }} />
 
       <div className="md:flex justify-between  md:space-x-4">
-        <div className=" shadow-lg  rounded-[1rem] pt-1 mx-2 md:mx-0 ">
+        {/* <div className=" shadow-lg  rounded-[1rem] pt-1 mx-2 md:mx-0 ">
           <ReactSelect
             styles={style}
             placeholder="Sort By"
@@ -95,7 +141,7 @@ const Contacts = () => {
               setSelectedCategory(opt);
             }}
           />
-        </div>
+        </div> */}
 
         <div className=" md:block lg:block mt-2 md:mt-0">
           <InputBase
@@ -107,6 +153,9 @@ const Contacts = () => {
               py: "5px",
             }}
             placeholder="Search..."
+            onChange={(e)=>{
+
+            }}
             endAdornment={
               <SearchOutlined sx={{ fontWeight: "300", cursor: "pointer" }} />
             }
@@ -115,7 +164,10 @@ const Contacts = () => {
       </div>
 
       <div className="space-y-3 mt-7">
-        <div className="flex items-center cursor-pointer"
+        {contactGroups && contactGroups.map((item,index)=> 
+        (
+          <div key={item._id} id={item._id} >
+          <div className="flex items-center cursor-pointer mb-3"
         
         >
           <Avatar
@@ -126,13 +178,13 @@ const Contacts = () => {
               width: "45px",
               height: "45px",
             }}
-            onClick={()=>navigate('/dashboard/contacts/go-neighborhood')}
+            onClick={()=>navigate('/dashboard/contacts/'+item._id)}
           >
-            G
+            {item.name.substr(0,1)}
           </Avatar>
 
-          <div className="font-semibold text-[14px] ml-3 flex-1" onClick={()=>navigate('/dashboard/contacts/go-neighborhood')}>
-            Go Neighborhoods
+          <div className="font-semibold text-[14px] ml-3 flex-1" onClick={()=>navigate('/dashboard/contacts/'+item._id)}>
+           {item.name}
           </div>
 
           <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
@@ -142,7 +194,11 @@ const Contacts = () => {
               aria-controls={open ? "basic-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
+              onClick={(e)=> {
+                handleClick(e)
+                setSelectedContactId(item._id)
+                setName(item.name)
+              }}
             />
 
             <Menu
@@ -181,17 +237,25 @@ const Contacts = () => {
               transformOrigin={{ horizontal: "center", vertical: "top" }}
               anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
             >
-              <MenuItem sx={{ fontSize: "10px", px: "15%" }}>
+              
+              <MenuItem sx={{ fontSize: "10px", px: "15%" }}
+              onClick={()=> {
+                setOpenRenameContactGroupModal(true)
+              }}
+              >
                Rename Contact Group
               </MenuItem>
 
-              <MenuItem sx={{ fontSize: "10px", px: "15%" }}>
+              {/* <MenuItem sx={{ fontSize: "10px", px: "15%" }}>
                Export Contact Group
-              </MenuItem>
+              </MenuItem> */}
 
               <Divider sx={{ mx: "6%", my: "1px" }} />
               <MenuItem
                 sx={{ fontSize: "10px", px: "15%", color: "red" }}
+                onClick={()=>{
+                  deleteContactGroup(item._id)
+                }}
               >
                 Delete Contact Group
               </MenuItem>
@@ -199,34 +263,15 @@ const Contacts = () => {
           </div>
         </div>
 
-        <Divider />
-
-        <div className="flex items-center cursor-pointer"
-       
-        >
-          <Avatar
-            variant="circular"
-            src=""
-            sx={{
-              bgcolor: "#114369",
-              width: "45px",
-              height: "45px",
-            }}
-            onClick={()=>navigate('/dashboard/contacts/go-neighborhood')}
-          >
-            J
-          </Avatar>
-
-          <div className="font-semibold text-[14px] ml-3 flex-1"  onClick={()=>navigate('/dashboard/contacts/go-neighborhood')}>
-            Juneteenth Festival
+        <Divider />  
           </div>
+        ))}
 
-          <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
-            <MoreHoriz sx={{ color: "#24A0FD" }} />
-          </div>
-        </div>
+        {contactGroups && contactGroups.length < 1 && (
+          <div className="text-xs lg:text-sm" > No contact group available... </div>
+        )}
 
-        <Divider />
+        
       </div>
     </div>
   );

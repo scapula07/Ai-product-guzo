@@ -11,12 +11,14 @@ import {
 import {
   Avatar,
   Button,
+  CircularProgress,
   Divider,
   InputBase,
   Menu,
   MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 
@@ -26,6 +28,17 @@ const CreateNewTextMessage = () => {
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
   const open = Boolean(anchorEl);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [contactGroupLoader, setContactGroupLoader] = useState(true)
+  const [senderPhoneNumbers, setSenderPhoneNumbers] = useState([
+   {
+    label:"+18337952227",
+    value: "+18337952227"
+   }
+  ])
+
+  const [sender, setSender] = useState(null)
+  const [message, setMessage] = useState("")
+  const [name, setName]  = useState("")
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -49,6 +62,63 @@ const CreateNewTextMessage = () => {
     }),
   };
   const navigate = useNavigate()
+
+  const [contactGroups,setContactGroups] = useState(null)
+  const [loader, setLoader] = useState(false)
+
+
+  const getContactGroups = async() =>{
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/contact/"+JSON.parse(localStorage.getItem("user"))._id)
+      .then((res) => {
+       console.log(res.data)
+       setContactGroups(res.data)
+       setContactGroupLoader(false)
+       
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const sendTextMessage = async() =>{
+    setLoader(true)
+    let url = process.env.REACT_APP_BACKEND_URL;
+    console.log(sender,
+      message,
+      selectedCategory)
+    axios
+      .post(url + "/contact/send-message/",{
+          sender:sender.value,
+          message,
+          contact_group : selectedCategory,
+          campaign_name : name,
+          user_id: JSON.parse(localStorage.getItem("user"))._id
+
+      })
+      .then((res) => {
+       console.log(res.data)
+       setLoader(false)
+       setName("")
+       setSender("")
+       setMessage("")
+       setSelectedCategory(null)
+       
+      })
+
+      .catch((err) => {
+        console.log(err);
+        setLoader(false)
+      });
+  }
+  useEffect(() => {
+    getContactGroups()
+  
+    
+  }, [])
+  
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <div className="md:flex space-y-2 md:space-y-0 items-center">
@@ -96,7 +166,8 @@ const CreateNewTextMessage = () => {
           >
             Save as Draft
           </Button>
-          <Button
+          {loader ? (<CircularProgress/>): (
+            <Button
             sx={{
               bgcolor: "#24A0FD",
               color: "white",
@@ -112,9 +183,12 @@ const CreateNewTextMessage = () => {
                 color: "white",
               },
             }}
+
+            onClick={sendTextMessage}
           >
             Save and Send
           </Button>
+          )}
         </div>
       </div>
 
@@ -136,6 +210,8 @@ const CreateNewTextMessage = () => {
               py: 1,
             }}
             placeholder="Fifth Ward CommUNITY Message"
+            value={name}
+            onChange={(e)=> setName(e.target.value)}
           />
         </div>
       </div>
@@ -148,30 +224,38 @@ const CreateNewTextMessage = () => {
         
         <div className="bg-[#EBF1F5] px-4 py-3 rounded-[5px] space-y-2">
             <div className="text-[14px]" > To{" "} <span className="text-black font-thin text-[12px] ">(Select your recipient Group(s)) </span></div>
-            <ReactSelect
-            styles={style}
-            placeholder="Select your contact groups(s)"
-            options={cats}
-            defaultOptions={cats}
-            value={selectedCategory}
-            menuPlacement="auto"
-            menuPosition="fixed"
-            noOptionsMessage={(opt) => {
-              if (opt.inputValue === "") {
-                return "Sort By";
-              } else {
-                return "no search results for " + opt.inputValue;
-              }
-            }}
-            components={{
-              IndicatorSeparator: () => null,
-            }}
-            onChange={(opt) => {
-              setSelectedCategory(opt);
-            }}
-          />
+           {contactGroupLoader ? (
 
-          <div className="text-[10px] font-semibold"  >Audience Size: 20</div>
+            <CircularProgress/>
+           )
+            : (
+              <ReactSelect
+              styles={style}
+              placeholder="Select your contact groups(s)"
+              options={contactGroups.map((item,index)=> ({label: item.name, value: item._id,contact_length: item.contacts.length,contacts: item.contacts}))}
+            defaultOptions={contactGroups.map((item,index)=> ({label: item.name, value: item._id,contact_length: item.contacts.length,contacts: item.contacts}))}
+              value={selectedCategory}
+              menuPlacement="auto"
+              menuPosition="fixed"
+              noOptionsMessage={(opt) => {
+                if (opt.inputValue === "") {
+                  return "Sort By";
+                } else {
+                  return "no search results for " + opt.inputValue;
+                }
+              }}
+              components={{
+                IndicatorSeparator: () => null,
+              }}
+              onChange={(opt) => {
+                console.log(opt)
+                setSelectedCategory(opt);
+              }}
+            />
+            )
+           }
+
+          <div className="text-[10px] font-semibold"  >Audience Size: {selectedCategory?.contact_length ? selectedCategory.contact_length : 0} </div>
         </div>
 
 
@@ -180,9 +264,9 @@ const CreateNewTextMessage = () => {
             <ReactSelect
             styles={style}
             placeholder="Select a phone number"
-            options={cats}
-            defaultOptions={cats}
-            value={selectedCategory}
+            options={senderPhoneNumbers}
+            defaultOptions={senderPhoneNumbers}
+            value={sender}
             menuPlacement="auto"
             menuPosition="fixed"
             noOptionsMessage={(opt) => {
@@ -196,7 +280,7 @@ const CreateNewTextMessage = () => {
               IndicatorSeparator: () => null,
             }}
             onChange={(opt) => {
-              setSelectedCategory(opt);
+              setSender(opt);
             }}
           />
 
@@ -218,12 +302,16 @@ const CreateNewTextMessage = () => {
             multiline
             rows={5}
             placeholder="Your SMS Message here..."
+            value={message}
+            onChange={(e)=> {
+              setMessage(e.target.value)
+            }}
           />
 
           <div className="text-[10px] font-semibold flex space-x-6"  >
-            <div>Character Count : 16</div>
-            <div> Number of message : 1</div>
-            <div>Credits Used : 20</div>
+            <div>Character Count : {message ? message.length : 0}</div>
+            {/* <div> Number of message : 1</div> */}
+            <div>Credits Used : 0</div>
           </div>
         </div>
 

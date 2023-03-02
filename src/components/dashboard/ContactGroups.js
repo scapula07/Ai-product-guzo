@@ -7,8 +7,10 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import ReactSelect from "react-select";
 import CreateContactGroupModal from "../molecules/CreateContactGroupModal";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
@@ -20,6 +22,10 @@ const ContactGroups = () => {
     useState(false);
   const open = Boolean(anchorEl);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [contactGroup, setContactGroup] = useState(null)
+  const [contacts, setContacts] = useState(null)
+  const [contact_id, setContactId] = useState(null)
+  const {id} = useParams()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -41,13 +47,59 @@ const ContactGroups = () => {
     }),
   };
 
+
+  const getContactGroup = async() =>{
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/contact/get-contact-group/"+id)
+      .then((res) => {
+        console.log(res.data)
+       setContactGroup(res.data)
+       setContacts(res.data.contacts)
+       
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    getContactGroup()
+  
+    
+  }, [])
+
+
+  const removeContact = async(contact_id) => {
+    const cons = contacts.filter((e)=>{return e?._id !== contact_id})
+    setContacts(cons)
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .post(url + "/contact/remove-contact/",{
+        contact_group_id : id,
+        contacts : cons
+      })
+      .then((res) => {
+        console.log(res.data)
+       setContacts(res.data.contacts)
+       
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(cons)
+  }
+  
+
   const navigate = useNavigate()
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
-      <CreateContactGroupModal
+      {/* <CreateContactGroupModal
         open={openCreateContactGroupModal}
         setOpen={setOpenCreateContactGroupModal}
-      />
+      /> */}
       <div className="md:flex space-y-2 md:space-y-0 items-center">
         <div>
           <Button
@@ -74,7 +126,7 @@ const ContactGroups = () => {
         <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
           Go Neighborhoods Contact Group
         </div>
-        <div>
+        {/* <div>
           <Button
             sx={{
               bgcolor: "#24A0FD",
@@ -92,13 +144,13 @@ const ContactGroups = () => {
           >
             Create New Contact Group
           </Button>
-        </div>
+        </div> */}
       </div>
 
       <Divider sx={{ my: 3 }} />
 
       <div className="md:flex justify-center  md:space-x-4">
-        <div className=" shadow-lg  rounded-[1rem] pt-1 mx-2 md:mx-0 ">
+        {/* <div className=" shadow-lg  rounded-[1rem] pt-1 mx-2 md:mx-0 ">
           <ReactSelect
             styles={style}
             placeholder="Sort By"
@@ -121,7 +173,7 @@ const ContactGroups = () => {
               setSelectedCategory(opt);
             }}
           />
-        </div>
+        </div> */}
 
         <div className=" md:block lg:block mt-2 md:mt-0">
           <InputBase
@@ -141,7 +193,10 @@ const ContactGroups = () => {
       </div>
 
       <div className="space-y-3 mt-7 mb-20">
-        <div className="flex items-center">
+      
+      {contacts && contacts.map((item,index)=> (
+        <div key={index}>
+           <div className="flex items-center mb-3">
           <Avatar
             variant="circular"
             src=""
@@ -151,10 +206,17 @@ const ContactGroups = () => {
               height: "45px",
             }}
           >
-            C1
+            {item?.name.substr(0,2)}
           </Avatar>
 
-          <div className="font-semibold text-[14px] ml-3 flex-1">Contact#1</div>
+          <div className="flex-1"> 
+
+          <div className="font-semibold text-[14px] ml-3 ">{item?.name}</div>
+          <div className="flex items-center"> 
+          <div className="font-thin text-xs ml-3  flex"><span>phone :</span>{item?.phone_number ? 'yes' : 'no'}</div>
+          <div className="font-thin text-xs ml-3 ">email :{item?.email ? 'yes' : 'no'}</div>
+          </div>
+          </div>
 
           <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
             <MoreHoriz
@@ -163,7 +225,10 @@ const ContactGroups = () => {
               aria-controls={open ? "basic-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
+              onClick={(e)=> {
+                handleClick(e)
+                setContactId(item?._id)
+              }}
             />
 
             <Menu
@@ -211,86 +276,12 @@ const ContactGroups = () => {
               </MenuItem>
 
               <Divider sx={{ mx: "6%", my: "1px" }} />
-              <MenuItem sx={{ fontSize: "10px", px: "23%", color: "red" }}>
-                Remove Contact
-              </MenuItem>
-            </Menu>
-          </div>
-        </div>
-
-        <Divider />
-
-        <div className="flex items-center">
-          <Avatar
-            variant="circular"
-            src=""
-            sx={{
-              bgcolor: "green",
-              width: "45px",
-              height: "45px",
-            }}
-          >
-            C2
-          </Avatar>
-
-          <div className="font-semibold text-[14px] ml-3 flex-1">Contact#2</div>
-
-          <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
-            <MoreHoriz
-              sx={{ color: "#24A0FD" }}
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            />
-
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={open}
-              onClose={handleClose}
-              onClick={handleClose}
-              PaperProps={{
-                elevation: 2,
-                sx: {
-                  overflow: "visible",
-                  width: "140px",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: { lg: "45%", xs: "10%" },
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
+              <MenuItem sx={{ fontSize: "10px", px: "23%", color: "red" }}
+              onClick={()=> {
+                
+                removeContact(contact_id)
               }}
-              transformOrigin={{ horizontal: "center", vertical: "top" }}
-              anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
-            >
-              <MenuItem sx={{ fontSize: "10px", px: "30%" }}>
-                Edit Contact
-              </MenuItem>
-
-              <MenuItem sx={{ fontSize: "10px", px: "27%" }}>
-                Share Contact
-              </MenuItem>
-
-              <Divider sx={{ mx: "6%", my: "1px" }} />
-              <MenuItem sx={{ fontSize: "10px", px: "23%", color: "red" }}>
+              >
                 Remove Contact
               </MenuItem>
             </Menu>
@@ -298,6 +289,9 @@ const ContactGroups = () => {
         </div>
 
         <Divider />
+          </div>
+       ))}
+       
       </div>
     </div>
   );

@@ -2,15 +2,15 @@ import { Button, Dialog, InputBase } from '@mui/material'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-const CreateContactGroupModal = ({open, setOpen, getContactGroups}) => {
-  const [name, setName] = useState("")
+const RenameContactGroupModal = ({open, setOpen, getContactGroups, id, name, setName}) => {
+ 
   const [user_id, setUserId] = useState(JSON.parse(localStorage.getItem("user"))._id|| null)
-  const createContactGroup = async() =>{
+  const updateContactGroup = async() =>{
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .post(url + "/contact", {
+      .post(url + "/contact/edit-contact-group", {
         name,
-        user_id
+        contact_group_id : id
       })
       .then((res) => {
        console.log(res.data)
@@ -37,6 +37,7 @@ const CreateContactGroupModal = ({open, setOpen, getContactGroups}) => {
    <Dialog
    open={open}
    onClose={()=> setOpen(false)}
+   
    >
     <div className='px-5 py-6 text-center text-[14px]' >
        <div className='font-bold' >Name your new contact group</div>
@@ -72,9 +73,9 @@ const CreateContactGroupModal = ({open, setOpen, getContactGroups}) => {
               },
               px: 5 
             }}
-            onClick={createContactGroup}
+            onClick={updateContactGroup}
           >
-            Create Contact Group
+            Update Contact Group
           </Button>
           </div>
     </div>
@@ -82,4 +83,4 @@ const CreateContactGroupModal = ({open, setOpen, getContactGroups}) => {
   )
 }
 
-export default CreateContactGroupModal
+export default RenameContactGroupModal

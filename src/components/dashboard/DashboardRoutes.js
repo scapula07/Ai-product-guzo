@@ -83,7 +83,7 @@ const DashboardRoutes = () => {
             <Route path='/teammates/edit' element={<EditTeammates />} />
             <Route path='/direct-messages' element={<DirectMessages />} />
             <Route path='/contacts' element={<Contacts />} />
-            <Route path='/contacts/go-neighborhood' element={<ContactGroups />} />
+            <Route path='/contacts/:id' element={<ContactGroups />} />
             <Route path='/contacts/go-neighborhood/create-contact' element={<CreateNewContact />} />
             <Route path='/textmessages' element={<TextMessages />} />
             <Route path='/textmessages/create' element={<CreateNewTextMessage />} />

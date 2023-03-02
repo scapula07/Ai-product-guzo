@@ -7,17 +7,58 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import ReactSelect from "react-select";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
 import MessageContacts from "../molecules/MessageContacts";
 import MessageModal from "../molecules/MessageModal";
 
 const DirectMessages = () => {
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [contactGroups, setContactGroups] = useState(null);
+  const [direct_messages, setDirectMessages] = useState(null);
+  const [message, setMessage] = useState("");
+  const getContactGroups = async () => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/contact/" + JSON.parse(localStorage.getItem("user"))._id)
+      .then((res) => {
+        console.log(res.data);
+        setContactGroups(res.data);
+        setDirectMessages(res.data[0].direct_messages);
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addDirectMessage = async () => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .post(url + "/contact/add-direct-message/", {
+        user_id: JSON.parse(localStorage.getItem("user"))._id,
+        username: JSON.parse(localStorage.getItem("user")).username,
+        message,
+        time: Date.now(),
+      })
+      .then((res) => {
+        console.log(res.data);
+        setDirectMessages(res.data.direct_messages);
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getContactGroups();
+  }, []);
+
   return (
     <div className="bg-white py-[20px] pb-[80px]  md:rounded-[18px] shadow-lg">
-        
       <div className="md:flex space-y-2 md:space-y-0 items-center px-[30px]">
         <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
           Direct Messages
@@ -25,80 +66,93 @@ const DirectMessages = () => {
       </div>
 
       <Divider sx={{ my: 3 }} />
-      <MessageModal open={open} setOpen={setOpen}/>
+      <MessageModal
+        open={open}
+        setOpen={setOpen}
+        contactGroups={contactGroups}
+      />
       <div className="grid grid-cols-5 gap-4 md:px-[30px]">
-        
         <div className=" hidden lg:block col-span-2 shadow-lg py-2 px-3 space-y-4 rounded-xl ">
-          <MessageContacts/>
+          <MessageContacts contactGroups={contactGroups} />
         </div>
 
-        
-
         <div className="col-span-5 lg:col-span-3 shadow-lg py-2 pb-6 px-3 space-y-4 rounded-xl ">
-            
           <div className="text-center text-[14px] font-semibold ">
-            Go Neighborhoods
+            {contactGroups &&  contactGroups[0]?.name}
           </div>
 
           {/* messages */}
 
-          <div className="space-y-4" >
+          <div className="space-y-4">
             {/* message */}
 
-            <div className="space-y-4" >
-              <div className="flex items-center">
-                <Avatar
-                  variant="square"
-                  src="/woman.png"
+            {direct_messages &&
+              direct_messages.map((item, index) => (
+                <div className="space-y-4" key={index}>
+                  <div className="flex items-center">
+                    <Avatar
+                      variant="square"
+                      src="/woman.png"
+                      sx={{
+                        bgcolor: "blue",
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "10px",
+                      }}
+                    >
+                     {item.name.substr(0,1)}
+                    </Avatar>
+
+                    <div className="font-semibold text-[14px] ml-3 flex-1">
+                      {item.username}
+                    </div>
+
+                    <div className="text-[12px] text-[#114369] ">12:30</div>
+                  </div>
+                  <div className="w-full bg-[#EBF1F5] px-4 py-2 text-[12px] rounded-lg ">
+                   {item.message}
+                  </div>
+                </div>
+              ))}
+
+            <div className="w-full">
+              <InputBase
+                multiline
+                rows={5}
+                sx={{
+                  bgcolor: "#FAFAFA",
+                  border: "1px solid #E6E6E6",
+                  pl: 3,
+                  fontSize: "14px",
+                  borderRadius: "8px",
+                  width: { md: "100%", xs: "100%" },
+                  py: "2px",
+                }}
+                placeholder="your message here"
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                }}
+              />
+
+              <div className="flex items-center ">
+                <div className="flex-1" />
+                <Button
+                  onClick={addDirectMessage}
                   sx={{
-                    bgcolor: "blue",
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "10px",
+                    textTransform: "none",
+                    bgcolor: "#24A0FD",
+                    color: "white",
+                    border: "1px solid #24A0FD",
+                    ":hover": {
+                      bgcolor: "#24A0FD",
+                      color: "white",
+                    },
+                    mt: 1,
                   }}
                 >
-                  G
-                </Avatar>
-
-                <div className="font-semibold text-[14px] ml-3 flex-1">
-                  Kathy
-                </div>
-
-                <div className="text-[12px] text-[#114369] ">12:30</div>
-              </div>
-              <div className="w-full bg-[#EBF1F5] px-4 py-2 text-[12px] rounded-lg " >
-
-              Hi Team, how are you doing guys ?
-
-              </div>
-            </div>
-
-            <div className="space-y-2" >
-              <div className="flex items-center">
-                <Avatar
-                  variant="square"
-                  src="/woman2.png"
-                  sx={{
-                    bgcolor: "blue",
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "10px",
-                  }}
-                >
-                  G
-                </Avatar>
-
-                <div className="font-semibold text-[14px] ml-3 flex-1">
-                  Denise
-                </div>
-
-                <div className="text-[12px] text-[#114369] ">12:30</div>
-              </div>
-              <div className="w-full bg-[#EBF1F5] px-4 py-2 text-[12px] rounded-lg " >
-
-              Hello Kathy, I’m great, I almost finished working on the new design, I’ll send you updates later.
-
-Thanks! 
+                  send
+                </Button>
               </div>
             </div>
           </div>

@@ -16,7 +16,8 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 
@@ -49,6 +50,31 @@ const TextMessages = () => {
     }),
   };
   const navigate = useNavigate()
+
+  const [loader, setLoader] = useState(true)
+  const [textMessages,setTextMessages] = useState(null)
+
+  const getTextMessages = async() =>{
+    setLoader(true)
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/contact/text-messages/"+JSON.parse(localStorage.getItem("user"))._id)
+      .then((res) => {
+       console.log(res.data)
+       setTextMessages(res.data)
+       setLoader(false)
+       
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    getTextMessages()
+  }, [])
+  
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <div className="md:flex space-y-2 md:space-y-0 items-center">
@@ -82,7 +108,7 @@ const TextMessages = () => {
         <div className="font-bold">Text Message Campaign List</div>
 
         <div className="flex space-x-4 items-center">
-          <div>
+          {/* <div>
             <InputBase
               sx={{
                 bgcolor: "#FAFAFA",
@@ -100,7 +126,7 @@ const TextMessages = () => {
 
           <div className="text-[12px] border-[1px] border-[#E6E6E6] py-1 rounded-lg px-1 cursor-pointer ">
             <FilterAltOutlined /> <span className="hidden lg:inline">Filter</span>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -117,7 +143,7 @@ const TextMessages = () => {
                 </div>
               </div>
 
-              <div className="col-span-2 py-2 pl-4">Company Name</div>
+              <div className="col-span-2   py-2 pl-4">Company Name</div>
 
               <div className="col-span-2 py-2 pl-4">From</div>
 
@@ -132,82 +158,53 @@ const TextMessages = () => {
 
               <div className="col-span-2 py-2 pl-4">Audience</div>
 
-              <div className="col-span-2 py-2 text-center">Action</div>
+              {/* <div className="col-span-2 py-2 text-center">Action</div> */}
             </div>
 
-            <div className="grid grid-cols-11  items-center divide-x  bg-[#EBF1F5] text-black  px-3 ">
-              <div className="relative">
-                <div className="text-center">1</div>
+           {textMessages && textMessages.map((item,index)=> (
+             <div className="grid grid-cols-11  items-center divide-x  bg-[#EBF1F5] text-black  px-3 "
+             key={index}
+             >
+             <div className="relative">
+               <div className="text-center">1</div>
+             </div>
+
+             <div className="col-span-2 py-2 pl-4">{item.campaign_name}</div>
+
+             <div className="col-span-2 py-2 pl-4">The Great Community </div>
+
+             <div className="col-span-2 py-2 flex justify-center">
+               {item.status === 'sent' && (
+                <div className="bg-[#e3ffcd] text-[#73e57b] border-[1px] border-[#73e57e] text-center font-bold w-fit px-7 ">
+                Sent
               </div>
+               )}
+             </div>
 
-              <div className="col-span-2 py-2 pl-4">Covid Vaccines</div>
+             <div className="col-span-2 py-2 text-center">{item.contacts.length}</div>
+             {/* <div className="col-span-2 py-2 text-center ">
+               <Button
+                 sx={{
+                   bgcolor: "#24A0FD",
+                   color: "white",
+                   fontSize: "10px",
+                   width: { sm: "fit", xs: "fit" },
+                   textTransform: "none",
+                   px: 5,
+                   borderRadius: "5px",
+                   ":hover": {
+                     bgcolor: "#24A0FD",
+                     color: "white",
+                   },
+                 }}
+               >
+                 Manage
+               </Button>
+             </div> */}
+           </div>
+           ))}
 
-              <div className="col-span-2 py-2 pl-4">(713) 491 - 4115 </div>
-
-              <div className="col-span-2 py-2 flex justify-center">
-                <div className="bg-[#FFCDD2] text-[#E57373] border-[1px] border-[#E57373] text-center font-bold w-fit px-7 ">
-                  Sent
-                </div>
-              </div>
-
-              <div className="col-span-2 py-2 text-center">264,336</div>
-              <div className="col-span-2 py-2 text-center ">
-                <Button
-                  sx={{
-                    bgcolor: "#24A0FD",
-                    color: "white",
-                    fontSize: "10px",
-                    width: { sm: "fit", xs: "fit" },
-                    textTransform: "none",
-                    px: 5,
-                    borderRadius: "5px",
-                    ":hover": {
-                      bgcolor: "#24A0FD",
-                      color: "white",
-                    },
-                  }}
-                >
-                  Manage
-                </Button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-11  items-center divide-x  bg-[#EBF1F5] text-black  px-3 ">
-              <div className="relative">
-                <div className="text-center">1</div>
-              </div>
-
-              <div className="col-span-2 py-2 pl-4">Covid Vaccines</div>
-
-              <div className="col-span-2 py-2 pl-4">(713) 491 - 4115 </div>
-
-              <div className="col-span-2 py-2 flex justify-center">
-                <div className="bg-[#B9F6CA] text-[#41bc80] border-[1px] border-[#69F0AE] text-center font-bold w-fit px-7 ">
-                  Sent
-                </div>
-              </div>
-
-              <div className="col-span-2 py-2 text-center">264,336</div>
-              <div className="col-span-2 py-2 text-center ">
-                <Button
-                  sx={{
-                    bgcolor: "#24A0FD",
-                    color: "white",
-                    fontSize: "10px",
-                    width: { sm: "fit", xs: "fit" },
-                    textTransform: "none",
-                    px: 5,
-                    borderRadius: "5px",
-                    ":hover": {
-                      bgcolor: "#24A0FD",
-                      color: "white",
-                    },
-                  }}
-                >
-                  Manage
-                </Button>
-              </div>
-            </div>
+            
 
           </div>
         </div>
