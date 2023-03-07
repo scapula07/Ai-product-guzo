@@ -90,8 +90,6 @@ const DirectMessages = ({community, setCommunity}) => {
           setDirectMessages((e)=> ([...direct_messages, data]))
         }
       })
-    }else{
-      window.location.reload()
     }
   }, [socket,direct_messages]);
 

@@ -238,13 +238,13 @@ const DashboardSidebar = ({community,setOpen, setCommunity, setLoader}) => {
             </AccordionSummary>
             <AccordionDetails sx={{ mt: -1 }}>
               <div className="text-left space-y-2 text-[13px] pl-3 font-[300] ">
-                <div className={window.location.pathname.match('/user/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
+                {/* <div className={window.location.pathname.match('/user/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
                  onClick={()=>navigate('/user')} 
                 >
                   
                   <AccountCircleOutlined sx={{ fontSize: "15px", mr: 1 }} />
                   Profile
-                </div>
+                </div> */}
                 <div className={window.location.pathname.match('/dashboard/teammates/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}  onClick={()=>navigate('/dashboard/teammates')} >
                   
                   <Groups3Outlined sx={{ fontSize: "15px", mr: 1 }} />
