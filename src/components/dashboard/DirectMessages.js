@@ -14,38 +14,23 @@ import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
 import MessageContacts from "../molecules/MessageContacts";
 import MessageModal from "../molecules/MessageModal";
 import { io } from "socket.io-client";
+import moment from 'moment'
 
 const DirectMessages = ({community, setCommunity}) => {
   const [open, setOpen] = React.useState(false);
   const [contactGroups, setContactGroups] = useState(null);
-  const [direct_messages, setDirectMessages] = useState(null);
+  const [direct_messages, setDirectMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const getContactGroups = async () => {
+
+
+
+
+  const getDirectMessage = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/" + JSON.parse(localStorage.getItem("community"))._id)
+      .get(url + "/community/get-community-by-id/" + JSON.parse(localStorage.getItem("community"))._id)
       .then((res) => {
-        console.log(res.data);
-        setContactGroups(res.data);
-        setDirectMessages(res.data[0].direct_messages);
-      })
-
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const addDirectMessage = async () => {
-    let url = process.env.REACT_APP_BACKEND_URL;
-    axios
-      .post(url + "/contact/add-direct-message/", {
-        user_id: JSON.parse(localStorage.getItem("user"))._id,
-        username: JSON.parse(localStorage.getItem("user")).username,
-        message,
-        time: Date.now(),
-      })
-      .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setDirectMessages(res.data.direct_messages);
       })
 
@@ -53,25 +38,60 @@ const DirectMessages = ({community, setCommunity}) => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    getContactGroups();
-  }, []);
-
-
   const [socket, setSocket] = useState(null)
+  const addDirectMessage = async () => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    socket.emit("new_message", {
+        community_id : JSON.parse(localStorage.getItem("community"))._id,
+        user_id: JSON.parse(localStorage.getItem("user"))._id,
+        username: JSON.parse(localStorage.getItem("user")).username,
+        message,
+        time: Date.now(),
+    });
+
+    axios
+      .post(url + "/community/add-new-message/", {
+        community_id : JSON.parse(localStorage.getItem("community"))._id,
+        user_id: JSON.parse(localStorage.getItem("user"))._id,
+        username: JSON.parse(localStorage.getItem("user")).username,
+        message,
+        time: Date.now(),
+      })
+      .then((res) => {
+        //console.log(res.data);
+        setDirectMessages(res.data.direct_messages);
+        setMessage("")
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+ 
+
+
+ 
   useEffect(() => {
-    
-    setSocket(io.connect('http://localhost:8080'))
+    getDirectMessage();
+    setSocket(io.connect('https://guzo-backend.herokuapp.com/'))
   }, [])
 
   useEffect(() => {
+    console.log(direct_messages)
     if (socket) {
       socket.on('new_user',(data)=>{
         console.log(data)
       })
+      socket.on('new_message', (data)=>{
+        console.log(data)
+
+        if(data.community_id === JSON.parse(localStorage.getItem("community"))._id){
+          setDirectMessages((e)=> ([...direct_messages, data]))
+        }
+      })
     }
-  }, [socket]);
+  }, [socket,direct_messages]);
 
   return (
     <div className="bg-white py-[20px] pb-[80px]  md:rounded-[18px] shadow-lg">
@@ -113,14 +133,14 @@ const DirectMessages = ({community, setCommunity}) => {
                         borderRadius: "10px",
                       }}
                     >
-                     {item.name.substr(0,1)}
+                     {item.username.substr(0,1)}
                     </Avatar>
 
                     <div className="font-semibold text-[14px] ml-3 flex-1">
                       {item.username}
                     </div>
 
-                    <div className="text-[12px] text-[#114369] ">12:30</div>
+                    <div className="text-[12px] text-[#114369] ">{moment.unix(item.time).format("MM/DD")}</div>
                   </div>
                   <div className="w-full bg-[#EBF1F5] px-4 py-2 text-[12px] rounded-lg ">
                    {item.message}
