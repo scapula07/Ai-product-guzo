@@ -13,8 +13,9 @@ import ReactSelect from "react-select";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
 import MessageContacts from "../molecules/MessageContacts";
 import MessageModal from "../molecules/MessageModal";
+import { io } from "socket.io-client";
 
-const DirectMessages = () => {
+const DirectMessages = ({community, setCommunity}) => {
   const [open, setOpen] = React.useState(false);
   const [contactGroups, setContactGroups] = useState(null);
   const [direct_messages, setDirectMessages] = useState(null);
@@ -22,7 +23,7 @@ const DirectMessages = () => {
   const getContactGroups = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/" + JSON.parse(localStorage.getItem("user"))._id)
+      .get(url + "/contact/" + JSON.parse(localStorage.getItem("community"))._id)
       .then((res) => {
         console.log(res.data);
         setContactGroups(res.data);
@@ -57,6 +58,21 @@ const DirectMessages = () => {
     getContactGroups();
   }, []);
 
+
+  const [socket, setSocket] = useState(null)
+  useEffect(() => {
+    
+    setSocket(io.connect('http://localhost:8080'))
+  }, [])
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('new_user',(data)=>{
+        console.log(data)
+      })
+    }
+  }, [socket]);
+
   return (
     <div className="bg-white py-[20px] pb-[80px]  md:rounded-[18px] shadow-lg">
       <div className="md:flex space-y-2 md:space-y-0 items-center px-[30px]">
@@ -69,17 +85,14 @@ const DirectMessages = () => {
       <MessageModal
         open={open}
         setOpen={setOpen}
-        contactGroups={contactGroups}
       />
       <div className="grid grid-cols-5 gap-4 md:px-[30px]">
         <div className=" hidden lg:block col-span-2 shadow-lg py-2 px-3 space-y-4 rounded-xl ">
-          <MessageContacts contactGroups={contactGroups} />
+          <MessageContacts  />
         </div>
 
         <div className="col-span-5 lg:col-span-3 shadow-lg py-2 pb-6 px-3 space-y-4 rounded-xl ">
-          <div className="text-center text-[14px] font-semibold ">
-            {contactGroups &&  contactGroups[0]?.name}
-          </div>
+         
 
           {/* messages */}
 

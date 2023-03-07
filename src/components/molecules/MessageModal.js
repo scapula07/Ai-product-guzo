@@ -38,7 +38,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 function MessageModal(props) {
-  const { window, open, setOpen, contactGroups } = props;
+  const { window, open, setOpen } = props;
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -100,8 +100,10 @@ function MessageModal(props) {
           }}
         >
           <Puller />
-          <Typography sx={{ p: 2, color: "text.secondary" }}>
-            {contactGroups?.length} Contact Groups
+          <Typography sx={{ p: 2, color: "text.secondary" }}  >
+            
+          {JSON.parse(localStorage.getItem('community')).name} group chat
+          
           </Typography>
         </StyledBox>
         <StyledBox
@@ -112,7 +114,7 @@ function MessageModal(props) {
             overflow: "auto",
           }}
         >
-          <MessageContacts contactGroups={contactGroups}/>
+          <MessageContacts />
         </StyledBox>
       </SwipeableDrawer>
     </Root>

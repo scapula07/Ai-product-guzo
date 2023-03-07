@@ -7,7 +7,7 @@ const Register = () => {
   const navigate = useNavigate()
   const loggedInUser =  JSON.parse(localStorage.getItem('user'))
   if(loggedInUser){
-    navigate('/dashboard/')
+    navigate('/dashboard/discover')
   }
 
   const [user, setUser] = useState({
