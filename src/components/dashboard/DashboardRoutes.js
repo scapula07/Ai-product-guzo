@@ -45,7 +45,7 @@ const DashboardRoutes = () => {
     let path = "/dashboard/create-community-profile";
     if (
       window.location.href !==
-      "http://localhost:3000/dashboard/create-community-profile"
+      "https://guzo-dev.vercel.app/dashboard/create-community-profile"
     ) {
       window.location.href = path;
       return;
