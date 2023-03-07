@@ -1,15 +1,18 @@
 import { Avatar, Button, Divider, InputBase } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate()
   const loggedInUser =  JSON.parse(localStorage.getItem('user'))
-  if(loggedInUser){
-    navigate('/dashboard/discover')
-  }
-
+  useEffect(() => {
+    if(loggedInUser){
+      navigate('/dashboard/discover')
+    }
+  
+  }, [])
+  
   const [user, setUser] = useState({
     username : "",
     email: "",
