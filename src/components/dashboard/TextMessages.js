@@ -58,7 +58,7 @@ const TextMessages = () => {
     setLoader(true)
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/text-messages/"+JSON.parse(localStorage.getItem("user"))._id)
+      .get(url + "/contact/text-messages/"+JSON.parse(localStorage.getItem("community"))._id)
       .then((res) => {
        console.log(res.data)
        setTextMessages(res.data)
@@ -133,7 +133,7 @@ const TextMessages = () => {
       <div className="mt-[30px] text-[12px]  ">
         <div className="md:w-[55vw] lg:w-full w-[85vw] overflow-x-auto">
           <div className="md:w-[850px] lg:w-full w-[1000px] ">
-            <div className="grid grid-cols-11  items-center divide-x  bg-[#24A0FD] text-white  px-3 ">
+            <div className="grid grid-cols-9  items-center divide-x  bg-[#24A0FD] text-white  px-3 ">
               <div className="relative">
                 <div className="text-left">id</div>
                 <div className="absolute right-0 top-[-2px] ">
@@ -162,7 +162,7 @@ const TextMessages = () => {
             </div>
 
            {textMessages && textMessages.map((item,index)=> (
-             <div className="grid grid-cols-11  items-center divide-x  bg-[#EBF1F5] text-black  px-3 "
+             <div className="grid grid-cols-9  items-center divide-x  bg-[#EBF1F5] text-black  px-3 "
              key={index}
              >
              <div className="relative">

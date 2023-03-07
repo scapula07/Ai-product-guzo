@@ -70,7 +70,7 @@ const CreateNewTextMessage = () => {
   const getContactGroups = async() =>{
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/"+JSON.parse(localStorage.getItem("user"))._id)
+      .get(url + "/contact/"+JSON.parse(localStorage.getItem("community"))._id)
       .then((res) => {
        console.log(res.data)
        setContactGroups(res.data)
@@ -95,7 +95,8 @@ const CreateNewTextMessage = () => {
           message,
           contact_group : selectedCategory,
           campaign_name : name,
-          user_id: JSON.parse(localStorage.getItem("user"))._id
+          user_id: JSON.parse(localStorage.getItem("user"))._id,
+          community_id: JSON.parse(localStorage.getItem("community"))._id
 
       })
       .then((res) => {
@@ -316,7 +317,7 @@ const CreateNewTextMessage = () => {
         </div>
 
 
-        <div className="bg-[#EBF1F5] px-4 py-3 rounded-[5px] space-y-2">
+        {/* <div className="bg-[#EBF1F5] px-4 py-3 rounded-[5px] space-y-2">
             <div  className="text-[14px]"> Schedule your Text Message Campaign </div>
             <ReactSelect
             styles={style}
@@ -341,7 +342,7 @@ const CreateNewTextMessage = () => {
             }}
           />
 
-        </div>
+        </div> */}
 
       </div>
     </div>

@@ -1,7 +1,13 @@
 import { CircularProgress } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useNavigate, useNavigation } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+  useNavigation,
+} from "react-router-dom";
 import DashboardHeader from "../layout/DashboardHeader";
 import DashboardSidebar from "../layout/DashboardSidebar";
 import AddTeammates from "./AddTeammates";
@@ -10,6 +16,7 @@ import CommunicationSetting from "./CommunicationSettings";
 import ContactGroups from "./ContactGroups";
 import Contacts from "./Contacts";
 import CreateCollaboration from "./CreateCollaboration";
+import CreateCommunityProfile from "./createCommunityProfile";
 import CreateNewContact from "./CreateNewContact";
 import CreateNewEmail from "./CreateNewEmail";
 import CreateNewTextMessage from "./CreateNewTextMessage";
@@ -28,73 +35,94 @@ import TextMessages from "./TextMessages";
 import TextMessageSettings from "./TextMessageSettings";
 
 const DashboardRoutes = () => {
-  let navigate = useNavigate()
-  const [community, setCommunity] = useState()
-  const [loader, setLoader] = useState(true)
+  const [community, setCommunity] = useState(JSON.parse(localStorage.getItem("community")) || null);
+  const [loader, setLoader] = useState(false)
+  let navigate = useNavigate();
+  const [communities, setCommunities] = useState(
+    JSON.parse(localStorage.getItem("user")).communities
+  );
+  if (communities.length < 1 || !community) {
+    let path = "/dashboard/create-community-profile";
+    if (
+      window.location.href !==
+      "http://localhost:3000/dashboard/create-community-profile"
+    ) {
+      window.location.href = path;
+      return;
+    }
+  }
 
-  const getCommunity = async () => {
-    let url = process.env.REACT_APP_BACKEND_URL;
-    axios
-      .get(url + "/community/" + JSON.parse(localStorage.getItem("user"))._id)
-      .then((res) => {
-        if (
-          !res.data
-        ) {
-          setLoader(false)
-          navigate('/dashboard/edit-community-profile')
-          return
-        } else {
-          setCommunity(res.data)
-          setLoader(false)
-          return
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    getCommunity()
-  }, [])
-  
   return (
     <>
-      <DashboardHeader community={community} />
+      <DashboardHeader community={community} setCommunity={setCommunity} setLoader={setLoader} />
       <div className="lg:grid md:grid md:grid-cols-3 lg:grid-cols-4 lg:gap-[60px] md:gap-3 md:px-5 lg:px-[98px] md:py-4 lg:py-[33px]">
         <div className="hidden lg:block md:block">
-        <DashboardSidebar community={community} />    
+          <DashboardSidebar community={community} setCommunity={setCommunity} setLoader={setLoader} />
         </div>
 
-        {loader ? (<div className="flex justify-center mt-[50px]" >
-          <CircularProgress/>
-        </div>): (
+        {loader ? (
+          <div className="flex justify-center mt-[50px]">
+            <CircularProgress />
+          </div>
+        ) : (
           <div className="lg:col-span-3 md:col-span-2 ">
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path='/edit-community-profile' element={<EditCommunityProfile getCommunity0={getCommunity}/>} />
-            <Route path='/my-collaborations' element={<MyCollaborations/>} />
-            <Route path='/create-collaboration' element={<CreateCollaboration community={community} />} />
-            <Route path='/collaboration/:collaboration_id' element={<CollaborationOwnerView />} />
-            <Route path='/edit-collaboration/:collaboration_id' element={<EditCollaboration />} />
-            <Route path='/discover' element={<Discover />} />
-            <Route path='/teammates' element={<Teammates />} />
-            <Route path='/teammates/add' element={<AddTeammates />} />
-            <Route path='/teammates/edit' element={<EditTeammates />} />
-            <Route path='/direct-messages' element={<DirectMessages />} />
-            <Route path='/contacts' element={<Contacts />} />
-            <Route path='/contacts/:id' element={<ContactGroups />} />
-            <Route path='/contacts/go-neighborhood/create-contact' element={<CreateNewContact />} />
-            <Route path='/textmessages' element={<TextMessages />} />
-            <Route path='/textmessages/create' element={<CreateNewTextMessage />} />
-            <Route path='/email' element={<Email />} />
-            <Route path='/email/create' element={<CreateNewEmail />} />
-            <Route path='/communication-settings' element={<CommunicationSetting />} />
-            <Route path='/communication-settings/email' element={<EmailSettings />} />
-            <Route path='/communication-settings/text-message' element={<TextMessageSettings />} />
-            <Route path='/notifications' element={<Notifications />} />
-          </Routes> 
-        </div>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route
+                path="/edit-community-profile"
+                element={<EditCommunityProfile getCommunity0={[]} community={community} setCommunity={setCommunity} />}
+              />
+
+              <Route
+                path="/create-community-profile"
+                element={<CreateCommunityProfile getCommunity0={[]} />}
+              />
+              <Route path="/my-collaborations" element={<MyCollaborations />} />
+              <Route
+                path="/create-collaboration"
+                element={<CreateCollaboration community={community} />}
+              />
+              <Route
+                path="/collaboration/:collaboration_id"
+                element={<CollaborationOwnerView />}
+              />
+              <Route
+                path="/edit-collaboration/:collaboration_id"
+                element={<EditCollaboration />}
+              />
+              <Route path="/discover" element={<Discover />} />
+              <Route path="/teammates" element={<Teammates />} />
+              <Route path="/teammates/add" element={<AddTeammates />} />
+              <Route path="/teammates/edit" element={<EditTeammates />} />
+              <Route path="/direct-messages" element={<DirectMessages />} />
+              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/contacts/:id" element={<ContactGroups />} />
+              <Route
+                path="/contacts/go-neighborhood/create-contact"
+                element={<CreateNewContact />}
+              />
+              <Route path="/textmessages" element={<TextMessages />} />
+              <Route
+                path="/textmessages/create"
+                element={<CreateNewTextMessage />}
+              />
+              <Route path="/email" element={<Email />} />
+              <Route path="/email/create" element={<CreateNewEmail />} />
+              <Route
+                path="/communication-settings"
+                element={<CommunicationSetting />}
+              />
+              <Route
+                path="/communication-settings/email"
+                element={<EmailSettings />}
+              />
+              <Route
+                path="/communication-settings/text-message"
+                element={<TextMessageSettings />}
+              />
+              <Route path="/notifications" element={<Notifications />} />
+            </Routes>
+          </div>
         )}
       </div>
     </>

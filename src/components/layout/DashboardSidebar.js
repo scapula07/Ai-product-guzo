@@ -1,12 +1,14 @@
 import {
     AccountCircleOutlined,
     AlternateEmail,
+  Campaign,
   Chat,
   ChatBubble,
   ChatBubbleOutline,
   ChatBubbleOutlined,
   Contacts,
   Dashboard,
+  Edit,
   ExpandMore,
   ForumOutlined,
   Groups3Outlined,
@@ -23,21 +25,97 @@ import {
   AccordionSummary,
   Typography,
 } from "@mui/material";
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
+import ReactSelect from "react-select";
 
-const DashboardSidebar = ({community,setOpen}) => {
+const DashboardSidebar = ({community,setOpen, setCommunity, setLoader}) => {
+  const [communities, setCommunities] = useState(
+    JSON.parse(localStorage.getItem("user")).communities
+  );
+  const [selectedCommunity, setSelectedCommunity] = useState({label:JSON.parse(localStorage.getItem("community"))?.name||null,value:JSON.parse(localStorage.getItem("community"))?._id|| null,})
   const navigate = useNavigate()
   console.log(community)
+  const style = {
+    control: (base) => ({
+      ...base,
+      border: "0px solid gray",
+      width: "100%",
+      boxShadow: "none",
+      backgroundColor: "#D1DEE7",
+      fontSize: "14px",
+      "@media (min-width:600px)": {
+        width: "1000px",
+      },
+      "@media (min-width:1200px)": {
+        width: "210px",
+      },
+    }),
+  };
+
+  const getCommunity = async (comm_id) => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    setLoader(true)
+    axios
+      .get(url + "/community/get-community-by-id/" + comm_id)
+      .then((res) => {
+        setLoader(false)
+        if (
+          res.data &&
+          Object.keys(res.data).length === 0 &&
+          Object.getPrototypeOf(res.data) === Object.prototype
+        ) {
+          setCommunity(null);
+          setLoader(false)
+        } else {
+          console.log(res.data);
+          let community = res.data;
+          localStorage.setItem("community", JSON.stringify(community));
+
+          setCommunity(community);
+          setLoader(false)
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
   return (
     <div className="bg-white px-[24px] py-[20px] space-y-[64px] lg:h-screen rounded-[18px] lg:shadow-lg">
       <div className="text-center text-[#114369] bg-[#D1DEE7] py-[21px] rounded-[16px]"
       onClick={()=> {
-        navigate('/dashboard/edit-community-profile')
-        setOpen(false)
+        //navigate('/dashboard/edit-community-profile')
+        //setOpen(false)
       }}
       >
-        {community?.name}
+
+        <div className=" flex justify-center ">
+            <ReactSelect
+              styles={style}
+              placeholder="Select community..."
+              options={communities && communities.map((item,index)=> ({label:item.name,value:item.id}))}
+              value={selectedCommunity}
+              menuPlacement="auto"
+              menuPosition="fixed"
+              noOptionsMessage={(opt) => {
+                if (opt.inputValue === "") {
+                  return "type a category";
+                } else {
+                  return "no search results for " + opt.inputValue;
+                }
+              }}
+              components={{
+                IndicatorSeparator: () => null,
+              }}
+              onChange={(opt) => {
+                setSelectedCommunity(opt);
+                getCommunity(opt.value)
+              }}
+            />
+          </div>
       </div>
 
       <div className="text-center  bg-[#EBF1F5] py-[15px] rounded-[16px]">
@@ -59,6 +137,11 @@ const DashboardSidebar = ({community,setOpen}) => {
             </AccordionSummary>
             <AccordionDetails sx={{ mt: -1 }}>
               <div className="text-left space-y-2 text-[13px] pl-3 font-[300] ">
+
+             
+
+
+
                 <div className={window.location.pathname.match('/dashboard/discover/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
                 onClick={()=> navigate('/dashboard/discover')}
                 >
@@ -67,7 +150,9 @@ const DashboardSidebar = ({community,setOpen}) => {
                   Discover 
                 </div>
                 <div className={window.location.pathname.match('/dashboard/my-collaborations/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
-                 onClick={()=> navigate('/dashboard/my-collaborations')}
+                 onClick={()=> {navigate('/dashboard/my-collaborations')
+                 setOpen(false)
+                }}
                 >
                   
                   <HandshakeOutlined sx={{ fontSize: "15px", mr: 1 }} /> My
@@ -164,6 +249,29 @@ const DashboardSidebar = ({community,setOpen}) => {
                   
                   <Groups3Outlined sx={{ fontSize: "15px", mr: 1 }} />
                   Teammates
+                </div>
+
+
+                <div className={window.location.pathname.match('/dashboard/create-community-profile/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
+                onClick={()=>{
+                   navigate('/dashboard/create-community-profile')
+                   setOpen(false)
+                  }}
+                >
+                  
+                  <Campaign sx={{ fontSize: "15px", mr: 1 }} />
+                  Create Community 
+                </div>
+
+                <div className={window.location.pathname.match('/dashboard/edit-community-profil/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
+                onClick={()=>{
+                  navigate('/dashboard/edit-community-profile')
+                  setOpen(false)
+                }}
+                >
+                  
+                  <Edit sx={{ fontSize: "15px", mr: 1 }} />
+                  Edit Community 
                 </div>
                
               </div>

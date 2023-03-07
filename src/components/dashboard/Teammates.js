@@ -2,19 +2,25 @@ import { Circle, MoreHoriz, SearchOutlined } from "@mui/icons-material";
 import {
   Avatar,
   Button,
+  CircularProgress,
   Divider,
   InputBase,
   Menu,
   MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
+import moment from 'moment'
 
 const Teammates = () => {
+  const [community, setCommunity] = useState(JSON.parse(localStorage.getItem("community")) || null)
+  const [loader, setLoader ] = useState()
   const [active, setActive] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [users, setUsers] = useState(null)
   const [openDeleteTeammateModal, setOpenDeleteTeammateModal] =
     React.useState(false);
   const open = Boolean(anchorEl);
@@ -40,6 +46,24 @@ const Teammates = () => {
     }),
   };
   const navigate = useNavigate()
+
+  const getAllUsers = async () => {
+    setLoader(true)
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/user")
+      .then((res) => {
+        setUsers(res.data)
+       setLoader(false)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getAllUsers()
+  }, [])
+  
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <DeleteTeammateModal
@@ -74,7 +98,7 @@ const Teammates = () => {
       <Divider sx={{ my: 3 }} />
 
       <div className="md:flex justify-center  md:space-x-4">
-        <div className=" shadow-lg  rounded-[2rem] pt-1 mx-2 md:mx-0 ">
+        {/* <div className=" shadow-lg  rounded-[2rem] pt-1 mx-2 md:mx-0 ">
           <ReactSelect
             styles={style}
             placeholder="Sort By"
@@ -97,7 +121,7 @@ const Teammates = () => {
               setSelectedCategory(opt);
             }}
           />
-        </div>
+        </div> */}
 
         <div className=" md:block lg:block mt-2 md:mt-0">
           <InputBase
@@ -116,126 +140,56 @@ const Teammates = () => {
         </div>
       </div>
 
-      <div className="mt-[5vw] space-y-[5vw] md:space-y-[15px] ">
-        <div className="flex items-end">
-          <Avatar
-            variant="square"
-            src="/woman.png"
-            sx={{ width: "90", height: "90", borderRadius: "5px" }}
-          />
-
-          <div className="ml-6  flex-1">
-            <div className=" font-bold text-[14px]  ">
-              Kathy Payton ,
-              <div className=" md:hidden font-thin text-[12px]"> Owner </div>
-            </div>
-            <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
-              <div className="hidden md:block font-thin text-[12px]">
-                {" "}
-                Owner{" "}
-              </div>
-              <div className="font-thin text-[12px]"> 24, Nov 2022 </div>
-              <div className=" font-bold text-[10px] bg-[#EBF1F5] w-fit text-[#818181] px-4 py-[2px] rounded-md border-[#818181] border-[1px] ">
-                {" "}
-                Pending{" "}
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div
-              className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer"
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              <MoreHoriz sx={{ color: "#24A0FD" }} />
-            </div>
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={open}
-              onClose={handleClose}
-              onClick={handleClose}
-              PaperProps={{
-                elevation: 2,
-                sx: {
-                  overflow: "visible",
-                  width: "140px",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: { lg: "45%", xs: "3%" },
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
-              transformOrigin={{ horizontal: "center", vertical: "top" }}
-              anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
-            >
-              <MenuItem sx={{ fontSize: "10px", px: "15%" }}>
-                Edit Teammate Status
-              </MenuItem>
-
-              <Divider sx={{ mx: "6%", my: "1px" }} />
-              <MenuItem
-                sx={{ fontSize: "10px", px: "25%", color: "red" }}
-                onClick={() => setOpenDeleteTeammateModal(true)}
-              >
-                Delete teammate
-              </MenuItem>
-            </Menu>
-          </div>
+      {loader ? (
+        <div className="flex items-center"> 
+        <CircularProgress sx={{ color: '#24A0FD' }} />
         </div>
+      ): (
+        <div className="mt-[5vw] space-y-[5vw] md:space-y-[15px] ">
+       
 
-        <div className="flex items-end">
-          <Avatar
-            variant="square"
-            src="/woman.png"
-            sx={{ width: "90", height: "90", borderRadius: "5px" }}
-          />
-
-          <div className="ml-6  flex-1">
-            <div className=" font-bold text-[14px]  ">
-              Kathy Payton ,
-              <div className=" md:hidden font-thin text-[12px]"> Owner </div>
-            </div>
-            <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
-              <div className="hidden md:block font-thin text-[12px]">
-                {" "}
-                Owner{" "}
+       {users && users.map((item,index)=> 
+      {
+        
+        if(item.communities.find(e=> e.id == community._id)){
+          return(
+            <div className="flex items-end" key={index}>
+            <Avatar
+              variant="square"
+              src="/woman.png"
+              sx={{ width: "90", height: "90", borderRadius: "5px" }}
+            />
+   
+            <div className="ml-6  flex-1">
+              <div className=" font-bold text-[14px]  ">
+                {item.username}
+                {/* <div className=" md:hidden font-thin text-[12px]"> Owner </div> */}
               </div>
-              <div className="font-thin text-[12px]"> 24, Nov 2022 </div>
-              <div className=" font-bold text-[10px] bg-[#B9F6CA] w-fit text-[#2d7e57] px-4 py-[2px] rounded-md border-[#00C853] border-[1px] ">
-                {" "}
-                Connected{" "}
+              <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
+                <div className=" md:block font-thin text-[12px]">
+                  {" "}
+                  {community.user_id === item._id ? 'Owner' : 'Admin'}{" "}
+                </div>
+                {/* <div className="font-thin text-[12px]"> {moment(item.createdAt).format("D, m, Y")} </div> */}
+                <div className=" font-bold text-[10px] bg-[#B9F6CA] w-fit text-[#2d7e57] px-4 py-[2px] rounded-md border-[#00C853] border-[1px] ">
+                  {" "}
+                  Connected{" "}
+                </div>
+              </div>
+            </div>
+   
+            <div>
+              <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg">
+                <MoreHoriz sx={{ color: "#24A0FD" }} />
               </div>
             </div>
           </div>
-
-          <div>
-            <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg">
-              <MoreHoriz sx={{ color: "#24A0FD" }} />
-            </div>
-          </div>
-        </div>
+          )
+        }
+      }
+       )}
       </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { MoreHoriz } from "@mui/icons-material";
+import { ContactPageSharp, MoreHoriz } from "@mui/icons-material";
 import {
   Avatar,
   Button,
@@ -53,7 +53,7 @@ const CollaborationOwnerView = () => {
   const getContactGroups = async() =>{
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/"+JSON.parse(localStorage.getItem("user"))._id)
+      .get(url + "/contact/"+JSON.parse(localStorage.getItem("community"))._id)
       .then((res) => {
        console.log(res.data)
        setContactGroups(res.data)
@@ -150,6 +150,9 @@ const CollaborationOwnerView = () => {
 
           {active === 0 && (
             <>
+            <SelectContactGroupModal open={openSelectContactGroupModal} setOpen={setOpenSelectContactGroupModal}
+                    contactGroups={contactGroups} contact={selectedContactGroup} setLoader={setLoader}
+                    />
               <div className="md:grid grid-cols-5 md:gap-4">
                 <div className="md:col-span-2">
                   <div className="md:shadow-lg py-[18px] px-[17px]">
@@ -226,8 +229,18 @@ const CollaborationOwnerView = () => {
                       </div>
                     </div>
 
-                    <div className="flex  items-center space-x-2 md:space-x-5">
-                      <div className=" md:mt-0  ">
+
+                  {contactGroups.map((contact_group,index)=>{
+                   
+                    let result = contact_group.contacts.find((e)=> 
+                      e.user_id === item.user_id
+                    )
+                    console.log(result)
+                    if(result){
+                      return
+                    }else{
+                      return(
+                        <div className=" mt-2 mb-2 md:mb-0  " key={index} id={item._id} >
                         <Button
                           sx={{
                             bgcolor: "#24A0FD",
@@ -241,6 +254,44 @@ const CollaborationOwnerView = () => {
                               color: "white",
                             },
                           }}
+
+                         
+  
+                          onClick={()=>{
+                            setOpenSelectContactGroupModal(true)
+                            setSelectedContactGroup(item)
+                            document.getElementById(item._id).hidden = true
+                          }}
+                        >
+                          Approve
+                        </Button>
+                      </div>
+                      )
+                    }
+                  })}
+
+                    <div className="flex  items-center space-x-2 md:space-x-5">
+                       
+
+                       
+                      <div className=" md:mt-0  " >
+                        <Button
+                          sx={{
+                            bgcolor: "#24A0FD",
+                            color: "white",
+                            fontSize: "14px",
+                            width: "165px",
+                            textTransform: "none",
+                            borderRadius: "5px",
+                            ":hover": {
+                              bgcolor: "#24A0FD",
+                              color: "white",
+                            },
+                          }}
+
+                          
+
+                         
                         >
                           Direct Message
                         </Button>

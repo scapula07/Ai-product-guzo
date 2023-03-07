@@ -65,7 +65,7 @@ import axios from "axios";
     const getContactGroups = async() =>{
       let url = process.env.REACT_APP_BACKEND_URL;
       axios
-        .get(url + "/contact/"+JSON.parse(localStorage.getItem("user"))._id)
+        .get(url + "/contact/"+JSON.parse(localStorage.getItem("community"))._id)
         .then((res) => {
          console.log(res.data)
          setContactGroups(res.data)
@@ -89,7 +89,8 @@ import axios from "axios";
             message,
             contact_group : selectedCategory,
             campaign_name : name,
-            user_id: JSON.parse(localStorage.getItem("user"))._id
+            user_id: JSON.parse(localStorage.getItem("user"))._id,
+            community_id: JSON.parse(localStorage.getItem("community"))._id
   
         })
         .then((res) => {
@@ -135,7 +136,7 @@ import axios from "axios";
                 color: "#24A0FD",
               },
             }}
-            onClick={()=>navigate('/dashboard/textmessages')}
+            onClick={()=>navigate('/dashboard/email')}
           >
             Cancel
           </Button>

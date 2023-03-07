@@ -2,11 +2,13 @@ import { Circle, MoreHoriz, SearchOutlined } from "@mui/icons-material";
 import {
   Avatar,
   Button,
+  CircularProgress,
   Divider,
   InputBase,
   Menu,
   MenuItem,
 } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
@@ -17,6 +19,8 @@ const AddTeammates = () => {
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
   const open = Boolean(anchorEl);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [email, setEmail] = useState("")
+  const [loader, setLoader] = useState(false)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -40,6 +44,26 @@ const AddTeammates = () => {
     }),
   };
   const navigate = useNavigate()
+
+  const addTeammate = async() => {
+    setLoader(true)
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .post(url + "/team/send-invite/",{
+        community_id: JSON.parse(localStorage.getItem("community"))._id,
+        community_name : JSON.parse(localStorage.getItem("community")).name,
+        reciever: email
+      })
+      .then((res) => {
+       console.log(res.data)
+       setLoader(false)
+       
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <div className="md:flex space-y-2 md:space-y-0 items-center">
@@ -67,29 +91,35 @@ const AddTeammates = () => {
           >
             Cancel
           </Button>
+         {loader ? (
+          <CircularProgress sx={{ position: 'relative', top: 3}} />
+
+         ): (
           <Button
-            sx={{
+          sx={{
+            bgcolor: "#24A0FD",
+            color: "white",
+            fontSize: "14px",
+            width: { sm: "165px", xs: "fit" },
+            textTransform: "none",
+            borderRadius: "5px",
+            ":hover": {
               bgcolor: "#24A0FD",
               color: "white",
-              fontSize: "14px",
-              width: { sm: "165px", xs: "fit" },
-              textTransform: "none",
-              borderRadius: "5px",
-              ":hover": {
-                bgcolor: "#24A0FD",
-                color: "white",
-              },
-            }}
-          >
-            Invite and Close
-          </Button>
+            },
+          }}
+          onClick={addTeammate}
+        >
+          Invite and Close
+        </Button>
+         )}
         </div>
       </div>
 
       <Divider sx={{ my: 3 }} />
 
 
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
             Name{" "} <span className="text-black font-thin text-[12px] ">(Required)</span>
             <span className="text-black font-thin text-[10px] ">
@@ -125,7 +155,7 @@ const AddTeammates = () => {
             />
           </div>
           </div>
-        </div>
+        </div> */}
 
 
         <div className="space-y-2 mt-4">
@@ -137,6 +167,10 @@ const AddTeammates = () => {
           </div>
           <div>
             <InputBase
+            value={email}
+            onChange={(e)=> {
+              setEmail(e.target.value)
+            }}
               sx={{
                 bgcolor: "#EBF1F5",
                 pl: 3,
@@ -153,7 +187,7 @@ const AddTeammates = () => {
           </div>
 
 
-          <div className="space-y-2 mt-4">
+          {/* <div className="space-y-2 mt-4">
           <div className="text-[#114369] font-semibold text-[14px] ">
             Teammate Role{" "} <span className="text-black font-thin text-[12px] ">(Required)</span>
             <span className="text-black font-thin text-[10px] ">
@@ -186,7 +220,7 @@ const AddTeammates = () => {
         </div>
 
          
-          </div>
+          </div> */}
     </div>
   );
 };

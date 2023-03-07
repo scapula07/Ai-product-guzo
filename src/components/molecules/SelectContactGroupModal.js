@@ -34,7 +34,6 @@ const SelectContactGroupModal = ({ open, setOpen, contactGroups, contact , setLo
       .post(url + "/contact/add/",{contact,contact_group_id : selectedContactGroup.value})
       .then((res) => {
         console.log(res.data);
-        
         setLoader(false)
       
       })

@@ -21,7 +21,7 @@ const MyCollaborations = () => {
       .get(
         url +
           "/collaboration/collaborations/" +
-          JSON.parse(localStorage.getItem("user"))._id
+          JSON.parse(localStorage.getItem("community"))._id
       )
       .then((res) => {
         console.log(res.data)

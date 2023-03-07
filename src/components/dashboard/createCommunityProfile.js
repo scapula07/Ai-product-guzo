@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 
-const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
+const CreateCommunityProfile = ({getCommunity0}) => {
   const [photo, setPhoto] = useState(null);
   const [fetchedPhoto, setFetchedPhoto] = useState("/picture_placeholder.png");
   const [channels, setChannels] = useState([]);
@@ -15,22 +15,22 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
   const [openConnectPlatformModal, setOpenConnectPlatformModal] =
     useState(false);
   const [tags, setTags] = useState([]);
-  const style = {
-    control: (base) => ({
-      ...base,
-      border: "0px solid gray",
-      width: "100%",
-      boxShadow: "none",
-      backgroundColor: "#EBF1F5",
-      fontSize: "14px",
-      "@media (min-width:600px)": {
-        width: "400px",
-      },
-    }),
-  };
+//   const style = {
+//     control: (base) => ({
+//       ...base,
+//       border: "0px solid gray",
+//       width: "100%",
+//       boxShadow: "none",
+//       backgroundColor: "#EBF1F5",
+//       fontSize: "14px",
+//       "@media (min-width:600px)": {
+//         width: "400px",
+//       },
+//     }),
+//   };
   const navigate = useNavigate();
 
- 
+  const [community, setCommunity] = useState();
 
   const [communityData, setCommunityData] = useState({
     user_id: JSON.parse(localStorage.getItem("user"))._id,
@@ -54,8 +54,18 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
           .post(url + "/community/upload-community-profile-picture", formdata)
           .then((res) => {
             console.log(res.data);
-            getCommunity();
-            getCommunity0()
+            let community = res.data;
+            console.log(community)
+            localStorage.setItem("community", JSON.stringify(community));
+            axios
+            .get(url + "/user/get-user-by-id/"+res.data.user_id)
+            .then((res) => {
+                localStorage.setItem('user' , JSON.stringify(res.data))
+                setLoader(false)
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           })
           .catch((err) => {
             console.log(err);
@@ -76,73 +86,72 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
         console.log(err);
       });
   };
-  const getCommunity = async () => {
-    let url = process.env.REACT_APP_BACKEND_URL;
-    console.log(community.name)
-    axios
-      .get(url + "/community/get-community-by-id/" + community?._id)
-      .then((res) => {
-        setLoader(false)
-        if (
-          res.data &&
-          Object.keys(res.data).length === 0 &&
-          Object.getPrototypeOf(res.data) === Object.prototype
-        ) {
-          setCommunity(null);
-        } else {
-          console.log(res.data);
-          let community = res.data;
-          localStorage.setItem("community", JSON.stringify(community));
+//   const getCommunity = async () => {
+//     let url = process.env.REACT_APP_BACKEND_URL;
+//     axios
+//       .get(url + "/community/" + JSON.parse(localStorage.getItem("user"))._id)
+//       .then((res) => {
+//         setLoader(false)
+//         if (
+//           res.data &&
+//           Object.keys(res.data).length === 0 &&
+//           Object.getPrototypeOf(res.data) === Object.prototype
+//         ) {
+//           setCommunity(null);
+//         } else {
+//           console.log(res.data);
+//           let community = res.data;
+//           localStorage.setItem("community", JSON.stringify(community));
+          
+//           setCommunity(community);
+//           setCommunityData({
+//             name: community.name,
+//             description: community.description,
+//           });
+//           setFetchedPhoto(community.profile_picture);
+//           setTags(community.tags);
+//           setChannels(community.channels);
+//         }
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
 
-          setCommunity(community);
-          setCommunityData({
-            name: community.name,
-            description: community.description,
-          });
-          setFetchedPhoto(community.profile_picture);
-          setTags(community.tags);
-          setChannels(community.channels);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+//   const editCommunity = async () => {
+//     setLoader(true)
+//     let url = process.env.REACT_APP_BACKEND_URL;
+//     axios
+//       .post(url + "/community/update-community", {
+//         ...communityData,
+//         community_id: community._id,
+//         tags, channels
+//       })
+//       .then((res) => {
+//         console.log(res.data);
+//         //community profile picture
+//         let formdata = new FormData();
+//         formdata.append("profile_picture", photo);
+//         formdata.append("community_id", res.data._id);
+//         axios
+//           .post(url + "/community/upload-community-profile-picture", formdata)
+//           .then((res) => {
+//             console.log(res.data);
+//             getCommunity();
+//           })
+//           .catch((err) => {
+//             console.log(err);
+//           });
+//       })
 
-  const editCommunity = async () => {
-    setLoader(true)
-    let url = process.env.REACT_APP_BACKEND_URL;
-    axios
-      .post(url + "/community/update-community", {
-        ...communityData,
-        community_id: community._id,
-        tags, channels
-      })
-      .then((res) => {
-        console.log(res.data);
-        //community profile picture
-        let formdata = new FormData();
-        formdata.append("profile_picture", photo);
-        formdata.append("community_id", res.data._id);
-        axios
-          .post(url + "/community/upload-community-profile-picture", formdata)
-          .then((res) => {
-            console.log(res.data);
-            getCommunity();
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
 
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    getCommunity();
-  }, []);
+//   useEffect(() => {
+//     getCommunity();
+//   }, []);
 
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
@@ -150,11 +159,11 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
         <div className=" flex-1 text-[#114369] font-[600] text-xl ">
           <div>
             {" "}
-           Edit Community Profile
+            Create Community Profile
           </div>
           <div className="text-xs font-light text-dark">
-           
-              Edit your community profile
+           Create your community profile or <span className="text-red-500">select from existing communities</span>
+             
           </div>
         </div>
 
@@ -196,7 +205,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
                     color: "white",
                   },
                 }}
-                onClick={ editCommunity}
+                onClick={ createCommunity}
               >
                 Save and Close
               </Button>
@@ -531,7 +540,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
   );
 };
 
-export default EditCommunityProfile;
+export default CreateCommunityProfile;
 
 const cats = [
   {
