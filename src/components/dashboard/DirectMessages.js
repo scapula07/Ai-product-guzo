@@ -74,7 +74,7 @@ const DirectMessages = ({community, setCommunity}) => {
  
   useEffect(() => {
     getDirectMessage();
-    setSocket(io.connect('https://guzo-backend.herokuapp.com/'))
+    setSocket(io.connect('https://guzo-backend.herokuapp.com'))
   }, [])
 
   useEffect(() => {
@@ -90,6 +90,8 @@ const DirectMessages = ({community, setCommunity}) => {
           setDirectMessages((e)=> ([...direct_messages, data]))
         }
       })
+    }else{
+      window.location.reload()
     }
   }, [socket,direct_messages]);
 
