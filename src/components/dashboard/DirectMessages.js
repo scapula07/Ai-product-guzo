@@ -125,13 +125,13 @@ const DirectMessages = ({community, setCommunity}) => {
                   <div className="flex items-center">
                     <Avatar
                       variant="square"
-                      src="/woman.png"
                       sx={{
                         bgcolor: "blue",
                         width: "40px",
                         height: "40px",
                         borderRadius: "10px",
                       }}
+                      
                     >
                      {item.username.substr(0,1)}
                     </Avatar>

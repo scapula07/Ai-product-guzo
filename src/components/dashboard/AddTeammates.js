@@ -57,6 +57,7 @@ const AddTeammates = () => {
       .then((res) => {
        console.log(res.data)
        setLoader(false)
+       setEmail("")
        
       })
 

@@ -75,7 +75,7 @@ const DashboardRoutes = () => {
 
               <Route
                 path="/create-community-profile"
-                element={<CreateCommunityProfile getCommunity0={[]} />}
+                element={<CreateCommunityProfile getCommunity0={[]} community={community} setCommunity={setCommunity} />}
               />
               <Route path="/my-collaborations" element={<MyCollaborations />} />
               <Route

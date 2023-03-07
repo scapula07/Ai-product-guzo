@@ -156,9 +156,8 @@ const Teammates = () => {
             <div className="flex items-end" key={index}>
             <Avatar
               variant="square"
-              src="/woman.png"
               sx={{ width: "90", height: "90", borderRadius: "5px" }}
-            />
+            >{item.username.substr(0,1)}</Avatar>
    
             <div className="ml-6  flex-1">
               <div className=" font-bold text-[14px]  ">

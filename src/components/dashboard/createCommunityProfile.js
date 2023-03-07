@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 
-const CreateCommunityProfile = ({getCommunity0}) => {
+const CreateCommunityProfile = ({getCommunity0,community, setCommunity}) => {
   const [photo, setPhoto] = useState(null);
   const [fetchedPhoto, setFetchedPhoto] = useState("/picture_placeholder.png");
   const [channels, setChannels] = useState([]);
@@ -30,7 +30,7 @@ const CreateCommunityProfile = ({getCommunity0}) => {
 //   };
   const navigate = useNavigate();
 
-  const [community, setCommunity] = useState();
+  
 
   const [communityData, setCommunityData] = useState({
     user_id: JSON.parse(localStorage.getItem("user"))._id,
@@ -62,6 +62,7 @@ const CreateCommunityProfile = ({getCommunity0}) => {
             .then((res) => {
                 localStorage.setItem('user' , JSON.stringify(res.data))
                 setLoader(false)
+                window.location.reload()
             })
             .catch((err) => {
               console.log(err);
@@ -71,15 +72,15 @@ const CreateCommunityProfile = ({getCommunity0}) => {
             console.log(err);
           });
 
-        // setCommunityData({
-        //   user_id: JSON.parse(localStorage.getItem("user"))._id,
-        //   name: "",
-        //   description: "",
-        // });
+         setCommunityData({
+           user_id: JSON.parse(localStorage.getItem("user"))._id,
+           name: "",
+           description: "",
+         });
 
-        // setChannels([]);
-        // setTags([]);
-        // setPhoto(null);
+         setChannels([]);
+         setTags([]);
+         setPhoto(null);
       })
 
       .catch((err) => {
