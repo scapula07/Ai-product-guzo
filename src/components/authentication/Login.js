@@ -1,16 +1,22 @@
 import { Avatar, Button, Divider, InputBase } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
 
 const Login = () => {
   const navigate = useNavigate()
+  const urlParams = new URLSearchParams(window.location.search);
+  const collaboration_id = urlParams.get('collaboration_id')
   const loggedInUser =  JSON.parse(localStorage.getItem('user'))
   const [loader,setLoader] = useState(false)
   useEffect(() => {
     if(loggedInUser){
-      navigate('/dashboard/discover')
+      if(collaboration_id){
+        navigate("/collaboration/contact-capture/"+collaboration_id)
+      }else{
+        navigate('/dashboard/discover')
+      }
     }
   }, [])
   
@@ -34,7 +40,11 @@ const Login = () => {
       localStorage.setItem('user' , JSON.stringify(res.data))
       setTimeout(() => {
         setLoader(false)
-        navigate('/dashboard/discover')
+        if(collaboration_id){
+          navigate("/collaboration/contact-capture/"+collaboration_id)
+        }else{
+          navigate('/dashboard/discover')
+        }
       }, 1000);
       }
    
@@ -121,7 +131,13 @@ const Login = () => {
             <div className="mt-4 text-[#24A0FD] underline text-[12px] cursor-pointer ">
             I forgot my password 
             <span className="mx-1">or</span>
-             <span className="" onClick={()=> navigate('/auth/register')} >register</span>
+             <span className="" onClick={()=> {
+              if(collaboration_id){
+                navigate('/auth/register?collaboration_id='+collaboration_id)
+              }else{
+                navigate('/auth/register')
+              }
+             }} >register</span>
             </div>
 
             <div className="my-3 text-red-600 text-xs " id='info' > </div>

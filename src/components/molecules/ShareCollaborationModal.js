@@ -24,7 +24,7 @@ const ShareCollaborationModal = ({ open, setOpen, collaboration_id }) => {
               py: "3px",
             }}
             placeholder=""
-            value={"http://localhost:3000/collaboration/"+collaboration_id}
+            value={"https://guzo-dev.vercel.app/collaboration/"+collaboration_id}
             endAdornment={
               <Button
                 sx={{

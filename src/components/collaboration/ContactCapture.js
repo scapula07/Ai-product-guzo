@@ -1,14 +1,20 @@
+import { TroubleshootTwoTone } from "@mui/icons-material";
 import { Button, CircularProgress, InputBase } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import CustomizedProgressBars from "../molecules/Progress";
 import ThankYouCard from "../molecules/ThankYouCard";
 
 const ContactCapture = () => {
   const [openThankYouCard, setOpenThankYouCard] = useState(false);
   const { collaboration_id } = useParams();
   const [loader, setLoader] = useState(true);
+  const [loader2, setLoader2] = useState(false);
   const [collaboration, setCollaboration] = useState({});
+  const [user, setUser] =  useState(JSON.parse(localStorage.getItem('user'))|| null)
+  const navigate = useNavigate()
+
 
   const [partner, setPartner] = useState({
     user_id: localStorage.getItem("user")
@@ -39,10 +45,14 @@ const ContactCapture = () => {
   };
 
   useEffect(() => {
+    if(!user){
+      navigate('/auth/login?collaboration_id='+collaboration_id)
+    }
     getCollaboration();
   }, []);
 
   const createPartner = async () => {
+    setLoader2(TroubleshootTwoTone)
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
       .post(url + "/collaboration/partner", {
@@ -51,13 +61,13 @@ const ContactCapture = () => {
       })
       .then((res) => {
         //console.log(res.data)
-        setLoader(false);
+        setLoader2(false);
         console.log(res.data);
         setOpenThankYouCard(true);
       })
       .catch((err) => {
         console.log(err);
-        setLoader(false);
+        setLoader2(false);
       });
   };
 
@@ -266,8 +276,8 @@ const ContactCapture = () => {
 
         <div className="mt-3">
           <ThankYouCard open={openThankYouCard} setOpen={setOpenThankYouCard} />
-          {loader ? (
-            <CircularProgress />
+          {loader2 ? (
+            <CustomizedProgressBars />
           ) : (
             <Button
               onClick={createPartner}

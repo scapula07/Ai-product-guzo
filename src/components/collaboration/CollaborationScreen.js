@@ -2,6 +2,7 @@ import { Avatar, Button, CircularProgress, InputBase } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useNavigation, useParams } from "react-router-dom";
+import CustomizedProgressBars from "../molecules/Progress";
 
 const CollaborationScreen = () => {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ const CollaborationScreen = () => {
   const [collaboration, setCollaboration] = useState({});
   const [loader, setLoader] = useState(true);
   const [error__, setError] = useState(false);
+  const [user, setUser] =  useState(JSON.parse(localStorage.getItem('user'))|| null)
 
   const getCollaboration = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
@@ -19,6 +21,10 @@ const CollaborationScreen = () => {
         setCollaboration(res.data);
         setLoader(false);
         console.log(res.data)
+        if(!res.data._doc){
+          setLoader(false);
+          setError(true);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -34,15 +40,18 @@ const CollaborationScreen = () => {
   return (
     <>
       {loader ? (
-        <div className="flex justify-center mt-[30vh]">
-          <CircularProgress />
+        <div className="flex justify-center  ">
+          <div className="flex-1" />
+          <CustomizedProgressBars />
         </div>
       ) : (
         <div className="flex justify-center">
           {error__ ? (
             <div> Collaboration not found</div>
           ) : (
-            <div className="bg-white lg:w-[70vw] rounded-[20px] shadow-lg py-[30px] px-[40px]  ">
+            <>
+            {collaboration._doc.is_public ? (
+              <div className="bg-white lg:w-[70vw] rounded-[20px] shadow-lg py-[30px] px-[40px]  ">
               <div className="text-center  text-[30px]  font-extrabold ">
                 <div>{collaboration._doc.community.name} </div>
 
@@ -161,7 +170,11 @@ const CollaborationScreen = () => {
                     },
                   }}
                   onClick={() => {
+                   if(user){
                     navigate("/collaboration/contact-capture/"+collaboration._doc._id);
+                   }else(
+                    navigate('/auth/login?collaboration_id='+collaboration._doc._id)
+                   )
                   }}
                 >
                   Yes, Count me in!
@@ -181,6 +194,14 @@ const CollaborationScreen = () => {
                       bgcolor: "#FF6060",
                       color: "white",
                     },
+                  }}
+
+                  onClick={() => {
+                    if(user){
+                      navigate("/dashboard/discover");
+                     }else(
+                      navigate('/auth/login?collaboration_id='+collaboration._doc._id)
+                     )
                   }}
                 >
                   No, Not this time
@@ -203,13 +224,21 @@ const CollaborationScreen = () => {
                     },
                   }}
                   onClick={() => {
-                    navigate("/collaboration/contact-capture");
+                    if(user){
+                      navigate("/collaboration/contact-capture/"+collaboration._doc._id);
+                     }else(
+                      navigate('/auth/login?collaboration_id='+collaboration._doc._id)
+                     )
                   }}
                 >
                   Maybe, Keep me informed
                 </Button>
               </div>
             </div>
+            ): (
+              <div> Collaboration is private</div>
+            )}
+            </>
           )}
         </div>
       )}
