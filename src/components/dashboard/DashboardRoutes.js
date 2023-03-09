@@ -35,6 +35,7 @@ import TextMessages from "./TextMessages";
 import TextMessageSettings from "./TextMessageSettings";
 
 const DashboardRoutes = () => {
+  localStorage.clear()
   const [community, setCommunity] = useState(JSON.parse(localStorage.getItem("community")) || null);
   const [loader, setLoader] = useState(false)
   let navigate = useNavigate();
