@@ -10,12 +10,12 @@ const CollaborationCard = ({collaboration}) => {
       {" "}
       <Avatar
         variant="square"
-        src={collaboration.photo}
+        src={collaboration?.photo}
         sx={{ width: "100%", height: "180px" }}
       />
     </div>
-    <div className="text-center font-[500] mt-[15px]">{collaboration.title}</div>
-    <div className="text-xs font-[300] mt-[6px] text-center ">({collaboration.is_public ? "public" : "private"})</div>
+    <div className="text-center font-[500] mt-[15px]">{collaboration?.title}</div>
+    <div className="text-xs font-[300] mt-[6px] text-center ">({collaboration?.is_public ? "public" : "private"})</div>
     <div className="mt-[10px]">
       <Button
         sx={{
@@ -30,7 +30,7 @@ const CollaborationCard = ({collaboration}) => {
             color: "white",
           },
         }}
-        onClick={()=>navigate('/dashboard/collaboration/'+collaboration._id)} 
+        onClick={()=>navigate('/dashboard/collaboration/'+collaboration?._id)} 
       >
         Manage
       </Button>

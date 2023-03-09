@@ -151,7 +151,7 @@ const Teammates = () => {
        {users && users.map((item,index)=> 
       {
         
-        if(item.communities.find(e=> e.id == community._id)){
+        if(item.communities.find(e=> e.id == community?._id)){
           return(
             <div className="flex items-end" key={index}>
             <Avatar

@@ -60,6 +60,24 @@ const ContactCapture = () => {
         setLoader(false);
       });
   };
+
+
+  // const addContact = async(contact) => {
+  //   setLoader(true)
+  //   setOpen(false);
+  //   let url = process.env.REACT_APP_BACKEND_URL;
+  //   console.log({...contact,contact_group_id : selectedContactGroup.value})
+  //   axios
+  //     .post(url + "/contact/add/",{contact,contact_group_id : selectedContactGroup.value})
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setLoader(false)
+      
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
   return (
     <div className="flex justify-center">
       <div className="bg-white lg:w-[70vw] rounded-[20px] shadow-lg py-[30px] px-[40px]  ">

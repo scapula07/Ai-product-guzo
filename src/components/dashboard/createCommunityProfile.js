@@ -1,12 +1,22 @@
 import { CancelOutlined, KeyboardArrowDown, Launch } from "@mui/icons-material";
-import { Avatar, Button, CircularProgress, Divider, InputBase, Link } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  Divider,
+  InputBase,
+  Link,
+} from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
+import CustomizedProgressBars from "../molecules/Progress";
+import SuccessSnackbar from "../molecules/SuccessSnackbar";
 
-const CreateCommunityProfile = ({getCommunity0,community, setCommunity}) => {
+const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
+  const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [fetchedPhoto, setFetchedPhoto] = useState("/picture_placeholder.png");
   const [channels, setChannels] = useState([]);
@@ -15,37 +25,36 @@ const CreateCommunityProfile = ({getCommunity0,community, setCommunity}) => {
   const [openConnectPlatformModal, setOpenConnectPlatformModal] =
     useState(false);
   const [tags, setTags] = useState([]);
-//   const style = {
-//     control: (base) => ({
-//       ...base,
-//       border: "0px solid gray",
-//       width: "100%",
-//       boxShadow: "none",
-//       backgroundColor: "#EBF1F5",
-//       fontSize: "14px",
-//       "@media (min-width:600px)": {
-//         width: "400px",
-//       },
-//     }),
-//   };
+  //   const style = {
+  //     control: (base) => ({
+  //       ...base,
+  //       border: "0px solid gray",
+  //       width: "100%",
+  //       boxShadow: "none",
+  //       backgroundColor: "#EBF1F5",
+  //       fontSize: "14px",
+  //       "@media (min-width:600px)": {
+  //         width: "400px",
+  //       },
+  //     }),
+  //   };
   const navigate = useNavigate();
 
-  
-
   const [communityData, setCommunityData] = useState({
-    user_id: JSON.parse(localStorage.getItem("user"))._id,
+    user_id: JSON.parse(localStorage.getItem("user"))?._id || null,
     name: "",
     description: "",
   });
 
   const createCommunity = async () => {
-    setLoader(true)
+    setLoader(true);
     let url = process.env.REACT_APP_BACKEND_URL;
-    console.log(channels);
     axios
       .post(url + "/community", { ...communityData, tags, channels })
       .then((res) => {
-        console.log(res.data);
+        let community = res.data;
+        localStorage.setItem("community", JSON.stringify(community));
+        setOpenSuccessSnack(true);
         //community profile picture
         let formdata = new FormData();
         formdata.append("profile_picture", photo);
@@ -53,118 +62,59 @@ const CreateCommunityProfile = ({getCommunity0,community, setCommunity}) => {
         axios
           .post(url + "/community/upload-community-profile-picture", formdata)
           .then((res) => {
-            console.log(res.data);
             let community = res.data;
-            console.log(community)
             localStorage.setItem("community", JSON.stringify(community));
+            setCommunity({ label: community?.name, value: community?._id });
+            setLoader(false);
+            setOpenSuccessSnack(false);
+            setTimeout(() => {
+              navigate("/dashboard/discover");
+            }, 1000);
             axios
-            .get(url + "/user/get-user-by-id/"+res.data.user_id)
-            .then((res) => {
-                localStorage.setItem('user' , JSON.stringify(res.data))
-                setLoader(false)
-                window.location.reload()
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+              .get(url + "/user/get-user-by-id/" + res.data.user_id)
+              .then((res) => {
+                localStorage.setItem("user", JSON.stringify(res.data));
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           })
           .catch((err) => {
             console.log(err);
           });
 
-         setCommunityData({
-           user_id: JSON.parse(localStorage.getItem("user"))._id,
-           name: "",
-           description: "",
-         });
+        setCommunityData({
+          user_id: JSON.parse(localStorage.getItem("user"))._id,
+          name: "",
+          description: "",
+        });
 
-         setChannels([]);
-         setTags([]);
-         setPhoto(null);
+        setChannels([]);
+        setTags([]);
+        setPhoto(null);
       })
 
       .catch((err) => {
         console.log(err);
       });
   };
-//   const getCommunity = async () => {
-//     let url = process.env.REACT_APP_BACKEND_URL;
-//     axios
-//       .get(url + "/community/" + JSON.parse(localStorage.getItem("user"))._id)
-//       .then((res) => {
-//         setLoader(false)
-//         if (
-//           res.data &&
-//           Object.keys(res.data).length === 0 &&
-//           Object.getPrototypeOf(res.data) === Object.prototype
-//         ) {
-//           setCommunity(null);
-//         } else {
-//           console.log(res.data);
-//           let community = res.data;
-//           localStorage.setItem("community", JSON.stringify(community));
-          
-//           setCommunity(community);
-//           setCommunityData({
-//             name: community.name,
-//             description: community.description,
-//           });
-//           setFetchedPhoto(community.profile_picture);
-//           setTags(community.tags);
-//           setChannels(community.channels);
-//         }
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
-
-//   const editCommunity = async () => {
-//     setLoader(true)
-//     let url = process.env.REACT_APP_BACKEND_URL;
-//     axios
-//       .post(url + "/community/update-community", {
-//         ...communityData,
-//         community_id: community._id,
-//         tags, channels
-//       })
-//       .then((res) => {
-//         console.log(res.data);
-//         //community profile picture
-//         let formdata = new FormData();
-//         formdata.append("profile_picture", photo);
-//         formdata.append("community_id", res.data._id);
-//         axios
-//           .post(url + "/community/upload-community-profile-picture", formdata)
-//           .then((res) => {
-//             console.log(res.data);
-//             getCommunity();
-//           })
-//           .catch((err) => {
-//             console.log(err);
-//           });
-//       })
-
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
-
-//   useEffect(() => {
-//     getCommunity();
-//   }, []);
 
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
+      <SuccessSnackbar
+        open={openSuccessSnack}
+        setOpen={setOpenSuccessSnack}
+        msg={"Community Created"}
+        duration={14000000}
+      />
       <div className="lg:flex items-center">
         <div className=" flex-1 text-[#114369] font-[600] text-xl ">
-          <div>
-            {" "}
-            Create Community Profile
-          </div>
+          <div> Create Community Profile</div>
           <div className="text-xs font-light text-dark">
-           Create your community profile or <span className="text-red-500">select from existing communities</span>
-             
+            Create your community profile or{" "}
+            <span className="text-red-500">
+              select from existing communities
+            </span>
           </div>
         </div>
 
@@ -191,7 +141,7 @@ const CreateCommunityProfile = ({getCommunity0,community, setCommunity}) => {
           </div>
           <div>
             {loader ? (
-              <CircularProgress sx={{ color: "#24A0FD" }} />
+              <CustomizedProgressBars />
             ) : (
               <Button
                 sx={{
@@ -206,7 +156,7 @@ const CreateCommunityProfile = ({getCommunity0,community, setCommunity}) => {
                     color: "white",
                   },
                 }}
-                onClick={ createCommunity}
+                onClick={createCommunity}
               >
                 Save and Close
               </Button>

@@ -26,17 +26,16 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
 import ReactSelect from "react-select";
 
 const DashboardSidebar = ({community,setOpen, setCommunity, setLoader}) => {
   const [communities, setCommunities] = useState(
-    JSON.parse(localStorage.getItem("user")).communities
+    JSON.parse(localStorage.getItem("user"))?.communities || null
   );
-  const [selectedCommunity, setSelectedCommunity] = useState({label:JSON.parse(localStorage.getItem("community"))?.name||null,value:JSON.parse(localStorage.getItem("community"))?._id|| null,})
+  const [selectedCommunity, setSelectedCommunity] = useState({label:JSON.parse(localStorage.getItem("community"))?.name||community?.name||null,value:JSON.parse(localStorage.getItem("community"))?._id||community?._id|| null,})
   const navigate = useNavigate()
-  console.log(community)
   const style = {
     control: (base) => ({
       ...base,
@@ -73,7 +72,7 @@ const DashboardSidebar = ({community,setOpen, setCommunity, setLoader}) => {
           let community = res.data;
           localStorage.setItem("community", JSON.stringify(community));
 
-          setCommunity(community);
+          setCommunity({label: community?.name, value: community?._id});
           setLoader(false)
         }
       })
@@ -81,6 +80,10 @@ const DashboardSidebar = ({community,setOpen, setCommunity, setLoader}) => {
         console.log(err);
       });
   };
+
+  useEffect(()=> {
+    setSelectedCommunity(community)
+ },[community])
 
 
   return (

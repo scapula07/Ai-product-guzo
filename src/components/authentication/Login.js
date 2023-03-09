@@ -2,10 +2,12 @@ import { Avatar, Button, Divider, InputBase } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CustomizedProgressBars from "../molecules/Progress";
 
 const Login = () => {
   const navigate = useNavigate()
   const loggedInUser =  JSON.parse(localStorage.getItem('user'))
+  const [loader,setLoader] = useState(false)
   useEffect(() => {
     if(loggedInUser){
       navigate('/dashboard/discover')
@@ -19,7 +21,7 @@ const Login = () => {
   }) 
 
   const login = async() => {
-   
+   setLoader(true)
     let url = process.env.REACT_APP_BACKEND_URL
     axios
     .post(url+"/user/login", user)
@@ -31,6 +33,7 @@ const Login = () => {
         localStorage.clear()
       localStorage.setItem('user' , JSON.stringify(res.data))
       setTimeout(() => {
+        setLoader(false)
         navigate('/dashboard/discover')
       }, 1000);
       }
@@ -116,32 +119,38 @@ const Login = () => {
             </div>
 
             <div className="mt-4 text-[#24A0FD] underline text-[12px] cursor-pointer ">
-            I forgot my password
+            I forgot my password 
+            <span className="mx-1">or</span>
+             <span className="" onClick={()=> navigate('/auth/register')} >register</span>
             </div>
 
             <div className="my-3 text-red-600 text-xs " id='info' > </div>
 
             <div className="flex justify-end mt-4" >
-            <Button
-            sx={{
-              bgcolor: "#24A0FD",
-              color: "white",
-              fontSize: "14px",
-              width: { sm: "fit", xs: "fit" },
-              textTransform: "none",
-              borderRadius: "5px",
-              px: 3,
-              mx: {xs: 1 , lg:0},
-              mt: {xs: 2 , lg:0},
-              ":hover": {
+            {loader ? (
+              <div className="flex" > <div className="flex-1 flex" /> <CustomizedProgressBars/> </div>
+            ): (
+              <Button
+              sx={{
                 bgcolor: "#24A0FD",
                 color: "white",
-              },
-            }}
-            onClick={login}
-          >
-          Login
-          </Button>
+                fontSize: "14px",
+                width: { sm: "fit", xs: "fit" },
+                textTransform: "none",
+                borderRadius: "5px",
+                px: 3,
+                mx: {xs: 1 , lg:0},
+                mt: {xs: 2 , lg:0},
+                ":hover": {
+                  bgcolor: "#24A0FD",
+                  color: "white",
+                },
+              }}
+              onClick={login}
+            >
+            Login
+            </Button>
+            )}
             </div>
           </div>
 

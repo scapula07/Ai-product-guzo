@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
+import CustomizedProgressBars from "../molecules/Progress";
 
 const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
   const [photo, setPhoto] = useState(null);
@@ -33,7 +34,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
  
 
   const [communityData, setCommunityData] = useState({
-    user_id: JSON.parse(localStorage.getItem("user"))._id,
+    user_id: JSON.parse(localStorage.getItem("user"))?._id || null,
     name: "",
     description: "",
   });
@@ -78,9 +79,8 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
   };
   const getCommunity = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
-    console.log(community.name)
     axios
-      .get(url + "/community/get-community-by-id/" + community?._id)
+      .get(url + "/community/get-community-by-id/" + community?.value)
       .then((res) => {
         setLoader(false)
         if (
@@ -94,7 +94,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
           let community = res.data;
           localStorage.setItem("community", JSON.stringify(community));
 
-          setCommunity(community);
+          setCommunity({label: community?.name, value: community?._id});
           setCommunityData({
             name: community.name,
             description: community.description,
@@ -115,7 +115,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
     axios
       .post(url + "/community/update-community", {
         ...communityData,
-        community_id: community._id,
+        community_id: community?.value,
         tags, channels
       })
       .then((res) => {
@@ -181,7 +181,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
           </div>
           <div>
             {loader ? (
-              <CircularProgress sx={{ color: "#24A0FD" }} />
+              <CustomizedProgressBars/>
             ) : (
               <Button
                 sx={{

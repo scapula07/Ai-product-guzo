@@ -141,6 +141,7 @@ const DashboardHeader = ({community, setCommunity, setLoader }) => {
               <MenuItem sx={{ fontSize: "13px", px: "35%", color: "red" }}
               onClick={()=>{
                 localStorage.removeItem('user')
+                localStorage.removeItem('community')
                 setTimeout(() => {
                   navigate('/auth/login')
                 }, 2000);

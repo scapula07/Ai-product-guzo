@@ -102,7 +102,7 @@ function MessageModal(props) {
           <Puller />
           <Typography sx={{ p: 2, color: "text.secondary" }}  >
             
-          {JSON.parse(localStorage.getItem('community')).name} group chat
+          {JSON.parse(localStorage.getItem('community'))?.name} group chat
           
           </Typography>
         </StyledBox>

@@ -6,7 +6,7 @@ const ThankYouCard = ({open, setOpen}) => {
   const [user, setUser] = useState(localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user'))._id : null)
   const navigate = useNavigate()
   return (
-   <Dialog open={open} setOpen={setOpen} >
+   <Dialog open={open} onClose={()=> setOpen(false)} >
      <div className="flex justify-center ">
       <div className="bg-white lg:w-[70vw] md:rounded-[20px] md:shadow-lg py-[30px] px-[40px]  ">
         <div className="text-[#114369] font-bold text-[16px] text-center" >Thank you for using Guzo.  Join up today!</div>

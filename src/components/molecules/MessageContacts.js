@@ -25,7 +25,7 @@ const MessageContacts = () => {
   }, [])
   return (
     <div className="  py-2 px-3 space-y-4 rounded-xl ">
-       <div className='text-sm font-bold text-center hidden lg:block'>{JSON.parse(localStorage.getItem('community')).name} group chat</div>
+       <div className='text-sm font-bold text-center hidden lg:block'>{JSON.parse(localStorage.getItem('community'))?.name} group chat</div>
             <div className=" md:block lg:block mt-2 md:mt-0">
               <InputBase
                 sx={{
@@ -56,7 +56,7 @@ const MessageContacts = () => {
        {users && users.map((item,index)=> 
       {
        
-        if(  item.communities.find(e=> e.id == community._id)){
+        if(  item.communities.find(e=> e.id == community?._id)){
            
           return(
             <div key={index} > 

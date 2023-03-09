@@ -28,7 +28,7 @@ const DirectMessages = ({community, setCommunity}) => {
   const getDirectMessage = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/community/get-community-by-id/" + JSON.parse(localStorage.getItem("community"))._id)
+      .get(url + "/community/get-community-by-id/" + JSON.parse(localStorage.getItem("community"))?._id)
       .then((res) => {
         //console.log(res.data);
         setDirectMessages(res.data.direct_messages);
@@ -42,18 +42,18 @@ const DirectMessages = ({community, setCommunity}) => {
   const addDirectMessage = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     socket.emit("new_message", {
-        community_id : JSON.parse(localStorage.getItem("community"))._id,
-        user_id: JSON.parse(localStorage.getItem("user"))._id,
-        username: JSON.parse(localStorage.getItem("user")).username,
+        community_id : JSON.parse(localStorage.getItem("community"))?._id,
+        user_id: JSON.parse(localStorage.getItem("user"))?._id,
+        username: JSON.parse(localStorage.getItem("user"))?.username,
         message,
         time: Date.now(),
     });
 
     axios
       .post(url + "/community/add-new-message/", {
-        community_id : JSON.parse(localStorage.getItem("community"))._id,
-        user_id: JSON.parse(localStorage.getItem("user"))._id,
-        username: JSON.parse(localStorage.getItem("user")).username,
+        community_id : JSON.parse(localStorage.getItem("community"))?._id,
+        user_id: JSON.parse(localStorage.getItem("user"))?._id,
+        username: JSON.parse(localStorage.getItem("user"))?.username,
         message,
         time: Date.now(),
       })

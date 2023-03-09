@@ -58,7 +58,7 @@ const TextMessages = () => {
     setLoader(true)
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/text-messages/"+JSON.parse(localStorage.getItem("community"))._id)
+      .get(url + "/contact/text-messages/"+JSON.parse(localStorage.getItem("community"))?._id)
       .then((res) => {
        console.log(res.data)
        setTextMessages(res.data)

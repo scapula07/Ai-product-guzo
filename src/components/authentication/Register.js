@@ -2,10 +2,12 @@ import { Avatar, Button, Divider, InputBase } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
+import CustomizedProgressBars from "../molecules/Progress";
 
 const Register = () => {
   const navigate = useNavigate()
   const loggedInUser =  JSON.parse(localStorage.getItem('user'))
+  const [loader,setLoader] = useState(false)
   useEffect(() => {
     if(loggedInUser){
       navigate('/dashboard/discover')
@@ -20,7 +22,7 @@ const Register = () => {
   }) 
 
   const register = async() => {
-
+    setLoader(true)
     if(user.username.length < 3) {
       document.getElementById('info').innerHTML = '( username is invalid )'
       return
@@ -45,6 +47,7 @@ const Register = () => {
       localStorage.clear()
       localStorage.setItem('user' , JSON.stringify(res.data))
       setTimeout(() => {
+        setLoader(false)
         navigate('/dashboard/')
       }, 1000);
    
@@ -173,9 +176,17 @@ const Register = () => {
               </div>
             </div>
 
+            <div className="mt-4 text-[#24A0FD] underline text-[12px] cursor-pointer ">
+            <span className="mx-1">or</span>
+             <span className="" onClick={()=> navigate('/auth/login')} >login</span>
+            </div>
+
             <div className="my-3 text-red-600 text-xs " id='info' > </div>
 
             <div className="flex justify-end mt-4" >
+           {loader ? (
+            <div className="flex" > <div className="flex-1 flex" /> <CustomizedProgressBars/> </div>
+           ): (
             <Button
             onClick={register }
             sx={{
@@ -196,6 +207,7 @@ const Register = () => {
           >
           Sign-up
           </Button>
+           )}
             </div>
           </div>
         </div>

@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import DashboardHeader from "../layout/DashboardHeader";
 import DashboardSidebar from "../layout/DashboardSidebar";
+import LandingModal from "../molecules/Landing";
+import CustomizedProgressBars from "../molecules/Progress";
 import AddTeammates from "./AddTeammates";
 import CollaborationOwnerView from "./CollaborationOwnerView";
 import CommunicationSetting from "./CommunicationSettings";
@@ -35,25 +37,53 @@ import TextMessages from "./TextMessages";
 import TextMessageSettings from "./TextMessageSettings";
 
 const DashboardRoutes = () => {
-  const [community, setCommunity] = useState(JSON.parse(localStorage.getItem("community")) || null);
+  const [community, setCommunity] = useState({label:JSON.parse(localStorage.getItem("community"))?.name||null,value:JSON.parse(localStorage.getItem("community"))?._id|| null,});
   const [loader, setLoader] = useState(false)
+  const [openLanding, setOpenLanding] = useState(false)
   let navigate = useNavigate();
   const [communities, setCommunities] = useState(
-    JSON.parse(localStorage.getItem("user")).communities
+    JSON.parse(localStorage.getItem("user"))?.communities || null
   );
-  if (communities.length < 1 || !community) {
-    let path = "/dashboard/create-community-profile";
-    if (
-      window.location.href !==
-      "https://guzo-dev.vercel.app/dashboard/create-community-profile"
-    ) {
-      window.location.href = path;
-      return;
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
+  useEffect(()=> {
+    window.scrollTo(0,0)
+    if(!user){
+      navigate('/auth/register')
     }
-  }
+    else{
+      if ( !communities || !community.label || communities.length < 1 ) {
+        let path = "/dashboard/create-community-profile";
+        if (
+          window.location.href !==
+          "http://localhost:3000/dashboard/create-community-profile"
+        
+        ) {
+        if(!community.label){
+          setOpenLanding(true)  
+        }
+        }
+      }
+    }
+  },[navigate])
+
+
+
+  useEffect(()=> {
+    if(!community.label){
+      console.log('hii')
+      setOpenLanding(true)
+    }
+  },[])
+
+  
+
+  
 
   return (
     <>
+    <LandingModal open={openLanding} setOpen={setOpenLanding} community={community} setCommunity={setCommunity} />
       <DashboardHeader community={community} setCommunity={setCommunity} setLoader={setLoader} />
       <div className="lg:grid md:grid md:grid-cols-3 lg:grid-cols-4 lg:gap-[60px] md:gap-3 md:px-5 lg:px-[98px] md:py-4 lg:py-[33px]">
         <div className="hidden lg:block md:block">
@@ -62,7 +92,7 @@ const DashboardRoutes = () => {
 
         {loader ? (
           <div className="flex justify-center mt-[50px]">
-            <CircularProgress />
+            <CustomizedProgressBars />
           </div>
         ) : (
           <div className="lg:col-span-3 md:col-span-2 ">
