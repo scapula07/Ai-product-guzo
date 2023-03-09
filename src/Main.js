@@ -9,7 +9,6 @@ import JoinCommunity from "./components/user/JoinCommunity";
 import UserRoutes from "./components/user/UserRoutes";
 
 const Main = () => {
-  localStorage.clear()
   return (
     <BrowserRouter >
       <Routes >
