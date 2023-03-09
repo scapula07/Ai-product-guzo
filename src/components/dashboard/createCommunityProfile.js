@@ -62,7 +62,7 @@ const CreateCommunityProfile = ({getCommunity0,community, setCommunity}) => {
             .then((res) => {
                 localStorage.setItem('user' , JSON.stringify(res.data))
                 setLoader(false)
-                window.location.reload()
+                window.location.href= 'https://guzo-dev.vercel.app/dashboard/discover'
             })
             .catch((err) => {
               console.log(err);
