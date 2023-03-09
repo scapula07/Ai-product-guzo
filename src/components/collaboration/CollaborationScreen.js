@@ -200,7 +200,7 @@ const CollaborationScreen = () => {
                     if(user){
                       navigate("/dashboard/discover");
                      }else(
-                      navigate('/auth/login?collaboration_id='+collaboration._doc._id)
+                      navigate('/auth/login')
                      )
                   }}
                 >
