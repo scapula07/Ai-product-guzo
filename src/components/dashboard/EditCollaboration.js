@@ -22,8 +22,10 @@ import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 import CustomizedProgressBars from "../molecules/Progress";
 import ShareCollaborationModal from "../molecules/ShareCollaborationModal";
+import SuccessSnackbar from "../molecules/SuccessSnackbar";
 
 const EditCollaboration = ({ community }) => {
+  const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
   const [loader, setLoader] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [fetchedPhoto, setFetchedPhoto] = useState(null);
@@ -31,6 +33,7 @@ const EditCollaboration = ({ community }) => {
   const [fetchedDocuments, setFetchedDocuments] = useState([]);
   const [type, setType] = useState("public");
   const [links, setLinks] = useState([]);
+
 
   const { collaboration_id } = useParams();
 
@@ -97,6 +100,8 @@ const EditCollaboration = ({ community }) => {
       .then((res) => {
         console.log(res.data);
         setLoader(false)
+        setOpenSuccessSnack(true)
+
 
          //upload photo
          let file = document.getElementById("hiddenfileinput").files[0];
@@ -153,9 +158,11 @@ const EditCollaboration = ({ community }) => {
 
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
+      <SuccessSnackbar msg={'Collaboration edit was successful'} duration='10000' 
+      open={openSuccessSnack} setOpen={setOpenSuccessSnack}  />
       <div className="lg:flex items-center">
         <div className=" flex-1 text-[#114369] font-[600] text-xl ">
-          <div> New Collaboration</div>
+          <div> Edit "{collaboration?.title}" Collaboration</div>
         </div>
 
         <div className="flex  mt-4 md:mt-0">

@@ -21,8 +21,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
+import CustomizedProgressBars from "../molecules/Progress";
+import SuccessSnackbar from "../molecules/SuccessSnackbar";
 
 const CreateNewTextMessage = () => {
+  const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
   const [active, setActive] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
@@ -102,6 +105,7 @@ const CreateNewTextMessage = () => {
       .then((res) => {
        console.log(res.data)
        setLoader(false)
+       setOpenSuccessSnack(true)
        setName("")
        setSender("")
        setMessage("")
@@ -122,11 +126,13 @@ const CreateNewTextMessage = () => {
   
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
+      <SuccessSnackbar msg={'Message sent successfully'} duration='10000' 
+      open={openSuccessSnack} setOpen={setOpenSuccessSnack}  />
       <div className="md:flex space-y-2 md:space-y-0 items-center">
         <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
           Create New Text Messages
         </div>
-        <div className="lg:space-x-4 ">
+        <div className="lg:space-x-4 lg:flex block">
           <Button
             sx={{
               bgcolor: "white",
@@ -167,7 +173,9 @@ const CreateNewTextMessage = () => {
           >
             Save as Draft
           </Button>
-          {loader ? (<CircularProgress/>): (
+          {loader ? (
+            <div> <CustomizedProgressBars/> </div>
+          ): (
             <Button
             sx={{
               bgcolor: "#24A0FD",
@@ -227,7 +235,7 @@ const CreateNewTextMessage = () => {
             <div className="text-[14px]" > To{" "} <span className="text-black font-thin text-[12px] ">(Select your recipient Group(s)) </span></div>
            {contactGroupLoader ? (
 
-            <CircularProgress/>
+            <CustomizedProgressBars/>
            )
             : (
               <ReactSelect

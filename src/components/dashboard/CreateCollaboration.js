@@ -17,9 +17,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
+import CustomizedProgressBars from "../molecules/Progress";
 import ShareCollaborationModal from "../molecules/ShareCollaborationModal";
+import SuccessSnackbar from "../molecules/SuccessSnackbar";
 
 const CreateCollaboration = ({ community }) => {
+  const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
   const [loader, setLoader] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [documents, setDocuments] = useState(null);
@@ -55,10 +58,11 @@ const CreateCollaboration = ({ community }) => {
 
     setLoader(true);
     let url = process.env.REACT_APP_BACKEND_URL;
+    let comm_ = JSON.parse(localStorage.getItem('community'))
     let comm = {
-      id: community._id,
-      name: community.name,
-      profile_picture: community.profile_picture,
+      id: comm_._id ||  community.value,
+      name: comm_.name || community.label,
+      profile_picture: comm_.profile_picture,
     };
     console.log(comm)
     axios
@@ -116,6 +120,7 @@ const CreateCollaboration = ({ community }) => {
          setDocuments(null);
          setOpenCollaborationModal(true);
          setLoader(false);
+         setOpenSuccessSnack(true)
       })
       .catch((err) => {
         console.log(err);
@@ -125,6 +130,8 @@ const CreateCollaboration = ({ community }) => {
 
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
+      <SuccessSnackbar msg={'Collaboration was successfully created'} duration='10000' 
+      open={openSuccessSnack} setOpen={setOpenSuccessSnack}  />
       <div className="lg:flex items-center">
         <div className=" flex-1 text-[#114369] font-[600] text-xl ">
           <div> New Collaboration</div>
@@ -158,7 +165,7 @@ const CreateCollaboration = ({ community }) => {
               collaboration_id={collaboration_id}
             />
             {loader ? (
-              <CircularProgress sx={{ color: "white" }} />
+              <CustomizedProgressBars />
             ) : (
               <Button
                 onClick={createCollaboration}

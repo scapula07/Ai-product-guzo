@@ -43,7 +43,7 @@ const ShareCollaborationModal = ({ open, setOpen, collaboration_id }) => {
                 id='copy_btn'
 
                 onClick={()=>{
-                    navigator.clipboard.writeText("http://localhost:3000/collaboration/"+collaboration_id)
+                    navigator.clipboard.writeText("http://guzo-dev.vercel.app/collaboration/"+collaboration_id)
                     document.getElementById('copy_btn').innerHTML='Copied !'
                    setTimeout(() => {
                     document.getElementById('copy_btn').innerHTML='Copy'

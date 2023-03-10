@@ -6,8 +6,10 @@ import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 import CustomizedProgressBars from "../molecules/Progress";
+import SuccessSnackbar from "../molecules/SuccessSnackbar";
 
 const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
+  const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [fetchedPhoto, setFetchedPhoto] = useState("/picture_placeholder.png");
   const [channels, setChannels] = useState([]);
@@ -128,6 +130,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
           .post(url + "/community/upload-community-profile-picture", formdata)
           .then((res) => {
             console.log(res.data);
+            setOpenSuccessSnack(true)
             getCommunity();
           })
           .catch((err) => {
@@ -146,6 +149,8 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
 
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
+      <SuccessSnackbar msg={'Community edit was successful'} duration='10000' 
+      open={openSuccessSnack} setOpen={setOpenSuccessSnack}  />
       <div className="lg:flex items-center">
         <div className=" flex-1 text-[#114369] font-[600] text-xl ">
           <div>

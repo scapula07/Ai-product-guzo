@@ -152,6 +152,7 @@ const CollaborationOwnerView = () => {
               bgcolor: "#24A0FD",
               color: "white",
               fontSize: "14px",
+              mr: 2,
               width: { sm: "165px", xs: "fit" },
               textTransform: "none",
               borderRadius: "5px",
@@ -163,6 +164,34 @@ const CollaborationOwnerView = () => {
             onClick={() => navigate("/dashboard/edit-collaboration/"+collaboration_id)}
           >
             Edit Collaboration
+          </Button>
+        </div>
+        <div>
+          <Button
+            sx={{
+              bgcolor: "#24A0FD",
+              color: "white",
+              fontSize: "14px",
+              width: { sm: "fit", xs: "fit" },
+              textTransform: "none",
+              borderRadius: "5px",
+              ":hover": {
+                bgcolor: "#24A0FD",
+                color: "white",
+              },
+            }}
+            id='copy_btn'
+
+
+            onClick={() =>{
+              navigator.clipboard.writeText("https://guzo-dev.vercel.app/collaboration/"+collaboration_id)
+              document.getElementById('copy_btn').innerHTML='Copied !'
+             setTimeout(() => {
+              document.getElementById('copy_btn').innerHTML='Copy Link'
+             }, 3000);
+            }}
+          >
+            Copy Link
           </Button>
         </div>
       </div>
