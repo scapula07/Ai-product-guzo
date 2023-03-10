@@ -1,4 +1,5 @@
 import {
+  Campaign,
   Cancel,
   CancelOutlined,
   Folder,
@@ -13,11 +14,13 @@ import {
   InputBase,
   Link,
 } from "@mui/material";
+import { fontSize } from "@mui/system";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReactSelect from "react-select";
 import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
+import CustomizedProgressBars from "../molecules/Progress";
 import ShareCollaborationModal from "../molecules/ShareCollaborationModal";
 
 const EditCollaboration = ({ community }) => {
@@ -94,14 +97,34 @@ const EditCollaboration = ({ community }) => {
       .then((res) => {
         console.log(res.data);
         setLoader(false)
+
+         //upload photo
+         let file = document.getElementById("hiddenfileinput").files[0];
+         let formdata = new FormData();
+         formdata.append("photo", file);
+         formdata.append("collaboration_id", collaboration._id);
+         console.log(formdata);
+         axios
+           .post(url + "/collaboration/photo", formdata)
+           .then((res) => {
+             console.log(collaboration);
+           })
+           .catch((err) => {
+             console.log(err);
+           });
+
+
+
+
         //upload support document
         let docs = document.getElementById("documents").files;
+        console.log(docs)
         for (let index = 0; index < docs.length; index++) {
           const item = docs[index];
           console.log(item.name);
           let formdata1 = new FormData();
           formdata1.append("support-document", item);
-          console.log(res.data._id)
+          console.log(collaboration._id)
           formdata1.append("collaboration_id", collaboration._id);
           formdata1.append("filename", item.name);
 
@@ -163,7 +186,7 @@ const EditCollaboration = ({ community }) => {
               collaboration_id={collaboration_id}
             />
             {loader ? (
-              <CircularProgress sx={{ color: "blue" }} />
+              <CustomizedProgressBars sx={{ color: "blue" }} />
             ) : (
               <Button
                 onClick={editCollaboration}
@@ -223,7 +246,8 @@ const EditCollaboration = ({ community }) => {
             >
               Click to upload photo
             </Avatar>
-            <input
+            <input 
+         
               hidden
               type="file"
               id="hiddenfileinput"
@@ -407,6 +431,8 @@ const EditCollaboration = ({ community }) => {
               </>
             )}
           </div>
+
+          <div className="text-red-900 text-xs"> <Campaign sx={{ color:'red.400', fontSize:''}}/> Files greater than 4mb would not be uploaded</div>
 
           {documents && (
             <Button

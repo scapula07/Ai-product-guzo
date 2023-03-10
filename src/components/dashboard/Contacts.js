@@ -51,7 +51,7 @@ const Contacts = () => {
   const getContactGroups = async() =>{
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/"+JSON.parse(localStorage.getItem("community"))._id)
+      .get(url + "/contact/"+JSON.parse(localStorage.getItem("community"))?._id)
       .then((res) => {
        console.log(res.data)
        setContactGroups(res.data)

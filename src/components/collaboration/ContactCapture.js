@@ -12,9 +12,11 @@ const ContactCapture = () => {
   const [loader, setLoader] = useState(true);
   const [loader2, setLoader2] = useState(false);
   const [collaboration, setCollaboration] = useState({});
-  const [user, setUser] =  useState(JSON.parse(localStorage.getItem('user'))|| null)
-  const navigate = useNavigate()
-
+  const [contactGroup, setContactGroup] = useState();
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
+  const navigate = useNavigate();
 
   const [partner, setPartner] = useState({
     user_id: localStorage.getItem("user")
@@ -24,7 +26,7 @@ const ContactCapture = () => {
     first_name: "",
     last_name: "",
     organization_name: "",
-    email: "",
+    email: user.email || "",
     country_code: "",
     phone: "",
     message: "",
@@ -37,6 +39,7 @@ const ContactCapture = () => {
       .then((res) => {
         setCollaboration(res.data);
         setLoader(false);
+        getContactGroups(res.data._doc.community_id);
       })
       .catch((err) => {
         console.log(err);
@@ -44,15 +47,52 @@ const ContactCapture = () => {
       });
   };
 
+  const getContactGroups = async (id) => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/contact/" + id)
+      .then((res) => {
+        setContactGroup(res.data[0]);
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addContact = async () => {
+    let contact = {
+      user_id: partner.user_id,
+      name: partner.first_name + " " + partner.last_name,
+      email: partner.email,
+      phone_number: partner.country_code + partner.phone,
+    };
+    setLoader(true);
+    let url = process.env.REACT_APP_BACKEND_URL;
+    console.log({ ...contact, contact_group_id: contactGroup._id });
+    await axios
+      .post(url + "/contact/add/", {
+        contact,
+        contact_group_id: contactGroup._id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setLoader(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
-    if(!user){
-      navigate('/auth/login?collaboration_id='+collaboration_id)
+    if (!user) {
+      navigate("/auth/login?collaboration_id=" + collaboration_id);
     }
     getCollaboration();
   }, []);
 
   const createPartner = async () => {
-    setLoader2(TroubleshootTwoTone)
+    setLoader2(TroubleshootTwoTone);
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
       .post(url + "/collaboration/partner", {
@@ -61,6 +101,7 @@ const ContactCapture = () => {
       })
       .then((res) => {
         //console.log(res.data)
+        addContact()
         setLoader2(false);
         console.log(res.data);
         setOpenThankYouCard(true);
@@ -70,7 +111,6 @@ const ContactCapture = () => {
         setLoader2(false);
       });
   };
-
 
   // const addContact = async(contact) => {
   //   setLoader(true)
@@ -82,7 +122,7 @@ const ContactCapture = () => {
   //     .then((res) => {
   //       console.log(res.data);
   //       setLoader(false)
-      
+
   //     })
   //     .catch((err) => {
   //       console.log(err);

@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import CustomizedProgressBars from "../molecules/Progress";
 import SelectContactGroupModal from "../molecules/SelectContactGroupModal";
 
 const CollaborationOwnerView = () => {
@@ -17,7 +18,12 @@ const CollaborationOwnerView = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
   const [collaboration, setCollaboration] = useState({});
+  const [partners, setPartners] = useState([])
   const [loader, setLoader] = useState(true);
+  const [loader2, setLoader2] = useState({
+    loader: false,
+    id: ""
+  });
   const [openSelectContactGroupModal, setOpenSelectContactGroupModal] = useState(false)
   const [contactGroups, setContactGroups] = useState([])
   const [selectedContactGroup, setSelectedContactGroup] = useState({})
@@ -32,16 +38,16 @@ const CollaborationOwnerView = () => {
   };
   const navigate = useNavigate();
   const { collaboration_id } = useParams();
-  console.log(collaboration_id);
 
   const getCollaboration = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
       .get(url + "/collaboration/" + collaboration_id)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setLoader(false);
         setCollaboration(res.data);
+        setPartners(res.data.collaborationPartners)
       })
       .catch((err) => {
         console.log(err);
@@ -55,7 +61,7 @@ const CollaborationOwnerView = () => {
     axios
       .get(url + "/contact/"+JSON.parse(localStorage.getItem("community"))._id)
       .then((res) => {
-       console.log(res.data)
+       //console.log(res.data)
        setContactGroups(res.data)
        
       })
@@ -66,9 +72,54 @@ const CollaborationOwnerView = () => {
   }
 
   useEffect(() => {
-    getCollaboration();
-    getContactGroups()
+     getCollaboration();
+     getContactGroups()
   }, []);
+
+
+  const verifyPartner = async (partner) => {
+    setLoader2({
+      loader:true,
+      id: partner._id
+    })
+    let url = process.env.REACT_APP_BACKEND_URL;
+    await axios
+      .post(url + "/collaboration/verify-partner",partner)
+      .then((res) => {
+        console.log(res.data)
+        setPartners(res.data)
+        setLoader2({
+          loader:false,
+          id: partner._id
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+  const deletePartner = async (partner) => {
+    setLoader2({
+      loader:true,
+      id: partner._id
+    })
+    let url = process.env.REACT_APP_BACKEND_URL;
+    await axios
+      .post(url + "/collaboration/delete-partner",partner)
+      .then((res) => {
+        setPartners(res.data)
+        setLoader2({
+          loader:false,
+          id: partner._id
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  
 
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
@@ -121,7 +172,8 @@ const CollaborationOwnerView = () => {
       {loader ? (
         <div className="flex justify-center mt-[50px]">
           {" "}
-          <CircularProgress />{" "}
+          <div className="flex flex-1"/>
+          <CustomizedProgressBars />{" "}
         </div>
       ) : (
         <div className="mt-[30px] text-[12px] ">
@@ -204,13 +256,14 @@ const CollaborationOwnerView = () => {
                 </div>
               </div>
 
-              <div>
-                <div className="text-[#114369] text-[14px] font-semibold mt-9 mb-5">
-                  Collaboration Partners
+              <div className=" " >
+                <div className="text-[#114369]  text-[14px] font-semibold mt-9 mb-5">
+                  Collaboration Partners ({collaboration.collaborationPartners.length})
                 </div>
-                {collaboration.collaborationPartners.map((item, index) => (
+               <div className="lg:h-[20vw] h-[20vh] overflow-y-auto" >
+               {partners.map((item, index) => (
                   <div
-                    className="md:flex items-center space-x-3 my-6"
+                    className="md:flex items-center justify-between space-x-3 my-6"
                     key={index}
                   >
                     <div className="flex items-center space-x-3">
@@ -230,50 +283,72 @@ const CollaborationOwnerView = () => {
                     </div>
 
 
-                  {contactGroups.map((contact_group,index)=>{
-                   
-                    let result = contact_group.contacts.find((e)=> 
-                      e.user_id === item.user_id
-                    )
-                    console.log(result)
-                    if(result){
-                      return
-                    }else{
-                      return(
-                        <div className=" mt-2 mb-2 md:mb-0  " key={index} id={item._id} >
-                        <Button
-                          sx={{
-                            bgcolor: "#24A0FD",
-                            color: "white",
-                            fontSize: "14px",
-                            width: "165px",
-                            textTransform: "none",
-                            borderRadius: "5px",
-                            ":hover": {
-                              bgcolor: "#24A0FD",
-                              color: "white",
-                            },
-                          }}
+              
 
-                         
-  
-                          onClick={()=>{
-                            setOpenSelectContactGroupModal(true)
-                            setSelectedContactGroup(item)
-                            document.getElementById(item._id).hidden = true
-                          }}
-                        >
-                          Approve
-                        </Button>
-                      </div>
-                      )
-                    }
-                  })}
+                 
 
                     <div className="flex  items-center space-x-2 md:space-x-5">
                        
+                       
+                    {
+                    !item.is_verified ? (
+                   <>
+                   
+                    {loader2.loader && loader2.id === item._id ? (
+                      <CustomizedProgressBars/>
+                    ): (
+                      <> 
+                        <div className=" mt-2 mb-2 md:mb-0  " key={index} id={item._id} >
+                      <Button
+                        sx={{
+                          bgcolor: "#24A0FD",
+                          color: "white",
+                          fontSize: "14px",
+                          width: "165px",
+                          textTransform: "none",
+                          borderRadius: "5px",
+                          ":hover": {
+                            bgcolor: "#24A0FD",
+                            color: "white",
+                          },
+                        }}
 
                        
+
+                        onClick={()=>{
+                          verifyPartner(item)
+                        }}
+                      >
+                        Approve
+                      </Button>
+
+                      
+                    </div>
+                    <div className=" md:mt-0  ">
+                    <Button
+                      sx={{
+                        bgcolor: "#FF6060",
+                        color: "white",
+                        fontSize: "14px",
+                        width: "165px",
+                        textTransform: "none",
+                        borderRadius: "5px",
+                        ":hover": {
+                          bgcolor: "#FF6060",
+                          color: "white",
+                        },
+                      }}
+                      onClick={()=>{
+                        deletePartner(item)
+                      }}
+                    >
+                      Decline
+                    </Button>
+                  </div>
+                      </>
+                    )}
+                  </>
+                    ):(
                       <div className=" md:mt-0  " >
                         <Button
                           sx={{
@@ -296,6 +371,8 @@ const CollaborationOwnerView = () => {
                           Direct Message
                         </Button>
                       </div>
+                    )
+                  }  
 
                       <div>
                         <Button
@@ -382,6 +459,7 @@ const CollaborationOwnerView = () => {
                     </div>
                   </div>
                 ))}
+               </div>
               </div>
             </>
           )}
