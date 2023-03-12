@@ -108,7 +108,7 @@ const scroller = () => {
 useEffect(()=> {
   if(contactGroups && selectedContactGroup){
     getDirectMessage();
-    setSocket(io.connect('http://localhost:8080'))
+    setSocket(io.connect('https://guzo-dev.vercel.app:8080'))
   }
 }, [contactGroups, selectedContactGroup])
 
