@@ -328,95 +328,47 @@ const CollaborationOwnerView = () => {
                   Collaboration Partners ({collaboration.collaborationPartners.length})
                 </div>
                <div className="lg:h-[20vw] h-[20vh] overflow-y-auto" >
-               {partners.map((item, index) => (
-                  <div
-                    className="md:flex items-center justify-between space-x-3 my-6"
-                    key={index}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <Avatar
-                        src={collaboration._doc.photo}
-                        sx={{ width: "53px", height: "53px" }}
-                      />
-
-                      <div>
-                        <div className="text-black text-[14px] font-bold">
-                          {item.organization_name}
-                        </div>
-                        <div className="text-black text-[10px] font-thin   ">
-                          {item.message}
+               {partners.map((item, index) => { 
+                if(item.user_id !== JSON.parse(localStorage.getItem('user'))._id){
+                  return(
+                    (
+                      <div
+                      className="md:flex items-center justify-between space-x-3 my-6"
+                      key={index}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <Avatar
+                          src={collaboration._doc.photo}
+                          sx={{ width: "53px", height: "53px" }}
+                        />
+    
+                        <div>
+                          <div className="text-black text-[14px] font-bold">
+                            {item.organization_name}
+                          </div>
+                          <div className="text-black text-[10px] font-thin   ">
+                            {item.message}
+                          </div>
                         </div>
                       </div>
-                    </div>
-
-
-              
-
-                 
-
-                    <div className="flex  items-center space-x-2 md:space-x-5">
-                       
-                       
-                    {
-                    !item.is_verified ? (
-                   <>
+    
+    
+                
+    
                    
-                    {loader2.loader && loader2.id === item._id ? (
-                      <CustomizedProgressBars/>
-                    ): (
-                      <> 
-                        <div className=" mt-2 mb-2 md:mb-0  " key={index} id={item._id} >
-                      <Button
-                        sx={{
-                          bgcolor: "#24A0FD",
-                          color: "white",
-                          fontSize: "14px",
-                          width: "165px",
-                          textTransform: "none",
-                          borderRadius: "5px",
-                          ":hover": {
-                            bgcolor: "#24A0FD",
-                            color: "white",
-                          },
-                        }}
-
-                       
-
-                        onClick={()=>{
-                          verifyPartner(item)
-                        }}
-                      >
-                        Approve
-                      </Button>
-
-                      
-                    </div>
-                    <div className=" md:mt-0  ">
-                    <Button
-                      sx={{
-                        bgcolor: "#FF6060",
-                        color: "white",
-                        fontSize: "14px",
-                        width: "165px",
-                        textTransform: "none",
-                        borderRadius: "5px",
-                        ":hover": {
-                          bgcolor: "#FF6060",
-                          color: "white",
-                        },
-                      }}
-                      onClick={()=>{
-                        deletePartner(item)
-                      }}
-                    >
-                      Decline
-                    </Button>
-                  </div>
-                      </>
-                    )}
-                  </>
-                    ):(
-                      <div className=" md:mt-0  " >
+    
+                      <div className="flex  items-center space-x-2 md:space-x-5">
+                         
+                         
+                      {
+                      !item.is_verified ? (
+                     <>
+                     
+                      {loader2.loader && loader2.id === item._id ? (
+                        <CustomizedProgressBars/>
+                      ): (
+                        <> 
+                          <div className=" mt-2 mb-2 md:mb-0  " key={index} id={item._id} >
                         <Button
                           sx={{
                             bgcolor: "#24A0FD",
@@ -430,102 +382,156 @@ const CollaborationOwnerView = () => {
                               color: "white",
                             },
                           }}
-
-                          
-
+    
                          
-                        >
-                          Direct Message
-                        </Button>
-                      </div>
-                    )
-                  }  
-
-                      <div>
-                        <Button
-                          sx={{
-                            bgcolor: "white",
-                            border: "1px solid #24A0FD",
-                            color: "#24A0FD",
-                            fontSize: "12px",
-                            width: { md: "fit", xs: "fit" },
-                            px: 2,
-                            textTransform: "none",
-                            borderRadius: "5px",
-                            ":hover": {
-                              bgcolor: "white",
-                              color: "#24A0FD",
-                            },
+    
+                          onClick={()=>{
+                            verifyPartner(item)
                           }}
                         >
-                          <MoreHoriz
-                            id="basic-button"
-                            aria-controls={open ? "basic-menu" : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? "true" : undefined}
-                            onClick={handleClick}
-                          />
-                          <Menu
-                            anchorEl={anchorEl}
-                            id="account-menu"
-                            open={open}
-                            onClose={handleClose}
-                            onClick={handleClose}
-                            PaperProps={{
-                              elevation: 2,
-                              sx: {
-                                overflow: "visible",
-                                width: "220px",
-                                filter:
-                                  "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                                mt: 1.5,
-                                "& .MuiAvatar-root": {
-                                  width: 32,
-                                  height: 32,
-                                  ml: -0.5,
-                                  mr: 1,
-                                },
-                                "&:before": {
-                                  content: '""',
-                                  display: "block",
-                                  position: "absolute",
-                                  top: 0,
-                                  right: { lg: "45%", xs: "45%" },
-                                  width: 10,
-                                  height: 10,
-                                  bgcolor: "background.paper",
-                                  transform: "translateY(-50%) rotate(45deg)",
-                                  zIndex: 0,
-                                },
+                          Approve
+                        </Button>
+    
+                        
+                      </div>
+                      <div className=" md:mt-0  ">
+                      <Button
+                        sx={{
+                          bgcolor: "#FF6060",
+                          color: "white",
+                          fontSize: "14px",
+                          width: "165px",
+                          textTransform: "none",
+                          borderRadius: "5px",
+                          ":hover": {
+                            bgcolor: "#FF6060",
+                            color: "white",
+                          },
+                        }}
+                        onClick={()=>{
+                          deletePartner(item)
+                        }}
+                      >
+                        Decline
+                      </Button>
+                    </div>
+                        </>
+                      )}
+                    </>
+                      ):(
+                        <div className=" md:mt-0  " >
+                          <Button
+                            sx={{
+                              bgcolor: "#24A0FD",
+                              color: "white",
+                              fontSize: "14px",
+                              width: "165px",
+                              textTransform: "none",
+                              borderRadius: "5px",
+                              ":hover": {
+                                bgcolor: "#24A0FD",
+                                color: "white",
                               },
                             }}
-                            transformOrigin={{
-                              horizontal: "center",
-                              vertical: "top",
-                            }}
-                            anchorOrigin={{
-                              horizontal: "center",
-                              vertical: "bottom",
+    
+                            
+    
+                           
+                          >
+                            Direct Message
+                          </Button>
+                        </div>
+                      )
+                    }  
+    
+                        <div>
+                          <Button
+                            sx={{
+                              bgcolor: "white",
+                              border: "1px solid #24A0FD",
+                              color: "#24A0FD",
+                              fontSize: "12px",
+                              width: { md: "fit", xs: "fit" },
+                              px: 2,
+                              textTransform: "none",
+                              borderRadius: "5px",
+                              ":hover": {
+                                bgcolor: "white",
+                                color: "#24A0FD",
+                              },
                             }}
                           >
-                            <MenuItem sx={{ fontSize: "13px", px: "35%" }}>
-                              Send Email
-                            </MenuItem>
-                            <MenuItem sx={{ fontSize: "13px", px: "24%" }}>
-                              Send Text Message
-                            </MenuItem>
-                            <Divider sx={{ mx: "6%", my: "1px" }} />
-                            <MenuItem
-                              sx={{ fontSize: "13px", px: "12%", color: "red" }}
+                            <MoreHoriz
+                              id="basic-button"
+                              aria-controls={open ? "basic-menu" : undefined}
+                              aria-haspopup="true"
+                              aria-expanded={open ? "true" : undefined}
+                              onClick={handleClick}
+                            />
+                            <Menu
+                              anchorEl={anchorEl}
+                              id="account-menu"
+                              open={open}
+                              onClose={handleClose}
+                              onClick={handleClose}
+                              PaperProps={{
+                                elevation: 2,
+                                sx: {
+                                  overflow: "visible",
+                                  width: "220px",
+                                  filter:
+                                    "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                                  mt: 1.5,
+                                  "& .MuiAvatar-root": {
+                                    width: 32,
+                                    height: 32,
+                                    ml: -0.5,
+                                    mr: 1,
+                                  },
+                                  "&:before": {
+                                    content: '""',
+                                    display: "block",
+                                    position: "absolute",
+                                    top: 0,
+                                    right: { lg: "45%", xs: "45%" },
+                                    width: 10,
+                                    height: 10,
+                                    bgcolor: "background.paper",
+                                    transform: "translateY(-50%) rotate(45deg)",
+                                    zIndex: 0,
+                                  },
+                                },
+                              }}
+                              transformOrigin={{
+                                horizontal: "center",
+                                vertical: "top",
+                              }}
+                              anchorOrigin={{
+                                horizontal: "center",
+                                vertical: "bottom",
+                              }}
                             >
-                              Remove From Collaboration
-                            </MenuItem>
-                          </Menu>
-                        </Button>
+                              <MenuItem sx={{ fontSize: "13px", px: "35%" }}>
+                                Send Email
+                              </MenuItem>
+                              <MenuItem sx={{ fontSize: "13px", px: "24%" }}>
+                                Send Text Message
+                              </MenuItem>
+                              <Divider sx={{ mx: "6%", my: "1px" }} />
+                              <MenuItem
+                                sx={{ fontSize: "13px", px: "12%", color: "red" }}
+                              >
+                                Remove From Collaboration
+                              </MenuItem>
+                            </Menu>
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                    )
+                  )
+                }
+                })}
                </div>
               </div>
             </>
