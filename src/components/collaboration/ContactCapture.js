@@ -3,11 +3,14 @@ import { Button, CircularProgress, InputBase } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import ErrorSnack from "../molecules/ErrorSnack";
 import CustomizedProgressBars from "../molecules/Progress";
 import ThankYouCard from "../molecules/ThankYouCard";
 
 const ContactCapture = () => {
   const [openThankYouCard, setOpenThankYouCard] = useState(false);
+  const [msg,setMsg] = useState("")
+  const [openErrorSnack, setOpenErrorSnack] = useState(false)
   const { collaboration_id } = useParams();
   const [loader, setLoader] = useState(true);
   const [loader2, setLoader2] = useState(false);
@@ -60,29 +63,29 @@ const ContactCapture = () => {
       });
   };
 
-  const addContact = async () => {
-    let contact = {
-      user_id: partner.user_id,
-      name: partner.first_name + " " + partner.last_name,
-      email: partner.email,
-      phone_number: partner.country_code + partner.phone,
-    };
-    setLoader(true);
-    let url = process.env.REACT_APP_BACKEND_URL;
-    console.log({ ...contact, contact_group_id: contactGroup._id });
-    await axios
-      .post(url + "/contact/add/", {
-        contact,
-        contact_group_id: contactGroup._id,
-      })
-      .then((res) => {
-        console.log(res.data);
-        setLoader(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const addContact = async () => {
+  //   let contact = {
+  //     user_id: partner.user_id,
+  //     name: partner.first_name + " " + partner.last_name,
+  //     email: partner.email,
+  //     phone_number: partner.country_code + partner.phone,
+  //   };
+  //   setLoader(true);
+  //   let url = process.env.REACT_APP_BACKEND_URL;
+  //   console.log({ ...contact, contact_group_id: contactGroup._id });
+  //   await axios
+  //     .post(url + "/contact/add/", {
+  //       contact,
+  //       contact_group_id: contactGroup._id,
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setLoader(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   useEffect(() => {
     if (!user) {
@@ -92,7 +95,7 @@ const ContactCapture = () => {
   }, []);
 
   const createPartner = async () => {
-    setLoader2(TroubleshootTwoTone);
+    setLoader2(true);
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
       .post(url + "/collaboration/partner", {
@@ -101,14 +104,23 @@ const ContactCapture = () => {
       })
       .then((res) => {
         //console.log(res.data)
-        addContact()
+        // addContact()
+       if(res.data.error){
+        setOpenErrorSnack(true)
+        setMsg(res.data.msg)
+        setLoader2(false);
+       }else{
         setLoader2(false);
         console.log(res.data);
         setOpenThankYouCard(true);
+       }
       })
       .catch((err) => {
         console.log(err);
         setLoader2(false);
+        setOpenErrorSnack(true)
+        setMsg(err.error)
+        
       });
   };
 
@@ -130,6 +142,12 @@ const ContactCapture = () => {
   // }
   return (
     <div className="flex justify-center">
+      <ErrorSnack
+        open={openErrorSnack}
+        setOpen={setOpenErrorSnack}
+        msg={msg}
+        duration={14000000}
+      />
       <div className="bg-white lg:w-[70vw] rounded-[20px] shadow-lg py-[30px] px-[40px]  ">
         <div className="text-center  text-[30px]  font-extrabold ">
           <div>{collaboration._doc?.community.name} </div>

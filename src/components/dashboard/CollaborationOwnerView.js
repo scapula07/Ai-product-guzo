@@ -26,6 +26,7 @@ const CollaborationOwnerView = () => {
   });
   const [openSelectContactGroupModal, setOpenSelectContactGroupModal] = useState(false)
   const [contactGroups, setContactGroups] = useState([])
+  const [contactGroup, setContactGroup] = useState()
   const [selectedContactGroup, setSelectedContactGroup] = useState({})
 
 
@@ -38,6 +39,19 @@ const CollaborationOwnerView = () => {
   };
   const navigate = useNavigate();
   const { collaboration_id } = useParams();
+
+  const getContactGroupByCollaboration = async () => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/contact/by-collaboration/" + collaboration_id)
+      .then((res) => {
+        //console.log(res.data[0]);
+        setContactGroup(res.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getCollaboration = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
@@ -74,7 +88,24 @@ const CollaborationOwnerView = () => {
   useEffect(() => {
      getCollaboration();
      getContactGroups()
+     getContactGroupByCollaboration()
   }, []);
+  const addContact = async (contact) => {
+   
+    let url = process.env.REACT_APP_BACKEND_URL;
+    console.log({ ...contact, contact_group_id: contactGroup._id });
+    await axios
+      .post(url + "/contact/add/", {
+        contact,
+        contact_group_id: contactGroup._id,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
 
   const verifyPartner = async (partner) => {
@@ -83,11 +114,18 @@ const CollaborationOwnerView = () => {
       id: partner._id
     })
     let url = process.env.REACT_APP_BACKEND_URL;
+    let contact = {
+      user_id: partner.user_id,
+      name: partner.first_name + " " + partner.last_name,
+      email: partner.email,
+      phone_number: partner.country_code + partner.phone,
+    };
     await axios
       .post(url + "/collaboration/verify-partner",partner)
       .then((res) => {
         console.log(res.data)
         setPartners(res.data)
+        addContact(contact)
         setLoader2({
           loader:false,
           id: partner._id
