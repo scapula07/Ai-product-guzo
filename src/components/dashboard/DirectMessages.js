@@ -21,14 +21,50 @@ const DirectMessages = ({community, setCommunity}) => {
   const [contactGroups, setContactGroups] = useState(null);
   const [direct_messages, setDirectMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [contactGroup, setContactGroup] = useState([])
+  const[selectedContactGroup, setSelectedContactGroup] = useState(null)
+const scroller = () => {
+  document.getElementById('msgbar').scrollTo({ top:document.getElementById('msgbar').scrollHeight, behavior:'smooth'})
+}
 
 
+  const getContactGroups = async() =>{
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/contact/"+JSON.parse(localStorage.getItem("community"))?._id)
+      .then((res) => {
+       console.log(res.data)
+       let cs = res.data
+       axios
+       .get(url + "/contact/get-by-user/"+JSON.parse(localStorage.getItem("user"))?._id)
+       .then((res) => {
+        console.log(res.data)
+        let c = [...cs, ...res.data]
+        console.log(c)
+        setContactGroups(c)
+        setSelectedContactGroup(c[0])
+        
+       })
+ 
+       .catch((err) => {
+         console.log(err);
+       });
+       
+      })
 
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(()=> {
+    scroller()
+  },[direct_messages])
 
   const getDirectMessage = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/community/get-community-by-id/" + JSON.parse(localStorage.getItem("community"))?._id)
+      .get(url + "/contact/get-contact-group/" + selectedContactGroup?._id)
       .then((res) => {
         //console.log(res.data);
         setDirectMessages(res.data.direct_messages);
@@ -42,7 +78,7 @@ const DirectMessages = ({community, setCommunity}) => {
   const addDirectMessage = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     socket.emit("new_message", {
-        community_id : JSON.parse(localStorage.getItem("community"))?._id,
+      contact_group_id : selectedContactGroup?._id,
         user_id: JSON.parse(localStorage.getItem("user"))?._id,
         username: JSON.parse(localStorage.getItem("user"))?.username,
         message,
@@ -50,8 +86,8 @@ const DirectMessages = ({community, setCommunity}) => {
     });
 
     axios
-      .post(url + "/community/add-new-message/", {
-        community_id : JSON.parse(localStorage.getItem("community"))?._id,
+      .post(url + "/contact/add-new-message/", {
+        contact_group_id : selectedContactGroup?._id,
         user_id: JSON.parse(localStorage.getItem("user"))?._id,
         username: JSON.parse(localStorage.getItem("user"))?.username,
         message,
@@ -69,14 +105,18 @@ const DirectMessages = ({community, setCommunity}) => {
   };
 
  
-
+useEffect(()=> {
+  if(contactGroups && selectedContactGroup){
+    getDirectMessage();
+    setSocket(io.connect('http://localhost:8080'))
+  }
+}, [contactGroups, selectedContactGroup])
 
  
   useEffect(() => {
-    getDirectMessage();
-    setSocket(io.connect('https://guzo-backend.herokuapp.com'))
+    getContactGroups()
   }, [])
-
+ 
   useEffect(() => {
     console.log(direct_messages)
     if (socket) {
@@ -86,12 +126,12 @@ const DirectMessages = ({community, setCommunity}) => {
       socket.on('new_message', (data)=>{
         console.log(data)
 
-        if(data.community_id === JSON.parse(localStorage.getItem("community"))._id){
+        if(data.contact_group_id === selectedContactGroup._id){
           setDirectMessages((e)=> ([...direct_messages, data]))
         }
       })
     }
-  }, [socket,direct_messages]);
+  }, [socket,direct_messages,selectedContactGroup]);
 
   return (
     <div className="bg-white py-[20px] pb-[80px]  md:rounded-[18px] shadow-lg">
@@ -105,10 +145,12 @@ const DirectMessages = ({community, setCommunity}) => {
       <MessageModal
         open={open}
         setOpen={setOpen}
+        contactGroups={contactGroups}
+        selectedContactGroup={selectedContactGroup} setSelectedContactGroup={setSelectedContactGroup}
       />
       <div className="grid grid-cols-5 gap-4 md:px-[30px]">
         <div className=" hidden lg:block col-span-2 shadow-lg py-2 px-3 space-y-4 rounded-xl ">
-          <MessageContacts  />
+          <MessageContacts  contactGroups={contactGroups} selectedContactGroup={selectedContactGroup} setSelectedContactGroup={setSelectedContactGroup} />
         </div>
 
         <div className="col-span-5 lg:col-span-3 shadow-lg py-2 pb-6 px-3 space-y-4 rounded-xl ">
@@ -119,9 +161,10 @@ const DirectMessages = ({community, setCommunity}) => {
           <div className="space-y-4">
             {/* message */}
 
+            <div className="h-[350px] overflow-y-auto" id='msgbar' >
             {direct_messages &&
               direct_messages.map((item, index) => (
-                <div className="space-y-4" key={index}>
+                <div className="space-y-4 mb-2" key={index}>
                   <div className="flex items-center">
                     <Avatar
                       variant="square"
@@ -147,6 +190,7 @@ const DirectMessages = ({community, setCommunity}) => {
                   </div>
                 </div>
               ))}
+            </div>
 
             <div className="w-full">
               <InputBase

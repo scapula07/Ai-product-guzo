@@ -3,7 +3,7 @@ import { Avatar, CircularProgress, Divider, InputBase } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-const MessageContacts = () => {
+const MessageContacts = ({contactGroups,selectedContactGroup, setSelectedContactGroup}) => {
   const [users, setUsers] = useState(null)
   const [loader, setLoader ] = useState()
   const [community, setCommunity] = useState(JSON.parse(localStorage.getItem('community')) || null)
@@ -25,7 +25,7 @@ const MessageContacts = () => {
   }, [])
   return (
     <div className="  py-2 px-3 space-y-4 rounded-xl ">
-       <div className='text-sm font-bold text-center hidden lg:block'>{JSON.parse(localStorage.getItem('community'))?.name} group chat</div>
+       <div className='text-sm font-bold text-center hidden lg:block'>{selectedContactGroup?.name} </div>
             <div className=" md:block lg:block mt-2 md:mt-0">
               <InputBase
                 sx={{
@@ -53,13 +53,15 @@ const MessageContacts = () => {
         <div className="mt-[5vw] space-y-[5vw] md:space-y-[15px] ">
        
 
-       {users && users.map((item,index)=> 
-      {
+       {contactGroups && contactGroups.map((item,index)=> (
+      
        
-        if(  item.communities.find(e=> e.id == community?._id)){
-           
-          return(
-            <div key={index} > 
+       
+            <div key={index} className={item?._id === selectedContactGroup?._id ? "bg-gray-200 pt-2 px-2 rounded-md": "cursor-pointer"}
+            onClick={()=> {
+              setSelectedContactGroup(item)
+            }}
+            > 
                   <div className="flex items-center mb-3">
                 <Avatar
                   variant="square"
@@ -71,11 +73,11 @@ const MessageContacts = () => {
                     borderRadius: "10px",
                   }}
                 >
-                  {item.username.substr(0,1)}
+                  {item.name.substr(0,1)}
                 </Avatar>
 
                 <div className="font-semibold text-[14px] ml-3 flex-1">
-                 {item.username}
+                 {item.name}
                 </div>
 
                 <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
@@ -84,10 +86,9 @@ const MessageContacts = () => {
               </div>
               <Divider/>
                 </div>
-          )
-        }
+        
 
-      }
+      )
        )}
       </div>
       )}

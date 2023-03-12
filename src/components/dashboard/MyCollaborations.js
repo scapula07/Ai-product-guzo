@@ -38,6 +38,7 @@ const MyCollaborations = () => {
   useEffect(() => {
     getCollaborations();
   }, []);
+  
 
   // useEffect(() => {
   //   if (active === 1) {
