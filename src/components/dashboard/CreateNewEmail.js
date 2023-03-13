@@ -209,7 +209,7 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
               width: { md: "800px", xs: "100%" },
               py: 1,
             }}
-            placeholder="Fifth Ward CommUNITY Message"
+            placeholder="Fifth Ward Organization Message"
             value={name}
             onChange={(e)=> setName(e.target.value)}
           />

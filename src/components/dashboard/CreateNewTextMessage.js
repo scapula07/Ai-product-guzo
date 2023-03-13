@@ -218,7 +218,7 @@ const CreateNewTextMessage = () => {
               width: { md: "800px", xs: "100%" },
               py: 1,
             }}
-            placeholder="Fifth Ward CommUNITY Message"
+            placeholder="Fifth Ward organization Message"
             value={name}
             onChange={(e)=> setName(e.target.value)}
           />

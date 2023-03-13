@@ -329,7 +329,7 @@ const ContactCapture = () => {
           only be shared with the “Collaboration” organizer. If you choose to
           submit your info, you consent to the organization communicating with
           you through the provided channels. You can choose to “unsubscribe”
-          from the community at any time.
+          from the organization at any time.
         </div>
 
         <div className="mt-3">

@@ -263,7 +263,7 @@ const DashboardSidebar = ({community,setOpen, setCommunity, setLoader}) => {
                 >
                   
                   <Campaign sx={{ fontSize: "15px", mr: 1 }} />
-                  Create Community 
+                  Create Organization 
                 </div>
 
                 <div className={window.location.pathname.match('/dashboard/edit-community-profil/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
@@ -274,7 +274,7 @@ const DashboardSidebar = ({community,setOpen, setCommunity, setLoader}) => {
                 >
                   
                   <Edit sx={{ fontSize: "15px", mr: 1 }} />
-                  Edit Community 
+                  Edit Organization 
                 </div>
                
               </div>

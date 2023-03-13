@@ -33,23 +33,27 @@ const Register = () => {
 
     if (user.first_name.length < 3) {
       document.getElementById("info").innerHTML = "( first name is invalid )";
+      setLoader(false)
       return;
     }
 
 
     if (user.last_name.length < 3) {
       document.getElementById("info").innerHTML = "( last name is invalid )";
+      setLoader(false)
       return;
     }
 
     if (user.email.length < 3) {
       document.getElementById("info").innerHTML = "( email is invalid )";
+      setLoader(false)
       return;
     }
 
     if (user.password.length < 8) {
       document.getElementById("info").innerHTML =
         "( password should be atleast 8 characters )";
+        setLoader(false)
       return;
     }
 
@@ -71,6 +75,7 @@ const Register = () => {
       })
       .catch((err) => {
         document.getElementById("info").innerHTML = "( user already exists )";
+        setLoader(false)
         console.log(err);
       });
   };

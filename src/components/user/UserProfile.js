@@ -96,7 +96,7 @@ const UserProfile = () => {
             }}
           />
           <span className="text-[#24A0FD] font-[500]">Creation Date: </span>{" "}
-          <span>Community Resource</span>
+          <span>Organization Resource</span>
         </div>
       </div>
     </div>

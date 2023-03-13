@@ -104,14 +104,14 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
       <SuccessSnackbar
         open={openSuccessSnack}
         setOpen={setOpenSuccessSnack}
-        msg={"Community Created"}
+        msg={"Organization Created"}
         duration={14000000}
       />
       <div className="lg:flex items-center">
         <div className=" flex-1 text-[#114369] font-[600] text-xl ">
-          <div> Create Community Profile</div>
+          <div> Create  Organization Profile</div>
           <div className="text-xs font-light text-dark">
-            Create your community profile or{" "}
+            Create your organization profile or{" "}
             <span className="text-red-500">
               select from existing communities
             </span>
@@ -169,7 +169,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
       <div className="space-y-5">
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-            Community name{" "}
+            Organization name{" "}
             <span className="text-black font-thin text-[10px] ">
               (Required)
             </span>
@@ -184,7 +184,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                 width: { md: "400px", xs: "100%" },
                 py: "3px",
               }}
-              placeholder="Community name"
+              placeholder="Organization name"
               value={communityData.name}
               onChange={(e) => {
                 setCommunityData({
@@ -198,7 +198,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-            Community profile picture{" "}
+            Organization profile picture{" "}
             <span className="text-black font-thin text-[10px] ">
               (Required)
             </span>
@@ -245,7 +245,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-            Community description{" "}
+            Organization description{" "}
             <span className="text-black font-thin text-[10px] ">
               (Required)
             </span>
@@ -262,7 +262,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                 width: "100%",
                 py: "3px",
               }}
-              placeholder="Community description"
+              placeholder="Organization description"
               value={communityData.description}
               onChange={(e) => {
                 setCommunityData({
@@ -276,7 +276,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
 
         {/* <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-            Community category{" "}
+            Organization category{" "}
             <span className="text-black font-thin text-[10px] ">
               (Required)
             </span>

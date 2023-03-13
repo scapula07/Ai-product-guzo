@@ -110,7 +110,7 @@ const Discover = () => {
                 <div> <span className="font-bold text-[#24A0FD] mr-3">
                      <Dashboard sx={{ fontSize: ''}} /> Category: 
                      </span>
-                     <span>Community Resource, Neighborhood Resource, Connector</span>  </div>
+                     <span>Organization Resource, Neighborhood Resource, Connector</span>  </div>
 
                 <div className="flex items-start">
                     <Avatar variant="square" src='logo1.png' sx={{ height: '' , width:'' }}/>   

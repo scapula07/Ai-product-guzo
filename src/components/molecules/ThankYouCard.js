@@ -17,7 +17,7 @@ const ThankYouCard = ({open, setOpen}) => {
 
 
         <div className="text-[#114369] text-center font-bold text-[12px] mt-2" >
-        Start collaborating with your community today!
+        Start collaborating with your Organization today!
         </div>
 
 

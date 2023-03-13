@@ -149,17 +149,17 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
 
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
-      <SuccessSnackbar msg={'Community edit was successful'} duration='10000' 
+      <SuccessSnackbar msg={'Organization edit was successful'} duration='10000' 
       open={openSuccessSnack} setOpen={setOpenSuccessSnack}  />
       <div className="lg:flex items-center">
         <div className=" flex-1 text-[#114369] font-[600] text-xl ">
           <div>
             {" "}
-           Edit Community Profile
+           Edit Organization Profile
           </div>
           <div className="text-xs font-light text-dark">
            
-              Edit your community profile
+              Edit your organization profile
           </div>
         </div>
 
@@ -214,7 +214,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
       <div className="space-y-5">
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-            Community name{" "}
+          Organization name{" "}
             <span className="text-black font-thin text-[10px] ">
               (Required)
             </span>
@@ -229,7 +229,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
                 width: { md: "400px", xs: "100%" },
                 py: "3px",
               }}
-              placeholder="Community name"
+              placeholder="Organization name"
               value={communityData.name}
               onChange={(e) => {
                 setCommunityData({
@@ -243,7 +243,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-            Community profile picture{" "}
+          Organization profile picture{" "}
             <span className="text-black font-thin text-[10px] ">
               (Required)
             </span>
@@ -290,7 +290,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-            Community description{" "}
+          Organization description{" "}
             <span className="text-black font-thin text-[10px] ">
               (Required)
             </span>
