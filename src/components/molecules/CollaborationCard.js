@@ -15,7 +15,7 @@ const CollaborationCard = ({collaboration}) => {
       />
     </div>
     <div className="text-center font-[500] mt-[15px]">{collaboration?.title}</div>
-    <div className="text-xs font-[300] mt-[6px] text-center ">({collaboration?.is_public ? "public" : "private"})</div>
+    <div className="text-xs font-[300] mt-[6px] text-center ">({collaboration?.is_public ? "Public" : "Private"})</div>
     <div className="mt-[10px]">
       <Button
         sx={{

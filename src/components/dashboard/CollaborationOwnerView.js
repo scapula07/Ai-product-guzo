@@ -179,6 +179,8 @@ const CollaborationOwnerView = () => {
                 color: "#24A0FD",
               },
             }}
+
+            onClick={()=> navigate('/dashboard/my-collaborations')}
           >
             Back
           </Button>

@@ -137,7 +137,7 @@ const CreateCollaboration = ({ community }) => {
           <div> New Collaboration</div>
         </div>
 
-        <div className="flex  mt-4 md:mt-0">
+        {/* <div className="flex  mt-4 md:mt-0">
           <div className="mr-3">
             <Button
               sx={{
@@ -186,7 +186,7 @@ const CreateCollaboration = ({ community }) => {
               </Button>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
 
       <Divider sx={{ my: 3 }} />
@@ -317,7 +317,7 @@ const CreateCollaboration = ({ community }) => {
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-            The Need{" "}
+            Ask{" "}
             <span className="text-[#FF6060] font-normal text-[10px]  ">
               (Required)
             </span>
@@ -418,7 +418,7 @@ const CreateCollaboration = ({ community }) => {
         <div className="space-y-2">
           <div className="text-[#818181] font-semibold text-[14px] ">
             Support Links{" "}
-            <span className="text-[#FF6060] font-normal text-[10px]  ">
+            <span className="text-[#818181] font-normal text-[10px]  ">
               (Optional)
             </span>
           </div>
@@ -575,6 +575,64 @@ const CreateCollaboration = ({ community }) => {
             >
               Private
             </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div className="lg:flex items-center mt-4">
+        <div className=" flex-1 text-[#114369] font-[600] text-xl ">
+          
+        </div>
+
+        <div className="flex  mt-4 md:mt-0">
+          <div className="mr-3">
+            <Button
+              sx={{
+                bgcolor: "white",
+                border: "1px solid #24A0FD",
+                color: "#24A0FD",
+                fontSize: "12px",
+                width: { md: "105px", xs: "" },
+                textTransform: "none",
+                borderRadius: "5px",
+                ":hover": {
+                  bgcolor: "white",
+                  color: "#24A0FD",
+                },
+              }}
+              onClick={() => navigate("/dashboard/my-collaborations")}
+            >
+              Cancel
+            </Button>
+          </div>
+          <div>
+            <ShareCollaborationModal
+              open={openShareCollaborationModal}
+              setOpen={setOpenCollaborationModal}
+              collaboration_id={collaboration_id}
+            />
+            {loader ? (
+              <CustomizedProgressBars />
+            ) : (
+              <Button
+                onClick={createCollaboration}
+                sx={{
+                  bgcolor: "#24A0FD",
+                  color: "white",
+                  fontSize: "12px",
+                  width: "175px",
+                  textTransform: "none",
+                  borderRadius: "5px",
+                  ":hover": {
+                    bgcolor: "#24A0FD",
+                    color: "white",
+                  },
+                }}
+              >
+                Create and Save
+              </Button>
+            )}
           </div>
         </div>
       </div>

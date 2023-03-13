@@ -118,7 +118,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
           </div>
         </div>
 
-        <div className="flex  mt-4 md:mt-0">
+        {/* <div className="flex  mt-4 md:mt-0">
           <div className="mr-3">
             <Button
               sx={{
@@ -162,14 +162,14 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
               </Button>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
 
       <Divider sx={{ my: 3 }} />
       <div className="space-y-5">
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-            Organization name{" "}
+            Organization Name{" "}
             <span className="text-black font-thin text-[10px] ">
               (Required)
             </span>
@@ -184,7 +184,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                 width: { md: "400px", xs: "100%" },
                 py: "3px",
               }}
-              placeholder="Organization name"
+              placeholder="Organization Name"
               value={communityData.name}
               onChange={(e) => {
                 setCommunityData({
@@ -198,7 +198,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-            Organization profile picture{" "}
+            Organization Profile Picture{" "}
             <span className="text-black font-thin text-[10px] ">
               (Required)
             </span>
@@ -484,6 +484,58 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                   </div>
                 ))}
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="lg:flex items-center mt-5">
+        <div className=" flex-1 text-[#114369] font-[600] text-xl ">
+         
+        </div>
+
+        <div className="flex  mt-4 md:mt-0">
+          <div className="mr-3">
+            <Button
+              sx={{
+                bgcolor: "white",
+                border: "1px solid #24A0FD",
+                color: "#24A0FD",
+                fontSize: "12px",
+                width: { md: "105px", xs: "" },
+                textTransform: "none",
+                borderRadius: "5px",
+                ":hover": {
+                  bgcolor: "white",
+                  color: "#24A0FD",
+                },
+              }}
+              onClick={() => navigate("/dashboard/collaboration")}
+            >
+              Cancel
+            </Button>
+          </div>
+          <div>
+            {loader ? (
+              <CustomizedProgressBars />
+            ) : (
+              <Button
+                sx={{
+                  bgcolor: "#24A0FD",
+                  color: "white",
+                  fontSize: "12px",
+                  width: "175px",
+                  textTransform: "none",
+                  borderRadius: "5px",
+                  ":hover": {
+                    bgcolor: "#24A0FD",
+                    color: "white",
+                  },
+                }}
+                onClick={createCommunity}
+              >
+                Save and Close
+              </Button>
+            )}
           </div>
         </div>
       </div>

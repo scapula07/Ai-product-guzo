@@ -125,7 +125,7 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
         <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
           Create New Email
         </div>
-        <div className="lg:space-x-4 ">
+        {/* <div className="lg:space-x-4 ">
           <Button
             sx={{
               bgcolor: "white",
@@ -189,7 +189,7 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
             Save and Send
           </Button>
           )}
-        </div>
+        </div> */}
       </div>
 
       <Divider sx={{ my: 3 }} />
@@ -343,6 +343,78 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
 
         </div> */}
 
+      </div>
+
+
+      <div className="md:flex space-y-2 md:space-y-0 items-center mt-5">
+        <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
+         
+        </div>
+        <div className="lg:space-x-4 ">
+          <Button
+            sx={{
+              bgcolor: "white",
+              color: "#24A0FD",
+              fontSize: "14px",
+              border: "1px solid #24A0FD",
+              width: { sm: "fit", xs: "fit" },
+              textTransform: "none",
+              px: 3,
+              mx: {xs: 1 , lg:0},
+              borderRadius: "5px",
+              ":hover": {
+                bgcolor: "white",
+                color: "#24A0FD",
+              },
+            }}
+            onClick={()=>navigate('/dashboard/email')}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            sx={{
+              bgcolor: "white",
+              color: "#24A0FD",
+              fontSize: "14px",
+              border: "1px solid #24A0FD",
+              width: { sm: "fit", xs: "fit" },
+              textTransform: "none",
+              borderRadius: "5px",
+              px: 3,
+              mx: {xs: 1 , lg:0},
+              ":hover": {
+                bgcolor: "white",
+                color: "#24A0FD",
+              },
+            }}
+          >
+            Save as Draft
+          </Button>
+          {loader ? (<CustomizedProgressBars/>): (
+            <Button
+            sx={{
+              bgcolor: "#24A0FD",
+              color: "white",
+              fontSize: "14px",
+              width: { sm: "fit", xs: "fit" },
+              textTransform: "none",
+              borderRadius: "5px",
+              px: 3,
+              mx: {xs: 1 , lg:0},
+              mt: {xs: 2 , lg:0},
+              ":hover": {
+                bgcolor: "#24A0FD",
+                color: "white",
+              },
+            }}
+
+            onClick={sendEmail}
+          >
+            Save and Send
+          </Button>
+          )}
+        </div>
       </div>
     </div>
     );

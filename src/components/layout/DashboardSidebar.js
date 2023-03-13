@@ -121,8 +121,14 @@ const DashboardSidebar = ({community,setOpen, setCommunity, setLoader}) => {
           </div>
       </div>
 
+      
+
       <div className="text-center  bg-[#EBF1F5] py-[15px] rounded-[16px]">
+
+        
         <div>
+
+          
           <Accordion
             sx={{ bgcolor: "transparent" }}
             elevation={0}
@@ -141,7 +147,27 @@ const DashboardSidebar = ({community,setOpen, setCommunity, setLoader}) => {
             <AccordionDetails sx={{ mt: -1 }}>
               <div className="text-left space-y-2 text-[13px] pl-3 font-[300] ">
 
-             
+              <div className={window.location.pathname.match('/dashboard/create-community-profile/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
+                onClick={()=>{
+                   navigate('/dashboard/create-community-profile')
+                   setOpen(false)
+                  }}
+                >
+                  
+                  <Campaign sx={{ fontSize: "15px", mr: 1 }} />
+                  Create Organization 
+                </div>
+
+                <div className={window.location.pathname.match('/dashboard/edit-community-profil/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
+                onClick={()=>{
+                  navigate('/dashboard/edit-community-profile')
+                  setOpen(false)
+                }}
+                >
+                  
+                  <Edit sx={{ fontSize: "15px", mr: 1 }} />
+                  Edit Organization 
+                </div>
 
 
 
@@ -255,27 +281,7 @@ const DashboardSidebar = ({community,setOpen, setCommunity, setLoader}) => {
                 </div>
 
 
-                <div className={window.location.pathname.match('/dashboard/create-community-profile/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
-                onClick={()=>{
-                   navigate('/dashboard/create-community-profile')
-                   setOpen(false)
-                  }}
-                >
-                  
-                  <Campaign sx={{ fontSize: "15px", mr: 1 }} />
-                  Create Organization 
-                </div>
-
-                <div className={window.location.pathname.match('/dashboard/edit-community-profil/*') ?"cursor-pointer text-blue-500": "cursor-pointer"}
-                onClick={()=>{
-                  navigate('/dashboard/edit-community-profile')
-                  setOpen(false)
-                }}
-                >
-                  
-                  <Edit sx={{ fontSize: "15px", mr: 1 }} />
-                  Edit Organization 
-                </div>
+               
                
               </div>
             </AccordionDetails>

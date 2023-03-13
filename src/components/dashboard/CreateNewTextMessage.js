@@ -132,7 +132,7 @@ const CreateNewTextMessage = () => {
         <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
           Create New Text Messages
         </div>
-        <div className="lg:space-x-4 lg:flex block">
+        {/* <div className="lg:space-x-4 lg:flex block">
           <Button
             sx={{
               bgcolor: "white",
@@ -198,7 +198,7 @@ const CreateNewTextMessage = () => {
             Save and Send
           </Button>
           )}
-        </div>
+        </div> */}
       </div>
 
       <Divider sx={{ my: 3 }} />
@@ -352,6 +352,79 @@ const CreateNewTextMessage = () => {
 
         </div> */}
 
+      </div>
+
+      <div className="md:flex space-y-2 md:space-y-0 items-center mt-5">
+        <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
+         
+        </div>
+        <div className="lg:space-x-4 lg:flex block">
+          <Button
+            sx={{
+              bgcolor: "white",
+              color: "#24A0FD",
+              fontSize: "14px",
+              border: "1px solid #24A0FD",
+              width: { sm: "fit", xs: "fit" },
+              textTransform: "none",
+              px: 3,
+              mx: {xs: 1 , lg:0},
+              borderRadius: "5px",
+              ":hover": {
+                bgcolor: "white",
+                color: "#24A0FD",
+              },
+            }}
+            onClick={()=>navigate('/dashboard/textmessages')}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            sx={{
+              bgcolor: "white",
+              color: "#24A0FD",
+              fontSize: "14px",
+              border: "1px solid #24A0FD",
+              width: { sm: "fit", xs: "fit" },
+              textTransform: "none",
+              borderRadius: "5px",
+              px: 3,
+              mx: {xs: 1 , lg:0},
+              ":hover": {
+                bgcolor: "white",
+                color: "#24A0FD",
+              },
+            }}
+          >
+            Save as Draft
+          </Button>
+          {loader ? (
+            <div> <CustomizedProgressBars/> </div>
+          ): (
+            <Button
+            sx={{
+              bgcolor: "#24A0FD",
+              color: "white",
+              fontSize: "14px",
+              width: { sm: "fit", xs: "fit" },
+              textTransform: "none",
+              borderRadius: "5px",
+              px: 3,
+              mx: {xs: 1 , lg:0},
+              mt: {xs: 2 , lg:0},
+              ":hover": {
+                bgcolor: "#24A0FD",
+                color: "white",
+              },
+            }}
+
+            onClick={sendTextMessage}
+          >
+            Save and Send
+          </Button>
+          )}
+        </div>
       </div>
     </div>
   );

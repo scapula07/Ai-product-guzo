@@ -165,7 +165,7 @@ const EditCollaboration = ({ community }) => {
           <div> Edit "{collaboration?.title}" Collaboration</div>
         </div>
 
-        <div className="flex  mt-4 md:mt-0">
+        {/* <div className="flex  mt-4 md:mt-0">
           <div className="mr-3">
             <Button
               sx={{
@@ -214,7 +214,7 @@ const EditCollaboration = ({ community }) => {
               </Button>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
 
       <Divider sx={{ my: 3 }} />
@@ -629,6 +629,64 @@ const EditCollaboration = ({ community }) => {
           </div>
         </div>
       </div>
+
+      <div className="lg:flex items-center">
+        <div className=" flex-1 text-[#114369] font-[600] text-xl ">
+          <div> </div>
+        </div>
+
+        <div className="flex  mt-4 md:mt-0">
+          <div className="mr-3">
+            <Button
+              sx={{
+                bgcolor: "white",
+                border: "1px solid #24A0FD",
+                color: "#24A0FD",
+                fontSize: "12px",
+                width: { md: "105px", xs: "" },
+                textTransform: "none",
+                borderRadius: "5px",
+                ":hover": {
+                  bgcolor: "white",
+                  color: "#24A0FD",
+                },
+              }}
+              onClick={() => navigate("/dashboard/my-collaborations")}
+            >
+              Cancel
+            </Button>
+          </div>
+          <div>
+            <ShareCollaborationModal
+              open={openShareCollaborationModal}
+              setOpen={setOpenCollaborationModal}
+              collaboration_id={collaboration_id}
+            />
+            {loader ? (
+              <CustomizedProgressBars sx={{ color: "blue" }} />
+            ) : (
+              <Button
+                onClick={editCollaboration}
+                sx={{
+                  bgcolor: "#24A0FD",
+                  color: "white",
+                  fontSize: "12px",
+                  width: "175px",
+                  textTransform: "none",
+                  borderRadius: "5px",
+                  ":hover": {
+                    bgcolor: "#24A0FD",
+                    color: "white",
+                  },
+                }}
+              >
+                Edit and Save
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+      
     </div>
   );
 };
