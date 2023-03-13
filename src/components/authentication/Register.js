@@ -21,15 +21,24 @@ const Register = () => {
   }, []);
 
   const [user, setUser] = useState({
-    username: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   });
 
   const register = async () => {
     setLoader(true);
-    if (user.username.length < 3) {
-      document.getElementById("info").innerHTML = "( username is invalid )";
+
+
+    if (user.first_name.length < 3) {
+      document.getElementById("info").innerHTML = "( first name is invalid )";
+      return;
+    }
+
+
+    if (user.last_name.length < 3) {
+      document.getElementById("info").innerHTML = "( last name is invalid )";
       return;
     }
 
@@ -102,7 +111,7 @@ const Register = () => {
 
             <div className="space-y-2 mt-2">
               <div className="text-[#114369] font-normal text-[14px] ">
-                User name
+                First Name
               </div>
               <div>
                 <InputBase
@@ -114,11 +123,34 @@ const Register = () => {
                     width: "100%",
                     py: "3px",
                   }}
-                  placeholder="your username"
+                  placeholder="your first name"
                   onChange={(e) => {
-                    setUser({ ...user, username: e.target.value });
+                    setUser({ ...user, first_name: e.target.value });
                   }}
-                  value={user.username}
+                  value={user.first_name}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2 mt-2">
+              <div className="text-[#114369] font-normal text-[14px] ">
+                Last Name
+              </div>
+              <div>
+                <InputBase
+                  sx={{
+                    bgcolor: "#EBF1F5",
+                    pl: 3,
+                    fontSize: "14px",
+                    borderRadius: "8px",
+                    width: "100%",
+                    py: "3px",
+                  }}
+                  placeholder="your last name"
+                  onChange={(e) => {
+                    setUser({ ...user, last_name: e.target.value });
+                  }}
+                  value={user.last_name}
                 />
               </div>
             </div>
