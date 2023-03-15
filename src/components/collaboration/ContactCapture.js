@@ -225,7 +225,7 @@ const ContactCapture = () => {
               width: { md: "100%", xs: "100%" },
               py: "3px",
             }}
-            placeholder="e.g. Fitfh Ward CRC"
+            placeholder="organization name"
             id="link_url"
             onChange={(e) => {
               setPartner({ ...partner, organization_name: e.target.value });
