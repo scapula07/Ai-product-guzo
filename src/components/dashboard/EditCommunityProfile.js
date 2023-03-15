@@ -59,6 +59,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
             console.log(res.data);
             getCommunity();
             getCommunity0()
+            getUser()
           })
           .catch((err) => {
             console.log(err);
@@ -111,6 +112,21 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
       });
   };
 
+  const getUser = async() => {
+    setLoader(true)
+     let url = process.env.REACT_APP_BACKEND_URL
+     axios
+     .get(url+"/user/get-user-by-id/", JSON.parse(localStorage.getItem('user'))._id)
+     .then((res) => {
+       console.log(res.data)
+       localStorage.setItem('user' , JSON.stringify(res.data))
+     })
+     .catch((err) => {
+       console.log(err);
+     });
+         
+   }
+
   const editCommunity = async () => {
     setLoader(true)
     let url = process.env.REACT_APP_BACKEND_URL;
@@ -132,6 +148,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
             console.log(res.data);
             setOpenSuccessSnack(true)
             getCommunity();
+            getUser()
           })
           .catch((err) => {
             console.log(err);
