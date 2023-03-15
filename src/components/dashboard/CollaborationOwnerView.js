@@ -345,11 +345,11 @@ const CollaborationOwnerView = () => {
 
               <div className=" " >
                 <div className="text-[#114369]  text-[14px] font-semibold mt-9 mb-5">
-                  Collaboration Partners ({partners?.length})
+                  Collaboration Partners ({partners?.find(e=> e.status !== 'deleted').length})
                 </div>
                <div className="lg:h-[20vw] h-[20vh] overflow-y-auto" >
                {partners.map((item, index) => { 
-                if(item.user_id !== JSON.parse(localStorage.getItem('user'))._id){
+                if(item.user_id !== JSON.parse(localStorage.getItem('user'))._id && item.status !== 'deleted'){
                   return(
                     (
                       <div
