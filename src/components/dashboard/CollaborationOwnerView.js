@@ -364,7 +364,7 @@ const CollaborationOwnerView = () => {
     
                         <div>
                           <div className="text-black text-[14px] font-bold">
-                            {item.organization_name}
+                            {item.username ? item.username : item.first_name+" "+item.last_name}
                           </div>
                           <div className="text-black text-[10px] font-thin   ">
                             {item.message}
