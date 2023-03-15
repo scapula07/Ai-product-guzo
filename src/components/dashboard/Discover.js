@@ -159,25 +159,31 @@ const Discover = () => {
                   communities.length > 0 &&
                   communities.map((item, index) => (
                     <div className=" bg-[#FAFAFA] my-5 p-5 " key={index}>
-                      <div className="font-bold text-[15px] my-4">
-                        {item._doc.name}
-                      </div>
+                      
 
                       {/* <div> <span className="font-bold text-[#24A0FD] mr-3">
                <Dashboard sx={{ fontSize: ''}} /> Category: 
                </span>
                <span>Organization Resource, Neighborhood Resource, Connector</span>  </div> */}
-
+<div className='flex justify-between'>
+<div>
+<div className="font-bold text-[15px] my-4">
+                        {item._doc.name}
+                      </div>
                       <div className="flex items-start">
-                        <Avatar
-                          variant="square"
-                          src="logo1.png"
-                          sx={{ height: "", width: "" }}
-                        />
+                     
                         <div className=" font-thin ">
                           {item._doc.description}
                         </div>
                       </div>
+</div>
+
+<Avatar
+                          variant="square"
+                          src={item._doc.profile_picture}
+                          sx={{ height: "100px", width: "100px" }}
+                        />
+</div>
 
                       <Divider sx={{ my: 3 }} />
 
@@ -189,7 +195,7 @@ const Discover = () => {
                           <div>{item.teammates?.length + 1} Members</div>
                         </div>
 
-                        <div className="flex  items-center space-x-2    ">
+                        {/* <div className="flex  items-center space-x-2    ">
                           <div className="font-bold text-[#24A0FD] flex items-center ">
                             <Language sx={{ fontSize: "", mr: 1 }} /> Community
                             Platform :
@@ -199,7 +205,7 @@ const Discover = () => {
                             Facebook, Intagram, Website, Email list, Text
                             Message List
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className="flex items-center space-x-2">
                           <div className="font-bold text-[#24A0FD]">
@@ -225,7 +231,7 @@ const Discover = () => {
                         </div>
                       </div>
 
-                      <div className="flex justify-end mt-2">
+                      {/* <div className="flex justify-end mt-2">
                         <Button
                           sx={{
                             bgcolor: "#24A0FD",
@@ -242,7 +248,7 @@ const Discover = () => {
                         >
                           View
                         </Button>
-                      </div>
+                      </div> */}
                     </div>
                   ))}
               </>
