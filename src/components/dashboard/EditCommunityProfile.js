@@ -11,7 +11,7 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
 const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
   const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
   const [photo, setPhoto] = useState(null);
-  const [fetchedPhoto, setFetchedPhoto] = useState("/picture_placeholder.png");
+  const [fetchedPhoto, setFetchedPhoto] = useState("");
   const [channels, setChannels] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [loader, setLoader] = useState(false);
@@ -270,8 +270,23 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
               id="main_img"
               src={photo ? URL.createObjectURL(photo) : fetchedPhoto}
               variant="square"
-              sx={{ width: "156px", height: "156px" }}
-            />
+              sx={
+                !photo
+                  ? {
+                      width: "156px",
+                      height: "156px",
+                      fontSize: "12px",
+                      bgcolor: "#EBF1F5",
+                      color: "gray",
+                    }
+                  : {
+                      width: "156px",
+                      height: "156px",
+                      fontSize: "12px",
+                      color: "gray",
+                    }
+              }
+            >Click to upload photo</Avatar>
             <input
               hidden
               type="file"
