@@ -171,9 +171,9 @@ const Teammates = () => {
         <div className="ml-6  flex-1">
           <div className=" font-bold text-[14px]  ">
             {user?.email} 
-            {/* <div className=" md:hidden font-thin text-[12px]"> Owner </div> */}
+            {/* <div className=" md:hidden font-thin text-[12px]"> Owner </div> md:w-[40vw] w-[50vw]*/}
           </div>
-          <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
+          <div className="flex items-center justify-between  ">
             <div className=" md:block font-thin text-[12px]"> Owner</div>
             {/* <div className="font-thin text-[12px]"> {moment(item.createdAt).format("D, m, Y")} </div> */}
             <div className=" font-bold text-[10px] bg-[#B9F6CA] w-fit text-[#2d7e57] px-4 py-[2px] rounded-md border-[#00C853] border-[1px] ">
@@ -183,11 +183,11 @@ const Teammates = () => {
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg">
             <MoreHoriz sx={{ color: "#24A0FD" }} />
           </div>
-        </div>
+        </div> */}
       </div>
       <div>
         {loader ? (
@@ -212,7 +212,7 @@ const Teammates = () => {
                           {item.email}
                           {/* <div className=" md:hidden font-thin text-[12px]"> Owner </div> */}
                         </div>
-                        <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
+                        <div className="flex items-center justify-between  ">
                           <div className=" md:block font-thin text-[12px]">
                             {" "}
                             {community.user_id === item._id
@@ -236,11 +236,11 @@ const Teammates = () => {
                         </div>
                       </div>
 
-                      <div>
+                      {/* <div>
                         <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg">
                           <MoreHoriz sx={{ color: "#24A0FD" }} />
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   );
                 }
