@@ -116,9 +116,10 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
     setLoader(true)
      let url = process.env.REACT_APP_BACKEND_URL
      axios
-     .get(url+"/user/get-user-by-id/", JSON.parse(localStorage.getItem('user'))._id)
+     .get(url+"/user/get-user-by-id/"+JSON.parse(localStorage.getItem('user'))._id)
      .then((res) => {
        console.log(res.data)
+       localStorage.removeItem('user')
        localStorage.setItem('user' , JSON.stringify(res.data))
      })
      .catch((err) => {
