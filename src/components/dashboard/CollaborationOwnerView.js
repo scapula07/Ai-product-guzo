@@ -464,7 +464,7 @@ const CollaborationOwnerView = () => {
                       )
                     }  
     
-                        <div>
+                        {/* <div>
                           <Button
                             sx={{
                               bgcolor: "white",
@@ -545,7 +545,7 @@ const CollaborationOwnerView = () => {
                               </MenuItem>
                             </Menu>
                           </Button>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                     )
