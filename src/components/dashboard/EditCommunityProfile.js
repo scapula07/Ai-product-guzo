@@ -307,7 +307,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
 
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
-          Organization description{" "}
+          Organization Description{" "}
             <span className="text-black font-thin text-[10px] ">
               (Required)
             </span>
