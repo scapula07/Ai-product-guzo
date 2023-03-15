@@ -124,7 +124,7 @@ const ContactGroups = () => {
           </Button>
         </div>
         <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
-          Go Neighborhoods Contact Group
+          {contactGroup?.name}
         </div>
         {/* <div>
           <Button
@@ -212,7 +212,7 @@ const ContactGroups = () => {
           <div className="flex-1"> 
 
           <div className="font-semibold text-[14px] ml-3 ">{item?.name}</div>
-          <div className="flex items-center"> 
+          <div className="lg:flex  items-center"> 
           <div className="font-thin text-xs ml-3  flex"><span>phone :</span>{item?.phone_number}</div>
           <div className="font-thin text-xs ml-3 ">email :{item?.email}</div>
           </div>
@@ -267,7 +267,7 @@ const ContactGroups = () => {
               transformOrigin={{ horizontal: "center", vertical: "top" }}
               anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
             >
-              <MenuItem sx={{ fontSize: "10px", px: "30%" }}>
+              {/* <MenuItem sx={{ fontSize: "10px", px: "30%" }}>
                 Edit Contact
               </MenuItem>
 
@@ -275,7 +275,7 @@ const ContactGroups = () => {
                 Share Contact
               </MenuItem>
 
-              <Divider sx={{ mx: "6%", my: "1px" }} />
+              <Divider sx={{ mx: "6%", my: "1px" }} /> */}
               <MenuItem sx={{ fontSize: "10px", px: "23%", color: "red" }}
               onClick={()=> {
                 

@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import ErrorSnack from "../molecules/ErrorSnack";
 import CustomizedProgressBars from "../molecules/Progress";
 import ThankYouCard from "../molecules/ThankYouCard";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const ContactCapture = () => {
   const [openThankYouCard, setOpenThankYouCard] = useState(false);
@@ -30,10 +32,10 @@ const ContactCapture = () => {
     last_name: "",
     organization_name: "",
     email: user.email || "",
-    country_code: "",
-    phone: "",
     message: "",
+    phone_number: ""
   });
+  const [value, setValue] = useState()
 
   const getCollaboration = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
@@ -98,10 +100,7 @@ const ContactCapture = () => {
     setLoader2(true);
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .post(url + "/collaboration/partner", {
-        ...partner,
-        phone_number: partner.country_code + partner.phone,
-      })
+      .post(url + "/collaboration/partner", partner)
       .then((res) => {
         //console.log(res.data)
         // addContact()
@@ -256,47 +255,23 @@ const ContactCapture = () => {
           />
         </div>
 
+       
         <div className="w-full mt-4">
           <div className="text-[15px] text-[#114369] font-bold mb-1  ">
             Phone Contact
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-1/3">
-              <InputBase
-                sx={{
-                  bgcolor: "#EBF1F5",
-                  pl: 3,
-                  fontSize: "14px",
-                  borderRadius: "8px",
-                  width: { md: "100%", xs: "100%" },
-                  py: "3px",
-                }}
-                placeholder="country code"
-                id="link_url"
-                onChange={(e) => {
-                  setPartner({ ...partner, country_code: e.target.value });
-                }}
-                value={partner.country_code}
-              />
-            </div>
-            <div className="w-2/3">
-              <InputBase
-                sx={{
-                  bgcolor: "#EBF1F5",
-                  pl: 3,
-                  fontSize: "14px",
-                  borderRadius: "8px",
-                  width: { md: "100%", xs: "100%" },
-                  py: "3px",
-                }}
-                placeholder="Phone number"
-                id="link_url"
-                onChange={(e) => {
-                  setPartner({ ...partner, phone: e.target.value });
-                }}
-                value={partner.phone}
-              />
-            </div>
+            
+          <PhoneInput
+      inputStyle={{backgroundColor:'#EBF1F5', border: '0px' , width:'100%'}}
+      placeholder="Enter phone number"
+      value={partner.phone_number}
+      onChange={(e)=> setPartner({...partner, phone_number: e})}
+      country={'us'}
+      
+      />                
+
+            
           </div>
         </div>
 

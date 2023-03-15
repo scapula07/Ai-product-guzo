@@ -10,7 +10,7 @@ const CollaborationRoutes = () => {
      <div className="flex justify-center  mt-4">
           <img
             src="/logo.png"
-            className="lg:w-[172px] lg:h-[64px] w-[50px] h-[20px] cursor-pointer relative top-1 left-5 "
+            className="lg:w-[172px] lg:h-[64px] w-[50px] h-[20px] cursor-pointer mb-2 lg:mb-0 "
           />
         </div>
       <div className="lg:grid md:grid md:grid-cols-3 lg:grid-cols-4 lg:gap-[60px] md:gap-3 md:px-5 lg:px-[98px] md:py-4 lg:py-[33px]">

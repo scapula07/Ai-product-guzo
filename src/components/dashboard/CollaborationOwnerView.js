@@ -115,7 +115,7 @@ const CollaborationOwnerView = () => {
       user_id: partner.user_id,
       name: partner.first_name + " " + partner.last_name,
       email: partner.email,
-      phone_number: partner.country_code + partner.phone,
+      phone_number: partner.phone_number,
     };
     await axios
       .post(url + "/collaboration/verify-partner", partner)
@@ -359,7 +359,7 @@ const CollaborationOwnerView = () => {
               <div className=" ">
                 <div className="text-[#114369]  text-[14px] font-semibold mt-9 mb-5">
                   Collaboration Partners (
-                  {partners?.find((e) => e.status !== "deleted")?.length})
+                  {partners?.filter((e) => e.status !== "deleted")?.length})
                 </div>
                 <div className="lg:h-[20vw] h-[20vh] overflow-y-auto">
                   {partners.map((item, index) => {
