@@ -299,7 +299,7 @@ const CollaborationOwnerView = () => {
                   </div>
 
                   <div className="text-center  text-[14px] font-bold flex justify-center mt-4 text-[#114369] ">
-                    The Need
+                    Ask
                   </div>
 
                   <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] ">
