@@ -18,17 +18,17 @@ const CollaborationOwnerView = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
   const [collaboration, setCollaboration] = useState({});
-  const [partners, setPartners] = useState([])
+  const [partners, setPartners] = useState([]);
   const [loader, setLoader] = useState(true);
   const [loader2, setLoader2] = useState({
     loader: false,
-    id: ""
+    id: "",
   });
-  const [openSelectContactGroupModal, setOpenSelectContactGroupModal] = useState(false)
-  const [contactGroups, setContactGroups] = useState([])
-  const [contactGroup, setContactGroup] = useState()
-  const [selectedContactGroup, setSelectedContactGroup] = useState({})
-
+  const [openSelectContactGroupModal, setOpenSelectContactGroupModal] =
+    useState(false);
+  const [contactGroups, setContactGroups] = useState([]);
+  const [contactGroup, setContactGroup] = useState();
+  const [selectedContactGroup, setSelectedContactGroup] = useState({});
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -61,37 +61,35 @@ const CollaborationOwnerView = () => {
         //console.log(res.data);
         setLoader(false);
         setCollaboration(res.data);
-        setPartners(res.data.collaborationPartners)
+        setPartners(res.data.collaborationPartners);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-
-
-  const getContactGroups = async() =>{
+  const getContactGroups = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/"+JSON.parse(localStorage.getItem("community"))._id)
+      .get(
+        url + "/contact/" + JSON.parse(localStorage.getItem("community"))._id
+      )
       .then((res) => {
-       //console.log(res.data)
-       setContactGroups(res.data)
-       
+        //console.log(res.data)
+        setContactGroups(res.data);
       })
 
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   useEffect(() => {
-     getCollaboration();
-     getContactGroups()
-     getContactGroupByCollaboration()
+    getCollaboration();
+    getContactGroups();
+    getContactGroupByCollaboration();
   }, []);
   const addContact = async (contact) => {
-   
     let url = process.env.REACT_APP_BACKEND_URL;
     console.log({ ...contact, contact_group_id: contactGroup._id });
     await axios
@@ -107,12 +105,11 @@ const CollaborationOwnerView = () => {
       });
   };
 
-
   const verifyPartner = async (partner) => {
     setLoader2({
-      loader:true,
-      id: partner._id
-    })
+      loader: true,
+      id: partner._id,
+    });
     let url = process.env.REACT_APP_BACKEND_URL;
     let contact = {
       user_id: partner.user_id,
@@ -121,43 +118,40 @@ const CollaborationOwnerView = () => {
       phone_number: partner.country_code + partner.phone,
     };
     await axios
-      .post(url + "/collaboration/verify-partner",partner)
+      .post(url + "/collaboration/verify-partner", partner)
       .then((res) => {
-        console.log(res.data)
-        setPartners(res.data)
-        addContact(contact)
+        console.log(res.data);
+        setPartners(res.data);
+        addContact(contact);
         setLoader2({
-          loader:false,
-          id: partner._id
-        })
+          loader: false,
+          id: partner._id,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
 
   const deletePartner = async (partner) => {
     setLoader2({
-      loader:true,
-      id: partner._id
-    })
+      loader: true,
+      id: partner._id,
+    });
     let url = process.env.REACT_APP_BACKEND_URL;
     await axios
-      .post(url + "/collaboration/delete-partner",partner)
+      .post(url + "/collaboration/delete-partner", partner)
       .then((res) => {
-        setPartners(res.data)
+        setPartners(res.data);
         setLoader2({
-          loader:false,
-          id: partner._id
-        })
+          loader: false,
+          id: partner._id,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  
 
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
@@ -179,12 +173,11 @@ const CollaborationOwnerView = () => {
                 color: "#24A0FD",
               },
             }}
-
-            onClick={()=> navigate('/dashboard/my-collaborations')}
+            onClick={() => navigate("/dashboard/my-collaborations")}
           >
             Back
           </Button>
-         {collaboration._doc?.title}
+          {collaboration._doc?.title}
         </div>
         <div>
           <Button
@@ -201,7 +194,9 @@ const CollaborationOwnerView = () => {
                 color: "white",
               },
             }}
-            onClick={() => navigate("/dashboard/edit-collaboration/"+collaboration_id)}
+            onClick={() =>
+              navigate("/dashboard/edit-collaboration/" + collaboration_id)
+            }
           >
             Edit Collaboration
           </Button>
@@ -220,15 +215,15 @@ const CollaborationOwnerView = () => {
                 color: "white",
               },
             }}
-            id='copy_btn'
-
-
-            onClick={() =>{
-              navigator.clipboard.writeText("https://guzo-dev.vercel.app/collaboration/"+collaboration_id)
-              document.getElementById('copy_btn').innerHTML='Copied !'
-             setTimeout(() => {
-              document.getElementById('copy_btn').innerHTML='Copy Link'
-             }, 3000);
+            id="copy_btn"
+            onClick={() => {
+              navigator.clipboard.writeText(
+                "https://guzo-dev.vercel.app/collaboration/" + collaboration_id
+              );
+              document.getElementById("copy_btn").innerHTML = "Copied !";
+              setTimeout(() => {
+                document.getElementById("copy_btn").innerHTML = "Copy Link";
+              }, 3000);
             }}
           >
             Copy Link
@@ -241,7 +236,7 @@ const CollaborationOwnerView = () => {
       {loader ? (
         <div className="flex justify-center mt-[50px]">
           {" "}
-          <div className="flex flex-1"/>
+          <div className="flex flex-1" />
           <CustomizedProgressBars />{" "}
         </div>
       ) : (
@@ -271,9 +266,13 @@ const CollaborationOwnerView = () => {
 
           {active === 0 && (
             <>
-            <SelectContactGroupModal open={openSelectContactGroupModal} setOpen={setOpenSelectContactGroupModal}
-                    contactGroups={contactGroups} contact={selectedContactGroup} setLoader={setLoader}
-                    />
+              <SelectContactGroupModal
+                open={openSelectContactGroupModal}
+                setOpen={setOpenSelectContactGroupModal}
+                contactGroups={contactGroups}
+                contact={selectedContactGroup}
+                setLoader={setLoader}
+              />
               <div className="md:grid grid-cols-5 md:gap-4">
                 <div className="md:col-span-2">
                   <div className="md:shadow-lg py-[18px] px-[17px]">
@@ -308,33 +307,47 @@ const CollaborationOwnerView = () => {
                   </div>
 
                   <div className="text-center  text-[14px] font-bold flex justify-center mt-4 text-[#114369] ">
-                  Supporting Links
+                    Supporting Links
                   </div>
 
                   <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] ">
-                   
                     {collaboration._doc.community.name}.
-                    {collaboration._doc.support_links.map(
-                      (item, index) => (
-                        <div className="underline text-[#24A0FD]" key={index}>
-                          {item.link}<span className="text-[#114369] no-underline">({item.description})</span>
-                        </div>
-                      )
-                    )}
+                    {collaboration._doc.support_links.map((item, index) => (
+                      <div
+                        className="underline text-[#24A0FD]  cursor-pointer"
+                        key={index}
+                        onClick={() => {
+                          let url = item.link
+                          if (!url.match(/^https?:\/\//i)) {
+                            url = "http://" + url;
+                          }
+                          return window.open(url);
+
+                        }}
+                      >
+                        {item.link}
+                        <span className="text-[#114369] no-underline">
+                          ({item.description})
+                        </span>
+                      </div>
+                    ))}
                   </div>
-
-
 
                   <div className="text-center  text-[14px] font-bold flex justify-center mt-4 text-[#114369] ">
-                  Supporting Documents
+                    Supporting Documents
                   </div>
 
                   <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] ">
-                   
                     {collaboration._doc.community.name}.
                     {collaboration.collaborationSupportDocuments.map(
                       (item, index) => (
-                        <div className="underline text-[#24A0FD]" key={index}>
+                        <div
+                          className="underline text-[#24A0FD] cursor-pointer"
+                          key={index}
+                          onClick={() => {
+                            window.open(item.document);
+                          }}
+                        >
                           {item.name}
                         </div>
                       )
@@ -343,128 +356,119 @@ const CollaborationOwnerView = () => {
                 </div>
               </div>
 
-              <div className=" " >
+              <div className=" ">
                 <div className="text-[#114369]  text-[14px] font-semibold mt-9 mb-5">
-                  Collaboration Partners ({partners?.find(e=> e.status !== 'deleted')?.length})
+                  Collaboration Partners (
+                  {partners?.find((e) => e.status !== "deleted")?.length})
                 </div>
-               <div className="lg:h-[20vw] h-[20vh] overflow-y-auto" >
-               {partners.map((item, index) => { 
-                if(item.user_id !== JSON.parse(localStorage.getItem('user'))._id && item.status !== 'deleted'){
-                  return(
-                    (
-                      <div
-                      className="md:flex items-center justify-between space-x-3 my-6"
-                      key={index}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <Avatar
-                          src={collaboration._doc.photo}
-                          sx={{ width: "53px", height: "53px" }}
-                        />
-    
-                        <div>
-                          <div className="text-black text-[14px] font-bold">
-                            {item.username ? item.username : item.first_name+" "+item.last_name}
-                          </div>
-                          <div className="text-black text-[10px] font-thin   ">
-                            {item.message}
-                          </div>
-                        </div>
-                      </div>
-    
-    
-                
-    
-                   
-    
-                      <div className="flex  items-center space-x-2 md:space-x-5">
-                         
-                         
-                      {
-                      !item.is_verified ? (
-                     <>
-                     
-                      {loader2.loader && loader2.id === item._id ? (
-                        <CustomizedProgressBars/>
-                      ): (
-                        <> 
-                          <div className=" mt-2 mb-2 md:mb-0  " key={index} id={item._id} >
-                        <Button
-                          sx={{
-                            bgcolor: "#24A0FD",
-                            color: "white",
-                            fontSize: "14px",
-                            width: "165px",
-                            textTransform: "none",
-                            borderRadius: "5px",
-                            ":hover": {
-                              bgcolor: "#24A0FD",
-                              color: "white",
-                            },
-                          }}
-    
-                         
-    
-                          onClick={()=>{
-                            verifyPartner(item)
-                          }}
+                <div className="lg:h-[20vw] h-[20vh] overflow-y-auto">
+                  {partners.map((item, index) => {
+                    if (
+                      item.user_id !==
+                        JSON.parse(localStorage.getItem("user"))._id &&
+                      item.status !== "deleted"
+                    ) {
+                      return (
+                        <div
+                          className="md:flex items-center justify-between space-x-3 my-6"
+                          key={index}
                         >
-                          Approve
-                        </Button>
-    
-                        
-                      </div>
-                      <div className=" md:mt-0  ">
-                      <Button
-                        sx={{
-                          bgcolor: "#FF6060",
-                          color: "white",
-                          fontSize: "14px",
-                          width: "165px",
-                          textTransform: "none",
-                          borderRadius: "5px",
-                          ":hover": {
-                            bgcolor: "#FF6060",
-                            color: "white",
-                          },
-                        }}
-                        onClick={()=>{
-                          deletePartner(item)
-                        }}
-                      >
-                        Decline
-                      </Button>
-                    </div>
-                        </>
-                      )}
-                    </>
-                      ):(
-                        <div className=" md:mt-0  " >
-                          <Button
-                            sx={{
-                              bgcolor: "#24A0FD",
-                              color: "white",
-                              fontSize: "14px",
-                              width: "165px",
-                              textTransform: "none",
-                              borderRadius: "5px",
-                              ":hover": {
-                                bgcolor: "#24A0FD",
-                                color: "white",
-                              },
-                            }}
-    
-                            
-    
-                           
-                          >
-                            Direct Message
-                          </Button>
-                        </div>
-                      )
-                    }  
-    
-                        {/* <div>
+                          <div className="flex items-center space-x-3">
+                            <Avatar
+                              src={collaboration._doc.photo}
+                              sx={{ width: "53px", height: "53px" }}
+                            />
+
+                            <div>
+                              <div className="text-black text-[14px] font-bold">
+                                {item.username
+                                  ? item.username
+                                  : item.first_name + " " + item.last_name}
+                              </div>
+                              <div className="text-black text-[10px] font-thin   ">
+                                {item.message}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex  items-center space-x-2 md:space-x-5">
+                            {!item.is_verified ? (
+                              <>
+                                {loader2.loader && loader2.id === item._id ? (
+                                  <CustomizedProgressBars />
+                                ) : (
+                                  <>
+                                    <div
+                                      className=" mt-2 mb-2 md:mb-0  "
+                                      key={index}
+                                      id={item._id}
+                                    >
+                                      <Button
+                                        sx={{
+                                          bgcolor: "#24A0FD",
+                                          color: "white",
+                                          fontSize: "14px",
+                                          width: "165px",
+                                          textTransform: "none",
+                                          borderRadius: "5px",
+                                          ":hover": {
+                                            bgcolor: "#24A0FD",
+                                            color: "white",
+                                          },
+                                        }}
+                                        onClick={() => {
+                                          verifyPartner(item);
+                                        }}
+                                      >
+                                        Approve
+                                      </Button>
+                                    </div>
+                                    <div className=" md:mt-0  ">
+                                      <Button
+                                        sx={{
+                                          bgcolor: "#FF6060",
+                                          color: "white",
+                                          fontSize: "14px",
+                                          width: "165px",
+                                          textTransform: "none",
+                                          borderRadius: "5px",
+                                          ":hover": {
+                                            bgcolor: "#FF6060",
+                                            color: "white",
+                                          },
+                                        }}
+                                        onClick={() => {
+                                          deletePartner(item);
+                                        }}
+                                      >
+                                        Decline
+                                      </Button>
+                                    </div>
+                                  </>
+                                )}
+                              </>
+                            ) : (
+                              <div className=" md:mt-0  ">
+                                <Button
+                                  sx={{
+                                    bgcolor: "#24A0FD",
+                                    color: "white",
+                                    fontSize: "14px",
+                                    width: "165px",
+                                    textTransform: "none",
+                                    borderRadius: "5px",
+                                    ":hover": {
+                                      bgcolor: "#24A0FD",
+                                      color: "white",
+                                    },
+                                  }}
+                                >
+                                  Direct Message
+                                </Button>
+                              </div>
+                            )}
+
+                            {/* <div>
                           <Button
                             sx={{
                               bgcolor: "white",
@@ -546,13 +550,12 @@ const CollaborationOwnerView = () => {
                             </Menu>
                           </Button>
                         </div> */}
-                      </div>
-                    </div>
-                    )
-                  )
-                }
-                })}
-               </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
               </div>
             </>
           )}
@@ -565,31 +568,35 @@ const CollaborationOwnerView = () => {
                 </div>
                 {collaboration.collaborationPartners.map((item, index) => (
                   <div key={index}>
-                    <SelectContactGroupModal open={openSelectContactGroupModal} setOpen={setOpenSelectContactGroupModal}
-                    contactGroups={contactGroups} contact={selectedContactGroup} setLoader={setLoader}
+                    <SelectContactGroupModal
+                      open={openSelectContactGroupModal}
+                      setOpen={setOpenSelectContactGroupModal}
+                      contactGroups={contactGroups}
+                      contact={selectedContactGroup}
+                      setLoader={setLoader}
                     />
                     <div className="md:flex items-start md:space-x-3 justify-between ">
                       <div className="flex items-center space-x-3">
                         <div>
                           <div className="text-black text-[16px] font-bold">
-                             {item.organization_name}
+                            {item.organization_name}
                           </div>
                           <div className="text-black text-[12px] font-thin mt-2   ">
                             <div className="font-normal">Contact</div>
-                            <div>{item.first_name+" "+item.last_name}</div>
+                            <div>{item.first_name + " " + item.last_name}</div>
                             <div>{item.email}</div>
                             <div>{item.phone_number}</div>
 
                             <div className="font-normal mt-4">
                               Network :{" "}
-                              <span className="font-thin">{collaboration._doc.community.name}</span>{" "}
+                              <span className="font-thin">
+                                {collaboration._doc.community.name}
+                              </span>{" "}
                             </div>
 
                             <div className="font-normal mt-4">
                               Message :{" "}
-                              <span className="font-thin">
-                                {item.message}
-                              </span>{" "}
+                              <span className="font-thin">{item.message}</span>{" "}
                             </div>
                           </div>
                         </div>
@@ -611,9 +618,9 @@ const CollaborationOwnerView = () => {
                                 color: "#24A0FD",
                               },
                             }}
-                            onClick={()=>{
-                              setOpenSelectContactGroupModal(true)
-                              setSelectedContactGroup(item)
+                            onClick={() => {
+                              setOpenSelectContactGroupModal(true);
+                              setSelectedContactGroup(item);
                             }}
                           >
                             Save Contact
