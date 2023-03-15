@@ -397,7 +397,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
           </div>
         </div>
 
-        <div className="mt-[30px] text-[12px]  ">
+        {/* <div className="mt-[30px] text-[12px]  ">
           <div className="font-bold mb-2 text-sm">Audience Channels</div>
           <div className="my-4">
             <Button
@@ -485,7 +485,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                 ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="lg:flex items-center mt-5">
