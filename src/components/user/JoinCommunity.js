@@ -3,10 +3,12 @@ import { Avatar, Button, Divider, InputBase } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import CustomizedProgressBars from "../molecules/Progress";
 
 const JoinCommunity = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
+  const [loader, setLoader] = useState(false)
   const loggedInUser = JSON.parse(localStorage.getItem("user"));
   const [msg,setMsg] = useState(null)
   const { token } = useParams();
@@ -23,6 +25,7 @@ const JoinCommunity = () => {
 
   const login = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
+    setLoader(true)
     axios
       .post(url + "/user/login", user)
       .then((res) => {
@@ -30,20 +33,28 @@ const JoinCommunity = () => {
         if (res.data.code) {
           document.getElementById("info").innerHTML =
             "( " + res.data.msg + " )";
+            setLoader(false)
         } else {
           localStorage.clear();
           localStorage.setItem("user", JSON.stringify(res.data));
           setStep(2);
+          setLoader(false)
         }
       })
       .catch((err) => {
         console.log(err);
+        setLoader(false)
       });
   };
 
   const register = async () => {
-    if (user.username.length < 3) {
-      document.getElementById("info").innerHTML = "( username is invalid )";
+    if (user.first_name.length < 3) {
+      document.getElementById("info").innerHTML = "( first name is invalid )";
+      return;
+    }
+
+    if (user.last_name.length < 3) {
+      document.getElementById("info").innerHTML = "( last name is invalid )";
       return;
     }
 
@@ -59,6 +70,7 @@ const JoinCommunity = () => {
     }
 
     let url = process.env.REACT_APP_BACKEND_URL;
+    setLoader(true)
     axios
       .post(url + "/user", user)
       .then((res) => {
@@ -66,10 +78,12 @@ const JoinCommunity = () => {
         localStorage.clear();
         localStorage.setItem("user", JSON.stringify(res.data));
         setStep(2);
+        setLoader(false)
       })
       .catch((err) => {
         document.getElementById("info").innerHTML = "( user already exists )";
         console.log(err);
+        setLoader(false)
       });
   };
 
@@ -167,7 +181,8 @@ const JoinCommunity = () => {
               </div>
 
               <div className="flex justify-end mt-4">
-                <Button
+                {loader ? <div className="flex justify-end">  <CustomizedProgressBars/></div>  : (
+                  <Button
                   sx={{
                     bgcolor: "#24A0FD",
                     color: "white",
@@ -187,13 +202,14 @@ const JoinCommunity = () => {
                 >
                   Login
                 </Button>
+                )}
               </div>
             </div>
 
             <Divider sx={{ my: 4 }} />
 
             <div className="my-4 text-[12px] text-center">
-              Or <span className="underline text-[#24A0FD] text-xs font-bold " onClick={()=>{
+              Or <span className="underline text-[#24A0FD] text-xs font-bold cursor-pointer " onClick={()=>{
                 setStep(1)
               }}  >Register</span>
             </div>
@@ -349,12 +365,13 @@ const JoinCommunity = () => {
 
              <div className='text-xs' >
                 have an account ?,
-             <span className="underline text-[#24A0FD] text-xs font-bold " onClick={()=>{
+             <span className="underline text-[#24A0FD] text-xs font-bold cursor-pointer" onClick={()=>{
                 setStep(0)
               }}  >Login</span>
                  </div>
 
               <div className="flex justify-end mt-4">
+              {loader ?<div className="flex justify-end">  <CustomizedProgressBars/></div> : (
                 <Button
                   onClick={register}
                   sx={{
@@ -375,6 +392,7 @@ const JoinCommunity = () => {
                 >
                   Sign-up
                 </Button>
+              )}
               </div>
             </div>
           </div>
