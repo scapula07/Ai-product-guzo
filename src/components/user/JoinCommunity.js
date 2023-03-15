@@ -123,7 +123,7 @@ const JoinCommunity = () => {
             </div>
 
             <div className="mt-4">
-              <div className="text-[12px] font-bold ">Sign up using Email</div>
+              {/* <div className="text-[12px] font-bold ">Sign up using Email</div> */}
 
               <div className="space-y-2 mt-2">
                 <div className="text-[#114369] font-normal text-[14px] ">
@@ -264,7 +264,7 @@ const JoinCommunity = () => {
             </div>
 
             <div className="mt-4">
-              <div className="text-[12px] font-bold ">Sign up using Email</div>
+              {/* <div className="text-[12px] font-bold ">Sign up using Email</div> */}
 
               <div className="space-y-2 mt-2">
                 <div className="text-[#114369] font-normal text-[14px] ">
