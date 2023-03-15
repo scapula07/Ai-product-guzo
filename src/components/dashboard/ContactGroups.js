@@ -213,8 +213,8 @@ const ContactGroups = () => {
 
           <div className="font-semibold text-[14px] ml-3 ">{item?.name}</div>
           <div className="flex items-center"> 
-          <div className="font-thin text-xs ml-3  flex"><span>phone :</span>{item?.phone_number ? 'yes' : 'no'}</div>
-          <div className="font-thin text-xs ml-3 ">email :{item?.email ? 'yes' : 'no'}</div>
+          <div className="font-thin text-xs ml-3  flex"><span>phone :</span>{item?.phone_number}</div>
+          <div className="font-thin text-xs ml-3 ">email :{item?.email}</div>
           </div>
           </div>
 
