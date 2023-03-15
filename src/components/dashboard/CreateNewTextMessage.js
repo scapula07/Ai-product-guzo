@@ -205,7 +205,7 @@ const CreateNewTextMessage = () => {
 
       <div className="space-y-2 mt-4">
         <div className="text-[#114369] font-semibold text-[14px] ">
-          Name your campaign
+          Campaign Name
           <span className="text-black font-thin text-[10px] "></span>
         </div>
         <div>
@@ -218,7 +218,7 @@ const CreateNewTextMessage = () => {
               width: { md: "800px", xs: "100%" },
               py: 1,
             }}
-            placeholder="Fifth Ward organization Message"
+            placeholder="Campaign Name"
             value={name}
             onChange={(e)=> setName(e.target.value)}
           />

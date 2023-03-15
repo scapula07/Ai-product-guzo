@@ -87,7 +87,7 @@ const Register = () => {
           <img src="/logo.png" className="w-[140px] h-[50px]" />
         </div>
         <div className="bg-white mt-5 lg:w-[40vw] md:w-[70vw]  shadow-lg md:px-20 px-4 py-10 rounded-lg">
-          <div className="font-bold text-[16px] text-center ">Sign up</div>
+          <div className="font-bold text-[16px] text-center ">Register</div>
 
           <div className="flex justify-center space-x-3 mt-5">
             <div className="border-[1px] border-[#D3D3D3] px-3 w-fit  md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
@@ -112,7 +112,9 @@ const Register = () => {
           </div>
 
           <div className="mt-4">
-            <div className="text-[12px] font-bold ">Sign up using Email</div>
+            {!collaboration_id && (
+              <div className="text-[12px] font-bold ">Sign up using Email</div>
+            )}
 
             <div className="space-y-2 mt-2">
               <div className="text-[#114369] font-normal text-[14px] ">

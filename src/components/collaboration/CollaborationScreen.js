@@ -108,7 +108,7 @@ const CollaborationScreen = () => {
 
 
               <div className="text-center  text-[19px] font-bold flex justify-center mt-4 text-[#114369] ">
-                Support Documents
+              Supporting Documents
               </div>
 
               <div>
@@ -130,7 +130,7 @@ const CollaborationScreen = () => {
               </div>
 
               <div className="text-center  text-[19px] font-bold flex justify-center mt-4 text-[#114369] ">
-                Will you collaborate us??
+                Will you collaborate us?
               </div>
 
               {/* <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] mb-2 ">

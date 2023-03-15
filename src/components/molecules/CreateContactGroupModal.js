@@ -5,12 +5,14 @@ import React, { useEffect, useState } from 'react'
 const CreateContactGroupModal = ({open, setOpen, getContactGroups}) => {
   const [name, setName] = useState("")
   const [user_id, setUserId] = useState(JSON.parse(localStorage.getItem("user"))._id|| null)
+  const [community, setCommunity] = useState(JSON.parse(localStorage.getItem("community"))|| null)
   const createContactGroup = async() =>{
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
       .post(url + "/contact", {
         name,
-        user_id
+        user_id,
+        community_id : community._id
       })
       .then((res) => {
        console.log(res.data)

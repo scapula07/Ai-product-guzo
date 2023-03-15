@@ -252,7 +252,7 @@ const JoinCommunity = () => {
 
               <div className="space-y-2 mt-2">
                 <div className="text-[#114369] font-normal text-[14px] ">
-                  User name
+                  First Name
                 </div>
                 <div>
                   <InputBase
@@ -264,15 +264,37 @@ const JoinCommunity = () => {
                       width: "100%",
                       py: "3px",
                     }}
-                    placeholder="your username"
+                    placeholder="your first name"
                     onChange={(e) => {
-                      setUser({ ...user, username: e.target.value });
+                      setUser({ ...user, first_name: e.target.value });
                     }}
-                    value={user.username}
+                    value={user.first_name}
                   />
                 </div>
               </div>
 
+              <div className="space-y-2 mt-2">
+                <div className="text-[#114369] font-normal text-[14px] ">
+                  Last Name
+                </div>
+                <div>
+                  <InputBase
+                    sx={{
+                      bgcolor: "#EBF1F5",
+                      pl: 3,
+                      fontSize: "14px",
+                      borderRadius: "8px",
+                      width: "100%",
+                      py: "3px",
+                    }}
+                    placeholder="your last name"
+                    onChange={(e) => {
+                      setUser({ ...user, last_name: e.target.value });
+                    }}
+                    value={user.last_name}
+                  />
+                </div>
+              </div>
               <div className="space-y-2 mt-2">
                 <div className="text-[#114369] font-normal text-[14px] ">
                   E-mail

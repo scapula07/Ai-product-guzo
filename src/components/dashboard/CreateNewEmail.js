@@ -209,7 +209,7 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
               width: { md: "800px", xs: "100%" },
               py: 1,
             }}
-            placeholder="Fifth Ward Organization Message"
+            placeholder="Email Subject"
             value={name}
             onChange={(e)=> setName(e.target.value)}
           />
@@ -289,7 +289,7 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
 
 
         <div className="bg-[#EBF1F5] px-4 py-3 rounded-[5px] space-y-2">
-            <div  className="text-[14px]"> Message{" "} <span className="text-black font-thin text-[12px] ">(Your SMS Content)  </span></div>
+            <div  className="text-[14px]"> Email body{" "} <span className="text-black font-thin text-[12px] ">(Your SMS Content)  </span></div>
             <InputBase
             sx={{
               bgcolor: "white",
@@ -301,7 +301,7 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
             }}
             multiline
             rows={5}
-            placeholder="Your SMS Message here..."
+            placeholder="Email body here..."
             value={message}
             onChange={(e)=> {
               setMessage(e.target.value)

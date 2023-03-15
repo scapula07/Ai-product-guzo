@@ -12,16 +12,19 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
+import ErrorSnack from "../molecules/ErrorSnack";
 import SuccessSnackbar from "../molecules/SuccessSnackbar";
 
 const AddTeammates = () => {
   const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
+  const [openErrorSnack, setOpenErrorSnack] = useState(false);
   const [active, setActive] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
   const open = Boolean(anchorEl);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [email, setEmail] = useState("")
+  const [msg, setMsg] =useState("")
   const [loader, setLoader] = useState(false)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -62,8 +65,18 @@ const AddTeammates = () => {
       .then((res) => {
        console.log(res.data)
        setLoader(false)
-       setOpenSuccessSnack(true)
-       setEmail("")
+      if(res.data.msg !== 'sent'){
+        setMsg(res.data.msg)
+        setOpenErrorSnack(true)
+      }else{
+        setOpenSuccessSnack(true)
+        setEmail("")
+        setTimeout(() => {
+          navigate('/dashboard/teammates')
+        }, 2000);
+      }
+
+      
        
       })
 
@@ -75,6 +88,8 @@ const AddTeammates = () => {
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
        <SuccessSnackbar msg={'Invite sent successfully'} duration='10000' 
       open={openSuccessSnack} setOpen={setOpenSuccessSnack}  />
+      <ErrorSnack msg={msg} duration='10000' 
+      open={openErrorSnack} setOpen={setOpenErrorSnack}  />
       <div className="md:flex space-y-2 md:space-y-0 items-center">
         <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
          Add Teammate

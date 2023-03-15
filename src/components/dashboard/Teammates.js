@@ -13,14 +13,18 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
-import moment from 'moment'
+import moment from "moment";
+import CustomizedProgressBars from "../molecules/Progress";
 
 const Teammates = () => {
-  const [community, setCommunity] = useState(JSON.parse(localStorage.getItem("community")) || null)
-  const [loader, setLoader ] = useState()
+  const [community, setCommunity] = useState(
+    JSON.parse(localStorage.getItem("community")) || null
+  );
+  const [loader, setLoader] = useState();
+  const [invites, setInvites] = useState();
   const [active, setActive] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [users, setUsers] = useState(null)
+  const [user, setUser] = useState(null);
   const [openDeleteTeammateModal, setOpenDeleteTeammateModal] =
     React.useState(false);
   const open = Boolean(anchorEl);
@@ -45,25 +49,41 @@ const Teammates = () => {
       },
     }),
   };
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const getAllUsers = async () => {
-    setLoader(true)
+  const getOwner = async () => {
+    setLoader(true);
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/user")
+      .get(url + "/user/get-user-by-id/" + community?.user_id)
       .then((res) => {
-        setUsers(res.data)
-       setLoader(false)
+        setUser(res.data);
+        setLoader(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const getAllInvites = async () => {
+    setLoader(true);
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/team/get-invites/" + community?._id)
+      .then((res) => {
+        setInvites(res.data);
+        setLoader(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
-    getAllUsers()
-  }, [])
-  
+    getOwner();
+    getAllInvites();
+  }, []);
+
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       <DeleteTeammateModal
@@ -88,7 +108,7 @@ const Teammates = () => {
                 color: "white",
               },
             }}
-            onClick={()=>navigate('/dashboard/teammates/add')} 
+            onClick={() => navigate("/dashboard/teammates/add")}
           >
             Add Teammates
           </Button>
@@ -140,55 +160,94 @@ const Teammates = () => {
         </div>
       </div>
 
-      {loader ? (
-        <div className="flex items-center"> 
-        <CircularProgress sx={{ color: '#24A0FD' }} />
-        </div>
-      ): (
-        <div className="mt-[5vw] space-y-[5vw] md:space-y-[15px] ">
-       
+      <div className="flex items-end mt-4">
+        <Avatar
+          variant="square"
+          sx={{ width: "90", height: "90", borderRadius: "5px" }}
+        >
+          {user?.email.substr(0, 1)}
+        </Avatar>
 
-       {users && users.map((item,index)=> 
-      {
-        
-        if(item.communities.find(e=> e.id == community?._id)){
-          return(
-            <div className="flex items-end" key={index}>
-            <Avatar
-              variant="square"
-              sx={{ width: "90", height: "90", borderRadius: "5px" }}
-            >{item.username.substr(0,1)}</Avatar>
-   
-            <div className="ml-6  flex-1">
-              <div className=" font-bold text-[14px]  ">
-                {item.username}
-                {/* <div className=" md:hidden font-thin text-[12px]"> Owner </div> */}
-              </div>
-              <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
-                <div className=" md:block font-thin text-[12px]">
-                  {" "}
-                  {community.user_id === item._id ? 'Owner' : 'Admin'}{" "}
-                </div>
-                {/* <div className="font-thin text-[12px]"> {moment(item.createdAt).format("D, m, Y")} </div> */}
-                <div className=" font-bold text-[10px] bg-[#B9F6CA] w-fit text-[#2d7e57] px-4 py-[2px] rounded-md border-[#00C853] border-[1px] ">
-                  {" "}
-                  Connected{" "}
-                </div>
-              </div>
-            </div>
-   
-            <div>
-              <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg">
-                <MoreHoriz sx={{ color: "#24A0FD" }} />
-              </div>
+        <div className="ml-6  flex-1">
+          <div className=" font-bold text-[14px]  ">
+            {user?.email} 
+            {/* <div className=" md:hidden font-thin text-[12px]"> Owner </div> */}
+          </div>
+          <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
+            <div className=" md:block font-thin text-[12px]"> Owner</div>
+            {/* <div className="font-thin text-[12px]"> {moment(item.createdAt).format("D, m, Y")} </div> */}
+            <div className=" font-bold text-[10px] bg-[#B9F6CA] w-fit text-[#2d7e57] px-4 py-[2px] rounded-md border-[#00C853] border-[1px] ">
+              {" "}
+              Connected{" "}
             </div>
           </div>
-          )
-        }
-      }
-       )}
+        </div>
+
+        <div>
+          <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg">
+            <MoreHoriz sx={{ color: "#24A0FD" }} />
+          </div>
+        </div>
       </div>
-      )}
+      <div>
+        {loader ? (
+          <div className="flex items-center">
+            <CustomizedProgressBars sx={{ color: "#24A0FD" }} />
+          </div>
+        ) : (
+          <div className="mt-[5vw] space-y-[5vw] md:space-y-[15px] ">
+            {invites &&
+              invites.map((item, index) => {
+                  return (
+                    <div className="flex items-end" key={index}>
+                      <Avatar
+                        variant="square"
+                        sx={{ width: "90", height: "90", borderRadius: "5px" }}
+                      >
+                        {item.email.substr(0, 1)}
+                      </Avatar>
+
+                      <div className="ml-6  flex-1">
+                        <div className=" font-bold text-[14px]  ">
+                          {item.email}
+                          {/* <div className=" md:hidden font-thin text-[12px]"> Owner </div> */}
+                        </div>
+                        <div className="flex items-center justify-between md:w-[40vw] w-[50vw] ">
+                          <div className=" md:block font-thin text-[12px]">
+                            {" "}
+                            {community.user_id === item._id
+                              ? "Owner"
+                              : "Admin"}{" "}
+                          </div>
+                          {/* <div className="font-thin text-[12px]"> {moment(item.createdAt).format("D, m, Y")} </div> */}
+                          {item.status === "Connected" && (
+                            <div className=" font-bold text-[10px] bg-[#B9F6CA] w-fit text-[#2d7e57] px-4 py-[2px] rounded-md border-[#00C853] border-[1px] ">
+                              {" "}
+                              Connected{" "}
+                            </div>
+                          )}
+
+                          {item.status === "Pending" && (
+                            <div className=" font-bold text-[10px] bg-[#e3d558] w-fit text-[#7e6f2d] px-4 py-[2px] rounded-md border-[#c8b400de] border-[1px] ">
+                              {" "}
+                              Pending{" "}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg">
+                          <MoreHoriz sx={{ color: "#24A0FD" }} />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,7 +1,9 @@
 import { Button, Dialog, InputBase } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const ShareCollaborationModal = ({ open, setOpen, collaboration_id }) => {
+  const navigate = useNavigate()
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
       <div className="px-5 py-6 text-center text-[14px] lg:w-[30vw] font-bold  ">
@@ -73,6 +75,9 @@ const ShareCollaborationModal = ({ open, setOpen, collaboration_id }) => {
 
             onClick={()=>{
                 setOpen(false)
+                setTimeout(()=>{
+                  navigate('/dashboard/my-collaborations')
+               },2000)
             }}
           >
             Close

@@ -308,11 +308,29 @@ const CollaborationOwnerView = () => {
                   </div>
 
                   <div className="text-center  text-[14px] font-bold flex justify-center mt-4 text-[#114369] ">
-                    Support Links
+                  Supporting Links
                   </div>
 
                   <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] ">
-                    Check out a sample marketing assest that we are sharing with{" "}
+                   
+                    {collaboration._doc.community.name}.
+                    {collaboration._doc.support_links.map(
+                      (item, index) => (
+                        <div className="underline text-[#24A0FD]" key={index}>
+                          {item.link}<span className="text-[#114369] no-underline">({item.description})</span>
+                        </div>
+                      )
+                    )}
+                  </div>
+
+
+
+                  <div className="text-center  text-[14px] font-bold flex justify-center mt-4 text-[#114369] ">
+                  Supporting Documents
+                  </div>
+
+                  <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] ">
+                   
                     {collaboration._doc.community.name}.
                     {collaboration.collaborationSupportDocuments.map(
                       (item, index) => (

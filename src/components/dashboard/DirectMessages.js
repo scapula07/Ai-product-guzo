@@ -61,6 +61,10 @@ const scroller = () => {
     scroller()
   },[direct_messages])
 
+  useEffect(()=> {
+     setDirectMessages([])
+  }, [selectedContactGroup])
+
   const getDirectMessage = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
@@ -77,12 +81,13 @@ const scroller = () => {
   const [socket, setSocket] = useState(null)
   const addDirectMessage = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
+    let date = Date.now()
     socket.emit("new_message", {
       contact_group_id : selectedContactGroup?._id,
         user_id: JSON.parse(localStorage.getItem("user"))?._id,
         username: JSON.parse(localStorage.getItem("user"))?.username,
         message,
-        time: Date.now(),
+        time: date,
     });
 
     axios
@@ -91,7 +96,7 @@ const scroller = () => {
         user_id: JSON.parse(localStorage.getItem("user"))?._id,
         username: JSON.parse(localStorage.getItem("user"))?.username,
         message,
-        time: Date.now(),
+        time: date,
       })
       .then((res) => {
         //console.log(res.data);
@@ -183,7 +188,7 @@ useEffect(()=> {
                       {item.username}
                     </div>
 
-                    <div className="text-[12px] text-[#114369] ">{moment.unix(item.time).format("MM/DD")}</div>
+                    <div className="text-[12px] text-[#114369] ">{moment(Number(item.time)).fromNow()}</div>
                   </div>
                   <div className="w-full bg-[#EBF1F5] px-4 py-2 text-[12px] rounded-lg ">
                    {item.message}
@@ -209,6 +214,15 @@ useEffect(()=> {
                 value={message}
                 onChange={(e) => {
                   setMessage(e.target.value);
+                }}
+
+                onKeyPress={(e)=> {
+                  if (e.key === "Enter") {
+                    // Cancel the default action, if needed
+                    e.preventDefault();
+                    // Trigger the button element with a click
+                    addDirectMessage()
+                  }
                 }}
               />
 

@@ -66,7 +66,9 @@ const Login = () => {
         
 
           <div className="mt-4">
-            <div className="text-[12px] font-bold ">Sign up using Email</div>
+          {!collaboration_id && (
+              <div className="text-[12px] font-bold ">Sign up using Email</div>
+            )}
 
             
 
