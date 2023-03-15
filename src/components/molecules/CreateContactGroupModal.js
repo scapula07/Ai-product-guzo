@@ -12,7 +12,8 @@ const CreateContactGroupModal = ({open, setOpen, getContactGroups}) => {
       .post(url + "/contact", {
         name,
         user_id,
-        community_id : community._id
+        community_id : community._id,
+        has_dm : false
       })
       .then((res) => {
        console.log(res.data)
