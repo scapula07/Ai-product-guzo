@@ -18,9 +18,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardResponsive from "./DashboardResponsive";
 
-const DashboardHeader = ({community, setCommunity, setLoader }) => {
+const DashboardHeader = ({ community, setCommunity, setLoader }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openSideMenu, setOpenSideMenu] = React.useState(false)
+  const [openSideMenu, setOpenSideMenu] = React.useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,17 +29,20 @@ const DashboardHeader = ({community, setCommunity, setLoader }) => {
     setAnchorEl(null);
   };
 
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-
-  
   return (
     <div>
       <div className="flex items-center justify-between lg:px-[97px] px-2 py-1 lg:py-[21px] ">
-        <div className="md:hidden" >
-          <MenuIcon onClick={()=> setOpenSideMenu(true)}/>
-          <DashboardResponsive open={openSideMenu} setOpen={setOpenSideMenu} community={community} setCommunity={setCommunity} setLoader={setLoader}  />
+        <div className="md:hidden">
+          <MenuIcon onClick={() => setOpenSideMenu(true)} />
+          <DashboardResponsive
+            open={openSideMenu}
+            setOpen={setOpenSideMenu}
+            community={community}
+            setCommunity={setCommunity}
+            setLoader={setLoader}
+          />
         </div>
         <div className="">
           <img
@@ -53,7 +56,7 @@ const DashboardHeader = ({community, setCommunity, setLoader }) => {
               bgcolor: "white",
               borderRadius: "62px",
               px: 4,
-              width: {sm:"400px", lg:"570px", xs:"300px"},
+              width: { sm: "400px", lg: "570px", xs: "300px" },
               py: "10px",
             }}
             placeholder="Search..."
@@ -64,7 +67,7 @@ const DashboardHeader = ({community, setCommunity, setLoader }) => {
         </div>
 
         <div className="flex items-center  lg:space-x-[83px] space-x-3   ">
-          <div>
+          {/* <div>
             <div className="relative cursor-pointer">
               <NotificationsOutlined
               onClick={()=> navigate('/dashboard/notifications')}
@@ -79,7 +82,7 @@ const DashboardHeader = ({community, setCommunity, setLoader }) => {
                 5
               </div>
             </div>
-          </div>
+          </div> */}
           <div>
             <Avatar
               sx={{
@@ -87,14 +90,28 @@ const DashboardHeader = ({community, setCommunity, setLoader }) => {
                 width: { lg: "54px", xs: "34px" },
                 height: { lg: "54px", xs: "34px" },
                 cursor: "pointer",
+                bgcolor: '#24A0FD'
               }}
-              src="/user.png"
               id="basic-button"
               aria-controls={open ? "basic-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
-            />
+            >
+              {JSON.parse(localStorage.getItem("user"))?.username
+                ? JSON.parse(localStorage.getItem("user"))?.username.substr(
+                    0,
+                    1
+                  )
+                : JSON.parse(localStorage.getItem("user"))?.first_name?.substr(
+                    0,
+                    1
+                  ) +
+                  JSON.parse(localStorage.getItem("user"))?.last_name?.substr(
+                    0,
+                    1
+                  )}
+            </Avatar>
             <Menu
               anchorEl={anchorEl}
               id="account-menu"
@@ -131,22 +148,22 @@ const DashboardHeader = ({community, setCommunity, setLoader }) => {
               transformOrigin={{ horizontal: "center", vertical: "top" }}
               anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
             >
-              <MenuItem sx={{ fontSize: "13px", px: "25%" }}>
+              {/* <MenuItem sx={{ fontSize: "13px", px: "25%" }}>
                 View Profile
               </MenuItem>
               <MenuItem sx={{ fontSize: "13px", px: "14%" }}>
                 Account Settings
-              </MenuItem>
-              <Divider sx={{ mx: "6%", my: "1px" }} />
-              <MenuItem sx={{ fontSize: "13px", px: "35%", color: "red" }}
-              onClick={()=>{
-                localStorage.removeItem('user')
-                localStorage.removeItem('community')
-                setTimeout(() => {
-                  navigate('/auth/login')
-                }, 2000);
-
-              }}
+              </MenuItem> */}
+              {/* <Divider sx={{ mx: "6%", my: "1px" }} /> */}
+              <MenuItem
+                sx={{ fontSize: "13px", px: "35%", color: "red" }}
+                onClick={() => {
+                  localStorage.removeItem("user");
+                  localStorage.removeItem("community");
+                  setTimeout(() => {
+                    navigate("/auth/login");
+                  }, 2000);
+                }}
               >
                 Log Out
               </MenuItem>
@@ -155,20 +172,20 @@ const DashboardHeader = ({community, setCommunity, setLoader }) => {
         </div>
       </div>
       <div className="flex justify-center py-4 md:hidden lg:hidden">
-          <InputBase
-            sx={{
-              bgcolor: "white",
-              borderRadius: "62px",
-              px: 4,
-              width: {sm:"400px", lg:"570px", xs:"300px"},
-              py: "6px",
-            }}
-            placeholder="Search..."
-            endAdornment={
-              <SearchOutlined sx={{ fontWeight: "300", cursor: "pointer" }} />
-            }
-          />
-        </div>
+        <InputBase
+          sx={{
+            bgcolor: "white",
+            borderRadius: "62px",
+            px: 4,
+            width: { sm: "400px", lg: "570px", xs: "300px" },
+            py: "6px",
+          }}
+          placeholder="Search..."
+          endAdornment={
+            <SearchOutlined sx={{ fontWeight: "300", cursor: "pointer" }} />
+          }
+        />
+      </div>
     </div>
   );
 };
