@@ -345,7 +345,7 @@ const CollaborationOwnerView = () => {
 
               <div className=" " >
                 <div className="text-[#114369]  text-[14px] font-semibold mt-9 mb-5">
-                  Collaboration Partners ({partners?.find(e=> e.status !== 'deleted').length})
+                  Collaboration Partners ({partners?.find(e=> e.status !== 'deleted')?.length})
                 </div>
                <div className="lg:h-[20vw] h-[20vh] overflow-y-auto" >
                {partners.map((item, index) => { 
