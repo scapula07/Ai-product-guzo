@@ -44,8 +44,6 @@ const Discover = () => {
       });
   };
 
-
-
   useEffect(() => {
     getCommunities();
   }, []);
@@ -86,7 +84,7 @@ const Discover = () => {
           <CustomizedProgressBars />{" "}
         </div>
       ) : (
-        <div className="mt-[30px] text-[12px] ">
+        <div className="mt-[30px] text-[12px]  ">
           <div className="flex justify-center items-center text-[14px] space-x-[20px] mb-[20px] md:mb-[50px] ">
             <div
               className={
@@ -109,138 +107,147 @@ const Discover = () => {
               Organizations
             </div>
           </div>
+          <div className="h-[800px] overflow-y-auto">
+            {active === 0 && (
+              <>
+                <div className="bg-white shadow-lg shadow-gray-200 rounded-3xl p-4 ">
+                  <div className=" lg:ml-9 lg:flex items-center lg:space-x-[18rem] text-[17px] mb-4">
+                    <div className="font-bold">DeLuxe Theater</div>
+                    <div className="font-thin">HCAS Art Exhibition</div>
+                  </div>
 
-          {active === 0 && (
-            <>
-              <div className="bg-white shadow-lg shadow-gray-200 rounded-3xl p-4 ">
-                <div className=" lg:ml-9 lg:flex items-center lg:space-x-[18rem] text-[17px] mb-4">
-                  <div className="font-bold">DeLuxe Theater</div>
-                  <div className="font-thin">HCAS Art Exhibition</div>
-                </div>
+                  <div className="lg:flex items-start space-y-5 lg:space-y-0 lg:space-x-8">
+                    <Avatar
+                      sx={{
+                        width: { xs: "100%", sm: "240px" },
+                        height: "180px",
+                        borderRadius: "1rem",
+                      }}
+                      variant="square"
+                      src="/wow.png"
+                    />
 
-                <div className="lg:flex items-start space-y-5 lg:space-y-0 lg:space-x-8">
-                  <Avatar
-                    sx={{
-                      width: { xs: "100%", sm: "240px" },
-                      height: "180px",
-                      borderRadius: "1rem",
-                    }}
-                    variant="square"
-                    src="/wow.png"
-                  />
+                    <div className="text-[#114369]">
+                      <div className="font-bold">Description</div>
+                      <div className="font-thin mb-3">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed senectus duis diam Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Sed senectus. Lorem ipsum
+                        dolor sit amet, consectetur adipiscing elit. Sed
+                        senectus duis diam Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit
+                      </div>
 
-                  <div className="text-[#114369]">
-                    <div className="font-bold">Description</div>
-                    <div className="font-thin mb-3">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Sed senectus duis diam Lorem ipsum dolor sit amet,
-                      consectetur adipiscing elit. Sed senectus. Lorem ipsum
-                      dolor sit amet, consectetur adipiscing elit. Sed senectus
-                      duis diam Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit
-                    </div>
-
-                    <div className="font-bold">The Ask</div>
-                    <div className="font-thin">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Sed senectus duis diam Lorem ipsum dolor sit amet,
-                      consectetur adipiscing elit. Sed senectus. Lorem ipsum
-                      dolor sit amet, consectetur adipiscing elit. Sed senectus
-                      duis diam Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit
+                      <div className="font-bold">The Ask</div>
+                      <div className="font-thin">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed senectus duis diam Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Sed senectus. Lorem ipsum
+                        dolor sit amet, consectetur adipiscing elit. Sed
+                        senectus duis diam Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
 
-          {active === 1 && (
-            <>
-              {communities &&
-                communities.length > 0 &&
-                communities.map((item, index) => (
-                  <div className=" bg-[#FAFAFA] my-5 p-5 " key={index}>
-                    <div className="font-bold text-[15px] my-4">
-                      {item._doc.name}
-                    </div>
+            {active === 1 && (
+              <>
+                {communities &&
+                  communities.length > 0 &&
+                  communities.map((item, index) => (
+                    <div className=" bg-[#FAFAFA] my-5 p-5 " key={index}>
+                      <div className="font-bold text-[15px] my-4">
+                        {item._doc.name}
+                      </div>
 
-                    {/* <div> <span className="font-bold text-[#24A0FD] mr-3">
+                      {/* <div> <span className="font-bold text-[#24A0FD] mr-3">
                <Dashboard sx={{ fontSize: ''}} /> Category: 
                </span>
                <span>Organization Resource, Neighborhood Resource, Connector</span>  </div> */}
 
-                    <div className="flex items-start">
-                      <Avatar
-                        variant="square"
-                        src="logo1.png"
-                        sx={{ height: "", width: "" }}
-                      />
-                      <div className=" font-thin ">{item._doc.description}</div>
-                    </div>
-
-                    <Divider sx={{ my: 3 }} />
-
-                    <div className="grid lg:grid-cols-4 gap-6">
-                      <div className="flex flex-wrap items-center space-x-2">
-                        <div className="font-bold text-[#24A0FD]">
-                          <People sx={{ fontSize: "" }} /> Members :{" "}
-                        </div>
-                        <div>
-                        {item.teammates?.length + 1} {" "}
-                          Members
+                      <div className="flex items-start">
+                        <Avatar
+                          variant="square"
+                          src="logo1.png"
+                          sx={{ height: "", width: "" }}
+                        />
+                        <div className=" font-thin ">
+                          {item._doc.description}
                         </div>
                       </div>
 
-                      <div className="flex  items-center space-x-2    ">
-                        <div className="font-bold text-[#24A0FD] flex items-center ">
-                          <Language sx={{ fontSize: "", mr: 1 }} /> Community
-                          Platform :
+                      <Divider sx={{ my: 3 }} />
+
+                      <div className="grid lg:grid-cols-4 gap-6">
+                        <div className="flex flex-wrap items-center space-x-2">
+                          <div className="font-bold text-[#24A0FD]">
+                            <People sx={{ fontSize: "" }} /> Members :{" "}
+                          </div>
+                          <div>{item.teammates?.length + 1} Members</div>
                         </div>
-                        <div>
-                          {" "}
-                          Facebook, Intagram, Website, Email list, Text Message
-                          List
+
+                        <div className="flex  items-center space-x-2    ">
+                          <div className="font-bold text-[#24A0FD] flex items-center ">
+                            <Language sx={{ fontSize: "", mr: 1 }} /> Community
+                            Platform :
+                          </div>
+                          <div>
+                            {" "}
+                            Facebook, Intagram, Website, Email list, Text
+                            Message List
+                          </div>
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                          <div className="font-bold text-[#24A0FD]">
+                            <CalendarMonth sx={{ fontSize: "" }} /> Creation
+                            Date:{" "}
+                          </div>
+                          <div>
+                            {moment(item._doc.createdAt).format("D MMM YYYY")}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center space-x-2 ">
+                          <div className="font-bold text-[#24A0FD]">
+                            <Person sx={{ fontSize: "" }} /> Owner :{" "}
+                          </div>
+                          <div>
+                            {item.owner?.username
+                              ? item.owner.username
+                              : item.owner?.first_name +
+                                " " +
+                                item.owner?.last_name}
+                          </div>
                         </div>
                       </div>
 
-                      <div className="flex items-center space-x-2">
-                        <div className="font-bold text-[#24A0FD]">
-                          <CalendarMonth sx={{ fontSize: "" }} /> Creation Date:{" "}
-                        </div>
-                        <div>{moment(item._doc.createdAt).format("D MMM YYYY")}</div>
-                      </div>
-
-                      <div className="flex items-center space-x-2 ">
-                        <div className="font-bold text-[#24A0FD]">
-                          <Person sx={{ fontSize: "" }} /> Owner :{" "}
-                        </div>
-                        <div>{item.owner?.username ? item.owner.username : item.owner?.first_name +" "+ item.owner?.last_name}</div>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-end mt-2">
-                      <Button
-                        sx={{
-                          bgcolor: "#24A0FD",
-                          color: "white",
-                          fontSize: "14px",
-                          width: { sm: "fit", xs: "fit" },
-                          textTransform: "none",
-                          borderRadius: "5px",
-                          ":hover": {
+                      <div className="flex justify-end mt-2">
+                        <Button
+                          sx={{
                             bgcolor: "#24A0FD",
                             color: "white",
-                          },
-                        }}
-                      >
-                        View
-                      </Button>
+                            fontSize: "14px",
+                            width: { sm: "fit", xs: "fit" },
+                            textTransform: "none",
+                            borderRadius: "5px",
+                            ":hover": {
+                              bgcolor: "#24A0FD",
+                              color: "white",
+                            },
+                          }}
+                        >
+                          View
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                ))}
-            </>
-          )}
+                  ))}
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>
