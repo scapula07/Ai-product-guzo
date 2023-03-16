@@ -287,7 +287,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
                       color: "gray",
                     }
               }
-            >Click to upload Photo</Avatar>
+            >Click to Upload Photo</Avatar>
             <input
               hidden
               type="file"
@@ -316,7 +316,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
                 },
               }}
             >
-              Upload photo
+              Upload Photo
             </Button>
           </div>
         </div>
@@ -340,7 +340,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
                 width: "100%",
                 py: "3px",
               }}
-              placeholder="Community description"
+              placeholder="Community Description"
               value={communityData.description}
               onChange={(e) => {
                 setCommunityData({
@@ -427,7 +427,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
                 width: "100%",
                 py: "3px",
               }}
-              placeholder="Add  tags here"
+              placeholder="Add  Tags Here"
               id="tags_input_feild"
             />
 

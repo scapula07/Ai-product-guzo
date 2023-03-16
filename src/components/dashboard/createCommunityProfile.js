@@ -113,7 +113,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
           <div className="text-xs font-light text-dark">
             Create your organization profile or{" "}
             <span className="text-red-500">
-              select from existing communities
+              select from existing organizations
             </span>
           </div>
         </div>
@@ -225,7 +225,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                     }
               }
 
-            >Click to upload Photo</Avatar>
+            >Click to Upload Photo</Avatar>
             <input
               hidden
               type="file"
@@ -254,7 +254,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                 },
               }}
             >
-              Upload photo
+              Upload Photo
             </Button>
           </div>
         </div>
@@ -278,7 +278,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                 width: "100%",
                 py: "3px",
               }}
-              placeholder="Organization description"
+              placeholder="Organization Description"
               value={communityData.description}
               onChange={(e) => {
                 setCommunityData({
@@ -365,7 +365,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                 width: "100%",
                 py: "3px",
               }}
-              placeholder="Add  tags here"
+              placeholder="Add  Tags Here"
               id="tags_input_feild"
             />
 
