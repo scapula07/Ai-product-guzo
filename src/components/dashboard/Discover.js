@@ -228,7 +228,7 @@ const Discover = () => {
                           <div className="font-bold text-[#24A0FD]">
                             <People sx={{ fontSize: "" }} /> Members :{" "}
                           </div>
-                          <div>{item.teammates?.length + 1} Members</div>
+                          <div>{item.teammates?.length} Members</div>
                         </div>
 
                         {/* <div className="flex  items-center space-x-2    ">
