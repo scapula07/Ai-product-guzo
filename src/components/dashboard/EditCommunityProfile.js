@@ -287,7 +287,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
                       color: "gray",
                     }
               }
-            >Click to upload photo</Avatar>
+            >Click to upload Photo</Avatar>
             <input
               hidden
               type="file"
