@@ -29,7 +29,6 @@ const scroller = () => {
 
 const urlParams = new URLSearchParams(window.location.search);
 const collaboration_id = urlParams.get('collaboration_id')
-console.log(collaboration_id)
 
 
   const getContactGroups = async() =>{
@@ -49,8 +48,8 @@ console.log(collaboration_id)
         setContactGroups(c)
         if(collaboration_id){
              c.forEach(element => {
-              if(element._id === collaboration_id){
-                setSelectedContactGroup(c)
+              if(element.collaboration_id === collaboration_id){
+                setSelectedContactGroup(element)
                 return
               }
              });
