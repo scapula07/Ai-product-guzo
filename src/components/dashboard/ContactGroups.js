@@ -303,7 +303,9 @@ const ContactGroups = () => {
             ))}
         </FadeIn>
 
-        {!contacts && (<CustomizedProgressBars/>)}
+        {!contacts  && (<CustomizedProgressBars/>)}
+
+        {contacts && contacts.length < 1 && "No contacts available in this group"}
       </div>
     </div>
   );
