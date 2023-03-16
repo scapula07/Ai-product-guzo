@@ -197,7 +197,7 @@ const Discover = () => {
                 {communities &&
                   communities.length > 0 &&
                   communities.map((item, index) => (
-                    <div className=" bg-[#FAFAFA] my-5 p-5 " key={index}>
+                    <div className=" bg-[#FAFAFA] rounded-3xl my-5 p-5 " key={index}>
                       {/* <div> <span className="font-bold text-[#24A0FD] mr-3">
                <Dashboard sx={{ fontSize: ''}} /> Category: 
                </span>

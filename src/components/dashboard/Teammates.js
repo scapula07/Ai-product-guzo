@@ -143,7 +143,7 @@ const Teammates = () => {
           />
         </div> */}
 
-        <div className=" md:block lg:block mt-2 md:mt-0">
+        {/* <div className=" md:block lg:block mt-2 md:mt-0">
           <InputBase
             sx={{
               bgcolor: "#EBF1F5",
@@ -157,7 +157,7 @@ const Teammates = () => {
               <SearchOutlined sx={{ fontWeight: "300", cursor: "pointer" }} />
             }
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-end mt-4">
