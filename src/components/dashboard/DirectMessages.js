@@ -181,11 +181,11 @@ useEffect(()=> {
                       }}
                       
                     >
-                     {item.username.substr(0,1)}
+                     {item.first_name.substr(0,1)+ item.last_name.substr(0,1)}
                     </Avatar>
 
                     <div className="font-semibold text-[14px] ml-3 flex-1">
-                      {item.username}
+                    {item.first_name.substr(0,1)+ item.last_name.substr(0,1)}
                     </div>
 
                     <div className="text-[12px] text-[#114369] ">{moment(Number(item.time)).fromNow()}</div>
