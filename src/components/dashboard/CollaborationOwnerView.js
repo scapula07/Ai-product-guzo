@@ -260,7 +260,7 @@ const CollaborationOwnerView = () => {
               }
               onClick={() => setActive(1)}
             >
-              Request Responses
+              Responses
             </div>
           </div>
 
@@ -311,24 +311,23 @@ const CollaborationOwnerView = () => {
                   </div>
 
                   <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] ">
-                    {collaboration._doc.community.name}.
+                    
                     {collaboration._doc.support_links.map((item, index) => (
-                      <div
-                        className="underline text-[#24A0FD]  cursor-pointer"
-                        key={index}
-                        onClick={() => {
-                          let url = item.link
-                          if (!url.match(/^https?:\/\//i)) {
-                            url = "http://" + url;
-                          }
-                          return window.open(url);
-
-                        }}
-                      >
-                        {item.link}
-                        <span className="text-[#114369] no-underline">
-                          ({item.description})
-                        </span>
+                      <div>
+                        {item.description}.
+                        <div
+                          className="underline text-[#24A0FD]  cursor-pointer"
+                          key={index}
+                          onClick={() => {
+                            let url = item.link;
+                            if (!url.match(/^https?:\/\//i)) {
+                              url = "http://" + url;
+                            }
+                            return window.open(url);
+                          }}
+                        >
+                          {item.link}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -338,7 +337,6 @@ const CollaborationOwnerView = () => {
                   </div>
 
                   <div className="text-left  text-[13px] font-semibold mt-4 text-[#114369] ">
-                    {collaboration._doc.community.name}.
                     {collaboration.collaborationSupportDocuments.map(
                       (item, index) => (
                         <div

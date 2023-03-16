@@ -167,6 +167,8 @@ useEffect(()=> {
           <div className="space-y-4">
             {/* message */}
 
+            <div className='text-sm font-bold text-center hidden lg:block'>{selectedContactGroup?.name} </div>
+
             <div className="h-[350px] overflow-y-auto" id='msgbar' >
             {direct_messages &&
               direct_messages.map((item, index) => (

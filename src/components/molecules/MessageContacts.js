@@ -25,7 +25,7 @@ const MessageContacts = ({contactGroups,selectedContactGroup, setSelectedContact
   }, [])
   return (
     <div className="  py-2 px-3 space-y-4 rounded-xl ">
-       <div className='text-sm font-bold text-center hidden lg:block'>{selectedContactGroup?.name} </div>
+      
             <div className=" md:block lg:block mt-2 md:mt-0">
               <InputBase
                 sx={{
@@ -80,9 +80,9 @@ const MessageContacts = ({contactGroups,selectedContactGroup, setSelectedContact
                  {item.name}
                 </div>
 
-                <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
+                {/* <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
                   <MoreHoriz sx={{ color: "#24A0FD" }} />
-                </div>
+                </div> */}
               </div>
               <Divider/>
                 </div>

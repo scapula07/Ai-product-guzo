@@ -53,20 +53,20 @@ const DashboardRoutes = () => {
       navigate('/auth/register')
     }
     else{
-      if ( !communities || !community.label || communities.length < 1 ) {
-        let path = "/dashboard/create-community-profile";
-        if (
-          window.location.href ==
-          "https://guzo-dev.vercel.app/dashboard/create-community-profile"
-          ||  window.location.href ==
-          "https://guzo-dev.vercel.app/dashboard/direct-messages"
+      // if ( !communities || !community.label || communities.length < 1 ) {
+      //   let path = "/dashboard/create-community-profile";
+      //   if (
+      //     window.location.href ==
+      //     "https://guzo-dev.vercel.app/dashboard/create-community-profile"
+      //     ||  window.location.href ==
+      //     "https://guzo-dev.vercel.app/dashboard/direct-messages"
         
-        ) {} else{
-        if(!community.label){
-          setOpenLanding(true)  
-        }
-        }
-      }
+      //   ) {} else{
+      //   if(!community.label){
+      //     setOpenLanding(true)  
+      //   }
+      //   }
+      // }
     }
   },[navigate])
 
