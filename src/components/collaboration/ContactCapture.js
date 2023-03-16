@@ -65,30 +65,7 @@ const ContactCapture = () => {
       });
   };
 
-  // const addContact = async () => {
-  //   let contact = {
-  //     user_id: partner.user_id,
-  //     name: partner.first_name + " " + partner.last_name,
-  //     email: partner.email,
-  //     phone_number: partner.country_code + partner.phone,
-  //   };
-  //   setLoader(true);
-  //   let url = process.env.REACT_APP_BACKEND_URL;
-  //   console.log({ ...contact, contact_group_id: contactGroup._id });
-  //   await axios
-  //     .post(url + "/contact/add/", {
-  //       contact,
-  //       contact_group_id: contactGroup._id,
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setLoader(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
+  
   useEffect(() => {
     if (!user) {
       navigate("/auth/login?collaboration_id=" + collaboration_id);
@@ -123,22 +100,7 @@ const ContactCapture = () => {
       });
   };
 
-  // const addContact = async(contact) => {
-  //   setLoader(true)
-  //   setOpen(false);
-  //   let url = process.env.REACT_APP_BACKEND_URL;
-  //   console.log({...contact,contact_group_id : selectedContactGroup.value})
-  //   axios
-  //     .post(url + "/contact/add/",{contact,contact_group_id : selectedContactGroup.value})
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setLoader(false)
-
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
+  
   return (
     <div className="flex justify-center">
       <ErrorSnack

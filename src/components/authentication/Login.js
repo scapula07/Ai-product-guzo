@@ -35,6 +35,7 @@ const Login = () => {
       console.log(res.data)
       if(res.data.code){
          document.getElementById('info').innerHTML = "( "+res.data.msg+" )"
+         setLoader(false)
       }else{
         localStorage.clear()
       localStorage.setItem('user' , JSON.stringify(res.data))
