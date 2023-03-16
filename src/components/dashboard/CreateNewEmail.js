@@ -104,6 +104,7 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
          setSender("")
          setMessage("")
          setSelectedCategory(null)
+         navigate('/dashboard/email')
          
         })
   
@@ -372,7 +373,7 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
             Cancel
           </Button>
 
-          <Button
+          {/* <Button
             sx={{
               bgcolor: "white",
               color: "#24A0FD",
@@ -390,7 +391,7 @@ import SuccessSnackbar from "../molecules/SuccessSnackbar";
             }}
           >
             Save as Draft
-          </Button>
+          </Button> */}
           {loader ? (<CustomizedProgressBars/>): (
             <Button
             sx={{

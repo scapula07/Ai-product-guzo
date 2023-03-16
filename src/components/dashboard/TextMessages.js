@@ -20,6 +20,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
+import FadeIn from "react-fade-in";
+import CustomizedProgressBars from "../molecules/Progress";
 
 const TextMessages = () => {
   const [active, setActive] = useState(0);
@@ -96,6 +98,7 @@ const TextMessages = () => {
               },
             }}
             onClick={()=>navigate('/dashboard/textmessages/create')}
+            className="transition ease-in-out delay-100  hover:-translate-y-0.5 hover:scale-200  duration-300"
           >
             Create New Text Message
           </Button>
@@ -147,7 +150,7 @@ const TextMessages = () => {
 
               <div className="col-span-2 py-2 pl-4">From</div>
 
-              <div className="relative col-span-2 py-2">
+              <div className="relative col-span-2 py-2 px-2">
                 <div className="text-left">Status</div>
                 <div className="absolute right-2 top-[6px] ">
                   <KeyboardArrowDown
@@ -161,12 +164,13 @@ const TextMessages = () => {
               {/* <div className="col-span-2 py-2 text-center">Action</div> */}
             </div>
 
+           <FadeIn>
            {textMessages && textMessages.map((item,index)=> (
              <div className="grid grid-cols-9  items-center divide-x  bg-[#EBF1F5] text-black  px-3 "
              key={index}
              >
              <div className="relative">
-               <div className="text-center">1</div>
+               <div className="text-center">{index+1}</div>
              </div>
 
              <div className="col-span-2 py-2 pl-4">{item.campaign_name}</div>
@@ -203,9 +207,10 @@ const TextMessages = () => {
              </div> */}
            </div>
            ))}
+           </FadeIn>
 
-            
-
+           {!textMessages && <div className="mt-3" ><CustomizedProgressBars/></div>}
+           {textMessages && textMessages.length < 1 &&  <div className="mt-3">No text messages available</div>}
           </div>
         </div>
       </div>

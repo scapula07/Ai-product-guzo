@@ -20,6 +20,8 @@ import axios from "axios";
   import React, { useEffect, useState } from "react";
   import { Link, useNavigate } from "react-router-dom";
   import ReactSelect from "react-select";
+  import FadeIn from "react-fade-in";
+import CustomizedProgressBars from "../molecules/Progress";
   
   const Email = () => {
     const [active, setActive] = useState(0);
@@ -95,6 +97,7 @@ import axios from "axios";
                 },
               }}
               onClick={()=>navigate('/dashboard/email/create')}
+              className="transition ease-in-out delay-100  hover:-translate-y-0.5 hover:scale-200  duration-300"
             >
               Create New Email
             </Button>
@@ -118,14 +121,14 @@ import axios from "axios";
                   width: { md: "fit", xs: "100%" },
                   py: "2px",
                 }}
-                placeholder="Search artists"
+                placeholder="Search emails "
                 startAdornment={<SearchOutlined />}
               />
             </div>
   
-            <div className="text-[12px] border-[1px] border-[#E6E6E6] py-1 rounded-lg px-1 cursor-pointer">
+            {/* <div className="text-[12px] border-[1px] border-[#E6E6E6] py-1 rounded-lg px-1 cursor-pointer">
               <FilterAltOutlined /> <span className="hidden lg:inline">Filter</span>
-            </div>
+            </div> */}
           </div>
         </div>
   
@@ -133,7 +136,7 @@ import axios from "axios";
           <div className="md:w-[55vw] lg:w-full w-[85vw] overflow-x-auto">
             <div className="md:w-[850px] lg:w-full w-[700px] ">
               <div className="grid grid-cols-7  items-center divide-x  bg-[#24A0FD] text-white  px-3 ">  
-                <div className="relative">
+                <div className="relative ">
                   <div className="text-left">id</div>
                   <div className="absolute right-0 top-[-2px] ">
                     <KeyboardArrowDown
@@ -146,7 +149,7 @@ import axios from "axios";
   
                 {/* <div className="col-span-2 py-2 pl-4">From</div> */}
   
-                <div className="relative col-span-2 py-2">
+                <div className="relative col-span-2 px-2 py-2">
                   <div className="text-left">Status</div>
                   <div className="absolute right-2 top-[6px] ">
                     <KeyboardArrowDown
@@ -159,7 +162,8 @@ import axios from "axios";
   
               </div>
   
-              {emails && emails.map((item,index)=> (
+            <FadeIn>
+            {emails && emails.map((item,index)=> (
              <div className="grid grid-cols-7  items-center divide-x  bg-[#EBF1F5] text-black  px-3 "
              key={index}
              >
@@ -201,7 +205,12 @@ import axios from "axios";
              </div> */}
            </div>
            ))}
+            </FadeIn>
   
+
+  {!emails && <div className="mt-3" ><CustomizedProgressBars/></div>}
+
+  {emails && emails.length < 1 &&  <div className="mt-3">No emails available</div>}
              
   
             </div>

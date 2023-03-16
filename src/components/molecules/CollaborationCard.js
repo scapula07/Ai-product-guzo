@@ -1,17 +1,19 @@
-import { Avatar, Button } from '@mui/material'
-import React from 'react'
+import { Avatar, Button, Fade } from '@mui/material'
+import React,{useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
+import FadeIn from 'react-fade-in'
 
-const CollaborationCard = ({collaboration}) => {
+const CollaborationCard = ({collaboration,index}) => {
   const navigate = useNavigate()
   return (
-    <div className="shadow-lg py-[18px] px-[17px]">
+ <FadeIn  delay={(index+1)*200 > 800 ? 800 : (index+1)*200  }>
+     <div className="shadow-lg py-[18px] px-[17px]">
     <div>
       {" "}
       <Avatar
         variant="square"
         src={collaboration?.photo}
-        sx={{ width: "100%", height: "180px" }}
+        sx={{ width: "100%", height: "180px", borderRadius:'0.4rem' }}
       />
     </div>
     <div className="text-center font-[500] mt-[15px]">{collaboration?.title}</div>
@@ -36,6 +38,7 @@ const CollaborationCard = ({collaboration}) => {
       </Button>
     </div>
   </div>
+ </FadeIn>
   )
 }
 

@@ -13,19 +13,23 @@ import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import CreateContactGroupModal from "../molecules/CreateContactGroupModal";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
+import CustomizedProgressBars from "../molecules/Progress";
 import RenameContactGroupModal from "../molecules/RenameContactGroupModal";
+import FadeIn from 'react-fade-in';
 
 const Contacts = () => {
-  const [contactGroups, setContactGroups] = useState([])
+  const [contactGroups, setContactGroups] = useState(null);
   const [active, setActive] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openCreateContactGroupModal, setOpenCreateContactGroupModal] = useState(false)
+  const [openCreateContactGroupModal, setOpenCreateContactGroupModal] =
+    useState(false);
   const open = Boolean(anchorEl);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [openRenameContactGroupModal, setOpenRenameContactGroupModal] = useState(false)
-  const [selectedContactId, setSelectedContactId] = useState()
-  const [name, setName] = useState('')
- 
+  const [openRenameContactGroupModal, setOpenRenameContactGroupModal] =
+    useState(false);
+  const [selectedContactId, setSelectedContactId] = useState();
+  const [name, setName] = useState("");
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -47,49 +51,53 @@ const Contacts = () => {
     }),
   };
 
-
-  const getContactGroups = async() =>{
+  const getContactGroups = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/"+JSON.parse(localStorage.getItem("community"))?._id)
+      .get(
+        url + "/contact/" + JSON.parse(localStorage.getItem("community"))?._id
+      )
       .then((res) => {
-       console.log(res.data)
-       setContactGroups(res.data)
-       
+        console.log(res.data);
+        setContactGroups(res.data);
       })
 
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
-
-  const deleteContactGroup = async(id) => {
+  const deleteContactGroup = async (id) => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/delete-contact-group/"+id)
+      .get(url + "/contact/delete-contact-group/" + id)
       .then((res) => {
-       console.log(res.data)
-       getContactGroups()
-       
+        console.log(res.data);
+        getContactGroups();
       })
 
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
-
-  
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
-     <CreateContactGroupModal open={openCreateContactGroupModal} setOpen={setOpenCreateContactGroupModal}
-     getContactGroups={getContactGroups}
-     />
-   
-     <RenameContactGroupModal open={openRenameContactGroupModal} setOpen={setOpenRenameContactGroupModal}
-     id={selectedContactId}  getContactGroups={getContactGroups} setName={setName} name={name} />
+      <CreateContactGroupModal
+        open={openCreateContactGroupModal}
+        setOpen={setOpenCreateContactGroupModal}
+        getContactGroups={getContactGroups}
+      />
+
+      <RenameContactGroupModal
+        open={openRenameContactGroupModal}
+        setOpen={setOpenRenameContactGroupModal}
+        id={selectedContactId}
+        getContactGroups={getContactGroups}
+        setName={setName}
+        name={name}
+      />
       <div className="md:flex space-y-2 md:space-y-0 items-center">
         <div className="md:flex flex-1 text-[#114369] font-bold text-xl ">
           Contact Groups
@@ -108,7 +116,8 @@ const Contacts = () => {
                 color: "white",
               },
             }}
-            onClick={()=> setOpenCreateContactGroupModal(true)}
+            onClick={() => setOpenCreateContactGroupModal(true)}
+            className="transition ease-in-out delay-100  hover:-translate-y-0.5 hover:scale-200  duration-300"
           >
             Create New Contact Group
           </Button>
@@ -153,9 +162,7 @@ const Contacts = () => {
               py: "5px",
             }}
             placeholder="Search..."
-            onChange={(e)=>{
-
-            }}
+            onChange={(e) => {}}
             endAdornment={
               <SearchOutlined sx={{ fontWeight: "300", cursor: "pointer" }} />
             }
@@ -164,114 +171,120 @@ const Contacts = () => {
       </div>
 
       <div className="space-y-3 mt-7">
-        {contactGroups && contactGroups.map((item,index)=> 
-        (
-          <div key={item._id} id={item._id} >
-          <div className="flex items-center cursor-pointer mb-3"
-        
-        >
-          <Avatar
-            variant="circular"
-            src=""
-            sx={{
-              bgcolor: "blue",
-              width: "45px",
-              height: "45px",
-            }}
-            onClick={()=>navigate('/dashboard/contacts/'+item._id)}
-          >
-            {item.name.substr(0,1)}
-          </Avatar>
+        <FadeIn delay={100} >
+        {contactGroups &&
+          contactGroups.map((item, index) => (
+            <div key={item._id} id={item._id}>
+              <div className="flex items-center cursor-pointer mb-3">
+                <Avatar
+                  variant="circular"
+                  src=""
+                  sx={{
+                    bgcolor: "blue",
+                    width: "45px",
+                    height: "45px",
+                  }}
+                  onClick={() => navigate("/dashboard/contacts/" + item._id)}
+                >
+                  {item.name.substr(0, 1)}
+                </Avatar>
 
-          <div className="font-semibold text-[14px] ml-3 flex-1" onClick={()=>navigate('/dashboard/contacts/'+item._id)}>
-           {item.name}
-          </div>
+                <div
+                  className="font-semibold text-[14px] ml-3 flex-1"
+                  onClick={() => navigate("/dashboard/contacts/" + item._id)}
+                >
+                  {item.name}
+                </div>
 
-          <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
-            <MoreHoriz
-              sx={{ color: "#24A0FD" }}
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={(e)=> {
-                handleClick(e)
-                setSelectedContactId(item._id)
-                setName(item.name)
-              }}
-            />
+                <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
+                  <MoreHoriz
+                    sx={{ color: "#24A0FD" }}
+                    id="basic-button"
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={(e) => {
+                      handleClick(e);
+                      setSelectedContactId(item._id);
+                      setName(item.name);
+                    }}
+                  />
 
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={open}
-              onClose={handleClose}
-              onClick={handleClose}
-              PaperProps={{
-                elevation: 2,
-                sx: {
-                  overflow: "visible",
-                  width: "140px",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: { lg: "45%", xs: "3%" },
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
-              transformOrigin={{ horizontal: "center", vertical: "top" }}
-              anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
-            >
-              
-              <MenuItem sx={{ fontSize: "10px", px: "15%" }}
-              onClick={()=> {
-                setOpenRenameContactGroupModal(true)
-              }}
-              >
-               Rename Contact Group
-              </MenuItem>
+                  <Menu
+                    anchorEl={anchorEl}
+                    id="account-menu"
+                    open={open}
+                    onClose={handleClose}
+                    onClick={handleClose}
+                    PaperProps={{
+                      elevation: 2,
+                      sx: {
+                        overflow: "visible",
+                        width: "140px",
+                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                        mt: 1.5,
+                        "& .MuiAvatar-root": {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        "&:before": {
+                          content: '""',
+                          display: "block",
+                          position: "absolute",
+                          top: 0,
+                          right: { lg: "45%", xs: "3%" },
+                          width: 10,
+                          height: 10,
+                          bgcolor: "background.paper",
+                          transform: "translateY(-50%) rotate(45deg)",
+                          zIndex: 0,
+                        },
+                      },
+                    }}
+                    transformOrigin={{ horizontal: "center", vertical: "top" }}
+                    anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+                  >
+                    <MenuItem
+                      sx={{ fontSize: "10px", px: "15%" }}
+                      onClick={() => {
+                        setOpenRenameContactGroupModal(true);
+                      }}
+                    >
+                      Rename Contact Group
+                    </MenuItem>
 
-              {/* <MenuItem sx={{ fontSize: "10px", px: "15%" }}>
+                    {/* <MenuItem sx={{ fontSize: "10px", px: "15%" }}>
                Export Contact Group
               </MenuItem> */}
 
-              <Divider sx={{ mx: "6%", my: "1px" }} />
-              <MenuItem
-                sx={{ fontSize: "10px", px: "15%", color: "red" }}
-                onClick={()=>{
-                  deleteContactGroup(item._id)
-                }}
-              >
-                Delete Contact Group
-              </MenuItem>
-            </Menu>
-          </div>
-        </div>
+                    <Divider sx={{ mx: "6%", my: "1px" }} />
+                    <MenuItem
+                      sx={{ fontSize: "10px", px: "15%", color: "red" }}
+                      onClick={() => {
+                        deleteContactGroup(item._id);
+                      }}
+                    >
+                      Delete Contact Group
+                    </MenuItem>
+                  </Menu>
+                </div>
+              </div>
 
-        <Divider />  
-          </div>
-        ))}
+              <Divider />
+            </div>
+          ))}
+        </FadeIn>
+
+        {!contactGroups && <CustomizedProgressBars />}
 
         {contactGroups && contactGroups.length < 1 && (
-          <div className="text-xs lg:text-sm" > No contact group available... </div>
+          <div className="text-xs lg:text-sm">
+            {" "}
+            No contact group available...{" "}
+          </div>
         )}
-
-        
       </div>
     </div>
   );

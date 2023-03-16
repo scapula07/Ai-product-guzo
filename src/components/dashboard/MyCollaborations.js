@@ -9,11 +9,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CollaborationCard from "../molecules/CollaborationCard";
+import CustomizedProgressBars from "../molecules/Progress";
 
 const MyCollaborations = () => {
   const [active, setActive] = useState(0);
   const [loader, setLoader] = useState(false);
-  const [collaborations, setCollaborations] = useState([]);
+  const [collaborations, setCollaborations] = useState(null);
 
   const getCollaborations = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
@@ -71,6 +72,7 @@ const MyCollaborations = () => {
               },
             }}
             onClick={() => navigate("/dashboard/create-collaboration")}
+            className="transition ease-in-out delay-100  hover:-translate-y-0.5 hover:scale-200  duration-300"
           >
             Create Collaboration
           </Button>
@@ -110,13 +112,15 @@ const MyCollaborations = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 md:gap-1 lg:gap-[48px]">
-            {collaborations.map((item, index) => (
-              <CollaborationCard key={index} collaboration={item} />
+            {collaborations && collaborations.map((item, index) => (
+              <CollaborationCard key={index} collaboration={item} index={index} />
             ))}
           </div>
         </div>
       )}
 
+
+      {!collaborations && (<CustomizedProgressBars/>)}
 
       {collaborations && collaborations.length < 1 && 'You dont have any collaborations yet'}
     </div>

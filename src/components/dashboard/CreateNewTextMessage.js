@@ -110,6 +110,7 @@ const CreateNewTextMessage = () => {
        setSender("")
        setMessage("")
        setSelectedCategory(null)
+       navigate('/dashboard/textmessages')
        
       })
 
@@ -380,7 +381,7 @@ const CreateNewTextMessage = () => {
             Cancel
           </Button>
 
-          <Button
+          {/* <Button
             sx={{
               bgcolor: "white",
               color: "#24A0FD",
@@ -398,7 +399,7 @@ const CreateNewTextMessage = () => {
             }}
           >
             Save as Draft
-          </Button>
+          </Button> */}
           {loader ? (
             <div> <CustomizedProgressBars/> </div>
           ): (

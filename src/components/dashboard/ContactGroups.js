@@ -14,6 +14,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReactSelect from "react-select";
 import CreateContactGroupModal from "../molecules/CreateContactGroupModal";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
+import FadeIn from "react-fade-in";
+import CustomizedProgressBars from "../molecules/Progress";
 
 const ContactGroups = () => {
   const [active, setActive] = useState(0);
@@ -22,10 +24,10 @@ const ContactGroups = () => {
     useState(false);
   const open = Boolean(anchorEl);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [contactGroup, setContactGroup] = useState(null)
-  const [contacts, setContacts] = useState(null)
-  const [contact_id, setContactId] = useState(null)
-  const {id} = useParams()
+  const [contactGroup, setContactGroup] = useState(null);
+  const [contacts, setContacts] = useState(null);
+  const [contact_id, setContactId] = useState(null);
+  const { id } = useParams();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -47,53 +49,48 @@ const ContactGroups = () => {
     }),
   };
 
-
-  const getContactGroup = async() =>{
+  const getContactGroup = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/contact/get-contact-group/"+id)
+      .get(url + "/contact/get-contact-group/" + id)
       .then((res) => {
-        console.log(res.data)
-       setContactGroup(res.data)
-       setContacts(res.data.contacts)
-       
+        console.log(res.data);
+        setContactGroup(res.data);
+        setContacts(res.data.contacts);
       })
 
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   useEffect(() => {
-    getContactGroup()
-  
-    
-  }, [])
+    getContactGroup();
+  }, []);
 
-
-  const removeContact = async(contact_id) => {
-    const cons = contacts.filter((e)=>{return e?._id !== contact_id})
-    setContacts(cons)
+  const removeContact = async (contact_id) => {
+    const cons = contacts.filter((e) => {
+      return e?._id !== contact_id;
+    });
+    setContacts(cons);
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .post(url + "/contact/remove-contact/",{
-        contact_group_id : id,
-        contacts : cons
+      .post(url + "/contact/remove-contact/", {
+        contact_group_id: id,
+        contacts: cons,
       })
       .then((res) => {
-        console.log(res.data)
-       setContacts(res.data.contacts)
-       
+        console.log(res.data);
+        setContacts(res.data.contacts);
       })
 
       .catch((err) => {
         console.log(err);
       });
-    console.log(cons)
-  }
-  
+    console.log(cons);
+  };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
       {/* <CreateContactGroupModal
@@ -118,7 +115,7 @@ const ContactGroups = () => {
                 color: "#24A0FD",
               },
             }}
-            onClick={()=>navigate('/dashboard/contacts')}
+            onClick={() => navigate("/dashboard/contacts")}
           >
             Back
           </Button>
@@ -193,81 +190,94 @@ const ContactGroups = () => {
       </div>
 
       <div className="space-y-3 mt-7 mb-20">
-      
-      {contacts && contacts.map((item,index)=> (
-        <div key={index}>
-           <div className="flex items-center mb-3">
-          <Avatar
-            variant="circular"
-            src=""
-            sx={{
-              bgcolor: "blue",
-              width: "45px",
-              height: "45px",
-            }}
-          >
-            {item?.name.substr(0,2)}
-          </Avatar>
+        <FadeIn>
+          {contacts &&
+            contacts.map((item, index) => (
+              <div key={index}>
+                <div className="flex items-center mb-3">
+                  <Avatar
+                    variant="circular"
+                    src=""
+                    sx={{
+                      bgcolor: "blue",
+                      width: "45px",
+                      height: "45px",
+                    }}
+                  >
+                    {item?.name.substr(0, 2)}
+                  </Avatar>
 
-          <div className="flex-1"> 
+                  <div className="flex-1">
+                    <div className="font-semibold text-[14px] ml-3 ">
+                      {item?.name}
+                    </div>
+                    <div className="lg:flex  items-center">
+                      <div className="font-thin text-xs ml-3  flex">
+                        <span>phone :</span>
+                        {item?.phone_number}
+                      </div>
+                      <div className="font-thin text-xs ml-3 ">
+                        email :{item?.email}
+                      </div>
+                    </div>
+                  </div>
 
-          <div className="font-semibold text-[14px] ml-3 ">{item?.name}</div>
-          <div className="lg:flex  items-center"> 
-          <div className="font-thin text-xs ml-3  flex"><span>phone :</span>{item?.phone_number}</div>
-          <div className="font-thin text-xs ml-3 ">email :{item?.email}</div>
-          </div>
-          </div>
+                  <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
+                    <MoreHoriz
+                      sx={{ color: "#24A0FD" }}
+                      id="basic-button"
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={(e) => {
+                        handleClick(e);
+                        setContactId(item?._id);
+                      }}
+                    />
 
-          <div className="border-[1px] border-[#24A0FD] p-1 rounded-lg cursor-pointer">
-            <MoreHoriz
-              sx={{ color: "#24A0FD" }}
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={(e)=> {
-                handleClick(e)
-                setContactId(item?._id)
-              }}
-            />
-
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={open}
-              onClose={handleClose}
-              onClick={handleClose}
-              PaperProps={{
-                elevation: 2,
-                sx: {
-                  overflow: "visible",
-                  width: "140px",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                  mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: { lg: "45%", xs: "10%" },
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
-                },
-              }}
-              transformOrigin={{ horizontal: "center", vertical: "top" }}
-              anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
-            >
-              {/* <MenuItem sx={{ fontSize: "10px", px: "30%" }}>
+                    <Menu
+                      anchorEl={anchorEl}
+                      id="account-menu"
+                      open={open}
+                      onClose={handleClose}
+                      onClick={handleClose}
+                      PaperProps={{
+                        elevation: 2,
+                        sx: {
+                          overflow: "visible",
+                          width: "140px",
+                          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                          mt: 1.5,
+                          "& .MuiAvatar-root": {
+                            width: 32,
+                            height: 32,
+                            ml: -0.5,
+                            mr: 1,
+                          },
+                          "&:before": {
+                            content: '""',
+                            display: "block",
+                            position: "absolute",
+                            top: 0,
+                            right: { lg: "45%", xs: "10%" },
+                            width: 10,
+                            height: 10,
+                            bgcolor: "background.paper",
+                            transform: "translateY(-50%) rotate(45deg)",
+                            zIndex: 0,
+                          },
+                        },
+                      }}
+                      transformOrigin={{
+                        horizontal: "center",
+                        vertical: "top",
+                      }}
+                      anchorOrigin={{
+                        horizontal: "center",
+                        vertical: "bottom",
+                      }}
+                    >
+                      {/* <MenuItem sx={{ fontSize: "10px", px: "30%" }}>
                 Edit Contact
               </MenuItem>
 
@@ -276,22 +286,24 @@ const ContactGroups = () => {
               </MenuItem>
 
               <Divider sx={{ mx: "6%", my: "1px" }} /> */}
-              <MenuItem sx={{ fontSize: "10px", px: "23%", color: "red" }}
-              onClick={()=> {
-                
-                removeContact(contact_id)
-              }}
-              >
-                Remove Contact
-              </MenuItem>
-            </Menu>
-          </div>
-        </div>
+                      <MenuItem
+                        sx={{ fontSize: "10px", px: "23%", color: "red" }}
+                        onClick={() => {
+                          removeContact(contact_id);
+                        }}
+                      >
+                        Remove Contact
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                </div>
 
-        <Divider />
-          </div>
-       ))}
-       
+                <Divider />
+              </div>
+            ))}
+        </FadeIn>
+
+        {!contacts && (<CustomizedProgressBars/>)}
       </div>
     </div>
   );
