@@ -155,7 +155,7 @@ const Contacts = () => {
             }}
           />
         </div> */}
-
+{/* 
         <div className=" md:block lg:block mt-2 md:mt-0">
           <InputBase
             sx={{
@@ -171,7 +171,7 @@ const Contacts = () => {
               <SearchOutlined sx={{ fontWeight: "300", cursor: "pointer" }} />
             }
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="space-y-3 mt-7">

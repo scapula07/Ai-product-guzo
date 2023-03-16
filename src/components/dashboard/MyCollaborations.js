@@ -88,7 +88,7 @@ const MyCollaborations = () => {
         </div>
       ) : (
         <div className="mt-[30px] text-[12px] ">
-          <div className="flex items-center text-[14px] space-x-[20px] mb-[20px] md:mb-[50px] ">
+          {/* <div className="flex items-center text-[14px] space-x-[20px] mb-[20px] md:mb-[50px] ">
             <div
               className={
                 active === 0
@@ -109,7 +109,7 @@ const MyCollaborations = () => {
             >
               Archived
             </div>
-          </div>
+          </div> */}
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 md:gap-1 lg:gap-[48px]">
             {collaborations && collaborations.map((item, index) => (

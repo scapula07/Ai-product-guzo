@@ -26,7 +26,7 @@ const MessageContacts = ({contactGroups,selectedContactGroup, setSelectedContact
   return (
     <div className="  py-2 px-3 space-y-4 rounded-xl ">
       
-            <div className=" md:block lg:block mt-2 md:mt-0">
+            {/* <div className=" md:block lg:block mt-2 md:mt-0">
               <InputBase
                 sx={{
                   bgcolor: "#EBF1F5",
@@ -42,7 +42,7 @@ const MessageContacts = ({contactGroups,selectedContactGroup, setSelectedContact
                   />
                 }
               />
-            </div>
+            </div> */}
 
             <div className="space-y-3">
             {loader ? (
@@ -50,7 +50,7 @@ const MessageContacts = ({contactGroups,selectedContactGroup, setSelectedContact
         <CircularProgress sx={{ color: '#24A0FD' }} />
         </div>
       ): (
-        <div className="mt-[5vw] space-y-[5vw] md:space-y-[15px] ">
+        <div className="mt-[5px] space-y-[5vw] md:space-y-[15px] ">
        
 
        {contactGroups && contactGroups.map((item,index)=> (

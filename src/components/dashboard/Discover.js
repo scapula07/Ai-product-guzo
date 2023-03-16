@@ -181,7 +181,7 @@ const Discover = () => {
                      {item.description}
                      </div>
 
-                     <div className="font-bold">The Ask</div>
+                     <div className="font-bold">Ask</div>
                      <div className="font-thin">
                       {item.need}
                      </div>

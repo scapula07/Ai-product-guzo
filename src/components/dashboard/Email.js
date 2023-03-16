@@ -110,7 +110,7 @@ import CustomizedProgressBars from "../molecules/Progress";
           <div className="font-bold">Email Campaign List</div>
   
           <div className="flex space-x-4 items-center">
-            <div>
+            {/* <div>
               <InputBase
                 sx={{
                   bgcolor: "#FAFAFA",
@@ -124,7 +124,7 @@ import CustomizedProgressBars from "../molecules/Progress";
                 placeholder="Search emails "
                 startAdornment={<SearchOutlined />}
               />
-            </div>
+            </div> */}
   
             {/* <div className="text-[12px] border-[1px] border-[#E6E6E6] py-1 rounded-lg px-1 cursor-pointer">
               <FilterAltOutlined /> <span className="hidden lg:inline">Filter</span>
