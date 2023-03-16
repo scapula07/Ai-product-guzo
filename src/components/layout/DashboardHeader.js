@@ -90,7 +90,8 @@ const DashboardHeader = ({ community, setCommunity, setLoader }) => {
                 width: { lg: "54px", xs: "34px" },
                 height: { lg: "54px", xs: "34px" },
                 cursor: "pointer",
-                bgcolor: '#24A0FD'
+                bgcolor: '#24A0FD',
+                fontSize:{lg:'22px',xs:'14px'}
               }}
               id="basic-button"
               aria-controls={open ? "basic-menu" : undefined}
