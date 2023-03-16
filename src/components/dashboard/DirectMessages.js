@@ -80,6 +80,7 @@ const scroller = () => {
   };
   const [socket, setSocket] = useState(null)
   const addDirectMessage = async () => {
+    
     let url = process.env.REACT_APP_BACKEND_URL;
     let date = Date.now()
     socket.emit("new_message", {
