@@ -85,7 +85,7 @@ const scroller = () => {
     socket.emit("new_message", {
       contact_group_id : selectedContactGroup?._id,
         user_id: JSON.parse(localStorage.getItem("user"))?._id,
-        username: JSON.parse(localStorage.getItem("user"))?.username,
+        username: JSON.parse(localStorage.getItem("user"))?.first_name + JSON.parse(localStorage.getItem("user"))?.first_name ,
         message,
         time: date,
     });
@@ -94,7 +94,7 @@ const scroller = () => {
       .post(url + "/contact/add-new-message/", {
         contact_group_id : selectedContactGroup?._id,
         user_id: JSON.parse(localStorage.getItem("user"))?._id,
-        username: JSON.parse(localStorage.getItem("user"))?.username,
+        username: JSON.parse(localStorage.getItem("user"))?.username + JSON.parse(localStorage.getItem("user"))?.first_name,
         message,
         time: date,
       })
@@ -181,11 +181,11 @@ useEffect(()=> {
                       }}
                       
                     >
-                     {item.first_name.substr(0,1)+ item.last_name.substr(0,1)}
+                     {item.username.substr(0,1)}
                     </Avatar>
 
                     <div className="font-semibold text-[14px] ml-3 flex-1">
-                    {item.first_name.substr(0,1)+ item.last_name.substr(0,1)}
+                    {item.username.substr(0,1)}
                     </div>
 
                     <div className="text-[12px] text-[#114369] ">{moment(Number(item.time)).fromNow()}</div>
