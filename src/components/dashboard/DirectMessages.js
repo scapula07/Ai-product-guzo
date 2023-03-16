@@ -27,9 +27,14 @@ const scroller = () => {
   document.getElementById('msgbar').scrollTo({ top:document.getElementById('msgbar').scrollHeight, behavior:'smooth'})
 }
 
+const urlParams = new URLSearchParams(window.location.search);
+const collaboration_id = urlParams.get('collaboration_id')
+console.log(collaboration_id)
+
 
   const getContactGroups = async() =>{
     let url = process.env.REACT_APP_BACKEND_URL;
+
     axios
       .get(url + "/contact/has-dm/"+JSON.parse(localStorage.getItem("community"))?._id)
       .then((res) => {
@@ -42,7 +47,16 @@ const scroller = () => {
         let c = [...cs, ...res.data]
         console.log(c)
         setContactGroups(c)
-        setSelectedContactGroup(c[0])
+        if(collaboration_id){
+             c.forEach(element => {
+              if(element._id === collaboration_id){
+                setSelectedContactGroup(c)
+                return
+              }
+             });
+        }else{
+          setSelectedContactGroup(c[0])
+        }
         
        })
  
