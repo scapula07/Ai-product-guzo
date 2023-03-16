@@ -137,7 +137,7 @@ const Discover = () => {
             {active === 0 && (
               <div>
                {communities && collaborations && collaborations.length > 0 && collaborations.map((item,index)=>(
-                 <div className="bg-white shadow-lg shadow-gray-200 rounded-3xl p-4 " key={index}>
+                 <div className="  rounded-3xl p-4 bg-[#FAFAFA] my-4 " key={index}>
 
                   <div className="flex items-center font-bold space-x-3" >
                   <Avatar
