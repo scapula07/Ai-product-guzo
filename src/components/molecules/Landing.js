@@ -152,7 +152,7 @@ const LandingModal = ({open, setOpen,community, setCommunity}) => {
                 }}
                
              >
-               create new community
+               create new organization
              </Button>
            )}
        
