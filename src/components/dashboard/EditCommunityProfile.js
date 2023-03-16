@@ -427,7 +427,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
                 width: "100%",
                 py: "3px",
               }}
-              placeholder="Add  Tags Here"
+              placeholder="Add Tags Here"
               id="tags_input_feild"
             />
 

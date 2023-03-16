@@ -365,7 +365,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                 width: "100%",
                 py: "3px",
               }}
-              placeholder="Add  Tags Here"
+              placeholder="Add Tags Here"
               id="tags_input_feild"
             />
 
@@ -407,7 +407,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                   },
                 }}
               >
-                Add Tag
+              Add Tag
               </Button>
             </div>
           </div>
