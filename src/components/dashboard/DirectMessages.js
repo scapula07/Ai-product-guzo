@@ -85,7 +85,7 @@ const scroller = () => {
     socket.emit("new_message", {
       contact_group_id : selectedContactGroup?._id,
         user_id: JSON.parse(localStorage.getItem("user"))?._id,
-        username: JSON.parse(localStorage.getItem("user"))?.first_name + JSON.parse(localStorage.getItem("user"))?.first_name ,
+        username: JSON.parse(localStorage.getItem("user"))?.first_name + JSON.parse(localStorage.getItem("user"))?.last_name ,
         message,
         time: date,
     });
@@ -94,7 +94,7 @@ const scroller = () => {
       .post(url + "/contact/add-new-message/", {
         contact_group_id : selectedContactGroup?._id,
         user_id: JSON.parse(localStorage.getItem("user"))?._id,
-        username: JSON.parse(localStorage.getItem("user"))?.username + JSON.parse(localStorage.getItem("user"))?.first_name,
+        username: JSON.parse(localStorage.getItem("user"))?.first_name + JSON.parse(localStorage.getItem("user"))?.last_name,
         message,
         time: date,
       })
