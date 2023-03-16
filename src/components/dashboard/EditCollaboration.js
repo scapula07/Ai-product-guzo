@@ -251,7 +251,7 @@ const EditCollaboration = ({ community }) => {
                 document.getElementById("hiddenfileinput").click();
               }}
             >
-              Click to upload photo
+              Click to Upload Photo
             </Avatar>
             <input 
          
@@ -282,7 +282,7 @@ const EditCollaboration = ({ community }) => {
                 },
               }}
             >
-              Upload photo
+              Upload Photo
             </Button>
           </div>
         </div>
@@ -332,7 +332,7 @@ const EditCollaboration = ({ community }) => {
               }}
               multiline
               rows={6}
-              placeholder="Describe your project, event, or campaign in this field."
+              placeholder="Describe Your Project, Event, or Campaign In This Field."
               onChange={(e) => {
                 setCollaboration({
                   ...collaboration,
@@ -363,7 +363,7 @@ const EditCollaboration = ({ community }) => {
               }}
               multiline
               rows={6}
-              placeholder="Clearly share how your partners can help? (Segment the needs based on category.)"
+              placeholder="Clearly Share How Your Partners Can Help? (Segment The Needs Based On Category.)"
               onChange={(e) => {
                 setCollaboration({ ...collaboration, need: e.target.value });
               }}
