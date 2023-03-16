@@ -460,6 +460,10 @@ const CollaborationOwnerView = () => {
                                       color: "white",
                                     },
                                   }}
+                                  onClick={()=> {
+                                    console.log('/dashboard/direct-messages?collaboration_id='+collaboration_id)
+                                    navigate('/dashboard/direct-messages?collaboration_id='+collaboration_id)
+                                  }}
                                 >
                                   Direct Message
                                 </Button>
