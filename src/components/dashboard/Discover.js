@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
 
 const Discover = () => {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openSideMenu, setOpenSideMenu] = React.useState(false);
   const [loader, setLoader] = useState(true);

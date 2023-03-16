@@ -68,6 +68,10 @@ const Contacts = () => {
   };
 
   const deleteContactGroup = async (id) => {
+    const cons = contactGroups.filter((e) => {
+      return e?._id !== id;
+    });
+    setContactGroups(cons);
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
       .get(url + "/contact/delete-contact-group/" + id)
@@ -263,7 +267,7 @@ const Contacts = () => {
                     <MenuItem
                       sx={{ fontSize: "10px", px: "15%", color: "red" }}
                       onClick={() => {
-                        deleteContactGroup(item._id);
+                        deleteContactGroup(selectedContactId);
                       }}
                     >
                       Delete Contact Group

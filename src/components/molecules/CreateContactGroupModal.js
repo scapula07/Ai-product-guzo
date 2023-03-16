@@ -19,11 +19,13 @@ const CreateContactGroupModal = ({open, setOpen, getContactGroups}) => {
        console.log(res.data)
        setOpen(false)
        getContactGroups()
+       setName("")
        
       })
 
       .catch((err) => {
         console.log(err);
+        setName("")
       });
   }
 
