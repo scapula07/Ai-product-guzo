@@ -47,7 +47,7 @@ const DashboardHeader = ({ community, setCommunity, setLoader }) => {
         <div className="">
           <img
             src="/logo.png"
-            className="lg:w-[172px] lg:h-[64px] w-[50px] h-[20px] cursor-pointer relative top-1 left-5 "
+            className="lg:w-[172px] lg:h-[64px] w-[50px] h-[20px] cursor-pointer "
           />
         </div>
         <div className="hidden md:block lg:block">
