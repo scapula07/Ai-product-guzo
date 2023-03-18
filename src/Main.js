@@ -18,6 +18,7 @@ const Main = () => {
         <Route path="/collaboration/*" element={<CollaborationRoutes />} />
         <Route path='/collaboration/finish'  element={<ThankYouCard/>} />
 
+        <Route path="/" element={<Register />} />
         <Route path="/auth/register" element={<Register />} />
         <Route path="/auth/login" element={<Login />} />
 
