@@ -218,7 +218,7 @@ const CollaborationOwnerView = () => {
             id="copy_btn"
             onClick={() => {
               navigator.clipboard.writeText(
-                "https://guzo-dev.vercel.app/collaboration/" + collaboration_id
+                window.location.origin+"/collaboration/" + collaboration_id
               );
               document.getElementById("copy_btn").innerHTML = "Copied !";
               setTimeout(() => {

@@ -26,7 +26,7 @@ const ShareCollaborationModal = ({ open, setOpen, collaboration_id }) => {
               py: "3px",
             }}
             placeholder=""
-            value={"https://guzo-dev.vercel.app/collaboration/"+collaboration_id}
+            value={ window.location.origin+"/collaboration/"+collaboration_id}
             endAdornment={
               <Button
                 sx={{
@@ -45,7 +45,7 @@ const ShareCollaborationModal = ({ open, setOpen, collaboration_id }) => {
                 id='copy_btn'
 
                 onClick={()=>{
-                    navigator.clipboard.writeText("http://guzo-dev.vercel.app/collaboration/"+collaboration_id)
+                    navigator.clipboard.writeText( window.location.origin+"/collaboration/"+collaboration_id)
                     document.getElementById('copy_btn').innerHTML='Copied !'
                    setTimeout(() => {
                     document.getElementById('copy_btn').innerHTML='Copy'
