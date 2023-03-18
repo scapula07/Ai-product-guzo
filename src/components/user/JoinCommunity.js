@@ -1,9 +1,11 @@
 import { SettingsSystemDaydreamSharp } from "@mui/icons-material";
-import { Avatar, Button, Divider, InputBase } from "@mui/material";
+import { Avatar, Button, Divider, InputBase, Alert } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
+import FadeIn from "react-fade-in";
+import jwtDecode from "jwt-decode";
 
 const JoinCommunity = () => {
   const navigate = useNavigate();
@@ -12,6 +14,7 @@ const JoinCommunity = () => {
   const loggedInUser = JSON.parse(localStorage.getItem("user"));
   const [msg,setMsg] = useState(null)
   const { token } = useParams();
+  const [errorMsg, setErrorMsg] = useState()
   useEffect(() => {
     if (loggedInUser) {
       setStep(2);
@@ -31,8 +34,7 @@ const JoinCommunity = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.code) {
-          document.getElementById("info").innerHTML =
-            "( " + res.data.msg + " )";
+         setErrorMsg(res.data.msg)
             setLoader(false)
         } else {
           localStorage.clear();
@@ -47,25 +49,62 @@ const JoinCommunity = () => {
       });
   };
 
+
+
+
+  const googleLogin = async (response) => {
+    setLoader(true);
+    setErrorMsg(null)
+    var user_object = jwtDecode(response.credential);
+    let url = process.env.REACT_APP_BACKEND_URL;
+    let user = {
+      email: user_object.email,
+    };
+    axios
+      .post(url + "/user/login-with-google", user)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.code) {
+          setErrorMsg(res.data.msg)
+          setLoader(false);
+        } else {
+          localStorage.clear();
+          localStorage.setItem("user", JSON.stringify(res.data));
+            setLoader(false);
+            setStep(2);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoader(false)
+      });
+  };
+
   const register = async () => {
+    setLoader(true);
+    setErrorMsg(null)
+
     if (user.first_name.length < 3) {
-      document.getElementById("info").innerHTML = "( first name is invalid )";
+      setErrorMsg( 'first name is invalid ');
+      setLoader(false);
       return;
     }
 
     if (user.last_name.length < 3) {
-      document.getElementById("info").innerHTML = "( last name is invalid )";
+      setErrorMsg( 'last name is invalid' );
+      setLoader(false);
       return;
     }
 
     if (user.email.length < 3) {
-      document.getElementById("info").innerHTML = "( email is invalid )";
+      setErrorMsg(' email is invalid ');
+      setLoader(false);
       return;
     }
 
     if (user.password.length < 8) {
-      document.getElementById("info").innerHTML =
-        "( password should be atleast 8 characters )";
+    setErrorMsg( "password should be atleast 8 characters" );
+      setLoader(false);
       return;
     }
 
@@ -81,9 +120,38 @@ const JoinCommunity = () => {
         setLoader(false)
       })
       .catch((err) => {
-        document.getElementById("info").innerHTML = "( user already exists )";
+        setErrorMsg( "user already exists");;
         console.log(err);
         setLoader(false)
+      });
+  };
+
+
+  const registerfromgoogle = async (response) => {
+    setErrorMsg(null)
+    var user_object = jwtDecode(response.credential);
+    console.log(user_object)
+    let url = process.env.REACT_APP_BACKEND_URL;
+    let data = {
+      email : user_object.email,
+      password: user_object.aud,
+      picture: user_object.picture,
+      first_name: user_object.family_name,
+      last_name : user_object.given_name
+    }
+    axios
+      .post(url + "/user/register-with-google", data)
+      .then((res) => {
+        console.log(res.data);
+        localStorage.clear();
+        localStorage.setItem("user", JSON.stringify(res.data));
+          setLoader(false);
+          setStep(2);
+      })
+      .catch((err) => {
+        setErrorMsg(" user already exists" );
+        setLoader(false);
+        console.log(err);
       });
   };
 
@@ -110,6 +178,43 @@ const JoinCommunity = () => {
         console.log(err);
       });
   };
+
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    /* global google */
+    google.accounts.id.initialize({
+      /* client_id: "177032038340-jul0gcjukdu8turooase19b1divjlc09.apps.googleusercontent.com", */
+      
+      client_id:
+        "293518718374-t8n6cfcrlacah3n7v6c0dkmamvklikb8.apps.googleusercontent.com",
+      callback: googleLogin,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    /* global google */
+    google.accounts.id.initialize({
+      /* client_id: "177032038340-jul0gcjukdu8turooase19b1divjlc09.apps.googleusercontent.com", */
+      
+      client_id:
+        "293518718374-t8n6cfcrlacah3n7v6c0dkmamvklikb8.apps.googleusercontent.com",
+      callback: registerfromgoogle,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("signUpDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+  }, []);
   return (
     <div className="md:flex justify-center md:mt-[2vw] mt-[4vw] ">
       {step === 0 && (
@@ -122,7 +227,12 @@ const JoinCommunity = () => {
               Login to your account
             </div>
 
+            {errorMsg && (
+            <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+          )}
+
             <div className="mt-4">
+              
               {/* <div className="text-[12px] font-bold ">Sign up using Email</div> */}
 
               <div className="space-y-2 mt-2">
@@ -176,10 +286,7 @@ const JoinCommunity = () => {
                 I forgot my password
               </div>
 
-              <div className="my-3 text-red-600 text-xs " id="info">
-                {" "}
-              </div>
-
+              
               <div className="flex justify-end mt-4">
                 {loader ? <div className="flex justify-end">  <CustomizedProgressBars/></div>  : (
                   <Button
@@ -215,7 +322,10 @@ const JoinCommunity = () => {
             </div>
 
             <div className="flex justify-center space-x-3 mt-5">
-              <div className="border-[1px] border-[#D3D3D3] px-3 w-fit  md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
+            <div>
+              <div id="signInDiv"></div>
+            </div>
+              {/* <div className="border-[1px] border-[#D3D3D3] px-3 w-fit  md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
                 <div>
                   <img src="/google.png" className="w-[12px] h-[12px]" />
                 </div>
@@ -227,7 +337,7 @@ const JoinCommunity = () => {
                   <img src="/ms.png" className="w-[12px] h-[12px]" />
                 </div>
                 <div>Sign up with Microsoft</div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -242,7 +352,10 @@ const JoinCommunity = () => {
             <div className="font-bold text-[16px] text-center ">Sign up</div>
 
             <div className="flex justify-center space-x-3 mt-5">
-              <div className="border-[1px] border-[#D3D3D3] px-3 w-fit  md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
+            <div>
+              <div id="signUpDiv"></div>
+            </div>
+              {/* <div className="border-[1px] border-[#D3D3D3] px-3 w-fit  md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
                 <div>
                   <img src="/google.png" className="w-[12px] h-[12px]" />
                 </div>
@@ -254,7 +367,7 @@ const JoinCommunity = () => {
                   <img src="/ms.png" className="w-[12px] h-[12px]" />
                 </div>
                 <div>Sign up with Microsoft</div>
-              </div>
+              </div> */}
             </div>
 
             <div className="flex item-center justify-center mt-5">
@@ -262,6 +375,11 @@ const JoinCommunity = () => {
               <span className="relative bottom-3 mx-4 text-[12px] ">Or</span>
               <Divider sx={{ width: "150px" }} />
             </div>
+
+            {errorMsg && (
+            <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+          )}
+
 
             <div className="mt-4">
               {/* <div className="text-[12px] font-bold ">Sign up using Email</div> */}
@@ -359,9 +477,7 @@ const JoinCommunity = () => {
                 </div>
               </div>
 
-              <div className="my-3 text-red-600 text-xs " id="info">
-                {" "}
-              </div>
+              =
 
              <div className='text-xs' >
                 have an account ?,
