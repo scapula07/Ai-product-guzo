@@ -373,9 +373,11 @@ const CollaborationOwnerView = () => {
                         >
                           <div className="flex items-center space-x-3">
                             <Avatar
-                              src={collaboration._doc.photo}
-                              sx={{ width: "53px", height: "53px" }}
-                            />
+                              sx={{ width: "53px", height: "53px" , bgcolor:'#24A0FD'}}
+                              
+                            >
+                              {item.first_name.substr(0,1)+ item.last_name.substr(0,1)}
+                            </Avatar>
 
                             <div>
                               <div className="text-black text-[14px] font-bold">

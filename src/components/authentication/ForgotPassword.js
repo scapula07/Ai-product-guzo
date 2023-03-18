@@ -1,15 +1,19 @@
-import { Avatar, Button, Divider, InputBase } from "@mui/material";
+import { Alert, Avatar, Button, Divider, Fade, InputBase } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
+import FadeIn from 'react-fade-in';
 
-const Login = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate()
   const urlParams = new URLSearchParams(window.location.search);
   const collaboration_id = urlParams.get('collaboration_id')
   const loggedInUser =  JSON.parse(localStorage.getItem('user'))
+  const [alert, setAlert] = useState(false)
+  const [error, setError] = useState(false)
   const [loader,setLoader] = useState(false)
+  const [msg,setMsg] = useState("")
   useEffect(() => {
     if(loggedInUser){
       if(collaboration_id){
@@ -23,38 +27,33 @@ const Login = () => {
 
   const [user, setUser] = useState({
     email: "",
-    password: ""
+    collaboration_id
   }) 
 
-  const login = async() => {
-   setLoader(true)
-    let url = process.env.REACT_APP_BACKEND_URL
-    axios
-    .post(url+"/user/login", user)
-    .then((res) => {
-      console.log(res.data)
-      if(res.data.code){
-         document.getElementById('info').innerHTML = "( "+res.data.msg+" )"
-         setLoader(false)
+   const forgotPassword = async() => {
+    setLoader(true)
+    setError(false)
+    setAlert(false)
+     let url = process.env.REACT_APP_BACKEND_URL
+     axios
+     .post(url+"/user/forgot-password", user)
+     .then((res) => {
+       console.log(res.data)
+      if(res.data.msg){
+        setMsg(res.data.msg)
+        setAlert(true)
       }else{
-        localStorage.clear()
-      localStorage.setItem('user' , JSON.stringify(res.data))
-      setTimeout(() => {
-        setLoader(false)
-        if(collaboration_id){
-          navigate("/collaboration/contact-capture/"+collaboration_id)
-        }else{
-          navigate('/dashboard/discover')
-        }
-      }, 1000);
+        setError(true)
       }
-   
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+       setLoader(false)
+     })
+     .catch((err) => {
+       console.log(err);
+       setLoader(false)
+       setError(true)
+     });
         
-  }
+   }
   return (
     <div className="md:flex justify-center md:mt-[2vw] mt-[4vw] ">
       <div>
@@ -62,15 +61,22 @@ const Login = () => {
           <img src="/logo.png" className="w-[140px] h-[50px]" />
         </div>
         <div className="bg-white mt-5 lg:w-[40vw] md:w-[70vw]  shadow-lg md:px-20 px-4 py-10 rounded-lg">
-          <div className="font-bold text-[16px] text-center text-[#114369]">Login to your account</div>
+          <div className="font-bold text-[16px] text-center text-[#114369]">Forgot Password</div>
 
         
 
           <div className="mt-4">
-          {!collaboration_id && (
-              <div className="text-[12px] font-bold ">Sign up using Email</div>
-            )}
-
+          {error && (
+            <FadeIn>
+            <Alert severity="error">Some error occured try again!</Alert>
+            </FadeIn>
+         )}
+          
+         {alert && (
+            <FadeIn>
+            <Alert severity="success">{msg}</Alert>
+            </FadeIn>
+         )}
             
 
 
@@ -102,39 +108,10 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="space-y-2 mt-2">
-              <div className="text-[#114369] font-normal text-[14px] ">
-                Password
-                
-              </div>
-              <div>
-                <InputBase
-                  type='password'
-                  sx={{
-                    bgcolor: "#EBF1F5",
-                    pl: 3,
-                    fontSize: "14px",
-                    borderRadius: "8px",
-                    width: "100%",
-                    py: "3px",
-                  }}
-                  placeholder="Your password"
-                  onChange={(e)=>{
-                    setUser(
-                      { ...user,
-                       password : e.target.value
-                      }
-                    )
-                  }}
-                  value={user.password}
-                />
-              </div>
-            </div>
+            
 
-            <div className="mt-4 text-[#24A0FD] underline text-[12px] cursor-pointer ">
-           <span onClick={()=> {
-            collaboration_id ? navigate('/auth/forgot-password?collaboration_id='+collaboration_id) : navigate('/auth/forgot-password')
-           }} >I forgot my password</span> 
+            {/* <div className="mt-4 text-[#24A0FD] underline text-[12px] cursor-pointer ">
+            I forgot my password 
             <span className="mx-1">or</span>
              <span className="" onClick={()=> {
               if(collaboration_id){
@@ -143,7 +120,7 @@ const Login = () => {
                 navigate('/auth/register')
               }
              }} >register</span>
-            </div>
+            </div> */}
 
             <div className="my-3 text-red-600 text-xs " id='info' > </div>
 
@@ -167,38 +144,23 @@ const Login = () => {
                   color: "white",
                 },
               }}
-              onClick={login}
+              onClick={forgotPassword}
             >
-            Login
+            Send me password reset link
             </Button>
             )}
             </div>
           </div>
 
 
-<Divider sx={{ my:4 }} />
 
-<div className="my-4 text-[12px] text-center">Or use Third party</div>
 
         
-
-          <div className="flex justify-center space-x-3 mt-5">
-            <div className="border-[1px] border-[#D3D3D3] px-3 w-fit  md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
-                <div><img src='/google.png' className="w-[12px] h-[12px]" /></div>
-             <div> Sign up with Google</div> 
-            </div>
-
-            <div className="border-[1px] border-[#D3D3D3] px-3 py-1 md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
-            <div><img src='/ms.png' className="w-[12px] h-[12px]" /></div>
-              <div>Sign up with Microsoft</div>
-            </div>
           </div>
-
          
-        </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default ForgotPassword;

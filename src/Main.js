@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ForgotPassword from "./components/authentication/ForgotPassword";
 import Login from "./components/authentication/Login";
 import Register from "./components/authentication/Register";
+import ResetPassword from "./components/authentication/ResetPassword";
 import CollaborationRoutes from "./components/collaboration/CollaborationRoutes";
 import DashboardRoutes from "./components/dashboard/DashboardRoutes";
 import ThankYouCard from "./components/molecules/ThankYouCard";
@@ -21,6 +23,8 @@ const Main = () => {
         <Route path="/" element={<Register />} />
         <Route path="/auth/register" element={<Register />} />
         <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+        <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
 
         <Route path="/join-community/:token" element={<JoinCommunity />} />
 
