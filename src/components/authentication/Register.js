@@ -1,15 +1,17 @@
-import { Avatar, Button, Divider, InputBase } from "@mui/material";
+import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
-
+import FadeIn from "react-fade-in";
 const Register = () => {
   const navigate = useNavigate();
   const loggedInUser = JSON.parse(localStorage.getItem("user"));
   const [loader, setLoader] = useState(false);
   const urlParams = new URLSearchParams(window.location.search);
   const collaboration_id = urlParams.get("collaboration_id");
+  const [errorMsg, setErrorMsg] = useState(null)
   useEffect(() => {
     if (loggedInUser) {
       if (collaboration_id) {
@@ -27,33 +29,65 @@ const Register = () => {
     password: "",
   });
 
+  const registerfromgoogle = async (response) => {
+    setErrorMsg(null)
+    var user_object = jwtDecode(response.credential);
+    console.log(user_object)
+    let url = process.env.REACT_APP_BACKEND_URL;
+    let data = {
+      email : user_object.email,
+      password: user_object.aud,
+      picture: user_object.picture,
+      first_name: user_object.family_name,
+      last_name : user_object.given_name
+    }
+    axios
+      .post(url + "/user/register-with-google", data)
+      .then((res) => {
+        console.log(res.data);
+        localStorage.clear();
+        localStorage.setItem("user", JSON.stringify(res.data));
+        setTimeout(() => {
+          setLoader(false);
+          if (collaboration_id) {
+            navigate("/collaboration/contact-capture/" + collaboration_id);
+          } else {
+            navigate("/dashboard/discover");
+          }
+        }, 1000);
+      })
+      .catch((err) => {
+        setErrorMsg(" user already exists" );
+        setLoader(false);
+        console.log(err);
+      });
+  };
+
   const register = async () => {
     setLoader(true);
-
+    setErrorMsg(null)
 
     if (user.first_name.length < 3) {
-      document.getElementById("info").innerHTML = "( first name is invalid )";
-      setLoader(false)
+      setErrorMsg( 'first name is invalid ');
+      setLoader(false);
       return;
     }
 
-
     if (user.last_name.length < 3) {
-      document.getElementById("info").innerHTML = "( last name is invalid )";
-      setLoader(false)
+      setErrorMsg( 'last name is invalid' );
+      setLoader(false);
       return;
     }
 
     if (user.email.length < 3) {
-      document.getElementById("info").innerHTML = "( email is invalid )";
-      setLoader(false)
+      setErrorMsg(' email is invalid ');
+      setLoader(false);
       return;
     }
 
     if (user.password.length < 8) {
-      document.getElementById("info").innerHTML =
-        "( password should be atleast 8 characters )";
-        setLoader(false)
+    setErrorMsg( "password should be atleast 8 characters" );
+      setLoader(false);
       return;
     }
 
@@ -74,11 +108,28 @@ const Register = () => {
         }, 1000);
       })
       .catch((err) => {
-        document.getElementById("info").innerHTML = "( user already exists )";
-        setLoader(false)
+       setErrorMsg( "user already exists");
+        setLoader(false);
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    /* global google */
+    google.accounts.id.initialize({
+      /* client_id: "177032038340-jul0gcjukdu8turooase19b1divjlc09.apps.googleusercontent.com", */
+      client_id:
+        "293518718374-t8n6cfcrlacah3n7v6c0dkmamvklikb8.apps.googleusercontent.com",
+      callback: registerfromgoogle,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+  }, []);
 
   return (
     <div className="md:flex justify-center md:mt-[2vw] mt-[4vw] ">
@@ -90,19 +141,23 @@ const Register = () => {
           <div className="font-bold text-[16px] text-center ">Register</div>
 
           <div className="flex justify-center space-x-3 mt-5">
-            <div className="border-[1px] border-[#D3D3D3] px-3 w-fit  md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
+            <div>
+              <div id="signInDiv"></div>
+            </div>
+
+            {/* <div className="border-[1px] border-[#D3D3D3] px-3 w-fit  md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
               <div>
                 <img src="/google.png" className="w-[12px] h-[12px]" />
               </div>
               <div> Sign up with Google</div>
-            </div>
+            </div> */}
 
-            <div className="border-[1px] border-[#D3D3D3] px-3 py-1 md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
+            {/* <div className="border-[1px] border-[#D3D3D3] px-3 py-1 md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
               <div>
                 <img src="/ms.png" className="w-[12px] h-[12px]" />
               </div>
               <div>Sign up with Microsoft</div>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex item-center justify-center mt-5">
@@ -110,6 +165,10 @@ const Register = () => {
             <span className="relative bottom-3 mx-4 text-[12px] ">Or</span>
             <Divider sx={{ width: "150px" }} />
           </div>
+
+          {errorMsg && (
+            <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+          )}
 
           <div className="mt-4">
             {!collaboration_id && (
@@ -228,9 +287,7 @@ const Register = () => {
               </span>
             </div>
 
-            <div className="my-3 text-red-600 text-xs " id="info">
-              {" "}
-            </div>
+            
 
             <div className="flex justify-end mt-4">
               {loader ? (

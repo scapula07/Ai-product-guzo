@@ -98,6 +98,7 @@ const DashboardHeader = ({ community, setCommunity, setLoader }) => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
+              // src={JSON.parse(localStorage.getItem("user"))?.picture}
             >
               {JSON.parse(localStorage.getItem("user"))?.username
                 ? JSON.parse(localStorage.getItem("user"))?.username.substr(
