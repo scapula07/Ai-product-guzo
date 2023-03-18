@@ -100,7 +100,7 @@ const Login = () => {
       /* client_id: "177032038340-jul0gcjukdu8turooase19b1divjlc09.apps.googleusercontent.com", */
       
       client_id:
-        "293518718374-an0icvlvai670sojsv0hmptsh3hu21ah.apps.googleusercontent.com",
+        "293518718374-t8n6cfcrlacah3n7v6c0dkmamvklikb8.apps.googleusercontent.com",
       callback: googleLogin,
     });
 
