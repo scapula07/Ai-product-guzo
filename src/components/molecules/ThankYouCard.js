@@ -9,7 +9,7 @@ const ThankYouCard = ({open, setOpen}) => {
    <Dialog open={open} onCse={()=> setOpen(false)} >
      <div className="flex justify-center ">
       <div className="bg-white lg:w-[70vw] md:rounded-[20px] md:shadow-lg py-[30px] px-[40px]  ">
-        <div className="text-[#114369] font-bold text-[16px] text-center" >Thank you for using Guzo.  Join up today!</div>
+        <div className="text-[#114369] font-bold text-[16px] text-center" >Thank you for using Guzo.</div>
 
         <div className="mt-10 flex justify-center " >
             <img src='/logo.png'/>
