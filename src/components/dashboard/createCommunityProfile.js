@@ -15,7 +15,7 @@ import ConnectPlatformModal from "../molecules/ConnectPlatformModal";
 import CustomizedProgressBars from "../molecules/Progress";
 import SuccessSnackbar from "../molecules/SuccessSnackbar";
 
-const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
+const CreateCommunityProfile = ({ getCommunity0, setCommunity ,setCommunities}) => {
   const [openSuccessSnack, setOpenSuccessSnack] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [fetchedPhoto, setFetchedPhoto] = useState("");
@@ -69,11 +69,13 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
             setOpenSuccessSnack(false);
             setTimeout(() => {
               navigate("/dashboard/discover");
+              window.location.reload()
             }, 1000);
             axios
               .get(url + "/user/get-user-by-id/" + res.data.user_id)
               .then((res) => {
                 localStorage.setItem("user", JSON.stringify(res.data));
+                setCommunities(res.data.communities)
               })
               .catch((err) => {
                 console.log(err);
@@ -208,6 +210,7 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
               id="main_img"
               src={photo ? URL.createObjectURL(photo) : fetchedPhoto}
               variant="square"
+              onClick={()=> document.getElementById("hiddenfileinput").click()}
               sx={
                 !photo
                   ? {
@@ -216,12 +219,14 @@ const CreateCommunityProfile = ({ getCommunity0, setCommunity }) => {
                       fontSize: "12px",
                       bgcolor: "#EBF1F5",
                       color: "gray",
+                      cursor:'pointer'
                     }
                   : {
                       width: "156px",
                       height: "156px",
                       fontSize: "12px",
                       color: "gray",
+                      cursor:'pointer'
                     }
               }
 

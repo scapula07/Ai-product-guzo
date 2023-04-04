@@ -6,36 +6,75 @@ import { useNavigate, useParams } from "react-router-dom";
 import ErrorSnack from "../molecules/ErrorSnack";
 import CustomizedProgressBars from "../molecules/Progress";
 import ThankYouCard from "../molecules/ThankYouCard";
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import ReactSelect from "react-select";
+import CreateCommunityProfileForCapture from "../dashboard/createCommunityProfileForCapture";
 
 const ContactCapture = () => {
   const [openThankYouCard, setOpenThankYouCard] = useState(false);
-  const [msg,setMsg] = useState("")
-  const [openErrorSnack, setOpenErrorSnack] = useState(false)
+  const [msg, setMsg] = useState("");
+  const [openErrorSnack, setOpenErrorSnack] = useState(false);
   const { collaboration_id } = useParams();
   const [loader, setLoader] = useState(true);
   const [loader2, setLoader2] = useState(false);
   const [collaboration, setCollaboration] = useState({});
   const [contactGroup, setContactGroup] = useState();
+  const [community, setCommunity] = useState();
+  const [openCreateCommunityModal,setOpenCreateCommunityModal] = useState(false)
+
+  useEffect(() => {
+    getCommunity(
+      JSON.parse(localStorage.getItem("user"))?.communities[0]?.id || null
+    );
+  }, []);
+  const [communities, setCommunities] = useState(
+    JSON.parse(localStorage.getItem("user"))?.communities || null
+  );
+  const [selectedCommunity, setSelectedCommunity] = useState({
+    label:
+      JSON.parse(localStorage.getItem("community"))?.name ||
+      community?.name ||
+      null,
+    value:
+      JSON.parse(localStorage.getItem("community"))?._id ||
+      community?._id ||
+      null,
+  });
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
   const navigate = useNavigate();
 
+  const style = {
+    control: (base) => ({
+      ...base,
+      border: "0px solid gray",
+      width: "100%",
+      boxShadow: "none",
+      backgroundColor: "#EBF1F5",
+      fontSize: "14px",
+      "@media (min-width:600px)": {
+        width: "100%",
+      },
+      "@media (min-width:1200px)": {
+        width: "100%",
+      },
+    }),
+  };
+  console.log(community);
   const [partner, setPartner] = useState({
     user_id: localStorage.getItem("user")
       ? JSON.parse(localStorage.getItem("user"))._id
       : null,
     collaboration_id,
-    first_name: "",
-    last_name: "",
-    organization_name: "",
+    first_name: user.first_name || "",
+    last_name: user.last_name || "",
     email: user.email || "",
     message: "",
-    phone_number: ""
+    phone_number: "",
   });
-  const [value, setValue] = useState()
+  const [value, setValue] = useState();
 
   const getCollaboration = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
@@ -65,7 +104,33 @@ const ContactCapture = () => {
       });
   };
 
-  
+  const getCommunity = async (comm_id) => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    setLoader(true);
+    axios
+      .get(url + "/community/get-community-by-id/" + comm_id)
+      .then((res) => {
+        setLoader(false);
+        if (
+          res.data &&
+          Object.keys(res.data).length === 0 &&
+          Object.getPrototypeOf(res.data) === Object.prototype
+        ) {
+          setCommunity(null);
+          setLoader(false);
+        } else {
+          console.log(res.data);
+          let community = res.data;
+
+          setCommunity(community);
+          setLoader(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     if (!user) {
       navigate("/auth/login?collaboration_id=" + collaboration_id);
@@ -74,35 +139,43 @@ const ContactCapture = () => {
   }, []);
 
   const createPartner = async () => {
+    if(communities?.length < 1){
+      setOpenErrorSnack(true);
+      setMsg("please select a community or create one");
+      return
+    }
     setLoader2(true);
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .post(url + "/collaboration/partner", partner)
+      .post(url + "/collaboration/partner/", {
+        ...partner,
+        organization: community,
+        organization_name: community?.name,
+      })
       .then((res) => {
         //console.log(res.data)
         // addContact()
-       if(res.data.error){
-        setOpenErrorSnack(true)
-        setMsg(res.data.msg)
-        setLoader2(false);
-       }else{
-        setLoader2(false);
-        console.log(res.data);
-        setOpenThankYouCard(true);
-       }
+        if (res.data.error) {
+          setOpenErrorSnack(true);
+          setMsg(res.data.msg);
+          setLoader2(false);
+        } else {
+          setLoader2(false);
+          console.log(res.data);
+          setOpenThankYouCard(true);
+        }
       })
       .catch((err) => {
         console.log(err);
         setLoader2(false);
-        setOpenErrorSnack(true)
-        setMsg(err.error)
-        
+        setOpenErrorSnack(true);
+        setMsg(err.error);
       });
   };
 
-  
   return (
     <div className="flex justify-center">
+      <CreateCommunityProfileForCapture setCommunities={setCommunities} setSelectedCommunity={setSelectedCommunity} open={openCreateCommunityModal} setOpen={setOpenCreateCommunityModal}/> 
       <ErrorSnack
         open={openErrorSnack}
         setOpen={setOpenErrorSnack}
@@ -175,24 +248,61 @@ const ContactCapture = () => {
 
         <div className="w-full mt-4">
           <div className="text-[15px] text-[#114369] font-bold mb-1  ">
-            Organization/Community/Group Name
+            Organization Name 
           </div>
-          <InputBase
-            sx={{
-              bgcolor: "#EBF1F5",
-              pl: 3,
-              fontSize: "14px",
-              borderRadius: "8px",
-              width: { md: "100%", xs: "100%" },
-              py: "3px",
-            }}
-            placeholder="organization name"
-            id="link_url"
-            onChange={(e) => {
-              setPartner({ ...partner, organization_name: e.target.value });
-            }}
-            value={partner.organization_name}
-          />
+          {communities && communities.length < 1 ? (
+           <Button
+           onClick={()=> {
+            setOpenCreateCommunityModal(true)
+           }}
+           sx={{
+             bgcolor: "#24A0FD",
+             border: "1px solid #24A0FD",
+             color: "white",
+             fontSize: "12px",
+             width: { md: "100%", xs: "100%" },
+             textTransform: "none",
+             borderRadius: "5px",
+             ":hover": {
+               bgcolor: "#24A0FD",
+               color: "white",
+             },
+           }}
+         >
+           Create Your First Community
+         </Button>
+          ):(
+             <div className="  ">
+             <ReactSelect
+               styles={style}
+               placeholder="Select community..."
+               options={
+                 communities &&
+                 communities.map((item, index) => ({
+                   label: item.name,
+                   value: item.id,
+                 }))
+               }
+               value={selectedCommunity}
+               menuPlacement="auto"
+               menuPosition="fixed"
+               noOptionsMessage={(opt) => {
+                 if (opt.inputValue === "") {
+                   return "type a category";
+                 } else {
+                   return "no search results for " + opt.inputValue;
+                 }
+               }}
+               components={{
+                 IndicatorSeparator: () => null,
+               }}
+               onChange={(opt) => {
+                 setSelectedCommunity(opt);
+                 getCommunity(opt.value);
+               }}
+             />
+           </div>
+          )}
         </div>
 
         <div className="w-full mt-4">
@@ -217,23 +327,22 @@ const ContactCapture = () => {
           />
         </div>
 
-       
         <div className="w-full mt-4">
           <div className="text-[15px] text-[#114369] font-bold mb-1  ">
             Phone Contact
           </div>
           <div className="flex items-center space-x-2">
-            
-          <PhoneInput
-      inputStyle={{backgroundColor:'#EBF1F5', border: '0px' , width:'100%'}}
-      placeholder="Enter phone number"
-      value={partner.phone_number}
-      onChange={(e)=> setPartner({...partner, phone_number: e})}
-      country={'us'}
-      
-      />                
-
-            
+            <PhoneInput
+              inputStyle={{
+                backgroundColor: "#EBF1F5",
+                border: "0px",
+                width: "100%",
+              }}
+              placeholder="Enter phone number"
+              value={partner.phone_number}
+              onChange={(e) => setPartner({ ...partner, phone_number: e })}
+              country={"us"}
+            />
           </div>
         </div>
 

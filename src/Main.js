@@ -5,6 +5,8 @@ import Login from "./components/authentication/Login";
 import Register from "./components/authentication/Register";
 import ResetPassword from "./components/authentication/ResetPassword";
 import CollaborationRoutes from "./components/collaboration/CollaborationRoutes";
+import CreateCommunityProfile from "./components/dashboard/createCommunityProfile";
+import CreateCommunityProfileForCapture from "./components/dashboard/createCommunityProfileForCapture";
 import DashboardRoutes from "./components/dashboard/DashboardRoutes";
 import ThankYouCard from "./components/molecules/ThankYouCard";
 import JoinCommunity from "./components/user/JoinCommunity";
@@ -16,6 +18,7 @@ const Main = () => {
       <Routes >
         <Route path="/dashboard/*"  element={<DashboardRoutes />} />
         <Route path="/user/*" element={<UserRoutes />} />
+
 
         <Route path="/collaboration/*" element={<CollaborationRoutes />} />
         <Route path='/collaboration/finish'  element={<ThankYouCard/>} />

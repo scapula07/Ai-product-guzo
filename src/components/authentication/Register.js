@@ -38,8 +38,8 @@ const Register = () => {
       email : user_object.email,
       password: user_object.aud,
       picture: user_object.picture,
-      first_name: user_object.family_name,
-      last_name : user_object.given_name
+      first_name: user_object.given_name,
+      last_name : user_object.family_name
     }
     axios
       .post(url + "/user/register-with-google", data)

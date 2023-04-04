@@ -21,7 +21,7 @@ const Discover = () => {
   const [communities, setCommunities] = useState(null);
   const [users, setUsers] = useState(null);
   const open = Boolean(anchorEl);
-  const [collaborations, setCollaborations] = useState(null)
+  const [collaborations, setCollaborations] = useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -45,17 +45,12 @@ const Discover = () => {
       });
   };
 
-
-
   const getCollaborations = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(
-        url +
-          "/collaboration/all-collabs"
-      )
+      .get(url + "/collaboration/all-collabs")
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setCollaborations(res.data);
         console.log(res.data);
       })
@@ -67,8 +62,6 @@ const Discover = () => {
   useEffect(() => {
     getCollaborations();
   }, []);
-
-
 
   useEffect(() => {
     getCommunities();
@@ -136,59 +129,61 @@ const Discover = () => {
           <div className="h-[800px] overflow-y-auto">
             {active === 0 && (
               <div>
-               {communities && collaborations && collaborations.length > 0 && collaborations.map((item,index)=>(
-                 <div className="  rounded-3xl p-4 bg-[#FAFAFA] my-4 " key={index}>
+                {communities &&
+                  collaborations &&
+                  collaborations.length > 0 &&
+                  collaborations.map((item, index) => (
+                    <div
+                      className="  rounded-3xl p-4 bg-[#FAFAFA] my-4 cursor-pointer "
+                      key={index}
+                      onClick={() => {
+                        window.open(
+                          "https://guzo-dev.vercel.app/collaboration/" +
+                            item._id,
+                          "_blank"
+                        );
+                      }}
+                    >
+                      <div className="flex items-center font-bold space-x-3">
+                        <Avatar
+                          sx={{
+                            width: { xs: "40px", sm: "40px" },
+                            height: "40px",
+                            borderRadius: "0.4rem",
+                          }}
+                          variant="square"
+                          src={item.community.profile_picture}
+                        />
 
-                  <div className="flex items-center font-bold space-x-3" >
-                  <Avatar
-                     sx={{
-                       width: { xs: "40px", sm: "40px" },
-                       height: "40px",
-                       borderRadius: "0.4rem",
-                     }}
-                     variant="square"
-                     src={item.community.profile_picture}
-                   />
-                    
-                  <div className="">
-                    {item.community.name}
-                   </div>
-                   
+                        <div className="">{item.community.name}</div>
+                      </div>
+                      <div className=" lg:flex  lg:space-x-[18rem] text-[17px] mt-3 mb-3 cursor-pointer">
+                        <div className="font-bold">{item.title}</div>
+                      </div>
+
+                      <div className="lg:flex items-start space-y-5 lg:space-y-0 lg:space-x-8">
+                        <Avatar
+                          sx={{
+                            width: { xs: "100%", sm: "300px" },
+                            height: "250px",
+                            borderRadius: "0.4rem",
+                          }}
+                          variant="square"
+                          src={item.photo}
+                        />
+
+                        <div className="text-[#114369]">
+                          <div className="font-bold">Description</div>
+                          <div className="font-thin mb-3">
+                            {item.description}
+                          </div>
+
+                          <div className="font-bold">Ask</div>
+                          <div className="font-thin">{item.need}</div>
+                        </div>
+                      </div>
                     </div>
-                 <div className=" lg:flex  lg:space-x-[18rem] text-[17px] mt-3 mb-3 cursor-pointer"
-                 onClick={()=>{
-                  window.open("https://guzo-dev.vercel.app/collaboration/"+item._id, '_blank')
-                 }}
-                 >
-                   <div className="font-bold">{item.title}</div>
-                  
-                 </div>
-
-                 <div className="lg:flex items-start space-y-5 lg:space-y-0 lg:space-x-8">
-                   <Avatar
-                     sx={{
-                       width: { xs: "100%", sm: "300px" },
-                       height: "250px",
-                       borderRadius: "0.4rem",
-                     }}
-                     variant="square"
-                     src={item.photo}
-                   />
-
-                   <div className="text-[#114369]">
-                     <div className="font-bold">Description</div>
-                     <div className="font-thin mb-3">
-                     {item.description}
-                     </div>
-
-                     <div className="font-bold">Ask</div>
-                     <div className="font-thin">
-                      {item.need}
-                     </div>
-                   </div>
-                 </div>
-               </div>
-               ))}
+                  ))}
               </div>
             )}
 
@@ -197,7 +192,10 @@ const Discover = () => {
                 {communities &&
                   communities.length > 0 &&
                   communities.map((item, index) => (
-                    <div className=" bg-[#FAFAFA] rounded-3xl my-5 p-5 " key={index}>
+                    <div
+                      className=" bg-[#FAFAFA] rounded-3xl my-5 p-5 "
+                      key={index}
+                    >
                       {/* <div> <span className="font-bold text-[#24A0FD] mr-3">
                <Dashboard sx={{ fontSize: ''}} /> Category: 
                </span>
@@ -226,9 +224,9 @@ const Discover = () => {
                       <div className="grid lg:grid-cols-4 gap-6">
                         <div className="flex flex-wrap items-center space-x-2">
                           <div className="font-bold text-[#24A0FD]">
-                            <People sx={{ fontSize: "" }} /> Members :{" "}
+                            <People sx={{ fontSize: "" }} /> Teammates :{" "}
                           </div>
-                          <div>{item.teammates?.length} Members</div>
+                          <div>{item.teammates?.length}</div>
                         </div>
 
                         {/* <div className="flex  items-center space-x-2    ">

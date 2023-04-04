@@ -1,4 +1,5 @@
 import {
+  Circle,
   Notifications,
   NotificationsActiveSharp,
   NotificationsOutlined,
@@ -124,9 +125,10 @@ const DashboardHeader = ({ community, setCommunity, setLoader }) => {
                 elevation: 2,
                 sx: {
                   overflow: "visible",
-                  width: "140px",
+                  width: "190px",
                   filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                   mt: 1.5,
+                  bgcolor:'rgb(249,250,251)',
                   "& .MuiAvatar-root": {
                     width: 32,
                     height: 32,
@@ -157,6 +159,46 @@ const DashboardHeader = ({ community, setCommunity, setLoader }) => {
                 Account Settings
               </MenuItem> */}
               {/* <Divider sx={{ mx: "6%", my: "1px" }} /> */}
+
+              <div className="justify-center flex bg-white relative bottom-[6px] py-3">
+              
+              <div className="bg-[#24A0FD] text-white p-3 rounded-full px-4 text-[20px] z-50">
+              {JSON.parse(localStorage.getItem("user"))?.username
+                ? JSON.parse(localStorage.getItem("user"))?.username.substr(
+                    0,
+                    1
+                  )
+                : JSON.parse(localStorage.getItem("user"))?.first_name?.substr(
+                    0,
+                    1
+                  ) +
+                  JSON.parse(localStorage.getItem("user"))?.last_name?.substr(
+                    0,
+                    1
+                  )}
+              </div>
+
+
+              </div>
+
+              <div className="bg-gray-50 relative bottom-3 text-black text-[15px] py-3 space-y-1 -z-10">
+                <div className=" text-center  ">
+                  {JSON.parse(localStorage.getItem("user"))?.first_name +" "+
+                  JSON.parse(localStorage.getItem("user"))?.last_name}
+                </div>
+
+                <div className=" text-center text-[12px] ">
+                  {JSON.parse(localStorage.getItem("user"))?.email}
+                </div>
+
+
+                <div className=" text-center text-[12px] ">
+                  <Circle sx={{ color:'green', fontSize:'7px'}}/> {JSON.parse(localStorage.getItem("community"))?.name}
+                  <br/>
+                  <span className="text-[9px]">(Active Community)</span>
+                </div>
+
+              </div>
               <MenuItem
                 sx={{ fontSize: "13px", px: "35%", color: "red" }}
                 onClick={() => {

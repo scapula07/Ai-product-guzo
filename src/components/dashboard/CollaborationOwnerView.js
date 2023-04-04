@@ -8,6 +8,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import axios from "axios";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
@@ -287,6 +288,11 @@ const CollaborationOwnerView = () => {
                     <div className="text-center font-[500] mt-[15px]">
                       {collaboration._doc.title}
                     </div>
+                    {collaboration._doc.date && (
+                      <div className="text-center font-[500] mt-[5px]">
+                      Date: {moment(collaboration._doc?.date).format("DD MMMM,YYYY")}
+                    </div>
+                    )}
                   </div>
                 </div>
                 <div className="md:col-span-3 bg-white md:shadow-lg shadow-gray-400 p-3 md:rounded-[20px] ">

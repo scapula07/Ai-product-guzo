@@ -211,12 +211,14 @@ const CreateCollaboration = ({ community }) => {
                       fontSize: "12px",
                       bgcolor: "#EBF1F5",
                       color: "gray",
+                      cursor:'pointer'
                     }
                   : {
                       width: "156px",
                       height: "156px",
                       fontSize: "12px",
                       color: "gray",
+                      cursor:'pointer'
                     }
               }
               onClick={() => {
@@ -284,6 +286,8 @@ const CreateCollaboration = ({ community }) => {
           </div>
         </div>
 
+
+
         <div className="space-y-2">
           <div className="text-[#114369] font-semibold text-[14px] ">
             Collaboration Description{" "}
@@ -303,7 +307,7 @@ const CreateCollaboration = ({ community }) => {
               }}
               multiline
               rows={6}
-              placeholder="Describe Your Project, Event, or Campaign In This Field."
+               placeholder="Describe Your Project, Event, or Campaign In This Field."
               onChange={(e) => {
                 setCollaboration({
                   ...collaboration,
@@ -311,6 +315,34 @@ const CreateCollaboration = ({ community }) => {
                 });
               }}
               value={collaboration.description}
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <div className="text-[#114369] font-semibold text-[14px] ">
+            Collaboration Date{" "}
+            <span className="text-[#818181] font-normal text-[10px]  ">
+              (optional)
+            </span>
+          </div>
+          <div>
+            <InputBase
+            type="date"
+              sx={{
+                bgcolor: "#EBF1F5",
+                pl: 3,
+                fontSize: "14px",
+                borderRadius: "8px",
+                width: { lg: "800px", md: "400px", xs: "100%" },
+                py: "3px",
+              }}
+              placeholder="e.g. collaboration date / event date  "
+              onChange={(e) => {
+                console.log(e.target.value)
+                setCollaboration({ ...collaboration, date: e.target.value });
+              }}
+              value={collaboration.date}
             />
           </div>
         </div>
