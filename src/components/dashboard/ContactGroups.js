@@ -48,15 +48,21 @@ const ContactGroups = () => {
       },
     }),
   };
-
+  const [errorMsg, setErrorMsg] = useState('')
   const getContactGroup = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
+    let community_id = JSON.parse(localStorage.getItem('community'))._id
     axios
-      .get(url + "/contact/get-contact-group/" + id)
+      .get(url + "/contact/get-contact-group/" + id+'/'+community_id)
       .then((res) => {
-        console.log(res.data);
-        setContactGroup(res.data);
-        setContacts(res.data.contacts);
+        if(res.data.status !== 'error'){
+          setContactGroup(res.data);
+          setContacts(res.data.contacts);
+        }
+        else{
+          setErrorMsg(res.data.msg)
+        }
+       
       })
 
       .catch((err) => {
@@ -189,7 +195,12 @@ const ContactGroups = () => {
         </div> */}
       </div>
 
-      <div className="space-y-3 mt-7 mb-20">
+      {errorMsg.length > 1 ?(
+<div>{errorMsg}</div>
+      )
+      :
+      (
+        <div className="space-y-3 mt-7 mb-20">
         <FadeIn>
           {contacts &&
             contacts.map((item, index) => (
@@ -307,6 +318,7 @@ const ContactGroups = () => {
 
         {contacts && contacts.length < 1 && "No contacts available in this group"}
       </div>
+      )}
     </div>
   );
 };

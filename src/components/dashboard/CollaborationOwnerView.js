@@ -54,15 +54,23 @@ const CollaborationOwnerView = () => {
       });
   };
 
+  const [errorMsg, setErrorMsg] = useState('')
+
   const getCollaboration = async () => {
+    let community_id = JSON.parse(localStorage.getItem('community'))._id
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
-      .get(url + "/collaboration/" + collaboration_id)
+      .get(url + "/collaboration/" + collaboration_id+'/'+community_id)
       .then((res) => {
-        //console.log(res.data);
-        setLoader(false);
-        setCollaboration(res.data);
-        setPartners(res.data.collaborationPartners);
+       if(res.data.status !== 'error'){
+         //console.log(res.data);
+         setLoader(false);
+         setCollaboration(res.data);
+         setPartners(res.data.collaborationPartners);
+       }else{
+           setErrorMsg(res.data.msg)
+           setLoader(false)
+       }
       })
       .catch((err) => {
         console.log(err);
@@ -234,6 +242,10 @@ const CollaborationOwnerView = () => {
 
       <Divider sx={{ my: 3 }} />
 
+     {errorMsg.length > 1 ? (
+      <div > {errorMsg} </div>
+     ) : (
+      <> 
       {loader ? (
         <div className="flex justify-center mt-[50px]">
           {" "}
@@ -684,6 +696,8 @@ const CollaborationOwnerView = () => {
           )}
         </div>
       )}
+      </>
+     )}
     </div>
   );
 };
