@@ -170,19 +170,25 @@ const JoinCommunity = () => {
       .get(url + "/team/accept-invite/" + token)
       .then((res) => {
         console.log(res.data);
-        if (res.data.error) {
-          if(res.data.error.message){
-            setMsg(res.data.error.message);
-          }else{
-            setMsg('Email on invite does not match user email address')
+        if(res.data.status === 001){
+          setMsg('You are already a team mate on this organization')
+          return
+        } else{
+          if (res.data.error) {
+            if(res.data.error.message){
+              setMsg(res.data.error.message);
+            }else{
+              setMsg('Email on invite does not match user email address')
+            }
+          } else {
+            localStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem('community_idd', d.data.community_id)
+            setTimeout(() => {
+              navigate("/dashboard/discover");
+            }, 1000);
           }
-        } else {
-          localStorage.setItem("user", JSON.stringify(res.data));
-          localStorage.setItem('community_idd', d.data.community_id)
-          setTimeout(() => {
-            navigate("/dashboard/discover");
-          }, 1000);
         }
+      
       })
       .catch((err) => {
         console.log(err);
