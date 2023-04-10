@@ -157,6 +157,15 @@ const JoinCommunity = () => {
 
   const acceptInvite = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
+    let user = JSON.parse(localStorage.getItem('user'))
+    let d = jwtDecode(token)
+    console.log(d)
+    if(user.email !== d.data.reciever ){
+      setMsg('Email on invite does not match user email address, please log out from the account in session')
+      return
+    }
+
+
     axios
       .get(url + "/team/accept-invite/" + token)
       .then((res) => {
@@ -517,7 +526,34 @@ const JoinCommunity = () => {
 
       {step === 2 && (
         <div>
-         <div className="text-red-500 text-xs font-semibold text-center mb-4" >  { msg && "{msg :"+ msg + "}"} </div>
+         <div className="text-red-500 text-xs font-semibold text-center mb-4" >  { msg && (
+          
+          <div> <div>{msg} </div>
+           <Button
+                  onClick={()=>{
+                    localStorage.clear()
+                    window.location.reload()
+                  }}
+                  sx={{
+                    bgcolor: "#24A0FD",
+                    color: "white",
+                    fontSize: "14px",
+                    width: { sm: "fit", xs: "fit" },
+                    textTransform: "none",
+                    borderRadius: "5px",
+                    px: 3,
+                    mx: { xs: 1, lg: 0 },
+                    mt: { xs: 2, lg: 0 },
+                    mb: 5,
+                    ":hover": {
+                      bgcolor: "#24A0FD",
+                      color: "white",
+                    },
+                  }}
+                >
+                  logout
+                </Button>
+          </div>)} </div>
          <div className="flex justify-center">
            
            <Button
