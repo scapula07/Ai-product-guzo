@@ -170,7 +170,7 @@ const JoinCommunity = () => {
       .get(url + "/team/accept-invite/" + token)
       .then((res) => {
         console.log(res.data);
-        if(res.data.status === 001){
+        if(res.data.status === 1){
           setMsg('You are already a team mate on this organization')
           return
         } else{
