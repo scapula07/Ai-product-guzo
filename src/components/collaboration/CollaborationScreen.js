@@ -17,9 +17,8 @@ const CollaborationScreen = () => {
 
   const getCollaboration = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
-    let community_id = JSON.parse(localStorage.getItem('community'))._id
     axios
-      .get(url + "/collaboration/" + collaboration_id+'/'+community_id)
+      .get(url + "/collaboration/collabforcapture/" + collaboration_id)
       .then((res) => {
         //console.log(res.data)
         setCollaboration(res.data);
