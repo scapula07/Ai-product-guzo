@@ -84,7 +84,7 @@ const LandingModal = ({open, setOpen,community, setCommunity}) => {
 
 
         <div className="text-[#114369] text-center font-bold text-[12px] mt-2" >
-        To use the guzo dashboard please {communities && communities.length > 0  && 'select a Organization or'} create one
+        To use Guzo, {communities && communities.length > 0  && 'select a Organization or'} please create an organization
         </div>
 
 
@@ -152,7 +152,7 @@ const LandingModal = ({open, setOpen,community, setCommunity}) => {
                 }}
                
              >
-               create new organization
+              Create New Organization
              </Button>
            )}
        
