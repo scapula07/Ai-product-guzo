@@ -105,7 +105,7 @@ const Landing = ({community,setCommunity}) => {
         <Avatar
           variant="square"
           sx={{ width: {lg:"120px", xs:'100%'}, height: {lg:"120px", xs:'190px', sm:'290px'}, borderRadius: "8px" }}
-          src="/logo1.png"
+          src={comm.profile_picture}
         />
 
         <div className="text-sm font-[300] leading-[30px]">
