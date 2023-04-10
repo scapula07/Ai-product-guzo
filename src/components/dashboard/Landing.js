@@ -5,18 +5,78 @@ import {
   Link,
 } from "@mui/icons-material";
 import { Avatar, Button, Divider } from "@mui/material";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CollaborationCard from "../molecules/CollaborationCard";
+import CustomizedProgressBars from "../molecules/Progress";
 
-const Landing = () => {
+const Landing = ({community,setCommunity}) => {
+  const [comm, setComm] = useState(null)
+  const [loader, setLoader] = useState(true)
+  const [collaborations, setCollaborations] = useState(null)
+  console.log(community)
+
+  const getCommunity = async () => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(url + "/community/get-community-by-id/" + community?.value)
+      .then((res) => {
+        setLoader(false)
+        if (
+          res.data &&
+          Object.keys(res.data).length === 0 &&
+          Object.getPrototypeOf(res.data) === Object.prototype
+        ) {
+          setCommunity(null);
+        } else {
+          console.log(res.data);
+          let community = res.data;
+
+          setComm(community)
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getCollaborations = async () => {
+    let url = process.env.REACT_APP_BACKEND_URL;
+    axios
+      .get(
+        url +
+          "/collaboration/collaborations/" +
+          community?.value
+      )
+      .then((res) => {
+        console.log(res.data)
+        setCollaborations(res.data);
+        setLoader(false);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoader(false);
+      });
+  };
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+   getCommunity()
+   getCollaborations()
+  }, [])
+  
   return (
     <div className="bg-white py-[20px] px-[30px] md:rounded-[18px] shadow-lg ">
       <div className="flex items-center">
         <div className="flex flex-1 text-[#114369] font-[600] text-xl ">
-          Fifth Ward CRC
+         {community?.label}
         </div>
         <div>
           <Button
+          onClick = {()=> navigate('/dashboard/edit-community-profile')}
             sx={{
               bgcolor: "#24A0FD",
               color: "white",
@@ -37,7 +97,11 @@ const Landing = () => {
 
       <Divider sx={{ my: 3 }} />
 
-      <div className="lg:flex items-center lg:space-x-4 space-y-2 lg:space-y-0 ">
+      {loader ? (
+        <CustomizedProgressBars/>
+      ): (
+        <>
+        <div className="lg:flex items-center lg:space-x-4 space-y-2 lg:space-y-0 ">
         <Avatar
           variant="square"
           sx={{ width: {lg:"120px", xs:'100%'}, height: {lg:"120px", xs:'190px', sm:'290px'}, borderRadius: "8px" }}
@@ -45,18 +109,15 @@ const Landing = () => {
         />
 
         <div className="text-sm font-[300] leading-[30px]">
-          Organized in 1989, Fifth Ward Community Redevelopment Corporation
-          (Fifth Ward CRC), a NeighborWorks America affiliate, is designed to
-          foster holistic community development. Fifth Ward CRC seeks to enhance
-          the quality of life for individuals and families in the
-          <span className="text-[#24A0FD] font-[500] cursor-pointer">
+          {comm?.description}
+          {/* <span className="text-[#24A0FD] font-[500] cursor-pointer">
             ...See More
-          </span>
+          </span> */}
         </div>
       </div>
 
       <div className="flex items-center mt-6 text-sm font-[300] space-x-6">
-        <div>
+        {/* <div>
           <Dashboard
             sx={{
               color: "#24A0FD",
@@ -67,15 +128,15 @@ const Landing = () => {
           />
           <span className="text-[#24A0FD] font-[500]">Category: </span>{" "}
           <span>Community Resource</span>
-        </div>
+        </div> */}
 
         <div>
           <span className="text-[#24A0FD] font-[500]">#Tags: </span>{" "}
-          <span> Neighborhood Resource, Connector</span>
+         {comm?.tags.map((item,index)=> (item.name))}
         </div>
       </div>
 
-      <div className="mt-[30px] text-[12px]  ">
+      {/* <div className="mt-[30px] text-[12px]  ">
         <div className="font-bold mb-2 text-sm">Audience Channels</div>
         <div className="md:w-[55vw] lg:w-full w-[85vw] overflow-x-auto" >
         <div className="md:w-[850px] lg:w-full w-[1000px] ">
@@ -172,7 +233,7 @@ const Landing = () => {
           </div>
         </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="mt-[30px] text-[12px] ">
         <div className="font-bold mb-2 text-sm ">
@@ -181,11 +242,16 @@ const Landing = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 md:gap-1 lg:gap-[48px]">
-          <CollaborationCard />
-          <CollaborationCard />
-          <CollaborationCard />
+        {collaborations && collaborations.map((item, index) => (
+              <CollaborationCard key={index} collaboration={item} index={index} />
+            ))}
         </div>
+
+
+{collaborations && collaborations.length < 1 && 'You dont have any collaborations yet'}
       </div>
+        </>
+      )}
     </div>
   );
 };

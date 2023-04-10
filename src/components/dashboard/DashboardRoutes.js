@@ -99,7 +99,7 @@ const DashboardRoutes = () => {
         ) : (
           <div className="lg:col-span-3 md:col-span-2 ">
             <Routes>
-              <Route path="/" element={<Landing />} />
+              <Route path="/profile" element={<Landing community={community} />} />
               <Route
                 path="/edit-community-profile"
                 element={<EditCommunityProfile getCommunity0={[]} community={community} setCommunity={setCommunity} />}

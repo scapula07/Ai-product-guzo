@@ -30,7 +30,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
 import ReactSelect from "react-select";
 
-const DashboardSidebar = ({ community, setOpen, setCommunity, setLoader }) => {
+const DashboardSidebar = ({ community, setOpen, setCommunity, setLoader ,open}) => {
   const [communities, setCommunities] = useState(
     JSON.parse(localStorage.getItem("user"))?.communities || null
   );
@@ -318,17 +318,16 @@ const DashboardSidebar = ({ community, setOpen, setCommunity, setLoader }) => {
 
                 <div
           className={
-            window.location.pathname.match("/dashboard/edit-community-profil/*")
+            window.location.pathname.match("/dashboard/profile/*")
               ? "cursor-pointer text-blue-500"
               : "cursor-pointer"
           }
           onClick={() => {
-            navigate("/dashboard/edit-community-profile");
-            setOpen(false);
+            navigate("/dashboard/profile/");
           }}
         >
           <Edit sx={{ fontSize: "15px", mr: 1 }} />
-          Edit Organization
+          Profile
         </div>
               </div>
             </AccordionDetails>

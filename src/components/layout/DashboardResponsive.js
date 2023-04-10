@@ -6,7 +6,7 @@ const DashboardResponsive = ({ open, setOpen, community,setCommunity, setLoader 
   return (
     <Drawer open={open} onClose={() => setOpen(false)}  >
       <div className="w-[80vw]">
-      <DashboardSidebar community={community} setOpen={setOpen}  setCommunity={setCommunity} setLoader={setLoader} />
+      <DashboardSidebar community={community} setOpen={setOpen} open={open}  setCommunity={setCommunity} setLoader={setLoader} />
       </div>
     </Drawer>
   );
