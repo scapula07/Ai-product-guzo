@@ -178,6 +178,7 @@ const JoinCommunity = () => {
           }
         } else {
           localStorage.setItem("user", JSON.stringify(res.data));
+          localStorage.setItem('community_idd', d.data.community_id)
           setTimeout(() => {
             navigate("/dashboard/discover");
           }, 1000);

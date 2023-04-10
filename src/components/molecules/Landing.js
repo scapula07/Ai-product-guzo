@@ -1,6 +1,6 @@
 import { Box, Button, CircularProgress, Dialog, LinearProgress } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
 import CustomizedProgressBars from "./Progress";
@@ -29,7 +29,22 @@ const LandingModal = ({open, setOpen,community, setCommunity}) => {
     }),
   };
 
+  const community_id = localStorage.getItem('community_idd') || null
+  useEffect(() => {
+    
+   if(community_id){
+    getCommunity(community_id)
+    localStorage.removeItem('community_idd')
+   }
+  }, [])
+  
+
   const [selectedCommunity, setSelectedCommunity] = useState(null)
+
+ 
+  
+
+
   const getCommunity = async (comm_id) => {
     let url = process.env.REACT_APP_BACKEND_URL;
     setLoader(true)
