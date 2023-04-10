@@ -80,8 +80,9 @@ const collaboration_id = urlParams.get('collaboration_id')
 
   const getDirectMessage = async () => {
     let url = process.env.REACT_APP_BACKEND_URL;
+    let community_id = JSON.parse(localStorage.getItem('community'))._id
     axios
-      .get(url + "/contact/get-contact-group/" + selectedContactGroup?._id)
+      .get(url + "/contact/get-contact-group/" + selectedContactGroup?._id+'/'+community_id)
       .then((res) => {
         //console.log(res.data);
         setDirectMessages(res.data.direct_messages);
