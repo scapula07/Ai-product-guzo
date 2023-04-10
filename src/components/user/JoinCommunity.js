@@ -15,6 +15,7 @@ const JoinCommunity = () => {
   const [msg,setMsg] = useState(null)
   const { token } = useParams();
   const [errorMsg, setErrorMsg] = useState()
+  const [proceed, setProceed] = useState(null)
   useEffect(() => {
     if (loggedInUser) {
       setStep(2);
@@ -172,6 +173,8 @@ const JoinCommunity = () => {
         console.log(res.data);
         if(res.data.status === 1){
           setMsg('You are already a team mate on this organization')
+          setProceed(1)
+          localStorage.setItem('community_idd', d.data.community_id)
           return
         } else{
           if (res.data.error) {
@@ -536,30 +539,56 @@ const JoinCommunity = () => {
          <div className="text-red-500 text-xs font-semibold text-center mb-4" >  { msg && (
           
           <div> <div>{msg} </div>
-           <Button
-                  onClick={()=>{
-                    localStorage.clear()
-                    window.location.reload()
-                  }}
-                  sx={{
-                    bgcolor: "#24A0FD",
-                    color: "white",
-                    fontSize: "14px",
-                    width: { sm: "fit", xs: "fit" },
-                    textTransform: "none",
-                    borderRadius: "5px",
-                    px: 3,
-                    mx: { xs: 1, lg: 0 },
-                    mt: { xs: 2, lg: 0 },
-                    mb: 5,
-                    ":hover": {
-                      bgcolor: "#24A0FD",
-                      color: "white",
-                    },
-                  }}
-                >
-                  logout
-                </Button>
+          {proceed ? (
+             <Button
+             onClick={()=>{
+               navigate('/dashboard/discover')
+             }}
+             sx={{
+               bgcolor: "#24A0FD",
+               color: "white",
+               fontSize: "14px",
+               width: { sm: "fit", xs: "fit" },
+               textTransform: "none",
+               borderRadius: "5px",
+               px: 3,
+               mx: { xs: 1, lg: 0 },
+               mt: { xs: 2, lg: 0 },
+               mb: 5,
+               ":hover": {
+                 bgcolor: "#24A0FD",
+                 color: "white",
+               },
+             }}
+           >
+             proceed to dashboard
+           </Button>
+          ): (
+            <Button
+            onClick={()=>{
+              localStorage.clear()
+              window.location.reload()
+            }}
+            sx={{
+              bgcolor: "#24A0FD",
+              color: "white",
+              fontSize: "14px",
+              width: { sm: "fit", xs: "fit" },
+              textTransform: "none",
+              borderRadius: "5px",
+              px: 3,
+              mx: { xs: 1, lg: 0 },
+              mt: { xs: 2, lg: 0 },
+              mb: 5,
+              ":hover": {
+                bgcolor: "#24A0FD",
+                color: "white",
+              },
+            }}
+          >
+            logout
+          </Button>
+          )}
           </div>)} </div>
          <div className="flex justify-center">
            
