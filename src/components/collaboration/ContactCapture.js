@@ -269,7 +269,7 @@ const ContactCapture = () => {
              },
            }}
          >
-           Create Your First Community
+           Create Your First Organization
          </Button>
           ):(
              <div className="  ">
