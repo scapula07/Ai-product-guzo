@@ -589,7 +589,7 @@ const EditCommunityProfile = ({getCommunity0,community,setCommunity}) => {
                   color: "#24A0FD",
                 },
               }}
-              onClick={() => navigate("/dashboard/collaboration")}
+              onClick={() => navigate("/dashboard/profile")}
             >
               Cancel
             </Button>
