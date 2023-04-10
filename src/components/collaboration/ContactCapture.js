@@ -144,6 +144,11 @@ const ContactCapture = () => {
       setMsg("please select a community or create one");
       return
     }
+    if(partner?.phone_number.length < 3){
+      setOpenErrorSnack(true);
+      setMsg("phone number is invalid");
+      return
+    }
     setLoader2(true);
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
