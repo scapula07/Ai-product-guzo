@@ -132,7 +132,9 @@ const Landing = ({community,setCommunity}) => {
 
         <div>
           <span className="text-[#24A0FD] font-[500]">#Tags: </span>{" "}
-         {comm?.tags.map((item,index)=> (item.name))}
+         {comm?.tags.map((item,index)=> (
+          <div className="mr-2">{item.name} </div>
+         ))}
         </div>
       </div>
 

@@ -21,6 +21,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
+import ErrorSnack from "../molecules/ErrorSnack";
 import CustomizedProgressBars from "../molecules/Progress";
 import SuccessSnackbar from "../molecules/SuccessSnackbar";
 
@@ -32,6 +33,8 @@ const CreateNewTextMessage = () => {
   const open = Boolean(anchorEl);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [contactGroupLoader, setContactGroupLoader] = useState(true)
+  const [openErrorSnack, setOpenErrorSnack] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
   const [senderPhoneNumbers, setSenderPhoneNumbers] = useState([
    {
     label:"+18337952227",
@@ -89,9 +92,13 @@ const CreateNewTextMessage = () => {
   const sendTextMessage = async() =>{
     setLoader(true)
     let url = process.env.REACT_APP_BACKEND_URL;
-    console.log(sender,
-      message,
-      selectedCategory)
+   
+
+      if(!sender || message.length< 1 || !selectedCategory || name.length < 1){
+        setOpenErrorSnack(true)
+        setLoader(false)
+        return 
+      }
     axios
       .post(url + "/contact/send-message/",{
           sender:sender.value,
@@ -127,6 +134,8 @@ const CreateNewTextMessage = () => {
   
   return (
     <div className="bg-white py-[20px] pb-[80px] px-[30px] md:rounded-[18px] shadow-lg">
+      <ErrorSnack msg={'Please fill all feilds'} duration='10000' 
+      open={openErrorSnack} setOpen={setOpenErrorSnack}  />
       <SuccessSnackbar msg={'Message sent successfully'} duration='10000' 
       open={openSuccessSnack} setOpen={setOpenSuccessSnack}  />
       <div className="md:flex space-y-2 md:space-y-0 items-center">
@@ -413,7 +422,7 @@ const CreateNewTextMessage = () => {
               borderRadius: "5px",
               px: 3,
               mx: {xs: 1 , lg:0},
-              mt: {xs: 2 , lg:0},
+              mt: {xs: 0 , lg:0},
               ":hover": {
                 bgcolor: "#24A0FD",
                 color: "white",
