@@ -138,7 +138,7 @@ const Discover = () => {
                       key={index}
                       onClick={() => {
                         window.open(
-                          "https://guzo-dev.vercel.app/collaboration/" +
+                          "https://app.guzo.io/collaboration/" +
                             item._id,
                           "_blank"
                         );
