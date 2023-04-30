@@ -117,7 +117,10 @@ const Register = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    /* global google */
+   
+
+    try {
+      /* global google */
     google.accounts.id.initialize({
       /* client_id: "177032038340-jul0gcjukdu8turooase19b1divjlc09.apps.googleusercontent.com", */
       client_id:
@@ -129,6 +132,9 @@ const Register = () => {
       theme: "outline",
       size: "large",
     });
+    } catch (error) {
+      window.location.reload();
+    }
   }, []);
 
   return (

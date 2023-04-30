@@ -6,14 +6,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
 import FadeIn from "react-fade-in";
 
-
 const Login = () => {
   const navigate = useNavigate();
   const urlParams = new URLSearchParams(window.location.search);
   const collaboration_id = urlParams.get("collaboration_id");
   const loggedInUser = JSON.parse(localStorage.getItem("user"));
   const [loader, setLoader] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(null)
+  const [errorMsg, setErrorMsg] = useState(null);
   useEffect(() => {
     if (loggedInUser) {
       if (collaboration_id) {
@@ -31,15 +30,15 @@ const Login = () => {
 
   const login = async () => {
     setLoader(true);
-    setErrorMsg(null)
+    setErrorMsg(null);
     let url = process.env.REACT_APP_BACKEND_URL;
     axios
       .post(url + "/user/login", user)
       .then((res) => {
         console.log(res.data);
         if (res.data.code) {
-          setErrorMsg(res.data.msg)
-          setLoader(false)
+          setErrorMsg(res.data.msg);
+          setLoader(false);
         } else {
           localStorage.clear();
           localStorage.setItem("user", JSON.stringify(res.data));
@@ -60,7 +59,7 @@ const Login = () => {
 
   const googleLogin = async (response) => {
     setLoader(true);
-    setErrorMsg(null)
+    setErrorMsg(null);
     var user_object = jwtDecode(response.credential);
     let url = process.env.REACT_APP_BACKEND_URL;
     let user = {
@@ -71,7 +70,7 @@ const Login = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.code) {
-          setErrorMsg(res.data.msg)
+          setErrorMsg(res.data.msg);
           setLoader(false);
         } else {
           localStorage.clear();
@@ -88,26 +87,30 @@ const Login = () => {
       })
       .catch((err) => {
         console.log(err);
-        setLoader(false)
+        setLoader(false);
       });
   };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    /* global google */
-    google.accounts.id.initialize({
-      /* client_id: "177032038340-jul0gcjukdu8turooase19b1divjlc09.apps.googleusercontent.com", */
-      
-      client_id:
-        "293518718374-t8n6cfcrlacah3n7v6c0dkmamvklikb8.apps.googleusercontent.com",
-      callback: googleLogin,
-    });
+    try {
+      /* global google */
+      google.accounts.id.initialize({
+        /* client_id: "177032038340-jul0gcjukdu8turooase19b1divjlc09.apps.googleusercontent.com", */
 
-    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-      theme: "outline",
-      size: "large",
-    });
+        client_id:
+          "293518718374-t8n6cfcrlacah3n7v6c0dkmamvklikb8.apps.googleusercontent.com",
+        callback: googleLogin,
+      });
+
+      google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+        theme: "outline",
+        size: "large",
+      });
+    } catch (error) {
+      window.location.reload();
+    }
   }, []);
   return (
     <div className="md:flex justify-center md:mt-[2vw] mt-[4vw] ">
@@ -121,7 +124,9 @@ const Login = () => {
           </div>
 
           {errorMsg && (
-            <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+            <FadeIn>
+              <Alert severity="error">{errorMsg}</Alert>
+            </FadeIn>
           )}
 
           <div className="mt-4">
@@ -206,8 +211,6 @@ const Login = () => {
               </span>
             </div>
 
-           
-
             <div className="flex justify-end mt-4">
               {loader ? (
                 <div className="flex">
@@ -244,7 +247,7 @@ const Login = () => {
           <div className="my-4 text-[12px] text-center">Or use Third party</div>
 
           <div className="flex justify-center space-x-3 mt-5">
-          <div>
+            <div>
               <div id="signInDiv"></div>
             </div>
             {/* <div className="border-[1px] border-[#D3D3D3] px-3 w-fit  md:text-[12px] text-[10px] cursor-pointer flex items-center space-x-2 ">
