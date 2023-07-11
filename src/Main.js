@@ -11,11 +11,13 @@ import DashboardRoutes from "./components/dashboard/DashboardRoutes";
 import ThankYouCard from "./components/molecules/ThankYouCard";
 import JoinCommunity from "./components/user/JoinCommunity";
 import UserRoutes from "./components/user/UserRoutes";
+import NewRoutes from "./new_components/Routes";
 
 const Main = () => {
   return (
     <BrowserRouter >
       <Routes >
+        <Route path="/new/*"  element={<NewRoutes />} />
         <Route path="/dashboard/*"  element={<DashboardRoutes />} />
         <Route path="/user/*" element={<UserRoutes />} />
 
