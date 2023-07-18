@@ -9,6 +9,9 @@ import Profile from "./OrgProfile";
 import Home from "./Home/views";
 import Feeds from "./Home/views/feed";
 import Ecosystems from "./Home/views/ecosystem";
+import Connections from "./Connections";
+import Active from "./Connections/views/active";
+import Pending from "./Connections/views/pending";
 
 const NewRoutes = () => {
 
@@ -28,6 +31,11 @@ const NewRoutes = () => {
                     <Route path="" element={<Feeds/>} />
                     <Route path="ecosystems" element={<Ecosystems/>} />
                 </Route>
+                <Route path="/connections" element={<Connections/>} >
+                     <Route path="" element={<Active/>} />
+                     <Route path="pending" element={<Pending/>} />
+                </Route>
+    
             </Routes>
     </>
   );
