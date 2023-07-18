@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import Index from "./authentication/Index";
 import Invite from "./authentication/Invite";
 import Share from "./authentication/Share";
-
+import Profile from "./OrgProfile";
 
 const NewRoutes = () => {
 
@@ -17,9 +17,10 @@ const NewRoutes = () => {
   return (
     <>
             <Routes>
-              <Route path="/auth/*" element={<Index/>} />
-              <Route path="/share" element={<Share/>} />
-              <Route path="/invite" element={<Invite/>} />
+                <Route path="/auth/*" element={<Index/>} />
+                <Route path="/share" element={<Share/>} />
+                <Route path="/invite" element={<Invite/>} />
+                <Route path="/profile" element={<Profile/>} />
             </Routes>
     </>
   );

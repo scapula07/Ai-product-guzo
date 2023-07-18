@@ -11,7 +11,7 @@ import DashboardRoutes from "./components/dashboard/DashboardRoutes";
 import ThankYouCard from "./components/molecules/ThankYouCard";
 import JoinCommunity from "./components/user/JoinCommunity";
 import UserRoutes from "./components/user/UserRoutes";
-import NewRoutes from "./new_components/Routes";
+import NewRoutes from "./modules/Routes";
 
 const Main = () => {
   return (
