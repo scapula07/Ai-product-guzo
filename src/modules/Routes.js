@@ -12,6 +12,7 @@ import Ecosystems from "./Home/views/ecosystem";
 import Connections from "./Connections";
 import Active from "./Connections/views/active";
 import Pending from "./Connections/views/pending";
+import Collaborations from "./Collaboration";
 
 const NewRoutes = () => {
 
@@ -32,6 +33,10 @@ const NewRoutes = () => {
                     <Route path="ecosystems" element={<Ecosystems/>} />
                 </Route>
                 <Route path="/connections" element={<Connections/>} >
+                     <Route path="" element={<Active/>} />
+                     <Route path="pending" element={<Pending/>} />
+                </Route>
+                <Route path="/collaborations" element={<Collaborations/>} >
                      <Route path="" element={<Active/>} />
                      <Route path="pending" element={<Pending/>} />
                 </Route>
