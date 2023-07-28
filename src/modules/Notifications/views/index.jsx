@@ -7,7 +7,11 @@ import Layout from '../../Layout'
 export default function Notifications() {
   return (
     <Layout>
-        <div className='flex flex-col w-full h-full space-y-7 overflow-y-scroll'>
+        <div className='py-2 flex-col flex space-y-4'> 
+            <h5 className='text-slate-700 font-semibold text-xl'>Notifications</h5>
+           
+        </div>
+        <div className='flex flex-col w-full h-full space-y-7 overflow-y-scroll py-6'>
             {notifications?.map((notification)=>{
                 return(
                 <Notification 

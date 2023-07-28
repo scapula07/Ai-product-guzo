@@ -38,6 +38,7 @@ export default function SidePanel() {
 const groups=[
   {
     img:org1
+   
 
    },
   {

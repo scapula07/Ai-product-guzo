@@ -1,8 +1,14 @@
-import React from 'react'
+import React ,{useState} from 'react'
 import orgPic from "../../assets/orgcover.png"
+import Modal from '../../Modal'
+import {AiOutlineClose } from "react-icons/ai"
+
+import CreatePosts from '../../ CreatePost.'
 
 export default function CreatePost() {
+  const [trigger,setTrigger]=useState(false)
   return (
+    <>
     <div className='bg-white w-full rounded-lg flex px-4 flex-col py-4  space-y-4'>
         <div className='flex items-center space-x-4'>
             <img 
@@ -16,8 +22,21 @@ export default function CreatePost() {
                />
 
         </div>
-        <button className='bg-blue-600 py-2 rounded-full w-full text-white font-semibold text-sm'>Post</button>
+        <button className='bg-blue-600 py-2 rounded-full w-full text-white font-semibold text-sm'
+         onClick={()=>setTrigger(true)}
+        >Post</button>
 
     </div>
+      <Modal trigger={trigger}  cname="w-1/2 py-2   px-4 rounded-lg">
+               <div className='w-full flex justify-end px-6 py-2'>
+                    <AiOutlineClose 
+                    onClick={()=>setTrigger(false)}
+                 />
+
+              </div>
+              <CreatePosts />
+        
+      </Modal>
+    </>
   )
 }

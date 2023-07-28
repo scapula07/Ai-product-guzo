@@ -29,6 +29,7 @@ import { Onboarding,
       } from "./Onboarding";
 import Org from "./Onboarding/views/Profiles/org";
 import Notifications from "./Notifications";
+import {Settings ,EditProfile} from "./Settings";
 
 
 
@@ -79,6 +80,8 @@ const NewRoutes = () => {
                 
                 </Route>
                 <Route path="/notifications" element={<Notifications/>} />
+                <Route path="/settings" element={<Settings/>} />
+                <Route path="/setting-edit-profile" element={<EditProfile/>} />
     
             </Routes>
     </>

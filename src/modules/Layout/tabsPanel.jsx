@@ -7,6 +7,7 @@ import connections from "../assets/icons/connections.png"
 import message from "../assets/icons/message.png"
 import opportunity from "../assets/icons/opportunity.png"
 import ecosystem from "../assets/icons/ecosystem.png"
+import { Link } from 'react-router-dom'
 
 export default function TabsPanel() {
   return (
@@ -21,7 +22,10 @@ export default function TabsPanel() {
                               src={nav?.icon}
                               className="h-5 w-5"
                             />
+                            <Link to={nav?.link}>
                             <h5 className='font-semibold'>{nav?.name}</h5>
+                            </Link>
+                           
                         </div>
                      )
                 })
@@ -53,28 +57,34 @@ export default function TabsPanel() {
 const navs=[
     {
         name:"Home",
-        icon:home
+        icon:home,
+        link:"/new"
 
     },
     {
         name:"Connections",
-        icon:connections
+        icon:connections,
+        link:"/new/connections"
 
     },
     {
         name:"Opportunities",
-        icon:opportunity
+        icon:opportunity,
+        link:"/new/collaborations"
     },
     {
         name:"Ecosystem",
-        icon:ecosystem
+        icon:ecosystem,
+        link:""
     },
     {
         name:"Messages",
-        icon:message
+        icon:message,
+        link:"/new/messages"
     },
     {
         name:"Profile",
-        icon:user
+        icon:user,
+        link:"/new/profile"
     },
 ]
