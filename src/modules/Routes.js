@@ -13,6 +13,25 @@ import Connections from "./Connections";
 import Active from "./Connections/views/active";
 import Pending from "./Connections/views/pending";
 import Collaborations from "./Collaboration";
+import Myopportunities from "./Collaboration/views/myopportunities";
+import JoinedOpportunities from "./Collaboration/views/joinedOpportunities";
+import Contacts from "./Collaboration/views/contacts";
+import Messenger from "./Messenger";
+import GroupChat from "./Messenger/views/groupchat";
+import DM from "./Messenger/views/dm";
+import { Onboarding,
+       Accounts,
+       Register,EmailAuth,
+       AuthTypes,FactorAuth,
+       CreateProfiles,
+       Individual,
+       Eco
+      } from "./Onboarding";
+import Org from "./Onboarding/views/Profiles/org";
+import Notifications from "./Notifications";
+
+
+
 
 const NewRoutes = () => {
 
@@ -25,6 +44,19 @@ const NewRoutes = () => {
     <>
             <Routes>
                 <Route path="/auth/*" element={<Index/>} />
+                <Route path="onboard" element={<Onboarding/>} >
+                    <Route path="" element={<Accounts/>} />
+                    <Route path="register" element={<Register/>} >
+                        <Route path="" element={<AuthTypes/>} />
+                        <Route path="email-password" element={<EmailAuth/>} />
+                    </Route>
+                    <Route path="2fa" element={<FactorAuth/>} />
+                    <Route path="profile" element={<CreateProfiles/>} >
+                        <Route path="" element={<Individual/>} />
+                        <Route path="org" element={<Org/>} />
+                        <Route path="network" element={<Eco/>} />
+                    </Route>
+                </Route>
                 <Route path="/share" element={<Share/>} />
                 <Route path="/invite" element={<Invite/>} />
                 <Route path="/profile" element={<Profile/>} />
@@ -37,9 +69,16 @@ const NewRoutes = () => {
                      <Route path="pending" element={<Pending/>} />
                 </Route>
                 <Route path="/collaborations" element={<Collaborations/>} >
-                     <Route path="" element={<Active/>} />
-                     <Route path="pending" element={<Pending/>} />
+                     <Route path="" element={<Myopportunities/>} />
+                     <Route path="joined" element={<JoinedOpportunities/>} />
+                     <Route path="contacts" element={<Contacts/>} />
                 </Route>
+                <Route path="/messages" element={<Messenger/>} >
+                     <Route path="" element={<DM/>} />
+                     <Route path="group" element={<GroupChat/>} />
+                
+                </Route>
+                <Route path="/notifications" element={<Notifications/>} />
     
             </Routes>
     </>
