@@ -6,12 +6,12 @@ export default function Tabs() {
     <div className='bg-white w-full rounded-lg flex items-center    px-8 py-2'>
         <div className='w-1/2 flex justify-center'>
            <Link to="">
-            <h5 className='text-sm font-semibold'>Active</h5>
+            <h5 className='lg:text-sm text-xs font-semibold'>Active</h5>
             </Link>
         </div>
           <div className='w-1/2 flex justify-center'>
           <Link to="pending">
-            <h5 className='text-sm font-semibold'>Pending</h5>
+            <h5 className='lg:text-sm text-xs font-semibold'>Pending</h5>
             </Link>
           </div>
       

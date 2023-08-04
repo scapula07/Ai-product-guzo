@@ -9,21 +9,21 @@ import {BsThreeDots} from "react-icons/bs"
 
 export default function Pending() {
   return (
-    <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
+    <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
         {ecosystems.map((eco)=>{
             return(
                 <div className='flex flex-col bg-white py-4 px-4'>
                     <div className='flex flex-col items-center space-y-3'>
                         <img 
                           src={eco.img}
-                          className="rounded-full w-32 h-32"
+                          className="rounded-full lg:w-32 lg:h-32 w-20 h-20"
                         />
-                        <h5 className=' text-center font-semibold '>{eco?.name}</h5>
-                        <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
+                        <h5 className=' text-center font-semibold text-sm lg:text-base '>{eco?.name}</h5>
+                        <h5 className='lg:text-sm text-xs font-semibold text-slate-600'>Ecosystem</h5>
                     </div>
 
                     <div className='flex flex-col items-center space-y-3 py-4'>
-                        <p className=' text-center font-light text-sm'>
+                        <p className=' text-center font-light lg:text-sm text-xs'>
                         Worem ipsum dolor sit amet, consectetur adi...
                         </p>
 
@@ -33,7 +33,7 @@ export default function Pending() {
                            </h5>
                            <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
                               <BsThreeDots 
-                                   className='text-blue-600 text-2xl'
+                                   className='text-blue-600 lg:text-2xl text-sm'
                               />
                            </h5>
                         </div>

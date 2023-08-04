@@ -1,12 +1,12 @@
 import React from 'react'
 import orgPic from "../../assets/orgcover.png"
 
-export default function CreatePost() {
+export default function CreatePost({group}) {
   return (
     <div className='bg-white w-full rounded-lg flex px-4 flex-col py-4  space-y-4'>
         <div className='flex items-center space-x-4'>
             <img 
-              src={orgPic}
+              src={group?.profile}
               className="rounded-full h-8 w-8 "
                />
 

@@ -8,12 +8,15 @@ import message from "../assets/icons/message.png"
 import opportunity from "../assets/icons/opportunity.png"
 import ecosystem from "../assets/icons/ecosystem.png"
 import { Link } from 'react-router-dom'
+import { groupState } from '../Recoil/globalstate'
+import {useRecoilValue} from "recoil"
 
 export default function TabsPanel() {
+    const group =useRecoilValue(groupState)
   return (
     <div className='py-6  w-full relative h-full'>
         <div className='flex flex-col items-center space-y-10 w-full'>
-            <h5 className='font-semibold text-2xl'>Common Desk</h5>
+            <h5 className='font-semibold text-2xl'>{group?.name}</h5>
             <div className='flex flex-col py-20 space-y-6'>
                 {navs.map((nav)=>{
                      return(

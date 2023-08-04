@@ -9,7 +9,7 @@ export default function SearchBar() {
          />
          <input 
             placeholder='Search'
-            className=' outline-none w-full border-0 text-lg text-black'
+            className=' outline-none w-full border-0 lg:text-lg text-sm text-black'
           />
      </div>
   )

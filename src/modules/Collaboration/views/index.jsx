@@ -8,7 +8,7 @@ export default function Collaborations() {
   return (
     <Layout>
        <div className='py-2 flex-col flex space-y-4'> 
-            <h5 className='text-slate-700 font-semibold text-xl'>Opportunities</h5>
+            <h5 className='text-slate-700 font-semibold lg:text-xl text-sm'>Opportunities</h5>
            
         </div>
         <div className=' w-full h-full space-x-10'>

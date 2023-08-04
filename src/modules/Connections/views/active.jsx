@@ -9,7 +9,7 @@ import {BsThreeDots} from "react-icons/bs"
 
 export default function Active() {
   return (
-    <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
+    <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
         {ecosystems.map((eco)=>{
             return(
                 <div className='flex flex-col bg-white py-4 px-4'>

@@ -24,7 +24,7 @@ export default function Feeds() {
 const Feed=()=>{
      return(
         <div className='w-full py-4 bg-white h-full '>
-        <div className='flex items-center border-b py-2  px-4 justify-between w-full'>
+        <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
              <div className='flex items-center space-x-3'>
                  <img
                    src={org}

@@ -6,7 +6,7 @@ export const accountTypeState =atom({
    default:"Individual"
 })
 
-export const HotelState =atom({
+export const groupState =atom({
    key:"hotel",
-   default:[]
+   default:{}
 })

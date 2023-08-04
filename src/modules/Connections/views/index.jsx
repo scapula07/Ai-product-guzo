@@ -8,11 +8,11 @@ export default function Connections() {
   return (
     <Layout>
        <div className='py-2 flex-col flex space-y-4'> 
-            <h5 className='text-slate-700 font-semibold text-xl'>Connections</h5>
+            <h5 className='text-slate-700 font-semibold lg:text-xl text-sm'>Connections</h5>
            
         </div>
         <div className='flex w-full h-full space-x-10'>
-            <div className='w-3/5 overflow-y-auto h-full '>
+            <div className='lg:w-3/5 w-full overflow-y-auto h-full '>
                  <Tabs />
                 
 
@@ -26,7 +26,7 @@ export default function Connections() {
                   </div>
       
                  </div>
-                <div className='w-2/5'>
+                <div className='w-2/5 lg:block hidden'>
                     <Suggestions />
 
                 </div>
