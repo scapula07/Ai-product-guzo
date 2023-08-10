@@ -6,6 +6,7 @@ import Posts from './posts'
 import Suggestions from './suggestions'
 import { groupState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
+import EcoFeed from './ecoFeed'
 
 
 export default function Profile() {
@@ -22,13 +23,26 @@ export default function Profile() {
              
                 <div className='lg:w-3/5 w-full overflow-y-auto h-full'>
                   <CoverSection group={group}/>
+                  {group?.type==="eco"?
+                     ""
+                        :
+                        <div className='py-6'>
+                            <CreatePost group={group}/>
+                        </div>
+                        }
 
-                  <div className='py-6'>
-                    <CreatePost group={group}/>
-                  </div>
-                  <div className=''>
-                    <Posts />
-                  </div>
+                    {group?.type==="eco"?
+                        <div className=''>
+                            <EcoFeed group={group}/>
+                        </div>
+                      
+                      :
+                      <div className=''>
+                       <Posts />
+                       </div>
+
+                   }
+                  
                 </div>
                 <div className='w-2/5 lg:block hidden'>
                      <Suggestions />

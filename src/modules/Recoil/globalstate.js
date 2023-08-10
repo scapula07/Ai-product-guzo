@@ -10,3 +10,8 @@ export const groupState =atom({
    key:"hotel",
    default:{}
 })
+
+export const userState =atom({
+    key:"user",
+    default:{}
+ })

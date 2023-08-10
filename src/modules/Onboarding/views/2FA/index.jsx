@@ -1,5 +1,8 @@
 import React from 'react'
 import guzo from "../../../assets/guzoLogo.png"
+import { Link } from 'react-router-dom'
+
+
 export default function FactorAuth() {
   return (
     <div className='w-full h-screen'>
@@ -17,12 +20,13 @@ export default function FactorAuth() {
                     <h5 className='font-semibold'>Required</h5>
                     <h5 className='font-semibold'> Authentication</h5>
                 </div>
-
-                <button className='text-blue-700 rounded-full px-8 py-1.5'
-                             style={{background: "rgba(236, 235, 254, 1)"}}
-                           >
-                        Continue
-               </button>
+                <Link to="/new/onboard/profile">
+                        <button className='text-blue-700 rounded-full px-8 py-1.5'
+                                    style={{background: "rgba(236, 235, 254, 1)"}}
+                                >
+                                Continue
+                    </button>
+               </Link>
 
            
             </div>

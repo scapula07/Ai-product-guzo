@@ -3,6 +3,7 @@ import orgPic from "../../assets/orgcover.png"
 import share from "../../assets/icons/share.png"
 import {BsFillShareFill} from "react-icons/bs"
 import postImg from "../../assets/conference.png"
+import CreatePost from './createPost'
 
 export default function Posts() {
   return (
@@ -20,8 +21,9 @@ export default function Posts() {
 }
 
 
-const Post =()=>{
+const Post =({group})=>{
    return(
+    <>
     <div className='w-full py-4 bg-white h-full '>
          <div className='flex items-center border-b py-2  px-4 justify-between w-full'>
               <div className='flex items-center space-x-3'>
@@ -72,5 +74,7 @@ const Post =()=>{
         
 
     </div>
+
+    </>
    )
 }

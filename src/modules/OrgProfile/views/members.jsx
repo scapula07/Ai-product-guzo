@@ -4,13 +4,10 @@ import eco2 from  "../../assets/eco2.png"
 import eco3 from  "../../assets/eco3.png"
 import eco4 from  "../../assets/eco4.png"
 import eco5 from  "../../assets/orgcover.png"
-import {FiMessageSquare} from "react-icons/fi"
-import {BsThreeDots} from "react-icons/bs"
-import { Link } from 'react-router-dom'
 
-export default function Active() {
+export default function Members() {
   return (
-    <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
+    <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
         {ecosystems.map((eco)=>{
             return(
                 <div className='flex flex-col bg-white py-4 px-4'>
@@ -27,22 +24,7 @@ export default function Active() {
                         <p className=' text-center font-light text-sm'>
                         Worem ipsum dolor sit amet, consectetur adi...
                         </p>
-
-                        <div className='flex items-center space-x-3 py-2'> 
-                           <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
-                             <Link to="/new/messages">
-                                <FiMessageSquare 
-                                    className='text-blue-600 text-2xl '
-                                />
-                             </Link>
-                             
-                           </h5>
-                           <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
-                              <BsThreeDots 
-                                   className='text-blue-600 text-2xl'
-                              />
-                           </h5>
-                        </div>
+                       <button className='bg-blue-600 rounded-full px-6 py-2 text-white text-xs font-semibold'>Join</button>
                     </div>
 
                 </div>

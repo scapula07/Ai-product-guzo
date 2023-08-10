@@ -1,8 +1,48 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {MdLocationPin} from "react-icons/md"
+import { Link } from 'react-router-dom'
+import { authApi } from '../../_api/auth'
+import { useNavigate } from "react-router-dom";
+import {useRecoilValue} from "recoil"
+import { accountTypeState } from '../../../Recoil/globalstate'
 
 
 export default function EmailAuth() {
+    let navigate = useNavigate();
+
+    const account =useRecoilValue(accountTypeState)
+    console.log(account,"email")
+
+    const [email,setEmail]=useState("")
+    const [password,setPassword]=useState("")
+    const [firstName,setFirst]=useState("")
+    const [lastName,setLast]=useState("")
+
+    const signUpWithEmail=async()=>{
+        const payload={
+            email,
+            firstName,
+            lastName
+          }
+         try{
+             const uid =await authApi.register(email,password,payload)
+             console.log(uid)
+             let route=""
+             if(account==="Organization"){
+                route="org"
+             }else if(account==="Ecosystem"){
+                route="network"
+             }
+             uid.length >0&& navigate(`/new/onboard/profile/${route}`)
+
+            }catch(e){
+                console.log(e)
+            }
+   
+
+
+        }
+
   return (
     <div className='w-full flex justify-center  '>
             <div className='w-1/2 flex bg-white rounded-lg  border flex-col  space-y-8 py-8' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
@@ -16,6 +56,10 @@ export default function EmailAuth() {
                                     placeholder='First Name'
                                     className=' py-2 px-4 w-full rounded-md text-sm outline-none'
                                     style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
+                                    name="firstName"
+                                    value={firstName}
+                                    onChange={(e)=>setFirst(e.target.value)}
+
                                 />
 
                             </div>
@@ -25,6 +69,9 @@ export default function EmailAuth() {
                                         placeholder='Last Name'
                                         className=' py-2 px-4 w-full rounded-md text-sm outline-none  '
                                         style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
+                                        name="lastName"
+                                        value={lastName}
+                                        onChange={(e)=>setLast(e.target.value)}
                                     />
 
                             </div>
@@ -37,6 +84,9 @@ export default function EmailAuth() {
                                         placeholder='Email'
                                         className=' py-2 px-4 w-full rounded-md text-sm outline-none'
                                         style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
+                                        name="email"
+                                        value={email}
+                                        onChange={(e)=>setEmail(e.target.value)}
                                     />
 
                             </div>
@@ -47,6 +97,9 @@ export default function EmailAuth() {
                                         placeholder='Password'
                                         className=' py-2 px-4 w-full rounded-md text-sm outline-none'
                                         style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
+                                        name="password"
+                                        value={password}
+                                        onChange={(e)=>setPassword(e.target.value)}
                                     />
 
                             </div>
@@ -78,11 +131,15 @@ export default function EmailAuth() {
                       
 
                       <div className='flex flex-col items-center space-y-3'>
-                          <button className='text-blue-700 rounded-full px-8 py-1.5'
-                             style={{background: "rgba(236, 235, 254, 1)"}}
-                           >
-                            Sign up
-                          </button>
+                         <Link to="">
+                            <button className='text-blue-700 rounded-full px-8 py-1.5'
+                                style={{background: "rgba(236, 235, 254, 1)"}}
+                                onClick={signUpWithEmail}
+                            
+                            >
+                                Sign up
+                            </button>
+                          </Link>
 
                           <p className='text-sm font-semibold w-1/2'>
                              By signing up, you agree to 

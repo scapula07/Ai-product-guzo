@@ -2,6 +2,7 @@
 import React from 'react'
 import guzo from "../../../assets/guzoLogo.png"
 import {Outlet } from "react-router-dom"
+import { Link } from 'react-router-dom'
 export default function CreateProfiles() {
   return (
    

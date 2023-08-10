@@ -10,14 +10,14 @@ export default function CoverSection({group}) {
       
         <div className='w-full flex flex-col  bg-white  rounded-lg'>
                 <img 
-                src={group?.cover }
+                src={cover }
                 className="w-full h-33"
 
                 />
 
                 <div className='flex lg:flex-row flex-col py-6 space-x-4 px-4'>
                     <img 
-                    src={group?.profile}
+                    src={group?.img}
                     className="rounded-full lg:h-33 lg:w-33 h-10 w-10"
                     />
 

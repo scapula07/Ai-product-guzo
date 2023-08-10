@@ -4,28 +4,58 @@ import org2 from "../assets/org2.png"
 import add from "../assets/icons/add.png"
 import {IoMdAdd} from "react-icons/io"
 import { groupState } from '../Recoil/globalstate'
-import {useRecoilState} from "recoil"
+import {useRecoilState,useRecoilValue} from "recoil"
 import ionprofile from "../assets/ionProfile.png"
 import ioncover from "../assets/ionCover.png"
 import orgcover from "../assets/orgcover1.png"
 import orgprofile from "../assets/orgcover.png"
+import { userState } from '../Recoil/globalstate'
 
 export default function SidePanel() {
   const [group,setGroup]=useRecoilState(groupState)
+  const currentUser =useRecoilValue(userState)
+  const {organizations,ecosystems}=currentUser
+  console.log(organizations?.length >0 || ecosystems?.length >0)
+
   return (
     <div className='lg:px-4 py-8 '>
       <div className='flex flex-col space-y-4 items-center'>
-        {groups.map((group)=>{
-           return(
-             <div>
-                <img 
-                  src={group?.img}
-                  className="h-10 w-10 hover:h-12 hover:w-12"
-                  onClick={()=>setGroup(group)}
-                />
-             </div>
-           )
-        })}
+          {organizations?.length >0 &&
+          <>
+            
+                {[...organizations].map((group)=>{
+                  console.log(group,"ggg")
+
+                  return(
+                    <div className='rounded-lg p-0.5 items-center justify-center flex border'>
+                      <img 
+                        src={group?.img}
+                        className="h-8 w-8 rounded-full"
+                        onClick={()=>setGroup(group)}
+                      />
+                  </div>
+                  )
+              })}
+            </>
+          }
+          {ecosystems?.length >0 &&
+          <>
+            
+                {[...ecosystems].map((group)=>{
+                  console.log(group,"ggg")
+                  return(
+                    <div className='rounded-lg p-1 items-center justify-center flex border'>
+                      <img 
+                        src={group?.img}
+                        className="h-8 w-8  rounded-full"
+                        onClick={()=>setGroup(group)}
+                      />
+                    </div>
+                  )
+              })}
+            </>
+          }
+        
 
              <div className='rounded-full h-10 w-10  flex justify-center items-center  ' style={{background: "linear-gradient(70.54deg, #281CF5 17.62%, #5DE4D7 94.09%)"}}>
                 <img 

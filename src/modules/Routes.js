@@ -30,37 +30,62 @@ import { Onboarding,
 import Org from "./Onboarding/views/Profiles/org";
 import Notifications from "./Notifications";
 import {Settings ,EditProfile} from "./Settings";
-
+import Posts from "./OrgProfile/views/posts";
+import Members from "./OrgProfile/views/members";
+import Ecosystem from "./Ecosystem/views";
+import { onAuthStateChanged } from "firebase/auth"
+import { userState } from "./Recoil/globalstate";
+import { useRecoilState } from 'recoil';
+import { auth,db } from "./Firebase";
+import { doc,getDoc}  from "firebase/firestore";
 
 
 
 const NewRoutes = () => {
-
-
+  const [currentUser,setcurrentUser]=useRecoilState(userState)
+  let authListner=null
+  useEffect( ()=>{
   
-
-  
+  authListner=onAuthStateChanged(auth,(user)=>{
+      if (user !== null) {
+          const uid = user.uid;
+          const userRef =doc(db,"users", uid)
+          getDoc(userRef).then(res=> {
+          console.log(res.exists(),"exist")
+            setcurrentUser({...res.data(),id:uid})
+      
+          })
+        }
+        })
+      return(
+        authListner()
+      )
+    },[])
 
   return (
     <>
             <Routes>
                 <Route path="/auth/*" element={<Index/>} />
                 <Route path="onboard" element={<Onboarding/>} >
-                    <Route path="" element={<Accounts/>} />
-                    <Route path="register" element={<Register/>} >
-                        <Route path="" element={<AuthTypes/>} />
-                        <Route path="email-password" element={<EmailAuth/>} />
-                    </Route>
-                    <Route path="2fa" element={<FactorAuth/>} />
-                    <Route path="profile" element={<CreateProfiles/>} >
-                        <Route path="" element={<Individual/>} />
-                        <Route path="org" element={<Org/>} />
-                        <Route path="network" element={<Eco/>} />
+                     <Route path="" element={<Accounts/>} />
+                      <Route path="register" element={<Register/>} >
+                          <Route path="" element={<AuthTypes/>} />
+                          <Route path="email-password" element={<EmailAuth/>} />
+                      </Route>
+                      <Route path="2fa" element={<FactorAuth/>} />
+                    <Route path="profile" element={<CreateProfiles />} >
+                        <Route path="" element={<Individual currentUser={currentUser}/>}   />
+                        <Route path="org" element={<Org currentUser={currentUser}/>} />
+                        <Route path="network" element={<Eco currentUser={currentUser}/>} />
                     </Route>
                 </Route>
                 <Route path="/share" element={<Share/>} />
                 <Route path="/invite" element={<Invite/>} />
-                <Route path="/profile" element={<Profile/>} />
+                 <Route path="/profile" element={<Profile/>} >
+                     <Route path="" element={<Posts/>} />
+                     <Route path="members" element={<Members />} />
+
+                  </Route>
                 <Route path="/" element={<Home/>} >
                     <Route path="" element={<Feeds/>} />
                     <Route path="ecosystems" element={<Ecosystems/>} />
@@ -82,6 +107,7 @@ const NewRoutes = () => {
                 <Route path="/notifications" element={<Notifications/>} />
                 <Route path="/settings" element={<Settings/>} />
                 <Route path="/setting-edit-profile" element={<EditProfile/>} />
+                <Route path="/ecosystem" element={< Ecosystem />} />
     
             </Routes>
     </>
