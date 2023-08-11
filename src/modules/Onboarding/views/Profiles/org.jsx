@@ -4,6 +4,8 @@ import {MdLocationPin} from "react-icons/md"
 import { createProfile } from '../../_api/createProfile'
 import { useNavigate } from "react-router-dom";
 import {BsFlag} from "react-icons/bs"
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 export default function Org({currentUser}) {
     console.log(currentUser,"indiv")
@@ -15,6 +17,7 @@ export default function Org({currentUser}) {
     const [orgLocation,setLocation]=useState("")
     const [tags,setTags]=useState([])
 
+    const [isLoading,setLoader]=useState(false)
 
 
 
@@ -41,6 +44,7 @@ export default function Org({currentUser}) {
 
 
       const create=async()=>{
+        setLoader(true)
         try{
             const payload={
                 creator:currentUser?.id,
@@ -50,12 +54,14 @@ export default function Org({currentUser}) {
 
             }
             const result =await createProfile.createOrgProfile(payload,file,currentUser)
-
+            setLoader(false)
+               navigate(`/new/profile`)
           }catch(e){
             console.log(e)
+            setLoader(false)
           }
 
-    //    navigate(`/new/profile`)
+  
            
         }
   return (
@@ -200,9 +206,18 @@ export default function Org({currentUser}) {
             
             <div className='flex  items-center w-full justify-between'>
                 <h5 style={{color: "rgba(37, 31, 134, 1)"}}>Back</h5>
-                <button className='px-6 py-2 text-blue-600 rounded-full' style={{background: "rgba(237, 237, 237, 1)"}}
-                 onClick={create}
-                > Continue</button>
+                      {isLoading?
+                             
+                             <ClipLoader 
+                                 color={"rgba(62, 51, 221, 1)"}
+                                 loading={isLoading}
+                             />
+                                          :
+                            <button className='px-6 py-2 text-blue-600 rounded-full' 
+                            style={{background: "rgba(237, 237, 237, 1)"}}
+                            onClick={create}
+                            > Continue</button>
+                          }
                             
             </div>
 

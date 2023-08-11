@@ -5,9 +5,12 @@ import Tabs from '../components/tabs'
 import CreatePost from './createPost'
 import { Outlet } from 'react-router-dom'
 
-
+import {useRecoilValue} from "recoil"
+import { groupState,userState } from '../../Recoil/globalstate'
 
 export default function Home() {
+    const group =useRecoilValue(groupState)
+    const currentUser=useRecoilValue(userState)
   return (
     <Layout>
         <div className='py-2 flex-col flex space-y-4'> 
@@ -20,7 +23,10 @@ export default function Home() {
                 
 
                 <div className='py-6'>
-                    <CreatePost />
+                    <CreatePost
+                      group={group}
+                      currentUser={currentUser}
+                     />
                 
                 </div>
                   <div className=''>

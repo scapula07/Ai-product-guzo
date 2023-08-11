@@ -3,8 +3,11 @@ import Layout from '../../Layout'
 import { Outlet } from 'react-router-dom'
 import Suggestions from '../../Home/views/suggestions'
 import Tabs from '../components/tabs'
+import { userState } from '../../Recoil/globalstate'
+import {useRecoilValue} from "recoil"
 
 export default function Connections() {
+    const currentUser=useRecoilValue(userState)
   return (
     <Layout>
        <div className='py-2 flex-col flex space-y-4'> 

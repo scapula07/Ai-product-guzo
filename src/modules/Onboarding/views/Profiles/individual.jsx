@@ -2,15 +2,17 @@ import React,{useState,useRef} from 'react'
 import { Link } from 'react-router-dom'
 import { createProfile } from '../../_api/createProfile'
 import { useNavigate } from "react-router-dom";
-import { HelpCenter } from '@mui/icons-material';
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Individual({currentUser}) {
     console.log(currentUser,"indiv")
     let navigate = useNavigate();
+    
 
     const [displayName,setName]=useState("")
     const [file,setFile]=useState()
     const [url,setUrl]=useState("")
+    const [isLoading,setLoader]=useState(false)
 
     const hiddenFileInput = useRef()
 
@@ -32,14 +34,18 @@ export default function Individual({currentUser}) {
 
 
       const create=async()=>{
+        setLoader(true)
         try{
             const result =await createProfile.createUserProfile(currentUser?.id,displayName,file)
+            setLoader(true)
+            navigate(`/new`)
 
           }catch(e){
             console.log(e)
+            setLoader(false)
           }
 
-    //    navigate(`/new/profile`)
+    //   
            
        }
 
@@ -101,11 +107,18 @@ export default function Individual({currentUser}) {
         
         <div className='flex  items-center w-full justify-between'>
             <h5 style={{color: "rgba(37, 31, 134, 1)"}}>Back</h5>
-            
+            {isLoading?
+                             
+                <ClipLoader 
+                    color={"rgba(62, 51, 221, 1)"}
+                    loading={isLoading}
+                />
+                             :
                <button className='px-6 py-2 text-blue-600 rounded-full' 
                style={{background: "rgba(237, 237, 237, 1)"}}
                onClick={create}
                > Continue</button>
+             }
             
           
                         

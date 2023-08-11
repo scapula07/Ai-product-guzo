@@ -78,7 +78,7 @@ const navs=[
     {
         name:"Ecosystem",
         icon:ecosystem,
-        link:""
+        link:"/new/ecosystem"
     },
     {
         name:"Messages",

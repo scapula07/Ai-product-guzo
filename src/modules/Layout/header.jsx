@@ -5,9 +5,14 @@ import {BiMenu} from "react-icons/bi"
 import { Drawer } from "@mui/material";
 import SidePanel from './sidePanel';
 import TabsPanel from './tabsPanel';
+import {useRecoilState,useRecoilValue} from "recoil"
+import { userState } from '../Recoil/globalstate'
+
 
 export default function Header() {
     const [trigger,setTrigger]=useState(false)
+    const currentUser =useRecoilValue(userState)
+    console.log(currentUser)
   return (
     <div className='w-full flex lg:justify-end items-center z-20 relative ' style={{background: "rgba(242, 242, 242, 0.6)"}}>
         <div className='lg:hidden flex justify-start w-1/4'>
@@ -28,11 +33,19 @@ export default function Header() {
                    />
                    <span className='bg-red-500 lg:h-1.5 lg:w-1.5 h-1 w-1 rounded-full -ml-3 mt-1'></span>
                 </h5>
+                {currentUser?.img?.length >0 ?
+                    <img 
+                        src={currentUser?.img}
+                        className='lg:w-8 lg:h-8 w-6 h-6 rounded-full'
+                    />
+                  :
+                  <h5 className='rounded-full bg-blue-600 text-white font-semibold text-sm p-1 border-2 border-white lg:w-8 lg:h-8 w-6 h-6 flex items-center justify0-center'>
+                    {currentUser?.firstName?.slice(0,1) +currentUser?.lastName?.slice(0,1)}
 
-                <img 
-                  src=""
-                  className='lg:w-8 lg:h-8 w-6 h-6 rounded-full'
-                />
+                  </h5>
+
+                }
+               
                
 
             </div>

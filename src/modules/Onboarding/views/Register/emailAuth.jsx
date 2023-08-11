@@ -5,7 +5,7 @@ import { authApi } from '../../_api/auth'
 import { useNavigate } from "react-router-dom";
 import {useRecoilValue} from "recoil"
 import { accountTypeState } from '../../../Recoil/globalstate'
-
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function EmailAuth() {
     let navigate = useNavigate();
@@ -17,14 +17,20 @@ export default function EmailAuth() {
     const [password,setPassword]=useState("")
     const [firstName,setFirst]=useState("")
     const [lastName,setLast]=useState("")
+    const [isLoading,setLoader]=useState(false)
 
     const signUpWithEmail=async()=>{
         const payload={
             email,
             firstName,
-            lastName
+            lastName,
+            organizations:[],
+            ecosystems:[],
+            pending:[]
+
           }
-         try{
+          setLoader(true)
+          try{
              const uid =await authApi.register(email,password,payload)
              console.log(uid)
              let route=""
@@ -33,6 +39,7 @@ export default function EmailAuth() {
              }else if(account==="Ecosystem"){
                 route="network"
              }
+             setLoader(true)
              uid.length >0&& navigate(`/new/onboard/profile/${route}`)
 
             }catch(e){
@@ -131,15 +138,33 @@ export default function EmailAuth() {
                       
 
                       <div className='flex flex-col items-center space-y-3'>
-                         <Link to="">
+                          {isLoading?
+                             
+                             <ClipLoader 
+                                 color={"rgba(62, 51, 221, 1)"}
+                                 loading={isLoading}
+                             />
+                             :
                             <button className='text-blue-700 rounded-full px-8 py-1.5'
                                 style={{background: "rgba(236, 235, 254, 1)"}}
                                 onClick={signUpWithEmail}
                             
-                            >
+                                >
                                 Sign up
                             </button>
-                          </Link>
+                           
+
+
+                        }
+                         {/* <Link to="">
+                              <button className='text-blue-700 rounded-full px-8 py-1.5'
+                                style={{background: "rgba(236, 235, 254, 1)"}}
+                                onClick={signUpWithEmail}
+                            
+                               >
+                                Sign up
+                            </button>
+                          </Link> */}
 
                           <p className='text-sm font-semibold w-1/2'>
                              By signing up, you agree to 

@@ -34,7 +34,12 @@ export const authApi= {
                 const token = credential.accessToken;
                 const user = res.user;
                 const ref =doc(db,"users",user?.uid)
-                await setDoc(ref,{email:user?.email})
+                await setDoc(ref,{
+                    email:user?.email,
+                    organizations:[],
+                    ecosystems:[],
+                    pending:[]
+                 })
 
 
           

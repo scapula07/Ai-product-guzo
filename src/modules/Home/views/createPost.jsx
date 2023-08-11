@@ -5,16 +5,27 @@ import {AiOutlineClose } from "react-icons/ai"
 
 import CreatePosts from '../../ CreatePost.'
 
-export default function CreatePost() {
+export default function CreatePost({group,currentUser}) {
   const [trigger,setTrigger]=useState(false)
+
   return (
     <>
     <div className='bg-white w-full rounded-lg flex px-4 flex-col py-4  space-y-4'>
         <div className='flex items-center space-x-4'>
-            <img 
-              src={orgPic}
-              className="rounded-full h-8 w-8 "
-               />
+            {group?.img?.length > 0?
+               <img 
+               src={group?.img}
+               className="rounded-full h-8 w-8 "
+                />
+                :
+                <img
+                src={currentUser?.img}
+                className="rounded-full h-8 w-8 "
+                />
+
+
+            }
+            
 
                <input 
                  placeholder='Create a post...'
@@ -27,14 +38,21 @@ export default function CreatePost() {
         >Post</button>
 
     </div>
-      <Modal trigger={trigger}  cname="w-1/2 py-2   px-4 rounded-lg">
+      <Modal trigger={trigger}  cname="w-1/2 py-2   px-4 rounded-lg " >
                <div className='w-full flex justify-end px-6 py-2'>
                     <AiOutlineClose 
                     onClick={()=>setTrigger(false)}
                  />
 
               </div>
-              <CreatePosts />
+              <div className='h-full overflow-y-scroll' style={{height:"500px"}}>
+                <CreatePosts 
+                  group={group}
+                  currentUser={currentUser}
+                />
+
+              </div>
+              
         
       </Modal>
     </>

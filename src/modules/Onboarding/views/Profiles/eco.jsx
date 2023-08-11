@@ -3,7 +3,7 @@ import {AiOutlineMail} from "react-icons/ai"
 import {MdLocationPin} from "react-icons/md"
 import { useNavigate } from 'react-router-dom'
 import { createProfile } from '../../_api/createProfile'
-
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Eco({currentUser}) {
     console.log(currentUser,"indiv")
@@ -15,7 +15,7 @@ export default function Eco({currentUser}) {
     const [ecoLocation,setLocation]=useState("")
     const [tags,setTags]=useState([])
 
-
+    const [isLoading,setLoader]=useState(false)
 
 
     const [file,setFile]=useState()
@@ -41,21 +41,24 @@ export default function Eco({currentUser}) {
 
 
       const create=async()=>{
+        setLoader(true)
         try{
             const payload={
                 creator:currentUser?.id,
-                eco_name:ecoName,
-                eco_email:ecoEmail,
-                eco_location:ecoLocation,
+                name:ecoName,
+                email:ecoEmail,
+                location:ecoLocation,
 
             }
             const result =await createProfile.createEcoProfile(payload,file,currentUser)
-
+            setLoader(false)
+                navigate(`/new/profile`)
           }catch(e){
             console.log(e)
+            setLoader(false)
           }
 
-    //    navigate(`/new/profile`)
+   
            
         }
 
@@ -120,7 +123,7 @@ export default function Eco({currentUser}) {
                     <AiOutlineMail
                         className="text-slate-500 font-semibold text-lg "
                     />
-                    <input 
+                     <input 
                         placeholder='Email'
                         className=' py-2  w-full rounded-md text-sm outline-none'
                         style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
@@ -128,7 +131,7 @@ export default function Eco({currentUser}) {
                         value={ecoEmail}
                         onChange={(e)=>setEmail(e.target.value)}
                 
-                    />
+                     />
                  </div>
                 <h5 className='font-light text-slate-500 text-sm '>This email will NOT be shared on the ecosystem profile. This email will be used for all Guzo correspondence.</h5>
 
@@ -202,9 +205,18 @@ export default function Eco({currentUser}) {
     
     <div className='flex  items-center w-full justify-between'>
         <h5 style={{color: "rgba(37, 31, 134, 1)"}}>Back</h5>
-         <button className='px-6 py-2 text-blue-600 rounded-full' style={{background: "rgba(237, 237, 237, 1)"}}
-           onClick={create}
-         > Continue</button>
+                     {isLoading?
+                             
+                             <ClipLoader 
+                                 color={"rgba(62, 51, 221, 1)"}
+                                 loading={isLoading}
+                             />
+                                          :
+                            <button className='px-6 py-2 text-blue-600 rounded-full' 
+                            style={{background: "rgba(237, 237, 237, 1)"}}
+                            onClick={create}
+                            > Continue</button>
+                          }
                     
     </div>
 

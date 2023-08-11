@@ -1,12 +1,15 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Layout from '../../Layout'
 import Tabs from '../components/tabs'
 import { Outlet } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { ecosystemApi } from '../api'
 
 export default function Ecosystem() {
+    
   return (
      <Layout>
-          <div className='py-2 flex-col flex space-y-4'> 
+          <div className='py-2 flex-col flex space-y-4 w-full'> 
               <h5 className='text-slate-700 font-semibold lg:text-xl text-sm'>Ecosystem</h5>
            
           </div>
@@ -20,7 +23,7 @@ export default function Ecosystem() {
                   
                 
                 </div>
-                  <div className=''>
+                  <div className='w-full'>
                       <Outlet />
                    
                   </div>

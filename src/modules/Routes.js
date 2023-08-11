@@ -38,11 +38,12 @@ import { userState } from "./Recoil/globalstate";
 import { useRecoilState } from 'recoil';
 import { auth,db } from "./Firebase";
 import { doc,getDoc}  from "firebase/firestore";
-
+import EcoMembers from "./Ecosystem/views/members";
 
 
 const NewRoutes = () => {
   const [currentUser,setcurrentUser]=useRecoilState(userState)
+  console.log(currentUser,"user")
   let authListner=null
   useEffect( ()=>{
   
@@ -107,7 +108,9 @@ const NewRoutes = () => {
                 <Route path="/notifications" element={<Notifications/>} />
                 <Route path="/settings" element={<Settings/>} />
                 <Route path="/setting-edit-profile" element={<EditProfile/>} />
-                <Route path="/ecosystem" element={< Ecosystem />} />
+                <Route path="/ecosystem" element={< Ecosystem />} >
+                    <Route path="" element={<EcoMembers/>} />
+                </Route>
     
             </Routes>
     </>

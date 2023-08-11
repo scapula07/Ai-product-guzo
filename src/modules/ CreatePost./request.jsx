@@ -1,6 +1,12 @@
 import React from 'react'
 
-export default function Request({setOthers}) {
+export default function Request({setOthers, requestPost, setRequest,setRequests,requests}) {
+
+    const close=()=>{
+        setOthers(false)
+        setRequest(false) 
+        setRequests([...requests,requestPost])
+    }
   return (
     <div className='w-full flex justify-center'>
           <div className='w-3/4 flex flex-col space-y-10'>
@@ -12,6 +18,9 @@ export default function Request({setOthers}) {
                                 <input 
                                     placeholder='What do you need...'
                                     className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                    name="title"
+                                    value={requestPost?.title}
+                                    onChange={(e)=>setRequest({...requestPost,title:e.target.value})}
             
                                 />
 
@@ -22,6 +31,10 @@ export default function Request({setOthers}) {
                                 <textarea
                                     placeholder='Include a description of your opportunity, request or need..... '
                                     className=' py-2 h-28 px-4 w-full rounded-md text-sm outline-none border'
+                                    name="body"
+                                    value={requestPost?.body}
+                                    onChange={(e)=>setRequest({...requestPost,body:e.target.value})}
+            
             
                                 />
 
@@ -35,7 +48,7 @@ export default function Request({setOthers}) {
                           <button 
                         
                              className='text-blue-700 rounded-full px-12 py-1.5 border border-blue-700'
-                             onClick={()=>setOthers(false)}
+                             onClick={close}
                             >
                             Back
                         </button>

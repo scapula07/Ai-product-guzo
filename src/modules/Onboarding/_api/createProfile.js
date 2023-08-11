@@ -6,7 +6,9 @@ import {getStorage, ref, uploadBytes } from "firebase/storage"
 
 export const createProfile= {
     createUserProfile:async function (uid,displayName,file) {
+        console.log(displayName,"name")
         try{
+            console.log(uid,"uid")
             const storage = getStorage();
             const fileId=Math.random().toString(36).substring(2,8+2);
             const storageRef = ref(storage, `/${fileId}`);
@@ -15,8 +17,9 @@ export const createProfile= {
              console.log(snapshot,"shote")
            
               const result = await updateDoc(userRef, {
+                username:"john",
                 img: `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
-                displayName
+                display:displayName
              })
     
              console.log(result,"result")
@@ -42,10 +45,12 @@ export const createProfile= {
             
                 const orgSnap = await addDoc(collection(db, "organizations"),{
                     ...payload,
-                    img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`
+                    img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+                    pending:[],
+                    active:[]
                 })
          
-        
+              console.log(orgSnap,"")
               const result = await updateDoc(userRef, {
                 organizations:[
                     ...currentUser?.organizations,
@@ -81,17 +86,19 @@ export const createProfile= {
         
             const ecoSnap = await addDoc(collection(db, "ecosystems"),{
                 ...payload,
-                img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`
+                img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+                pending:[],
+                active:[]
             })
      
-            console.log()
+            console.log(ecoSnap,"ecosnap")
     
           const result = await updateDoc(userRef, {
             ecosystems:[
                 ...currentUser?.ecosystems,
                 {
                  id:ecoSnap?.id,
-                  name:payload?.eco_name,
+                 name:payload?.name,
                  type:"eco",
                  img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`
                 }
