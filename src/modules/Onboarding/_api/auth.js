@@ -48,5 +48,19 @@ export const authApi= {
             }
    
 
+        },
+        login:async function (email,password) {
+             try{
+                const response = await signInWithEmailAndPassword(auth,email,password)
+                console.log(response,"resss")
+
+              return response?.user?.uid
+
+                
+
+             }catch(e){
+                console.log(e)
+             }
+
         }
 }

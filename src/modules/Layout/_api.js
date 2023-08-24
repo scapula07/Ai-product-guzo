@@ -1,9 +1,10 @@
 import { collection, onSnapshot, doc, getDocs, query, orderBy, limit } from 'firebase/firestore'
-import { db } from '../../../Firebase'
+import { db,auth } from '../Firebase';
+import { signOut} from 'firebase/auth';
 
 export const userApi = {
   
-    getUserOrg: async function (orgs) {
+    getUserOrg: async function () {
          try{
 
          }catch(e){
@@ -14,16 +15,28 @@ export const userApi = {
           try{
             const querySnapshot = await getDocs(q);
             querySnapshot.docs.map((doc) => {
-                houses.push({ ...doc.data(), id: doc.id })
+                orgs.push({ ...doc.data(), id: doc.id })
               
             })
-            return houses
+            return orgs 
 
             }catch(e){
             console.log(e)
             }
     
          },
+         logout: async function () {
+            try{
+                const response=await signOut(auth)
+                console.log(response,"logout")
+                return response
+            }catch(e){
+                console.log(e)
+            }
+          
+
+         }
+         
 
      
   }

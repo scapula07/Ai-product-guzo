@@ -6,26 +6,23 @@ import { collection,  onSnapshot,
 import { db } from '../../Firebase';
 
 
-export const feedApi = {
-    getEcosystemFeeds: async function (id) {
-       
+export const collaborationApi = {
+    getAllCollaborations: async function (id) {
         const q = query(collection(db, "posts"));
-        const feeds= []
+        const collabs= []
           try{
             const querySnapshot = await getDocs(q);
             querySnapshot.docs.map((doc) => {
-              feeds.push({ ...doc.data(), id: doc.id })
+              collabs.push({ ...doc.data(), id: doc.id })
               
             })
         
-            // const filterFeeds= feeds.filter(feed => feed?.creator_id===id);
-           return feeds
+            const filter= collabs.filter(feed => feed?.creator_id===id);
+           return filter
         
 
         }catch(e){
             console.log(e)
         }
-
     }
-
 }

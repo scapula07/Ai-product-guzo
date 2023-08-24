@@ -8,5 +8,17 @@ import Org from "./views/Profiles/org"
 import Eco from "./views/Profiles/eco"
 import Individual from "./views/Profiles/individual"
 import CreateProfiles from "./views/Profiles"
+import Login from "./views/Login"
 
-export {Onboarding,Accounts,Register,AuthTypes,EmailAuth,FactorAuth,Eco,Individual,CreateProfiles} 
+export {
+    Onboarding,
+    Accounts,
+    Register,
+    AuthTypes,
+    EmailAuth,
+    FactorAuth,
+    Eco,
+    Individual,
+    CreateProfiles,
+    Login
+} 

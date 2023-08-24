@@ -32,11 +32,8 @@ export const ecosystemApi = {
                 
                  const ecoRef =doc(db,"ecosystems",ecoId)
                  const userRef =doc(db,"users",currentUser?.id)
-                //  console.log(ecoRef,"ref")
                  const docSnap = await getDoc(ecoRef);
-                //  console.log(docSnap.id,"snap")
                  const ecosystem =docSnap?.data()
-                //  console.log(ecosystem,"Ecosysyy")
                  const pendingMembers =ecosystem?.pending
                  console.log()
                  const result = await updateDoc(ecoRef, {

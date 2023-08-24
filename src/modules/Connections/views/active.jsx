@@ -6,16 +6,21 @@ import eco4 from  "../../assets/eco4.png"
 import eco5 from  "../../assets/orgcover.png"
 import {FiMessageSquare} from "react-icons/fi"
 import {BsThreeDots} from "react-icons/bs"
-import { Link } from 'react-router-dom'
 import { userState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
+import {Link} from "react-router-dom"
 
 export default function Active() {
     const currentUser=useRecoilValue(userState)
   return (
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
-        {currentUser?.ecosystems.map((eco)=>{
+        {currentUser?.ecosystems?.map((eco)=>{
             return(
+                <Link  to={`/new/eco-profile/${eco?.id}`}
+                    state={{
+                    eco
+                }}
+                >
                 <div className='flex flex-col bg-white py-4 px-4'>
                     <div className='flex flex-col items-center space-y-3'>
                         <img 
@@ -49,6 +54,7 @@ export default function Active() {
                     </div>
 
                 </div>
+                </Link>
             )
         })
 

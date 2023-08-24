@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {useRecoilValue} from "recoil"
 import { accountTypeState } from '../../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
+import FadeIn from "react-fade-in";
 
 export default function EmailAuth() {
     let navigate = useNavigate();

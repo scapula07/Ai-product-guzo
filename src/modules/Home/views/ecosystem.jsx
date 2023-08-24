@@ -13,10 +13,10 @@ import { useNavigate } from 'react-router-dom'
 
 
 export default function Ecosystems() {
-    let navigate = useNavigate();
+  
     const [ecosystems,setEco] =useState([])
     const currentUser =useRecoilValue(userState)
-    const [isLoading,setLoading]=useState(false)
+  
    
 
     useEffect(()=>{
@@ -26,73 +26,23 @@ export default function Ecosystems() {
              }
         getEcosytems()
        },[])
-    //    console.log(ecosystems)
 
-       const join=async(id)=>{
-          setLoading(true)
-          try{
-            const result =await ecosystemApi.joinRequest(id,currentUser)
-            setLoading(false)
-            navigate("/new/connections/pending")
-            
-
-            }catch(e){
-                console.log(e)
-                setLoading(false)
-            }
-       }
+      
   return (
     <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
         {ecosystems?.length >0 &&ecosystems?.map((eco)=>{
+
             const result= eco?.pending?.find(e=>e?.user ===currentUser?.id)
             return(
-                <div className='flex flex-col bg-white py-4 px-4'>
-                    <div className='flex flex-col items-center space-y-3'>
-                        <img 
-                          src={eco?.img}
-                          className="rounded-full w-32 h-32"
-                        />
-                        <h5 className=' text-center font-semibold '>{eco?.name}</h5>
-                        <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
-                    </div>
+               
+                  <EcosystemCard 
+                     eco={eco}
+                     result={result}
+                     currentUser={currentUser}
 
-                    <div className='flex flex-col items-center space-y-3 py-4'>
-                        <p className=' text-center font-light text-sm'>
-                        Worem ipsum dolor sit amet, consectetur adi...
-                        </p>
-                        {/* <Link to="/new/connections/pending">
-                          <button className='bg-blue-600 rounded-full px-6 py-2 text-white text-xs font-semibold'
-                           onClick={()=>join(eco?.id)}
-                          >Join</button>
-                        </Link> */}
-                        {result===undefined?
-                            <>
-                            {isLoading?
-                             
-                                <ClipLoader 
-                                    color={"rgba(62, 51, 221, 1)"}
-                                    loading={isLoading}
-                                />
-                                :
-                                <button className='bg-blue-600 rounded-full px-6 py-2 text-white text-xs font-semibold'
-                                onClick={()=>join(eco?.id)}
-                                >Join</button>
-                            }
-                            </>
-                            :
-                            <h5 className='rounded-full p-2 items-center justify-center text-blue-600 text-xs font-semibold' style={{background: "rgba(242, 242, 242, 1)"}}>
-                               Pending...
-                             </h5>
+                  />
 
-
-                        }
-
-                      
-                      
-                      
-                    </div>
-
-                </div>
+              
             )
         })
 
@@ -110,27 +60,78 @@ export default function Ecosystems() {
   )
 }
 
+const EcosystemCard=({eco,result,currentUser})=>{
+
+    let navigate = useNavigate();
+    const [isLoading,setLoading]=useState(false)
+
+    const join=async(id)=>{
+        setLoading(true)
+        try{
+          const result =await ecosystemApi.joinRequest(id,currentUser)
+          setLoading(false)
+          navigate("/new/connections/pending")
+          
+
+          }catch(e){
+              console.log(e)
+              setLoading(false)
+          }
+     }
+    return(
+        <div className='flex flex-col bg-white py-4 px-4'>
+        <div className='flex flex-col items-center space-y-3'>
+            <Link  to={`/new/eco-profile/${eco?.id}`}
+                    state={{
+                     eco
+                  }}
+                  >
+                <img 
+                src={eco?.img}
+                className="rounded-full w-32 h-32"
+                />
+           </Link>
+            <h5 className=' text-center font-semibold '>{eco?.name}</h5>
+            <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
+        </div>
+
+        <div className='flex flex-col items-center space-y-3 py-4'>
+            <p className=' text-center font-light text-sm'>
+            Worem ipsum dolor sit amet, consectetur adi...
+            </p>
+            {/* <Link to="/new/connections/pending">
+              <button className='bg-blue-600 rounded-full px-6 py-2 text-white text-xs font-semibold'
+               onClick={()=>join(eco?.id)}
+              >Join</button>
+            </Link> */}
+            {result===undefined?
+                <>
+                {isLoading?
+                 
+                    <ClipLoader 
+                        color={"rgba(62, 51, 221, 1)"}
+                        loading={isLoading}
+                    />
+                    :
+                    <button className='bg-blue-600 rounded-full px-6 py-2 text-white text-xs font-semibold'
+                    onClick={()=>join(eco?.id)}
+                    >Join</button>
+                }
+                </>
+                :
+                <h5 className='rounded-full p-2 items-center justify-center text-blue-600 text-xs font-semibold' style={{background: "rgba(242, 242, 242, 1)"}}>
+                   Pending...
+                 </h5>
 
 
-// const ecosystems=[
-//   {
-//     name:"Common Desk",
-//     img:eco1
+            }
 
-//    },
-//    {
-//     name:"Fifth Ward CRC",
-//     img:eco2
+          
+          
+          
+        </div>
 
-//    },
-//    {
-//     name:"Headway Idea Labs",
-//     img:eco3
+    </div>
 
-//    },
-//    {
-//     name:"Alvin-Manvel Area Chamber of Commerce",
-//     img:eco5
-
-//    }
-// ]
+    )
+}

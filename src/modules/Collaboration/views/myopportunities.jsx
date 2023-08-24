@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import op1 from  "../../assets/new9.png"
 import op2 from  "../../assets/conference.png"
 import op3 from  "../../assets/new7.png"
@@ -6,11 +6,27 @@ import op4 from  "../../assets/new6.png"
 import op5 from  "../../assets/new5.png"
 import {FiMessageSquare} from "react-icons/fi"
 import {BsThreeDots} from "react-icons/bs"
+import { collaborationApi } from '../_api'
+import { groupState,userState } from '../../Recoil/globalstate'
+import { useRecoilValue } from 'recoil'
 
 export default function MyOpportunities() {
+      const group =useRecoilValue(groupState)
+      const [collabs,setCollabs]=useState([])
+      const [isLoading,setLoading]=useState(false)
+
+      useEffect(()=>{
+        const getAllCollabs=async()=>{
+            const collabs=await collaborationApi.getAllCollaborations(group?.id)
+            setCollabs(collabs)
+
+        }
+        getAllCollabs()
+
+     },[group])
   return (
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-1 gap-4 gap-y-8 h-full w-full'>
-        {ecosystems.map((eco)=>{
+        {collabs?.map((collab)=>{
             return(
                 <div className='flex flex-col bg-white py-4 px-4 space-y-4'>
                     <div className='flex justify-end'>
@@ -18,10 +34,10 @@ export default function MyOpportunities() {
                     </div>
                     <div className='flex flex-col items-center space-y-3'>
                         <img 
-                          src={eco.img}
+                          src={collab?.post?.img}
                           className="rounded-md w-full h-36"
                         />
-                        <h5 className=' text-center font-semibold '>{eco?.name}</h5>
+                        <h5 className=' text-center font-semibold '>{collab?.post?.name}</h5>
                         <h5 className='text-sm font-semibold text-slate-600'>
                             Hosted by
                         </h5>

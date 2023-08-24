@@ -9,6 +9,7 @@ import {BsThreeDots} from "react-icons/bs"
 import { connectApi } from '../api'
 import { userState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
+import { Link } from 'react-router-dom'
 
 export default function Pending() {
     const currentUser=useRecoilValue(userState)
@@ -27,6 +28,11 @@ export default function Pending() {
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
         {currentUser?.pending?.map((eco)=>{
             return(
+                <Link  to={`/new/eco-profile/${eco?.id}`}
+                    state={{
+                    eco
+                        }}
+                    >
                 <div className='flex flex-col bg-white py-4 px-4 rounded-lg'>
                     <div className='flex flex-col items-center space-y-3'>
                         <img 
@@ -55,6 +61,7 @@ export default function Pending() {
                     </div>
 
                 </div>
+                </Link>
             )
         })
 

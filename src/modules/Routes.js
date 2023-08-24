@@ -25,7 +25,8 @@ import { Onboarding,
        AuthTypes,FactorAuth,
        CreateProfiles,
        Individual,
-       Eco
+       Eco,
+       Login
       } from "./Onboarding";
 import Org from "./Onboarding/views/Profiles/org";
 import Notifications from "./Notifications";
@@ -39,6 +40,10 @@ import { useRecoilState } from 'recoil';
 import { auth,db } from "./Firebase";
 import { doc,getDoc}  from "firebase/firestore";
 import EcoMembers from "./Ecosystem/views/members";
+import ViewProfile from "./ViewProfile";
+import ViewPosts from "./ViewProfile/views/posts";
+import ViewMembers from "./ViewProfile/views/members";
+import EcoFeed from "./ViewProfile/views/ecoFeed";
 
 
 const NewRoutes = () => {
@@ -72,7 +77,9 @@ const NewRoutes = () => {
                       <Route path="register" element={<Register/>} >
                           <Route path="" element={<AuthTypes/>} />
                           <Route path="email-password" element={<EmailAuth/>} />
+                          <Route path="login" element={<Login/>} />
                       </Route>
+                    
                       <Route path="2fa" element={<FactorAuth/>} />
                     <Route path="profile" element={<CreateProfiles />} >
                         <Route path="" element={<Individual currentUser={currentUser}/>}   />
@@ -86,6 +93,10 @@ const NewRoutes = () => {
                      <Route path="" element={<Posts/>} />
                      <Route path="members" element={<Members />} />
 
+                  </Route>
+                  <Route path="/eco-profile/:id/*" element={<ViewProfile/>}>
+                     
+                     
                   </Route>
                 <Route path="/" element={<Home/>} >
                     <Route path="" element={<Feeds/>} />

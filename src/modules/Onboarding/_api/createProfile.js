@@ -47,7 +47,8 @@ export const createProfile= {
                     ...payload,
                     img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                     pending:[],
-                    active:[]
+                    active:[],
+                    type:"org"
                 })
          
               console.log(orgSnap,"")
@@ -88,7 +89,8 @@ export const createProfile= {
                 ...payload,
                 img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                 pending:[],
-                active:[]
+                active:[],
+                type:"eco",
             })
      
             console.log(ecoSnap,"ecosnap")

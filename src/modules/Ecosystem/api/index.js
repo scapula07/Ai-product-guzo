@@ -11,7 +11,7 @@ export const ecosystemApi= {
         console.log(docSnap?.data())
         console.log(docSnap?.data().creator===currentUser?.id)
          if(docSnap?.data().creator===currentUser?.id){
-           return docSnap?.data()?.pending
+           return docSnap?.data()
          }
 
        },
@@ -22,6 +22,8 @@ export const ecosystemApi= {
                     const docSnap = await getDoc(ecoRef);
                     console.log(docSnap?.data())
                     const pending = docSnap?.data()?.pending
+                    const activeMembers = docSnap?.data()?.active
+
                     const newPending = pending?.filter(member=> member?.id !== member?.id);
                     console.log(newPending,"new")
 
@@ -29,7 +31,11 @@ export const ecosystemApi= {
                 
                 console.log(pending,"pending")
                   const result = await updateDoc(ecoRef, {
-                    pending:[...newPending]
+                    pending:[...newPending],
+                    active:[
+                        ...activeMembers,
+                        member
+                     ]
                    })
                     const userRef =doc(db,"users",member?.id)
                     const result2 = await updateDoc(userRef, {

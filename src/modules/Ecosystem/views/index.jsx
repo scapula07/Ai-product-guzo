@@ -4,8 +4,12 @@ import Tabs from '../components/tabs'
 import { Outlet } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { ecosystemApi } from '../api'
+import { groupState,userState } from '../../Recoil/globalstate'
+import {useRecoilValue} from "recoil"
 
 export default function Ecosystem() {
+    const currentUser=useRecoilValue(userState)
+
     
   return (
      <Layout>

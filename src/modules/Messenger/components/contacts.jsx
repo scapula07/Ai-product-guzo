@@ -3,7 +3,7 @@ import SearchBar from './saarch'
 import Dmcontacts from './dmcontacts'
 import GroupContacts from './groupContacts'
 
-export default function Contacts() {
+export default function Contacts({conversations,setCurrentChat,currentChat, currentUser, receiverInfo, setReceiver}) {
     const [active,setActive]=useState("dm")
   return (
     <div className='h-full flex flex-col w-full py-8 px-6 space-y-6'>
@@ -18,7 +18,15 @@ export default function Contacts() {
 
         </div>
             <div>
-               {active==="dm"&&<Dmcontacts />  }
+               {active==="dm"&&<Dmcontacts 
+                                    conversations={conversations}
+                                    setCurrentChat={setCurrentChat}
+                                    currentChat={currentChat}
+                                    currentUser={ currentUser}
+                                    receiverInfo={receiverInfo}
+                                    setReceiver={setReceiver}
+               
+                                  />  }
                {active==="group"&&<GroupContacts />  }
             </div>
 
