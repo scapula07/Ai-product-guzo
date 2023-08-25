@@ -9,6 +9,7 @@ import { feedApi } from '../_api/feed'
 import {RiArrowDownSLine} from "react-icons/ri"
 import {AiOutlineClose} from "react-icons/ai"
 import {MdEdit} from "react-icons/md"
+import { Link } from 'react-router-dom'
 
 import { groupState,userState } from '../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
@@ -55,15 +56,16 @@ export default function Feeds() {
 
 
 const Feed=({feed})=>{
+     
      return(
         <div className='w-full py-4 bg-white h-full '>
         <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
               <div className='flex items-center space-x-3'>
                   <img
-                    src={org}
+                    src={feed?.shared_by?.img}
                     className="rounded-full h-8 w-8"
                   />
-                  <h5 className='text-lg font-semibold'>Ion Houston</h5>
+                  <h5 className='text-lg font-semibold'>{feed?.shared_by?.name}</h5>
 
               </div>
 
@@ -86,10 +88,17 @@ const Feed=({feed})=>{
               </div>
 
               <div className='flex flex-col space-y-5 px-4 '>
-                  <img
-                    src={feed?.img_post}
-                    className="w-full h-72"
-                  />
+               <Link  to={`/new/feed/${feed?.id}`}
+                    state={{
+                     feed
+                  }}
+                  >
+                
+                    <img
+                      src={feed?.img_post}
+                      className="w-full h-72"
+                    />
+                   </Link>
                   <div className='flex flex-col space-y-2'>
                         <h5 className='font-semibold text-lg text-slate-600'>Description</h5>
                         <p className='font-light text-xs '>
@@ -141,7 +150,7 @@ const RequestCard=({req})=>{
                   <h5 className='text-xl font-semibold'>{req?.title}</h5>
                   {trigger?
                       <AiOutlineClose
-                      className='text-xl font-semibold'
+                      className='text-xl font-light'
                       onClick={()=>setTrigger(false)}
                     />
                     :

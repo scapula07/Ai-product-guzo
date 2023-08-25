@@ -16,6 +16,7 @@ export default function Ecosystems() {
   
     const [ecosystems,setEco] =useState([])
     const currentUser =useRecoilValue(userState)
+    const group =useRecoilValue(groupState)
   
    
 
@@ -32,13 +33,17 @@ export default function Ecosystems() {
     <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
         {ecosystems?.length >0 &&ecosystems?.map((eco)=>{
 
-            const result= eco?.pending?.find(e=>e?.user ===currentUser?.id)
+            const isPending= eco?.pending?.some(e=>e?.id ===currentUser?.id)
+            console.log(isPending,"pendiinn")
+            const isMember= eco?.active?.some(e=>e?.id ===currentUser?.id) || eco?.creator ===currentUser?.id;
+            
             return(
                
                   <EcosystemCard 
                      eco={eco}
-                     result={result}
+                     isPendingt={isPending}
                      currentUser={currentUser}
+                     isMember={isMember}
 
                   />
 
@@ -60,7 +65,7 @@ export default function Ecosystems() {
   )
 }
 
-const EcosystemCard=({eco,result,currentUser})=>{
+const EcosystemCard=({eco,isPending,currentUser,isMember})=>{
 
     let navigate = useNavigate();
     const [isLoading,setLoading]=useState(false)
@@ -104,7 +109,7 @@ const EcosystemCard=({eco,result,currentUser})=>{
                onClick={()=>join(eco?.id)}
               >Join</button>
             </Link> */}
-            {result===undefined?
+            {!isPending?
                 <>
                 {isLoading?
                  
@@ -113,10 +118,17 @@ const EcosystemCard=({eco,result,currentUser})=>{
                         loading={isLoading}
                     />
                     :
-                    <button className='bg-blue-600 rounded-full px-6 py-2 text-white text-xs font-semibold'
-                    onClick={()=>join(eco?.id)}
-                    >Join</button>
-                }
+                    <>
+                       {isMember?
+                           ""
+                           :
+                            <button className='bg-blue-600 rounded-full px-6 py-2 text-white text-xs font-semibold'
+                            onClick={()=>join(eco?.id)}
+                            >Join</button>
+                       }
+                      
+                    </>
+                  }
                 </>
                 :
                 <h5 className='rounded-full p-2 items-center justify-center text-blue-600 text-xs font-semibold' style={{background: "rgba(242, 242, 242, 1)"}}>

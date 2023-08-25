@@ -4,7 +4,7 @@ import { db } from "../../Firebase";
 
 export const connectApi= {
     getPending:async function (currentUser) {
-        const pending=currentUser?.pending
+          const pending=currentUser?.pending
         
 
       }

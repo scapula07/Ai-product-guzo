@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import org1 from "../assets/org1.png"
 import org2 from "../assets/org2.png"
 import add from "../assets/icons/add.png"
@@ -15,7 +15,13 @@ export default function SidePanel() {
   const [group,setGroup]=useRecoilState(groupState)
   const currentUser =useRecoilValue(userState)
   const {organizations,ecosystems}=currentUser
-  console.log(organizations?.length >0 || ecosystems?.length >0)
+
+
+  useEffect(()=>{
+    const isGroup= organizations?.length >0 || ecosystems?.length >0
+    isGroup&&setGroup([...organizations,...ecosystems][0])
+     
+    },[currentUser])
 
   return (
     <div className='lg:px-4 py-8 '>

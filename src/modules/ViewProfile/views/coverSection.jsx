@@ -12,7 +12,7 @@ export default function CoverSection({group}) {
 
 
  
-      const active=group?.active?.some(member => member?.id===currentUser?.id)
+      const active=group?.active?.some(member => member?.id===currentUser?.id) || group?.creator ===currentUser?.id
       const pending=group?.active?.some(member => member?.id===currentUser?.id)
       console.log(active)
       console.log(pending)

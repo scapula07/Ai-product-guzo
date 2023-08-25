@@ -16,7 +16,7 @@ export default function EcoFeed({group}) {
         </div>
 
         <div className='py-6'>
-          {active==="feed"&&<ViewPosts />}
+          {active==="feed"&&<ViewPosts group={group}/>}
           {active==="members"&&<ViewMembers group={group} />}
            
         </div>

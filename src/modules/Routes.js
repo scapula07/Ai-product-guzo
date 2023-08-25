@@ -12,10 +12,10 @@ import Ecosystems from "./Home/views/ecosystem";
 import Connections from "./Connections";
 import Active from "./Connections/views/active";
 import Pending from "./Connections/views/pending";
-import Collaborations from "./Collaboration";
-import Myopportunities from "./Collaboration/views/myopportunities";
-import JoinedOpportunities from "./Collaboration/views/joinedOpportunities";
-import Contacts from "./Collaboration/views/contacts";
+import Collaborations from "./Collaborations";
+import Myopportunities from "./Collaborations/views/myopportunities";
+import JoinedOpportunities from "./Collaborations/views/joinedOpportunities";
+import Contacts from "./Collaborations/views/contacts";
 import Messenger from "./Messenger";
 import GroupChat from "./Messenger/views/groupchat";
 import DM from "./Messenger/views/dm";
@@ -41,9 +41,8 @@ import { auth,db } from "./Firebase";
 import { doc,getDoc}  from "firebase/firestore";
 import EcoMembers from "./Ecosystem/views/members";
 import ViewProfile from "./ViewProfile";
-import ViewPosts from "./ViewProfile/views/posts";
-import ViewMembers from "./ViewProfile/views/members";
-import EcoFeed from "./ViewProfile/views/ecoFeed";
+import Feed from "./Feed";
+import { Collaboration,Post,CollabContacts } from "./Collaboration";
 
 
 const NewRoutes = () => {
@@ -111,6 +110,10 @@ const NewRoutes = () => {
                      <Route path="joined" element={<JoinedOpportunities/>} />
                      <Route path="contacts" element={<Contacts/>} />
                 </Route>
+                <Route path="/collaboration/:id" element={<Collaboration/>} >
+                     <Route path="" element={<Post/>} />
+                     <Route path="contacts" element={<CollabContacts/>} />
+                </Route>
                 <Route path="/messages" element={<Messenger/>} >
                      <Route path="" element={<DM/>} />
                      <Route path="group" element={<GroupChat/>} />
@@ -122,6 +125,7 @@ const NewRoutes = () => {
                 <Route path="/ecosystem" element={< Ecosystem />} >
                     <Route path="" element={<EcoMembers/>} />
                 </Route>
+                <Route path="/feed/:id" element={<Feed/>} />
     
             </Routes>
     </>

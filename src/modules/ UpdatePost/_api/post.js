@@ -44,8 +44,9 @@ export const postApi= {
            }
            
             
-             const response= await getDoc(postSnap).exists()
-             return response
+             console.log(postSnap.exists(),"snapp")
+             return postSnap?.exists()
+
 
           }catch(e){
             console.log(e)

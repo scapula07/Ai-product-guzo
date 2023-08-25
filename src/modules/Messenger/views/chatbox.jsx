@@ -1,6 +1,11 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import org from "../../assets/orgcover.png"
 import feedorg from "../../assets/feedorg.png"
+import {doc,setDoc,
+    addDoc,collection,
+    getDoc,getDocs,
+    query, where,onSnapshot,orderBy} from "firebase/firestore"
+import { db } from '../../Firebase'
 
 
 const Chat=({msg})=>{
@@ -35,7 +40,33 @@ const Chat=({msg})=>{
      )
 }
 
-export default function Chatbox({currentChat,messages,send,setNewMessage,receiverInfo}) {
+export default function Chatbox({currentChat,messages,send,setNewMessage,receiverInfo, conversations}) {
+     const [msgs,setMsg]=useState([])
+       useEffect(()=>{
+              if(conversations?.length>0){
+                console.log(currentChat?.id,"chat id")
+                // const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id),orderBy("date", "asc"));
+                const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id));
+                const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                    const msgs= [];
+                    querySnapshot.forEach((doc) => {
+                        msgs.push({...doc?.data(),id:doc?.id});
+                    });
+                  
+                    setMsg(msgs)
+                  });
+                return () => {
+                    unsubscribe()
+       
+                };
+            }
+            
+         
+        }
+
+        ,[currentChat])  
+
+        console.log(msgs,"checking order")
   return (
     <div className='flex flex-col py-8 px-4 h-full'>
         {receiverInfo?.type?.length >0?
@@ -61,19 +92,26 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
         }
 
        <div className='flex flex-col w-full space-y-6 overflow-y-scroll h-full'>
-          {messages?.map((msg)=>{
+          {msgs?.length>0&&msgs?.map((msg)=>{
              return(
                 <Chat
                  msg={msg}
                  />
              )
-          })
+           })
+
+          }
+
+          {msgs?.length===0&&
+            <div className='flex justify-center py-6'>
+                <h5 className='text-sm font-light '>No messages</h5>
+            </div>
 
           }
 
        </div>
 
-       <div className='flex items-center space-x-4'>
+       <div className='flex items-center space-x-4 pt-6'>
           <textarea
             placeholder='Type a message'
             className='py-1 px-4 rounded-md w-full text-sm font-semibold border outline-none'

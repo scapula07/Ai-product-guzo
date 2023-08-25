@@ -10,6 +10,7 @@ import { connectApi } from '../api'
 import { userState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
 import { Link } from 'react-router-dom'
+import { ClipLoader } from 'react-spinners'
 
 export default function Pending() {
     const currentUser=useRecoilValue(userState)
@@ -25,6 +26,22 @@ export default function Pending() {
 
     // },[])
   return (
+
+    <div className='w-full'>
+      
+        {currentUser?.pending?.length ===0&&
+            <div className='flex justify-center'>
+                <ClipLoader 
+                        color={"rgba(62, 51, 221, 1)"}
+                        loading={true}
+                    />
+
+
+            </div>
+        
+        }
+
+      
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
         {currentUser?.pending?.map((eco)=>{
             return(
@@ -66,6 +83,9 @@ export default function Pending() {
         })
 
         }
+        
+
+      </div>
 
       </div>
   )

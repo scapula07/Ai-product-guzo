@@ -22,11 +22,11 @@ export default function Messenger() {
   //  console.log(receiver,"redd")
 
    const currentUser=useRecoilValue(userState)
-   const [currentChat,setCurrentChat] =useState(null)
-   const [receiverInfo,setReceiver] =useState(null)
+   const [currentChat,setCurrentChat] =useState()
+   const [receiverInfo,setReceiver] =useState({})
    const [messages,setMessages]=useState([])
 
-   const [conversations,setConversations]=useState(null)
+   const [conversations,setConversations]=useState([])
    const [arrivalMessage, setArrivalMessage] = useState(null);
    const [textsubmit,setTextsubmit]=useState(false)
    const [socketUsers,setSocketUsers]=useState([])
@@ -85,23 +85,26 @@ export default function Messenger() {
         const message = {
           sender: currentUser,
           text: newMessage,
-          conversationid:currentChat.id
+          conversationid:currentChat.id,
+          date:Number(Date.now()),
+          time:Date.now()
         };
         const receiverId = currentChat?.members.find(
           (member) => member !== currentUser.id
         );
-        socket.current.emit("addUser", receiverId);
-        console.log(receiverId,"rrrr");
-        console.log(socketUsers,"usersss")
-        const u=socketUsers.find((user)=>user.userId ===receiverId)
-        console.log(u,"urur>>>>>>>>>>>>>")
-        socket.current.emit("sendMessage", {
-          sender: currentUser.id,
-          socketId: u.socketId,
-          text: newMessage,
-        });
+        // socket.current.emit("addUser", receiverId);
+        // console.log(receiverId,"rrrr");
+        // console.log(socketUsers,"usersss")
+        // const u=socketUsers.find((user)=>user.userId ===receiverId)
+        // console.log(u,"urur>>>>>>>>>>>>>")
+        // socket.current.emit("sendMessage", {
+        //   sender: currentUser.id,
+        //   socketId: u.socketId,
+        //   text: newMessage,
+        // });
           setTextsubmit(false)
         try{
+          
             const docRef = await addDoc(collection(db, "messages"),message);
         
             const docSnap = await getDoc(docRef);
@@ -143,6 +146,7 @@ export default function Messenger() {
                 setNewMessage={setNewMessage}
                 currentUser={currentUser}
                 receiverInfo={receiverInfo}
+                conversations={conversations}
                 
                
               />

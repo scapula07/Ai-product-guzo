@@ -1,3 +1,5 @@
-import Collaborations from "./views";
+import Collaboration from "./views";
+import Post from "./views/post";
+import CollabContacts from "./views/contacts";
 
-export default Collaborations;
+export {Collaboration,Post ,CollabContacts}

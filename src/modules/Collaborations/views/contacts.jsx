@@ -4,7 +4,7 @@ import {BsThreeDots} from "react-icons/bs"
 import Contactgroup from './contactgroup'
 import ContactTable from './contactTable'
 
-export default function CollabContacts() {
+export default function Contacts() {
   return (
         <div className='w-full'>
 

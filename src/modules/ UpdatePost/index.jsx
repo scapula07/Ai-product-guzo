@@ -12,7 +12,7 @@ import {MdArrowDropDown} from "react-icons/md"
 import { postApi } from './_api/post'
 import ClipLoader from "react-spinners/ClipLoader";
 
-export default function CreatePosts ({group,currentUser,setTrigger}) {
+export default function UpdatePosts ({group,currentUser,setTrigger}) {
      const [request,setReq]=useState(false)
      const [event,setEvent]=useState(false)
      const [file,setFile]=useState(false)
@@ -278,7 +278,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                                 className='text-blue-700 rounded-full px-12 py-1.5'
                                 onClick={()=>makePost(group)}
                             >
-                                Post
+                                Update
                             </button>
                            }
 

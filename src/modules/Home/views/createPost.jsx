@@ -49,6 +49,7 @@ export default function CreatePost({group,currentUser}) {
                 <CreatePosts 
                   group={group}
                   currentUser={currentUser}
+                  setTrigger={setTrigger}
                 />
 
               </div>

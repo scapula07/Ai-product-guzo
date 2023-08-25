@@ -1,13 +1,11 @@
-import React,{useState} from 'react'
+import React from 'react'
 import Layout from '../../Layout'
 import { Outlet } from 'react-router-dom'
 import Suggestions from '../../Home/views/suggestions'
 import Tabs from '../components/tabs'
-import { useLocation,useParams} from "react-router-dom";
 
-export default function Collaboration() {
-  const location =useLocation()
-  const [collab,setCollab]=useState(location?.state?.collab)
+export default function Collaborations() {
+   
   return (
     <Layout>
        <div className='py-2 flex-col flex space-y-4 px-10'> 
@@ -24,7 +22,7 @@ export default function Collaboration() {
                 
                 </div>
                   <div className=''>
-                      <Outlet context={[collab]}/>
+                      <Outlet />
                    
                   </div>
       
