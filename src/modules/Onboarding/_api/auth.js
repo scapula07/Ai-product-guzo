@@ -16,8 +16,14 @@ export const authApi= {
             const user=credential.user
             const ref =doc(db,"users",user?.uid)
             await setDoc(ref,payload)
-    
-            return user.uid
+            const docSnap = await getDoc(ref);
+            if (docSnap.exists()) {
+                return {id:docSnap?.id,...docSnap?.data()}
+              } else {
+                
+                console.log("No such document!");
+              }
+            
 
         }catch(e){
             console.log(e)
@@ -53,8 +59,15 @@ export const authApi= {
              try{
                 const response = await signInWithEmailAndPassword(auth,email,password)
                 console.log(response,"resss")
-
-              return response?.user?.uid
+                const ref =doc(db,"users",response?.user?.uid)
+                const docSnap = await getDoc(ref);
+                if (docSnap.exists()) {
+                    return {id:docSnap?.id,...docSnap?.data()}
+                } else {
+                    
+                    console.log("No such document!");
+                }
+         
 
                 
 

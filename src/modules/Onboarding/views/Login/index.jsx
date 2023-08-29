@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import {MdLocationPin} from "react-icons/md"
 import { Link } from 'react-router-dom'
 import { authApi } from '../../_api/auth'
@@ -8,8 +8,14 @@ import { accountTypeState } from '../../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
 import FadeIn from "react-fade-in";
 
+
+
 export default function Login() {
     let navigate = useNavigate();
+    useEffect(()=>{
+        localStorage.clear();
+
+    },[])
 
     const account =useRecoilValue(accountTypeState)
     console.log(account,"email")
@@ -22,9 +28,13 @@ export default function Login() {
        
           setLoader(true)
           try{
-             const uid =await authApi.login(email,password)
+             const user=await authApi.login(email,password)
+            
              setLoader(false)
-             uid.length >0&& navigate(`/new/`)
+            localStorage.clear();
+            user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
+             user?.id.length >0&& navigate(`/new/`)
+
 
             }catch(e){
                 console.log(e)

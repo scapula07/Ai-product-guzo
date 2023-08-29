@@ -14,6 +14,7 @@ export default function PendingMember({group,member}) {
             const result =ecosystemApi.acceptMember(id,member)
             setLoading(false)
             setAccept(true)
+
          }catch(e){
             console.log(e)
             setLoading(false)
@@ -30,11 +31,21 @@ export default function PendingMember({group,member}) {
                             src={member?.img}
                             className="w-14 h-14 rounded-full"
                         />
+                         {member?.type?.length >0?
+                            <div className='flex flex-col'>
+                                <h5 className='text-xl font-semibold'>{member?.name}</h5>
+                                <h5 className='text-sm '>{"Qorem ipsum dolor sit amet, consectetur adipiscing elit. "}</h5>
+                            </div>
+                                :
+                                <div className='flex flex-col'>
+                                    <h5 className='text-xl font-semibold'>{member?.firstName + " " + member?.lastName }</h5>
+                                    <h5 className='text-sm '>{"Qorem ipsum dolor sit amet, consectetur adipiscing elit. "}</h5>
+                            </div>
 
-                        <div className='flex flex-col'>
-                            <h5 className='text-xl font-semibold'>{member?.name}</h5>
-                            <h5 className='text-sm '>{"Qorem ipsum dolor sit amet, consectetur adipiscing elit. "}</h5>
-                        </div>
+
+
+                         }
+                       
                 </div>
 
                 <div className='flex items-center space-x-4 justify-end w-1/4'>
@@ -54,7 +65,13 @@ export default function PendingMember({group,member}) {
                             onClick={()=>accept(group?.id,member)}
                         
                             > 
-                            Accept
+                            {accept?
+                              "Accept"
+                              :
+                              "Accepted"
+
+                            }
+                          
                         </button>
                     }
 

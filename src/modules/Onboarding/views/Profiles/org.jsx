@@ -5,11 +5,16 @@ import { createProfile } from '../../_api/createProfile'
 import { useNavigate } from "react-router-dom";
 import {BsFlag} from "react-icons/bs"
 import ClipLoader from "react-spinners/ClipLoader";
+import { useOutletContext } from 'react-router-dom'
 
 
 export default function Org({currentUser}) {
     console.log(currentUser,"indiv")
     let navigate = useNavigate();
+
+    const [user]= useOutletContext();
+
+    console.log(user,"user")
 
     const [orgName,setName]=useState("")
     const [orgEmail,setEmail]=useState("")
@@ -47,15 +52,19 @@ export default function Org({currentUser}) {
         setLoader(true)
         try{
             const payload={
-                creator:currentUser?.id,
+                creator:user?.id,
                 org_name:orgName,
                 org_email:orgEmail,
                 org_location:orgLocation,
 
             }
-            const result =await createProfile.createOrgProfile(payload,file,currentUser)
+            const result =await createProfile.createOrgProfile(payload,file,user)
             setLoader(false)
-               navigate(`/new/profile`)
+            localStorage.clear();
+            result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
+            console.log(result,"result")
+            setLoader(false)
+            result?.id?.length>0&& navigate(`/new`)
           }catch(e){
             console.log(e)
             setLoader(false)

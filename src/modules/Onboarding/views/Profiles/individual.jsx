@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom'
 import { createProfile } from '../../_api/createProfile'
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useOutletContext } from 'react-router-dom'
 
 export default function Individual({currentUser}) {
     console.log(currentUser,"indiv")
     let navigate = useNavigate();
+
+    const [user]= useOutletContext();
+
+    console.log(user?.id,"user")
     
 
     const [displayName,setName]=useState("")

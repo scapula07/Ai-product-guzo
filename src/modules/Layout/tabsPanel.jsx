@@ -22,7 +22,14 @@ export default function TabsPanel() {
     <>
     <div className='py-6  w-full relative h-full'>
         <div className='flex flex-col items-center space-y-10 w-full'>
-            <h5 className='font-semibold text-2xl'>{group?.name}</h5>
+            {group?.type?.length >0?
+                 <h5 className='font-semibold text-lg'>{group?.name}</h5>
+                 :
+                 <h5 className='font-semibold text-lg'>{group?.firstName + " " + group?.lastName}</h5>
+
+
+            }
+          
             <div className='flex flex-col py-20 space-y-6'>
                 {navs.map((nav)=>{
                      return(

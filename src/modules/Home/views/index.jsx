@@ -1,16 +1,22 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Layout from '../../Layout'
 import Suggestions from './suggestions'
 import Tabs from '../components/tabs'
 import CreatePost from './createPost'
 import { Outlet } from 'react-router-dom'
 
-import {useRecoilValue} from "recoil"
+import {useRecoilValue,useRecoilState} from "recoil"
 import { groupState,userState } from '../../Recoil/globalstate'
 
 export default function Home() {
     const group =useRecoilValue(groupState)
-    const currentUser=useRecoilValue(userState)
+    const [currentUser,setcurrentUser]=useRecoilState(userState)
+    const user = localStorage.getItem("user");
+    useEffect( ()=>{
+      
+      console.log(JSON.parse(user),"user")
+      setcurrentUser(JSON.parse(user))
+      },[])
   return (
     <Layout>
         <div className='py-2 flex-col flex space-y-4'> 

@@ -20,7 +20,7 @@ export const createProfile= {
                 username:"john",
                 img: `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                 display:displayName
-             })
+              })
     
              console.log(result,"result")
 
@@ -47,26 +47,45 @@ export const createProfile= {
                     ...payload,
                     img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                     pending:[],
-                    active:[],
+                    active:[
+                        currentUser
+                     ],
+                    teammates:[
+                        currentUser
+
+                      ],
                     type:"org"
                 })
+
+               const orgRef=doc(db,"organizations",orgSnap?.id)
+               const docSnap = await getDoc(orgRef);
+               const docOrg=docSnap.data()
          
-              console.log(orgSnap,"")
-              const result = await updateDoc(userRef, {
-                organizations:[
-                    ...currentUser?.organizations,
-                    {
-                        id:orgSnap?.id,
-                        name:payload?.org_name,
-                        type:"org",
-                        img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`
+               if (docSnap.exists()) {
+                const doc=docSnap.data()
+                    const result = await updateDoc(userRef, {
+                            organizations:[
+                                ...currentUser?.organizations,
+                                {
+                                    id:orgSnap?.id,
+                                    name:payload?.org_name,
+                                    type:"org",
+                                    img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+                                    teammates:[
+                                       ...docOrg?.teammates
+                                     ]
+                                }
+                                ]
+                        
+                            })
+                    
+                    
+                            console.log(result,"result")
+                        const docSnap = await getDoc(userRef);
+                        console.log(docSnap,"ecosystem")
+        
+                        return {id:docSnap?.id,...docSnap?.data()}
                     }
-                    ]
-            
-                })
-        
-        
-                console.log(result,"result")
 
                 }catch(e){
                     console.log(e)
@@ -89,27 +108,51 @@ export const createProfile= {
                 ...payload,
                 img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                 pending:[],
-                active:[],
+                active:[
+                    currentUser
+                ],
+                teammates:[
+                    currentUser
+                ],
                 type:"eco",
             })
      
             console.log(ecoSnap,"ecosnap")
-    
-          const result = await updateDoc(userRef, {
-            ecosystems:[
-                ...currentUser?.ecosystems,
-                {
-                 id:ecoSnap?.id,
-                 name:payload?.name,
-                 type:"eco",
-                 img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`
-                }
-                ]
-        
-             })
-    
-    
-            console.log(result,"result")
+            const ecoRef=doc(db,"ecosystems",ecoSnap?.id)
+            const docSnap = await getDoc(ecoRef);
+            const docEco=docSnap.data()
+            console.log(doc,"ecosystem doc")
+
+            if (docSnap.exists()) {
+              
+                const result = await updateDoc(userRef, {
+                    ecosystems:[
+                        ...currentUser?.ecosystems,
+                        {
+                         id:ecoSnap?.id,
+                         name:payload?.name,
+                         type:"eco",
+                         img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+                         teammates:[
+                            ...docEco?.teammates
+                          ]
+                        }
+                        ]
+                
+                     })
+                const docSnap = await getDoc(userRef);
+                console.log(docSnap,"ecosystem")
+
+                return {id:docSnap?.id,...docSnap?.data()}
+            
+            
+                    console.log(result,"result")
+              } else {
+                
+                console.log("No such document!");
+              }
+
+         
 
             }catch(e){
                 console.log(e)

@@ -6,7 +6,7 @@ import ContactTable from './contactTable'
 
 export default function Contacts() {
   return (
-        <div className='w-full'>
+        <div className='w-full '>
 
             <div className='flex flex-col w-full'>
                 <div className='flex items-center justify-between w-full'>

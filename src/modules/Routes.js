@@ -49,23 +49,28 @@ const NewRoutes = () => {
   const [currentUser,setcurrentUser]=useRecoilState(userState)
   console.log(currentUser,"user")
   let authListner=null
+  const user = localStorage.getItem("user");
   useEffect( ()=>{
-  
-  authListner=onAuthStateChanged(auth,(user)=>{
-      if (user !== null) {
-          const uid = user.uid;
-          const userRef =doc(db,"users", uid)
-          getDoc(userRef).then(res=> {
-          console.log(res.exists(),"exist")
-            setcurrentUser({...res.data(),id:uid})
+    
+    console.log(JSON.parse(user),"user")
+    setcurrentUser(JSON.parse(user))
+  // authListner=onAuthStateChanged(auth,(user)=>{
+  //     if (user !== null) {
+  //         const uid = user.uid;
+  //         const userRef =doc(db,"users", uid)
+  //         getDoc(userRef).then(res=> {
+  //         console.log(res.exists(),"exist")
+  //           setcurrentUser({...res.data(),id:uid})
       
-          })
-        }
-        })
-      return(
-        authListner()
-      )
-    },[])
+  //         })
+  //       }
+  //       })
+  //     return(
+  //       authListner()
+  //     )
+    },[user])
+
+
 
   return (
     <>

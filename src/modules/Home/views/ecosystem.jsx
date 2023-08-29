@@ -27,7 +27,8 @@ export default function Ecosystems() {
              }
         getEcosytems()
        },[])
-
+        
+       console.log(ecosystems,"ecosystem home")
       
   return (
     <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>

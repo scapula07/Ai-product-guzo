@@ -12,7 +12,7 @@ export default function ActiveMember({member}) {
                 src={member?.img}
                 className="rounded-full w-32 h-32"
             />
-            <h5 className=' text-center font-semibold '>{member?.name}</h5>
+            <h5 className=' text-center font-semibold '>{member?.firstName + " " + member?.lastName}</h5>
             <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
         </div>
 

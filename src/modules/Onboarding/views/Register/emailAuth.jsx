@@ -25,6 +25,7 @@ export default function EmailAuth() {
             email,
             firstName,
             lastName,
+            img:"",
             organizations:[],
             ecosystems:[],
             pending:[]
@@ -32,8 +33,8 @@ export default function EmailAuth() {
           }
           setLoader(true)
           try{
-             const uid =await authApi.register(email,password,payload)
-             console.log(uid)
+             const user =await authApi.register(email,password,payload)
+             console.log(user,"user")
              let route=""
              if(account==="Organization"){
                 route="org"
@@ -41,7 +42,10 @@ export default function EmailAuth() {
                 route="network"
              }
              setLoader(true)
-             uid.length >0&& navigate(`/new/onboard/profile/${route}`)
+               localStorage.clear();
+               localStorage.setItem('user',JSON.stringify(user));
+
+             user?.id.length >0&& navigate(`/new/onboard/profile/${route}`)
 
             }catch(e){
                 console.log(e)

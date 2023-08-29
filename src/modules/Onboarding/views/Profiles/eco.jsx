@@ -4,10 +4,15 @@ import {MdLocationPin} from "react-icons/md"
 import { useNavigate } from 'react-router-dom'
 import { createProfile } from '../../_api/createProfile'
 import ClipLoader from "react-spinners/ClipLoader";
+import { useOutletContext } from 'react-router-dom'
 
 export default function Eco({currentUser}) {
     console.log(currentUser,"indiv")
     let navigate = useNavigate();
+
+    const [user]= useOutletContext();
+
+    console.log(user,"user")
 
     const [ecoName,setName]=useState("")
     const [ecoEmail,setEmail]=useState("")
@@ -44,15 +49,18 @@ export default function Eco({currentUser}) {
         setLoader(true)
         try{
             const payload={
-                creator:currentUser?.id,
+                creator:user?.id,
                 name:ecoName,
                 email:ecoEmail,
                 location:ecoLocation,
 
             }
-            const result =await createProfile.createEcoProfile(payload,file,currentUser)
+            const result =await createProfile.createEcoProfile(payload,file,user)
+            localStorage.clear();
+            result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
+            console.log(result,"result")
             setLoader(false)
-                navigate(`/new/profile`)
+            result?.id?.length>0&& navigate(`/new`)
           }catch(e){
             console.log(e)
             setLoader(false)

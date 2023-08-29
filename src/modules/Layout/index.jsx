@@ -1,11 +1,20 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import SidePanel from './sidePanel'
 import TabsPanel from './tabsPanel'
 import Header from './header'
+import {useRecoilValue,useRecoilState} from "recoil"
+import { groupState,userState } from '../Recoil/globalstate'
 
 
 export default function Layout({children}) {
     const [hover,setHover]=useState(false)
+    const [currentUser,setcurrentUser]=useRecoilState(userState)
+    const user = localStorage.getItem("user");
+    useEffect( ()=>{
+      
+      console.log(JSON.parse(user),"user")
+      setcurrentUser(JSON.parse(user))
+      },[])
   return (
      <div className='w-full overflow-x-hidden overflow-y-hidden h-screen' 
         style={{background: "rgba(242, 242, 242, 0.6)"}}

@@ -7,10 +7,11 @@ export default function LogOut({currentUser}) {
     let navigate = useNavigate();
 
     const logout=async()=>{
+        localStorage.clear();
         try{
             const response =await userApi.logout()
             console.log(response,"response")
-
+           
             navigate(`/new/onboard/register/login`)
 
         }catch(e){
