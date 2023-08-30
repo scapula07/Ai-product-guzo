@@ -8,26 +8,15 @@ export const ecosystemApi= {
 
         const ecoRef =doc(db,"ecosystems",id)
         const docSnap = await getDoc(ecoRef);
-        console.log(docSnap?.data())
-        console.log(docSnap?.data().creator===currentUser?.id)
-         if(docSnap?.data().creator===currentUser?.id){
+        // console.log(docSnap?.data())
+        // console.log(docSnap?.data().creator===currentUser?.id)
+         if(docSnap?.data()?.creator===currentUser?.id){
            return docSnap?.data()
          }
-        // const unsub = onSnapshot(doc(db,"ecosystems",id), (doc) => {
-        //     console.log("Current data: ", doc.data()?.creator);
-        //     if(doc?.data()?.creator !=currentUser?.id) return ;
-        //     return doc?.data()
-               
-              
-        // });
        
-         
-        
-        
-
        },
        acceptMember:async function (id,member) {
-        console.log(member,"mmm")
+        // console.log(member,"mmm")
             try{
                     const ecoRef =doc(db,"ecosystems",id)
                     const docSnap = await getDoc(ecoRef);
@@ -48,25 +37,55 @@ export const ecosystemApi= {
                         member
                      ]
                    })
-                    const userRef =doc(db,"users",member?.id)
+
+                   console.log(result,"eco log")
+
+                   if(member?.type?.length >0){
+                        const collection=member?.type ==="eco"?"ecosystems" :"organizations"
+                        console.log(collection,"ccccc")
+                        const memberRef=doc(db,collection,member?.id)
+                        const memberSnap = await getDoc(memberRef);
+                        console.log(memberSnap?.data(),"members")
+                        const members=memberSnap?.data()?.memberships.length ===0? []:memberSnap?.data()?.memberships
+                          const result = await updateDoc(memberRef, {
+                                memberships:[
+                                    ...members,
+                                    ...docSnap?.data()
+                                  ]
+                              })
+                              console.log( result ,"member log")
+                    
+
+                   }else{
+                       const memberRef =doc(db,"users",member?.id)
+                         const memberSnap = await getDoc(memberRef);
+                         console.log(memberSnap?.data(),"usersss")
+                          const result2 = await updateDoc(memberRef, {
+                                ecosystems:[
+                                    ...member?.ecosystems,
+                                    {
+                                        ...docSnap?.data()
+
+
+                                    }
+                                ]
+                                
+                            })
+                            console.log( result2 ,"user log")
+                               
+
+                    }
+                   
                   
-                    const result2 = await updateDoc(userRef, {
-                        ecosystems:[
-                            ...member?.ecosystems,
-                            {
-                                ...docSnap?.data()
-
-
-                            }
-                        ]
-                        
-                    })
+              
 
                 
-                 console.log(result2,"result")
-                const memberSnap = await getDoc(ecoRef);
-                console.log(docSnap,"ecosystem")
-                return docSnap?.data()
+                
+                    const memberSnap = await getDoc(ecoRef);
+                    console.log(memberSnap,"ecosystem");
+                    console.log({active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending },"new memeber")
+                    return {active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending }
+
            
             }catch(e){
                 console.log(e)

@@ -66,19 +66,19 @@ export default function EmailAuth() {
           setLoader(true)
           try{
              
-            //  const user =await authApi.register(email,password,payload)
-            //  console.log(user,"user")
-            //  let route=""
-            //  if(account==="Organization"){
-            //     route="org"
-            //  }else if(account==="Ecosystem"){
-            //     route="network"
-            //  }
-            //  setLoader(true)
-            //    localStorage.clear();
-            //    localStorage.setItem('user',JSON.stringify(user));
+             const user =await authApi.register(email,password,payload)
+             console.log(user,"user")
+             let route=""
+             if(account==="Organization"){
+                route="org"
+             }else if(account==="Ecosystem"){
+                route="network"
+             }
+             setLoader(true)
+               localStorage.clear();
+               localStorage.setItem('user',JSON.stringify(user));
 
-            //  user?.id.length >0&& navigate(`/new/onboard/profile/${route}`)
+             user?.id.length >0&& navigate(`/new/onboard/profile/${route}`)
 
             }catch(e){
                 console.log(e)
@@ -92,7 +92,7 @@ export default function EmailAuth() {
     <div className='w-full flex justify-center  '>
             <div className='w-4/5 flex bg-white rounded-lg  border flex-col  space-y-8 py-8' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
                  <h5 className='text-xl font-semibold text-center'>Sign up with Email</h5>
-                 <div className='px-6 py-1'>
+                 <div className='px-10 py-1'>
                     {errorMsg && (
                       <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
                      )}
@@ -100,7 +100,7 @@ export default function EmailAuth() {
                  </div>
                  
 
-                    <div className='flex flex-col w-full px-6 space-y-4'>
+                    <div className='flex flex-col w-full px-10 space-y-4'>
                         <div className='flex items-center w-full space-x-4'>
                             <div className='flex flex-col w-1/2 space-y-2'>
                                 <label className='text-sm text-slate-700'>First Name</label>
@@ -216,7 +216,7 @@ export default function EmailAuth() {
                             <h5 className='h-0.5  w-1/3 text-black border '></h5>
                             <div className='flex flex-col space-y-2 items-center w-full'>
                             <h5>Already have an account?</h5>
-                            <Link to="login">
+                            <Link to="/new/onboard/register/login">
                                 <button className='border border-blue-700 text-blue-700 rounded-full px-10 py-1'>Sign in</button>
                             </Link>
         

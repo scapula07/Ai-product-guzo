@@ -22,7 +22,7 @@ export default function CreateProfiles() {
                className="w-1/7"
              />
 
-             <div className='w-3/5 h-full py-20'>
+             <div className='w-3/5 h-full py-20 overflow-y-scroll no-scrollbar'>
                 <Outlet  context={[user]}/>
 
              </div>

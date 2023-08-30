@@ -55,7 +55,8 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
         const payload={
             post,
             requests,
-            eventPost
+            eventPost,
+            contacts:[]
         }
 
         try{

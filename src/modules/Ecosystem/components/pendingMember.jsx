@@ -33,10 +33,37 @@ export default function PendingMember({group,member,setMembers}) {
       <div className='flex flex-col bg-white rounded-lg w-full space-y-2'>
             <div className='flex items-center py-6 px-2 rounded-lg w-full justify-between'>
                     <div className='flex items-center space-x-4'>
-                        <img 
-                            src={member?.img}
-                            className="w-14 h-14 rounded-full"
-                        />
+                        <>
+                          {member?.type?.length >0?
+                                <img 
+                                src={member?.img}
+                                className="w-14 h-14 rounded-full"
+
+                                />
+                                :
+                                <>
+                                {member?.img?.length>0?
+                                    <img 
+                                        src={member?.img}
+                                        className="h-10 w-10 rounded-full"
+                                      />
+                                        :
+                                        <div className='rounded-full p-2 items-center justify-center flex border'
+                                        >
+                                        <h5 className='font-semibold text-sm'> {member?.firstName?.slice(0,1) +member?.lastName?.slice(0,1)}</h5>
+                                    </div>
+                                        
+
+                                    }
+
+                                  
+                                </>
+
+
+                          }
+                           
+                        </>
+                       
                          {member?.type?.length >0?
                             <div className='flex flex-col'>
                                 <h5 className='text-xl font-semibold'>{member?.name}</h5>
@@ -46,7 +73,7 @@ export default function PendingMember({group,member,setMembers}) {
                                 <div className='flex flex-col'>
                                     <h5 className='text-xl font-semibold'>{member?.firstName + " " + member?.lastName }</h5>
                                     <h5 className='text-sm '>{"Qorem ipsum dolor sit amet, consectetur adipiscing elit. "}</h5>
-                            </div>
+                               </div>
 
 
 

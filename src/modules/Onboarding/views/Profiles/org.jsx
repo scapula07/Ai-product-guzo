@@ -53,9 +53,10 @@ export default function Org({currentUser}) {
         try{
             const payload={
                 creator:user?.id,
-                org_name:orgName,
-                org_email:orgEmail,
-                org_location:orgLocation,
+                name:orgName,
+                email:orgEmail,
+                location:orgLocation,
+                memberships:[]
 
             }
             const result =await createProfile.createOrgProfile(payload,file,user)

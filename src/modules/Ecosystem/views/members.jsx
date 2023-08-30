@@ -20,12 +20,13 @@ export default function EcoMembers() {
         const getAllMembers=async()=>{
             console.log("mmmm")
            const members=await ecosystemApi.getAllMembers(group?.id,currentUser)
-           console.log(members,"memm")
            setMembers(members)
-        }
-        getAllMembers()
-     },[group])
-    console.log(members,"mmmm")
+
+           console.log("running again")
+           }
+           getAllMembers()
+          },[group])
+    console.log(members?.active,"mmmm pending")
 
   return (
        <div className='flex flex-col space-y-6 w-full'>

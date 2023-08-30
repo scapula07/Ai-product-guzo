@@ -13,16 +13,19 @@ import { Link } from 'react-router-dom'
 
 import { groupState,userState } from '../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
-
+import Join from "../../JoinPost"
 export default function Feeds() {
     const group =useRecoilValue(groupState)
     const [feeds,setFeeds]=useState([])
     const [isLoading,setLoading]=useState(false)
+    const [arePosts,setPost]=useState("")
     // console.log(group)
 
     useEffect(()=>{
         const getAllEcoFeed=async()=>{
             const feeds=await feedApi.getEcosystemFeeds(group?.id)
+            feeds?.length===0 &&setPost("No Feeds")
+            feeds?.length >0 &&setPost("")
             setFeeds(feeds)
 
         }
@@ -42,13 +45,20 @@ export default function Feeds() {
         })
 
         }
-         {feeds?.length ===0&&
+         {arePosts?.length===0&&feeds?.length ===0&&
             <div className='w-full flex justify-center py-10'>
                <ClipLoader 
                     color={"rgba(62, 51, 221, 1)"}
                     loading={true}
                 />
             </div>
+            }
+
+            {arePosts?.length >0&&
+               <div className='w-full flex justify-center py-10'>
+                  <h5 className="text-lg font-semibold">No posts</h5>
+               </div>
+
             }
 
   </div>
@@ -134,7 +144,7 @@ const Feed=({feed,group})=>{
                  </div>
 
                  <div>
-                  
+
                  </div>
 
                <div className='flex flex-col'>
@@ -142,6 +152,7 @@ const Feed=({feed,group})=>{
                       return(
                        <RequestCard 
                         req={req}
+                        group={group}
                        />
                       )
 
@@ -164,7 +175,7 @@ const Feed=({feed,group})=>{
 }
 
 
-const RequestCard=({req})=>{
+const RequestCard=({req,group})=>{
   const randomNumber = Math.floor(Math.random() * 4) + 1;
   const [trigger,setTrigger]=useState(false)
 
@@ -199,8 +210,9 @@ const RequestCard=({req})=>{
               <div className='flex flex-col space-y-2'>
                    <p>{req?.body}</p>
                    <div className='flex justify-center w-full'>
-                      <button className='text-white font-semibold rounded-full px-8 w-1/2 py-2 ' style={{background: "linear-gradient(70.54deg, #281CF5 17.62%, #5DE4D7 94.09%)"}}>Manage</button>
-                
+                       <Join 
+                         group={group}
+                       />
                     </div>
                   
               </div>

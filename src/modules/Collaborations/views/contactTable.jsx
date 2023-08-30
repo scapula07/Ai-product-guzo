@@ -2,23 +2,17 @@ import React from 'react'
 
 export default function ContactTable() {
   return (
-    <div className='flex w-full flex-col py-4 w-full overflow-x-auto'>
-        <div className='flex justify-end w-full overflow-x-auto'>
-            
-                <button className='text-blue-700 rounded-full px-8 py-1.5'
-                    style={{background: "rgba(236, 235, 254, 1)"}}
-                >
-                Add New Contact
-                </button>
-         </div>
-        <div className='py-8 px-4 overflow-x-scroll ' style={{width:"200%"}}>
+    <div className='flex w-full flex-col py-4 w-full overflow-x-auto no-scrollbar'>
+         
+  
+          <div className='px-4 overflow-x-scroll no-scrollbar' style={{width:"200%"}}>
 
-          <Table />
+              <Table />
             
+            </div>
+
+
         </div>
-
-
-    </div>
   )
 }
  
@@ -50,7 +44,7 @@ const Table=()=>{
         count++
           return(
             <tr className='py-6 text-sm font-light'>
-              <td className='bg-white text-center text-xs'>{count}</td>
+              {/* <td className='bg-white text-center text-xs'>{count}</td>
               <td className='bg-white text-center'>Malcolm</td>
               <td className='bg-white text-center'>Malcolm</td>
               <td className='bg-white text-center'>Malcolm</td>
@@ -60,7 +54,7 @@ const Table=()=>{
               <td className='bg-white text-center'>Malcolm</td>
               <td className='bg-white text-center' >Malcolm</td>
               <td className='bg-white text-center'>Malcolm</td>
-              <td className='bg-white text-center'>Malcolm</td>
+              <td className='bg-white text-center'>Malcolm</td> */}
            </tr>
           )
          })

@@ -6,28 +6,16 @@ import { groupState,userState } from '../../Recoil/globalstate'
 import { useRecoilValue } from 'recoil'
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom'
+import { useOutletContext } from 'react-router-dom';
 
 export default function MyOpportunities() {
       const group =useRecoilValue(groupState)
-      const [collabs,setCollabs]=useState([])
-      const [isLoading,setLoading]=useState(false)
+      const [collabs,arePosts]= useOutletContext();
 
-
-
-      useEffect(()=>{
-        const getAllCollabs=async()=>{
-            const collabs=await collaborationApi.getAllCollaborations(group?.id)
-            setCollabs(collabs)
-
-        }
-        getAllCollabs()
-
-     },[group])
-     console.log(collabs,"collabs")
   return (
 
     <div className='w-full'>
-        {collabs?.length ===0&&
+        {arePosts?.length===0&&collabs?.length ===0&&
             <div className='w-full flex justify-center py-10'>
                <ClipLoader 
                     color={"rgba(62, 51, 221, 1)"}
@@ -35,6 +23,12 @@ export default function MyOpportunities() {
                 />
             </div>
             }
+            {arePosts?.length >0&&
+               <div className='w-full flex justify-center py-10'>
+                  <h5 className="text-lg font-semibold">No Posts</h5>
+               </div>
+
+             }
   
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-1 gap-4 gap-y-8 h-full w-full'>
         {collabs?.length >0&&collabs?.map((collab)=>{

@@ -53,6 +53,8 @@ export default function Eco({currentUser}) {
                 name:ecoName,
                 email:ecoEmail,
                 location:ecoLocation,
+                memberships:[]
+
 
             }
             const result =await createProfile.createEcoProfile(payload,file,user)

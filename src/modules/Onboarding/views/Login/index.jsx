@@ -7,7 +7,7 @@ import {useRecoilValue} from "recoil"
 import { accountTypeState } from '../../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
 import FadeIn from "react-fade-in";
-
+import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
 
 
 export default function Login() {
@@ -16,7 +16,7 @@ export default function Login() {
         localStorage.clear();
 
     },[])
-
+    const [errorMsg, setErrorMsg] = useState(null)
     const account =useRecoilValue(accountTypeState)
     console.log(account,"email")
 
@@ -25,14 +25,27 @@ export default function Login() {
     const [isLoading,setLoader]=useState(false)
 
     const login=async()=>{
+         
        
           setLoader(true)
+          setErrorMsg(null)
+
+          if (email.length < 3) {
+            setErrorMsg(' email is invalid ');
+            setLoader(false);
+            return;
+          }
+  
+          if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)){
+              setErrorMsg( "email is invalid" );
+              setLoader(false);
+          }
           try{
              const user=await authApi.login(email,password)
             
              setLoader(false)
             localStorage.clear();
-            user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
+             user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
              user?.id.length >0&& navigate(`/new/`)
 
 
@@ -49,8 +62,14 @@ export default function Login() {
     <div className='w-full flex justify-center  '>
             <div className='w-4/5 flex bg-white rounded-lg  border flex-col  space-y-8 py-8' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
                  <h5 className='text-xl font-semibold text-center'>Login with Email</h5>
+                    <div className='px-10 py-1'>
+                        {errorMsg && (
+                        <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+                        )}
 
-                    <div className='flex flex-col w-full px-6 space-y-4'>
+                    </div>
+
+                    <div className='flex flex-col w-full px-10 space-y-4'>
                         
                         <div className='flex flex-col w-full space-y-4'>
                             <div className='flex flex-col w-full space-y-2'>

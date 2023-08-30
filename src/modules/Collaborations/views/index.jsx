@@ -1,10 +1,31 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import Layout from '../../Layout'
 import { Outlet } from 'react-router-dom'
 import Suggestions from '../../Home/views/suggestions'
 import Tabs from '../components/tabs'
+import { collaborationApi } from '../_api'
+import { groupState,userState } from '../../Recoil/globalstate'
+import { useRecoilValue } from 'recoil'
 
 export default function Collaborations() {
+  const group =useRecoilValue(groupState)
+  const [collabs,setCollabs]=useState([])
+  const [isLoading,setLoading]=useState(false)
+  const [arePosts,setPost]=useState("")
+
+
+  useEffect(()=>{
+    const getAllCollabs=async()=>{
+        const collabs=await collaborationApi.getAllCollaborations(group?.id)
+        collabs?.length===0 &&setPost("No Feeds")
+        collabs?.length >0 &&setPost("")
+        setCollabs(collabs)
+
+    }
+    getAllCollabs()
+
+ },[group])
+ console.log(collabs,"collabs")
    
   return (
     <Layout>
@@ -22,7 +43,7 @@ export default function Collaborations() {
                 
                 </div>
                   <div className=''>
-                      <Outlet />
+                      <Outlet context={[collabs,arePosts]}/>
                    
                   </div>
       

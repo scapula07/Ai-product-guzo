@@ -72,7 +72,7 @@ export const createProfile= {
                                 ...currentUser?.organizations,
                                 {
                                     id:orgSnap?.id,
-                                    name:payload?.org_name,
+                                    name:payload?.name,
                                     type:"org",
                                     img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                                     teammates:[
