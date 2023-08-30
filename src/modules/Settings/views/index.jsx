@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from "../../Layout"
-
+import { Link } from 'react-router-dom'
 export default function Settings() {
   return (
     <Layout>
@@ -12,17 +12,32 @@ export default function Settings() {
           <div className='flex flex-col w-full space-y-4  '>
               <Card 
                     title="Profile Information & Accounts"
-                    body={["Edit Profile","Teammates","Delete account"]}
+                    body={[
+                      {
+                       text: "Edit Profile",
+                       link:""
+                      },
+                      {
+                        text: "Teammates",
+                        link:"/new/team"
+
+                      },
+                      {
+                        text: "Delete account",
+                        link:""
+
+                      }
+                      ]}
               
                 />
-              <Card 
+              {/* <Card 
                   title="Subscriptions and Payments"
                   body={["Billing Information","Manage Subscription","View Payment History"]}
               />
               <Card 
                   title="Monetization & Privacy"
                   body={["Manage Ecosystem Privacy","Setup Paywall"]}
-              />
+              /> */}
 
           </div>
 
@@ -36,14 +51,17 @@ const Card=({title,body})=>{
      return(
         <div className='bg-white w-3/4 flex flex-col space-y-4 px-8 py-6'>
             <h5 className='text-sm font-semibold'>{title}</h5>
-            {body?.map((text)=>{
+            {body?.map((option)=>{
                  return(
                     <>
-                     {text!="Delete account"&&
-                    <h5 className='text-sm font-light'>{text}</h5>
+                     {option?.text!="Delete account"&&
+                     <Link to={option?.link}>
+                   
+                        <h5 className='text-sm font-light'>{option?.text}</h5>
+                    </Link>
                         }
-                    {text==="Delete account"&&
-                      <h5 className='text-sm font-light text-red-600' >{text}</h5>
+                    {option?.text==="Delete account"&&
+                      <h5 className='text-sm font-light text-red-600' >{option?.text}</h5>
 
                      }
                      </>

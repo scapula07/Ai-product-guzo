@@ -27,7 +27,7 @@ export const ecosystemApi = {
             }
       },
 
-        joinRequest: async function (ecoId,currentUser) {
+        joinRequest: async function (ecoId,currentUser,group) {
             try{
                 
                  const ecoRef =doc(db,"ecosystems",ecoId)
@@ -40,12 +40,12 @@ export const ecosystemApi = {
                     pending:[
                         ...pendingMembers,
                         {
-                           ...currentUser
+                           ...group
                         }
                        ]
                      })
                   
-                     console.log(result,"result")
+                  console.log(result,"result")
                 
               const res = await updateDoc(userRef, {
                   pending:[
@@ -53,11 +53,13 @@ export const ecosystemApi = {
                        id:docSnap.id,
                        ...docSnap?.data()
                       }
-                   ]
+                    ]
             
                  })
 
             console.log(res,"resss")
+            const userSnap = await getDoc(userRef);
+            return {id:userSnap?.id,...userSnap?.data()}
         
                     
 

@@ -40,7 +40,7 @@ export default function Layout({children}) {
                     setHover={setHover}
                    />
                 </div> 
-               <div className='lg:pt-20 pt-8 overflow-y-auto h-full w-full ' >
+               <div className='lg:pt-20 pt-8 overflow-y-auto h-full w-full no-scrollbar' >
                 {children}
                </div>
                 

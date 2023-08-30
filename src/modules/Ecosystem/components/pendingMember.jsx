@@ -1,26 +1,32 @@
+import { Face2 } from '@mui/icons-material';
 import React,{useState} from 'react'
 import ClipLoader from "react-spinners/ClipLoader";
 import { ecosystemApi } from '../api';
 
-export default function PendingMember({group,member}) {
+export default function PendingMember({group,member,setMembers}) {
     const [accepted,setAccept]=useState(false)
-    const [isLoading,setLoading]=useState(false)
+    // const [isLoading,setLoading]=useState(false)
+    const [loading,setLoader]=useState(false)
 
     const accept=async(id,member)=>{
-        setLoading(true)
+       
        
          try{
-           
-            const result =ecosystemApi.acceptMember(id,member)
-            setLoading(false)
             setAccept(true)
+            const result =ecosystemApi.acceptMember(id,member)
+            console.log(result,"resss")
+            setMembers(result)
+            setAccept(false)
+           
 
          }catch(e){
             console.log(e)
-            setLoading(false)
+            setLoader(false)
+            setAccept(false)
          }
          
        }
+    console.log(accepted,"accepted")
 
 
   return (
@@ -50,27 +56,22 @@ export default function PendingMember({group,member}) {
 
                 <div className='flex items-center space-x-4 justify-end w-1/4'>
                     <h5 className='text-slate-600 font-semibold text-lg'>Ignore</h5>
-                    {isLoading===true&&
+                    {accepted?
                 
                         <ClipLoader 
                             color={"rgba(62, 51, 221, 1)"}
                         
 
                         />
-                    }
-                    {!isLoading&&
+                  
+                       :
                         <button 
                             style={{background: "rgba(236, 235, 254, 1)"}}
                             className='text-blue-700 rounded-full px-8 py-1.5'
                             onClick={()=>accept(group?.id,member)}
                         
                             > 
-                            {accept?
-                              "Accept"
-                              :
-                              "Accepted"
-
-                            }
+                           Accept
                           
                         </button>
                     }

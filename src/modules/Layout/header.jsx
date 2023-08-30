@@ -45,7 +45,7 @@ export default function Header({hover,setHover}) {
                            
                         />
                     :
-                    <h5 className='rounded-full bg-blue-600 text-white font-semibold text-sm p-1 border-2 border-white lg:w-8 lg:h-8 w-6 h-6 flex items-center justify0-center'
+                    <h5 className='rounded-full bg-blue-600 text-white font-semibold text-sm p-1 border-2 border-white lg:w-8 lg:h-8 w-6 h-6 flex items-center justify-center'
                        
                     >
                         {currentUser?.firstName?.slice(0,1) +currentUser?.lastName?.slice(0,1)}

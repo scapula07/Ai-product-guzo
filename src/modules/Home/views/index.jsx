@@ -24,7 +24,7 @@ export default function Home() {
            
         </div>
         <div className='flex w-full h-full space-x-10'>
-            <div className='lg:w-3/5 overflow-y-auto h-full '>
+            <div className='lg:w-3/5 overflow-y-auto h-full no-scrollbar'>
                  <Tabs />
                 
 

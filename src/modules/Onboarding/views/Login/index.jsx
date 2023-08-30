@@ -47,8 +47,8 @@ export default function Login() {
 
   return (
     <div className='w-full flex justify-center  '>
-            <div className='w-1/2 flex bg-white rounded-lg  border flex-col  space-y-8 py-8' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
-                 <h5 className='text-xl font-semibold text-center'>Sign up with Email</h5>
+            <div className='w-4/5 flex bg-white rounded-lg  border flex-col  space-y-8 py-8' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
+                 <h5 className='text-xl font-semibold text-center'>Login with Email</h5>
 
                     <div className='flex flex-col w-full px-6 space-y-4'>
                         
@@ -101,7 +101,7 @@ export default function Login() {
                                 onClick={login}
                             
                                 >
-                                Login 
+                                Next
                             </button>
                            
 
@@ -117,6 +117,21 @@ export default function Login() {
                           </p>
 
                       </div>
+
+
+                      <div className='flex flex-col space-y-4 items-center w-full'>
+                            <h5 className='h-0.5  w-1/3 text-black border '></h5>
+                            <div className='flex flex-col space-y-2 items-center w-full'>
+                            <h5>Already have an account?</h5>
+                            <Link to="/new/onboard/register/email-password">
+                                <button className='border border-blue-700 text-blue-700 rounded-full px-10 py-1'>Sign up</button>
+                            </Link>
+        
+
+                     </div>
+
+
+                  </div>
                
  
             </div>

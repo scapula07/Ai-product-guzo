@@ -19,7 +19,7 @@ export default function Ecosystem() {
           </div>
 
           <div className=' w-full h-full space-x-10'>
-            <div className='w-full overflow-y-auto h-full '>
+            <div className='w-full overflow-y-auto h-full no-scrollbar'>
                  <Tabs />
                 
 

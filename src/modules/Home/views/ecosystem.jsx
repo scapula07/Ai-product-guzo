@@ -44,6 +44,7 @@ export default function Ecosystems() {
                      eco={eco}
                      isPendingt={isPending}
                      currentUser={currentUser}
+                     group={group}
                      isMember={isMember}
 
                   />
@@ -66,7 +67,7 @@ export default function Ecosystems() {
   )
 }
 
-const EcosystemCard=({eco,isPending,currentUser,isMember})=>{
+const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
 
     let navigate = useNavigate();
     const [isLoading,setLoading]=useState(false)
@@ -74,9 +75,12 @@ const EcosystemCard=({eco,isPending,currentUser,isMember})=>{
     const join=async(id)=>{
         setLoading(true)
         try{
-          const result =await ecosystemApi.joinRequest(id,currentUser)
+          const result =await ecosystemApi.joinRequest(id,currentUser,group)
           setLoading(false)
           navigate("/new/connections/pending")
+          result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
+          console.log(result,"result")
+          result?.id?.length>0&&  navigate("/new/connections/pending")
           
 
           }catch(e){
@@ -105,11 +109,7 @@ const EcosystemCard=({eco,isPending,currentUser,isMember})=>{
             <p className=' text-center font-light text-sm'>
             Worem ipsum dolor sit amet, consectetur adi...
             </p>
-            {/* <Link to="/new/connections/pending">
-              <button className='bg-blue-600 rounded-full px-6 py-2 text-white text-xs font-semibold'
-               onClick={()=>join(eco?.id)}
-              >Join</button>
-            </Link> */}
+     
             {!isPending?
                 <>
                 {isLoading?

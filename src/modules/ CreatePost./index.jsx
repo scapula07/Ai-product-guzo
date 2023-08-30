@@ -13,6 +13,9 @@ import { postApi } from './_api/post'
 import ClipLoader from "react-spinners/ClipLoader";
 
 export default function CreatePosts ({group,currentUser,setTrigger}) {
+
+     console.log(group,"postt")
+
      const [request,setReq]=useState(false)
      const [event,setEvent]=useState(false)
      const [file,setFile]=useState(false)
@@ -99,7 +102,12 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                 post={post}
                 setFile={setFile}
                />}
-              {share&&<Share  setOthers={setOthers}/>}
+              {share&&<Share  
+                   setOthers={setOthers}
+                   group={group}
+                   currentUser={currentUser}
+                   setShare={setShare}
+               />}
 
 
           </>
@@ -113,26 +121,64 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 <div className='w-full flex justify-center h-full overflow-y-scroll'>
       
       <div className='w-4/5 flex flex-col h-full space-y-10 py-4 '>
-
+       
         <div className='flex items-center space-x-2 w-full'>
-                <img 
-                src={group?.img}
-                className="h-10 w-10 rounded-full"
-                />
+              {group?.type?.length>0?
 
-                <div className='flex flex-col '>
-                    <h5 className='font-semibold'>{group?.name}</h5>
-                    <h5 className='text-sm font-light'>{group?.type}</h5>
-                    <div className='flex items-center space-x-1'>
-                        <h5 className='text-sm font-semibold '>Share Options</h5>
-                        <MdArrowDropDown 
-                        className='text-lg'
-                          onClick={()=>setShare(true) || setOthers(true)}
-                        />
-                    </div>
+                  <img 
+                    src={group?.img}
+                    className="h-10 w-10 rounded-full"
+                  />
+                 :
+                 <>
+                   {group?.img?.length>0?
+                       <img 
+                        src={group?.img}
+                        className="h-10 w-10 rounded-full"
+                       />
+                        :
+                        <div className='rounded-full p-2 items-center justify-center flex border'
+                          >
+                         <h5 className='font-semibold text-sm'> {currentUser?.firstName?.slice(0,1) +currentUser?.lastName?.slice(0,1)}</h5>
+                      </div>
+                        
+
+                    }
+                    
                    
+                 </>
+                 }
+                {group?.type?.length>0?
 
-                </div>
+               
+                    <div className='flex flex-col '>
+                        <h5 className='font-semibold'>{group?.name}</h5>
+                        <h5 className='text-sm font-light'>{group?.type}</h5>
+                        <div className='flex items-center space-x-1'>
+                            <h5 className='text-sm font-semibold '>Share Options</h5>
+                            <MdArrowDropDown 
+                            className='text-lg'
+                            onClick={()=>setShare(true) || setOthers(true)}
+                            />
+                        </div>
+                    
+
+                    </div>
+                    :
+                    <div className='flex flex-col '>
+                        <h5 className='font-semibold'>{group?.firstName + " " + group?.lastName}</h5>
+                        <div className='flex items-center space-x-1'>
+                            <h5 className='text-sm font-semibold '>Share Options</h5>
+                            <MdArrowDropDown 
+                            className='text-lg'
+                            onClick={()=>setShare(true) || setOthers(true)}
+                            />
+                        </div>
+                    
+
+                    </div>
+
+                 }
          </div>
 
          <div className='flex flex-col space-y-4'>

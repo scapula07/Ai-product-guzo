@@ -2,6 +2,7 @@ import React from 'react'
 import {BiSolidUserCircle} from "react-icons/bi"
 import { userApi } from './_api'
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export default function LogOut({currentUser}) {
     let navigate = useNavigate();
@@ -46,7 +47,10 @@ export default function LogOut({currentUser}) {
 
         </div>
         <div className='flex flex-col text-sm'>
-            <h5>Settings</h5>
+            <Link to="/new/settings">
+              <h5>Settings</h5>
+            </Link>
+           
             <h5 onClick={logout}>Logout</h5>
 
         </div>

@@ -1,80 +1,44 @@
 import React,{useRef,useState} from 'react'
 import upload from "../../modules/assets/upload.png"
+import {IoMdRadioButtonOn,IoMdRadioButtonOff} from "react-icons/io"
 
 export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setEvent}) {
-    console.log(eventPost,"event")
-    const [url,setUrl]=useState("")
-    const hiddenFileInput = useRef()
+    const [choice,setChoice]=useState("In Person")
+  
 
-    console.log(url?.length ,"length")
-
-    const handleClick = event => {
-            hiddenFileInput.current.click()
-        }
-
-        const handleChange = async(e)=> {
-            const dir = e.target.files[0]
-            console.log(dir,"dir")
-            if (dir) {
-            setUrl({
-                src: URL.createObjectURL(dir)
-                })
-            }
-         setEvt({...eventPost,file:dir})
-          
-    
-        }
+   
   return (
     <div className='w-full flex justify-center'>
         
         <div className='w-3/4 flex flex-col space-y-6'>
                 <h5 className='text-2xl font-semibold'>Add a request to your post...</h5>
-
-
-                <div className='flex flex-col space-y-4'>
-                     <h5  className='text-lg font-semibold'>Add an Image for your Event Post</h5>
-                     <div className='flex justify-center items-center h-48 w-full rounded-lg' style={{background: "rgba(242, 242, 242, 1)"}}>
-                      {url?.length ==0&&
-                            <div className='flex flex-col items-center'
-                            onClick={handleClick}
-                            >
-                                <img 
-                                    src={upload}
-                                />
-                                <input
-                                    type="file"
-                                    className='hidden'
-                                    ref={hiddenFileInput}
-                                    onChange={handleChange}
-                                />
-                                <h5 className='text-sm font-light'>Upload or Drop Images</h5>
-
-                            </div>
-                           }
-                            { url?.src?.length > 0&&
-                             <div className='w-1/2 py-4'>
-                                <img
-                                  src={url?.src}
-                                  className='w-full h-full rounded-lg'
-                                />
-                            </div>
-                          
-                          }
-                          
-                     </div>
-
-                </div>
-
                 <div className='flex flex-col'>
                      <div className="flex items-center space-x-6 ">
-                         <div className='flex items-center space-x-1'>
-                            <input type={"radio"}/>
-                            <h5 className='font-light text-xs'>In Person</h5>
-                         </div>
-                         <div className='flex items-center space-x-1'>
-                            <input type={"radio"} style={{background:"black"}}/>
-                            <h5 className='font-light text-xs'>Online</h5>
-                         </div>
+                         {["In Person","Online"].map((text)=>{
+                             return(
+                                <div className='flex items-center space-x-1'>
+                                   
+                                    <>
+                                    {choice===text?
+                                    < IoMdRadioButtonOn 
+                                       className='text-slate-500 text-lg'
+                                     
+                                    />
+                                    :
+                                    <IoMdRadioButtonOff 
+                                        className='text-slate-500 text-lg'
+                                        onClick={()=>setChoice(text)}
+                                    />
+                                    }
+                                    </>
+                                   
+                                 <h5 className='font-light text-xs'>{text}</h5>
+                                </div>
+
+                                )
+                            })
+                        
+                         }
 
                      </div>
 
@@ -113,6 +77,7 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
                   <EventForms 
                    eventPost={eventPost}
                    setEvt={setEvt}
+                   choice={choice}
                   />
 
 
@@ -150,7 +115,7 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
 
 
 
-const EventForms=({ eventPost,setEvt})=>{
+const EventForms=({ eventPost,setEvt,choice})=>{
 
      return(
         <div className='flex flex-col py-4 space-y-4'>
@@ -212,8 +177,10 @@ const EventForms=({ eventPost,setEvt})=>{
                     }
 
             </div>
+            {choice==="In Person"&&
 
-             <div className='flex flex-col py-4 space-y-6'>
+            
+            <div className='flex flex-col py-4 space-y-6'>
                 {[
                        {
                         name:"Location/Address",
@@ -227,8 +194,32 @@ const EventForms=({ eventPost,setEvt})=>{
                         click:(e)=>setEvt({...eventPost,directions:e.target.value})
 
 
-                    },
-                    {
+                    }].map((field)=>{
+                        
+                        return(
+                        
+                    <div className='flex flex-col w-full space-y-2'>
+                            <label className='text-sm text-black font-semibold'>{field?.name}</label>
+                            <input 
+                                placeholder={field?.placeholder}
+                                className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                onChange={(e)=>field?.click(e)}
+
+
+                            />
+            
+                        </div> 
+                        )
+                    })
+        
+
+                    }
+             </div>
+             }
+                
+
+             <div className='flex flex-col py-2 space-y-6'>
+                {[ {
                         name:"Event Link",
                         placeholder:"Link",
                         click:(e)=>setEvt({...eventPost,link:e.target.value})
@@ -244,10 +235,11 @@ const EventForms=({ eventPost,setEvt})=>{
                     }
 
                   ].map((field)=>{
+                        
                             return(
-
+                            
                         <div className='flex flex-col w-full space-y-2'>
-                                 <label className='text-sm text-black font-semibold'>{field?.name}</label>
+                                <label className='text-sm text-black font-semibold'>{field?.name}</label>
                                 <input 
                                     placeholder={field?.placeholder}
                                     className=' py-2 px-4 w-full rounded-md text-sm outline-none border'

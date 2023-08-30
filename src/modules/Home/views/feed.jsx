@@ -36,6 +36,7 @@ export default function Feeds() {
         return(
             <Feed
              feed={feed}
+             group={group}
              />
         )
         })
@@ -55,16 +56,40 @@ export default function Feeds() {
 }
 
 
-const Feed=({feed})=>{
+const Feed=({feed,group})=>{
      
      return(
         <div className='w-full py-4 bg-white h-full '>
         <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
               <div className='flex items-center space-x-3'>
-                  <img
-                    src={feed?.shared_by?.img}
-                    className="rounded-full h-8 w-8"
-                  />
+                   <>
+                     {feed?.shared_by?.type?.length>0?
+                         <img
+                         src={feed?.shared_by?.img}
+                         className="rounded-full h-8 w-8"
+                       />
+                        :
+                        <>
+                          {feed?.shared_by?.img?.length>0?
+                               <img
+                               src={feed?.shared_by?.img}
+                               className="rounded-full h-8 w-8"
+                             />
+                             :
+                             <div className='rounded-full p-2 items-center justify-center flex border'
+                                >
+                                <h5 className='font-semibold text-sm'> {feed?.shared_by?.firstName?.slice(0,1) +feed?.shared_by?.lastName?.slice(0,1)}</h5>
+                            </div>
+                             
+
+                          }
+                        
+                        
+                        </>
+
+                     }
+                     
+                  </>
                   <h5 className='text-lg font-semibold'>{feed?.shared_by?.name}</h5>
 
               </div>
@@ -105,8 +130,12 @@ const Feed=({feed})=>{
                             {feed?.post?.body}
                         </p>
 
-                  </div>
-              </div>
+                   </div>
+                 </div>
+
+                 <div>
+                  
+                 </div>
 
                <div className='flex flex-col'>
                    {feed?.requests?.map((req)=>{
@@ -122,7 +151,9 @@ const Feed=({feed})=>{
 
               </div>
              
-              <Comment />
+              <Comment 
+                 group ={ group }
+              />
              
 
           </div>
@@ -182,11 +213,37 @@ const RequestCard=({req})=>{
 }
 
 
-const Comment=()=>{
+const Comment=({ group })=>{
    return(
       <div className='flex flex-col w-full px-4  '>
-          <div className='flex items-center w-full space-x-8 px-2'>
-             <h5>Y</h5>
+          <div className='flex items-center w-full space-x-2 px-2'>
+              <div>
+              { group.type?.length>0?
+                         <img
+                         src={group ?.img}
+                         className="rounded-full h-8 w-8"
+                       />
+                        :
+                        <>
+                          { group.img?.length>0?
+                               <img
+                               src={ group?.img}
+                               className="rounded-full h-8 w-8"
+                             />
+                             :
+                             <div className='rounded-full p-2 items-center justify-center flex border'
+                                >
+                                <h5 className='font-semibold text-sm'> { group?.firstName?.slice(0,1) + group?.lastName?.slice(0,1)}</h5>
+                            </div>
+                             
+
+                          }
+                        
+                        
+                        </>
+
+                     }
+              </div>
              <div className='flex items-center border px-2 border-black justify-between rounded-full w-full'>
                  <input 
                    className='border-0  py-1 rounded-full outline-none px-2'

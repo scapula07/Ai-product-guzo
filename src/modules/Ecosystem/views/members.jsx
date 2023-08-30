@@ -20,6 +20,7 @@ export default function EcoMembers() {
         const getAllMembers=async()=>{
             console.log("mmmm")
            const members=await ecosystemApi.getAllMembers(group?.id,currentUser)
+           console.log(members,"memm")
            setMembers(members)
         }
         getAllMembers()
@@ -32,8 +33,9 @@ export default function EcoMembers() {
             {members?.pending?.map((member)=>{
                 return(
                     <PendingMember 
-                    member={member}
-                    group={ group}
+                        member={member}
+                        group={ group}
+                        setMembers={setMembers}
                     />
             
 

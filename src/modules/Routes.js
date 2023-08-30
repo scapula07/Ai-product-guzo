@@ -43,6 +43,7 @@ import EcoMembers from "./Ecosystem/views/members";
 import ViewProfile from "./ViewProfile";
 import Feed from "./Feed";
 import { Collaboration,Post,CollabContacts } from "./Collaboration";
+import Teammates from "./Teammates";
 
 
 const NewRoutes = () => {
@@ -131,6 +132,7 @@ const NewRoutes = () => {
                     <Route path="" element={<EcoMembers/>} />
                 </Route>
                 <Route path="/feed/:id" element={<Feed/>} />
+                <Route path="/team" element={<Teammates/>} />
     
             </Routes>
     </>

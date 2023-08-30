@@ -41,9 +41,12 @@ export default function Individual({currentUser}) {
       const create=async()=>{
         setLoader(true)
         try{
-            const result =await createProfile.createUserProfile(currentUser?.id,displayName,file)
+            const result =await createProfile.createUserProfile(user?.id,displayName,file)
             setLoader(true)
-            navigate(`/new`)
+            result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
+            console.log(result,"result")
+            setLoader(false)
+            result?.id?.length>0&& navigate(`/new`)
 
           }catch(e){
             console.log(e)

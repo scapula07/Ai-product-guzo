@@ -12,19 +12,34 @@ export default function CreatePost({group,currentUser}) {
     <>
     <div className='bg-white w-full rounded-lg flex px-4 flex-col py-4  space-y-4'>
         <div className='flex items-center space-x-4'>
-            {group?.img?.length > 0?
-               <img 
-               src={group?.img}
-               className="rounded-full h-8 w-8 "
-                />
-                :
-                <img
-                src={currentUser?.img}
+
+            {group?.type?.length>0?
+
+                <img 
+                src={group?.img}
                 className="rounded-full h-8 w-8 "
                 />
 
+              :
 
-            }
+             <>
+              {group?.img?.length > 0?
+                <img 
+                src={group?.img}
+                className="rounded-full h-8 w-8 "
+                  />
+                  :
+                  <div className='rounded-full p-2 items-center justify-center flex border'
+                     >
+                    <h5 className='font-semibold text-sm'> {currentUser?.firstName?.slice(0,1) +currentUser?.lastName?.slice(0,1)}</h5>
+                   </div>
+                  
+
+
+                }
+             </>
+
+              }
             
 
                <input 

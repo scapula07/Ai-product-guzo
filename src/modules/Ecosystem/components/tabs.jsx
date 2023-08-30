@@ -10,7 +10,7 @@ export default function Tabs() {
              </Link>
         </div>
           <div className='w-1/2 flex justify-center'>
-              <Link to="poost">
+              <Link to="post">
                 <h5 className='lg:text-sm text-xs font-semibold'>Post Management</h5>
               </Link>
           </div>

@@ -23,6 +23,10 @@ export const createProfile= {
               })
     
              console.log(result,"result")
+             const docSnap = await getDoc(userRef);
+             console.log(docSnap,"ecosystem")
+
+             return {id:docSnap?.id,...docSnap?.data()}
 
             }catch(e){
                 console.log(e)
@@ -62,7 +66,7 @@ export const createProfile= {
                const docOrg=docSnap.data()
          
                if (docSnap.exists()) {
-                const doc=docSnap.data()
+              
                     const result = await updateDoc(userRef, {
                             organizations:[
                                 ...currentUser?.organizations,

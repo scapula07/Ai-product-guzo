@@ -23,29 +23,20 @@ export const postApi= {
             console.log(postImg)
     
             delete payload?.post?.img;
-          let postSnap;
-           if(group?.id?.length >0){
-           
-                 postSnap = await addDoc(collection(db, "posts"),{
-                    ...payload,
-                    img_post:postImg ,
-                    creator_id:group?.id,
-                    shared_by:group
-                })
-           }else{
-        
-                postSnap = await addDoc(collection(db, "posts"),{
-                    ...payload,
-                    img_post:postImg ,
-                    creator_id:currentUser?.id,
-                    shared_by:currentUser
-                })
-
-           }
-           
+      
+      
+            const  postSnap = await addDoc(collection(db, "posts"),{
+                ...payload,
+                img_post:postImg ,
+                creator_id:group?.id,
+                shared_by:group
+            })
+    
+             
+           const postRef=doc(db,"posts",postSnap?.id)
+           const docSnap = await getDoc(postRef);
+           return docSnap.exists()
             
-             const response= await getDoc(postSnap).exists()
-             return response
 
           }catch(e){
             console.log(e)

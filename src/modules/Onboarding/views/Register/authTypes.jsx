@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { authApi } from '../../_api/auth'
 
 
+
 export default function AuthTypes() {
   
     const [activeAuth,setAuth]=useState("")
@@ -45,7 +46,7 @@ export default function AuthTypes() {
      ]
   return (
     <div className='w-full flex justify-center  '>
-            <div className='w-1/2 flex bg-white rounded-lg h-96 border flex-col items-center py-8 space-y-8 ' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
+            <div className='w-4/5 flex bg-white rounded-lg  border flex-col items-center py-8 space-y-8 ' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
                  <h5 className='text-xl font-semibold '>Sign up for Guzo</h5>
 
                  {auths?.map((auth)=>{
@@ -61,18 +62,11 @@ export default function AuthTypes() {
                               className="w-4"
                             />
                             
-                                 {/* <Link to={`${activeAuth="Sign up with Email" ? "email-password": "2fa"}`}>
-                                   <h5 className="font-light text-sm">{auth?.name}</h5>
-                                </Link> */}
+          
 
                              <h5 className="font-light text-sm">
                               {auth?.name}
-                                {/* {activeAuth==="Sign up with Email" ?
-                                   <Link to="email-password"> </Link>
-                                   :
-                                    <span click={auth?.click}>{auth?.name}</span>   
-
-                                } */}
+                                
                                
                                 </h5>
 
@@ -84,6 +78,21 @@ export default function AuthTypes() {
                      )
                  })
                  }
+
+
+                 <div className='flex flex-col space-y-4 items-center w-full'>
+                    <h5 className='h-0.5  w-1/3 text-black border '></h5>
+                    <div className='flex flex-col space-y-2 items-center w-full'>
+                      <h5>Already have an account?</h5>
+                     <Link to="login">
+                        <button className='border border-blue-700 text-blue-700 rounded-full px-10 py-1'>Sign in</button>
+                     </Link>
+   
+
+                    </div>
+
+
+                 </div>
  
             </div>
 

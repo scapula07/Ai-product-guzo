@@ -37,7 +37,7 @@ export default function SidePanel() {
             <>
               {currentUser?.img?.length ===0?
                    <div className='rounded-lg p-2 items-center justify-center flex border'
-                   onClick={()=>setGroup(currentUser)}
+                      onClick={()=>setGroup(currentUser)}
                    >
                        <h5 className='font-semibold text-sm'> {currentUser?.firstName?.slice(0,1) +currentUser?.lastName?.slice(0,1)}</h5>
                     </div>

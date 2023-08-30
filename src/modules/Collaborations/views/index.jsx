@@ -13,7 +13,7 @@ export default function Collaborations() {
            
         </div>
         <div className=' w-full h-full space-x-10 px-10'>
-            <div className='w-full overflow-y-auto h-full '>
+            <div className='w-full overflow-y-auto h-full no-scrollbar'>
                  <Tabs />
                 
 

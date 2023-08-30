@@ -1,4 +1,4 @@
-import { doc,getDoc,setDoc , updateDoc,collection,addDoc}  from "firebase/firestore";
+import { doc,getDoc,setDoc , updateDoc,collection,addDoc,onSnapshot}  from "firebase/firestore";
 import {getStorage, ref, uploadBytes } from "firebase/storage"
 import { db } from "../../Firebase";
 
@@ -13,6 +13,17 @@ export const ecosystemApi= {
          if(docSnap?.data().creator===currentUser?.id){
            return docSnap?.data()
          }
+        // const unsub = onSnapshot(doc(db,"ecosystems",id), (doc) => {
+        //     console.log("Current data: ", doc.data()?.creator);
+        //     if(doc?.data()?.creator !=currentUser?.id) return ;
+        //     return doc?.data()
+               
+              
+        // });
+       
+         
+        
+        
 
        },
        acceptMember:async function (id,member) {
@@ -38,6 +49,7 @@ export const ecosystemApi= {
                      ]
                    })
                     const userRef =doc(db,"users",member?.id)
+                  
                     const result2 = await updateDoc(userRef, {
                         ecosystems:[
                             ...member?.ecosystems,
@@ -49,7 +61,12 @@ export const ecosystemApi= {
                         ]
                         
                     })
-                    console.log(result2,"result")
+
+                
+                 console.log(result2,"result")
+                const memberSnap = await getDoc(ecoRef);
+                console.log(docSnap,"ecosystem")
+                return docSnap?.data()
            
             }catch(e){
                 console.log(e)
