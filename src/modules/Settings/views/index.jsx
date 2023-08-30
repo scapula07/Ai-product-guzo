@@ -19,7 +19,7 @@ export default function Settings() {
                       },
                       {
                         text: "Teammates",
-                        link:"/new/team"
+                        link:"/team"
 
                       },
                       {

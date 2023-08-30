@@ -37,8 +37,8 @@ export const teamApi= {
     getAllTeammates:async function (id,currentUser) {
         const ecoRef =doc(db,"ecosystems",id)
         const docSnap = await getDoc(ecoRef);
-        console.log(docSnap?.data(),"api")
-        return docSnap?.data()?.teammates
+        console.log(docSnap?.data()?.invitees,"api")
+        return {teammates:docSnap?.data()?.teammates,invitees:docSnap?.data()?.invitees}
 
         //  if(docSnap?.data().creator===currentUser?.id){
         //    return docSnap?.data()

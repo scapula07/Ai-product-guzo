@@ -26,7 +26,7 @@ export default function Teammates() {
             const teammates=await teamApi.getAllTeammates(group?.id,currentUser)
             console.log(teammates,"teammm")
             setTeam(teammates)
-        }
+         }
         getAllTeammates()
      }, [group])
 

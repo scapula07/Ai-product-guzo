@@ -53,7 +53,8 @@ export default function Eco({currentUser}) {
                 name:ecoName,
                 email:ecoEmail,
                 location:ecoLocation,
-                memberships:[]
+                memberships:[],
+                invitees:[]
 
 
             }
@@ -62,7 +63,7 @@ export default function Eco({currentUser}) {
             result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
             console.log(result,"result")
             setLoader(false)
-            result?.id?.length>0&& navigate(`/new`)
+            result?.id?.length>0&& navigate(`/home`)
           }catch(e){
             console.log(e)
             setLoader(false)

@@ -45,7 +45,7 @@ export default function Pending() {
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
         {currentUser?.pending?.map((eco)=>{
             return(
-                <Link  to={`/new/eco-profile/${eco?.id}`}
+                <Link  to={`/eco-profile/${eco?.id}`}
                     state={{
                     eco
                         }}

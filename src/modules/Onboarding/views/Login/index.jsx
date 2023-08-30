@@ -143,7 +143,7 @@ export default function Login() {
                             <h5 className='h-0.5  w-1/3 text-black border '></h5>
                             <div className='flex flex-col space-y-2 items-center w-full'>
                             <h5>Already have an account?</h5>
-                            <Link to="/new/onboard/register/email-password">
+                            <Link to="/register/email-password">
                                 <button className='border border-blue-700 text-blue-700 rounded-full px-10 py-1'>Sign up</button>
                             </Link>
         

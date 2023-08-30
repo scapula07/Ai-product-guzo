@@ -77,7 +77,7 @@ const NewRoutes = () => {
     <>
             <Routes>
                 <Route path="/auth/*" element={<Index/>} />
-                <Route path="onboard" element={<Onboarding/>} >
+                <Route path="/" element={<Onboarding/>} >
                      <Route path="" element={<Accounts/>} />
                       <Route path="register" element={<Register/>} >
                           <Route path="" element={<AuthTypes/>} />
@@ -86,7 +86,7 @@ const NewRoutes = () => {
                       </Route>
                     
                       <Route path="2fa" element={<FactorAuth/>} />
-                    <Route path="profile" element={<CreateProfiles />} >
+                    <Route path="create-profile" element={<CreateProfiles />} >
                         <Route path="" element={<Individual currentUser={currentUser}/>}   />
                         <Route path="org" element={<Org currentUser={currentUser}/>} />
                         <Route path="network" element={<Eco currentUser={currentUser}/>} />
@@ -103,7 +103,7 @@ const NewRoutes = () => {
                      
                      
                   </Route>
-                <Route path="/" element={<Home/>} >
+                <Route path="/home" element={<Home/>} >
                     <Route path="" element={<Feeds/>} />
                     <Route path="ecosystems" element={<Ecosystems/>} />
                 </Route>

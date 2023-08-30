@@ -16,7 +16,7 @@ export default function Active() {
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
         {currentUser?.ecosystems?.map((eco)=>{
             return(
-                <Link  to={`/new/eco-profile/${eco?.id}`}
+                <Link  to={`/eco-profile/${eco?.id}`}
                     state={{
                     eco
                 }}
@@ -38,7 +38,7 @@ export default function Active() {
 
                         <div className='flex items-center space-x-3 py-2'> 
                            <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
-                             <Link to="/new/messages">
+                             <Link to="/messages">
                                 <FiMessageSquare 
                                     className='text-blue-600 text-2xl '
                                 />

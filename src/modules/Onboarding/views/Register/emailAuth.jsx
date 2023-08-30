@@ -22,6 +22,7 @@ export default function EmailAuth() {
     const [isLoading,setLoader]=useState(false)
 
     const signUpWithEmail=async()=>{
+       
         setErrorMsg(null)
 
         if (firstName.length < 3) {
@@ -78,7 +79,7 @@ export default function EmailAuth() {
                localStorage.clear();
                localStorage.setItem('user',JSON.stringify(user));
 
-             user?.id.length >0&& navigate(`/new/onboard/profile/${route}`)
+             user?.id.length >0&& navigate(`/create-profile/${route}`)
 
             }catch(e){
                 console.log(e)
@@ -217,7 +218,7 @@ export default function EmailAuth() {
                             <h5 className='h-0.5  w-1/3 text-black border '></h5>
                             <div className='flex flex-col space-y-2 items-center w-full'>
                             <h5>Already have an account?</h5>
-                            <Link to="/new/onboard/register/login">
+                            <Link to="/register/login">
                                 <button className='border border-blue-700 text-blue-700 rounded-full px-10 py-1'>Sign in</button>
                             </Link>
         

@@ -123,7 +123,7 @@ const Feed=({feed,group})=>{
               </div>
 
               <div className='flex flex-col space-y-5 px-4 '>
-               <Link  to={`/new/feed/${feed?.id}`}
+               <Link  to={`/feed/${feed?.id}`}
                     state={{
                      feed
                   }}

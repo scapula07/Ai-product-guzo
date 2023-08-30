@@ -13,7 +13,7 @@ export default function LogOut({currentUser}) {
             const response =await userApi.logout()
             console.log(response,"response")
            
-            navigate(`/new/onboard/register/login`)
+            navigate(`/register/login`)
 
         }catch(e){
             console.log(e)
@@ -47,7 +47,7 @@ export default function LogOut({currentUser}) {
 
         </div>
         <div className='flex flex-col text-sm'>
-            <Link to="/new/settings">
+            <Link to="/settings">
               <h5>Settings</h5>
             </Link>
            

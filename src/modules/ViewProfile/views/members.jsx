@@ -66,7 +66,7 @@ const Member=({member,currentUser})=>{
           const response=await messageApi.startConversation(member,currentUser)
           console.log(response,"msg res")
           setLoading(false)
-          response && navigate("/new/messages")
+          response && navigate("/messages")
           setLoading(false)
           
 

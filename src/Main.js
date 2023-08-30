@@ -17,8 +17,8 @@ const Main = () => {
   return (
     <BrowserRouter >
       <Routes >
-        <Route path="/new/*"  element={<NewRoutes />} />
-        <Route path="/dashboard/*"  element={<DashboardRoutes />} />
+        <Route path="/*"  element={<NewRoutes />} />
+        {/* <Route path="/dashboard/*"  element={<DashboardRoutes />} />
         <Route path="/user/*" element={<UserRoutes />} />
 
 
@@ -31,7 +31,7 @@ const Main = () => {
         <Route path="/auth/forgot-password" element={<ForgotPassword />} />
         <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
 
-        <Route path="/join-community/:token" element={<JoinCommunity />} />
+        <Route path="/join-community/:token" element={<JoinCommunity />} /> */}
 
 
       </Routes>

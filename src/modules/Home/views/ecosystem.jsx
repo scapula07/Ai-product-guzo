@@ -77,10 +77,10 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
         try{
           const result =await ecosystemApi.joinRequest(id,currentUser,group)
           setLoading(false)
-          navigate("/new/connections/pending")
+        //   navigate("/newconnections/pending")
           result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
           console.log(result,"result")
-          result?.id?.length>0&&  navigate("/new/connections/pending")
+          result?.id?.length>0&&  navigate("/connections/pending")
           
 
           }catch(e){
@@ -91,7 +91,7 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
     return(
         <div className='flex flex-col bg-white py-4 px-4'>
         <div className='flex flex-col items-center space-y-3'>
-            <Link  to={`/new/eco-profile/${eco?.id}`}
+            <Link  to={`/eco-profile/${eco?.id}`}
                     state={{
                      eco
                   }}

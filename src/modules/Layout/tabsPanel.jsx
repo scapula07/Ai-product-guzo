@@ -99,33 +99,33 @@ const navs=[
     {
         name:"Home",
         icon:home,
-        link:"/new"
+        link:"/home"
 
     },
     {
         name:"Connections",
         icon:connections,
-        link:"/new/connections"
+        link:"/connections"
 
     },
     {
         name:"Posts",
         icon:opportunity,
-        link:"/new/collaborations"
+        link:"/collaborations"
     },
     {
         name:"Ecosystem",
         icon:ecosystem,
-        link:"/new/ecosystem"
+        link:"/ecosystem"
     },
     {
         name:"Messages",
         icon:message,
-        link:"/new/messages"
+        link:"/messages"
     },
     {
         name:"Profile",
         icon:user,
-        link:"/new/profile"
+        link:"/profile"
     },
 ]

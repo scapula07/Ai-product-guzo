@@ -56,7 +56,8 @@ export default function Org({currentUser}) {
                 name:orgName,
                 email:orgEmail,
                 location:orgLocation,
-                memberships:[]
+                memberships:[],
+                invitees:[]
 
             }
             const result =await createProfile.createOrgProfile(payload,file,user)
@@ -65,7 +66,7 @@ export default function Org({currentUser}) {
             result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
             console.log(result,"result")
             setLoader(false)
-            result?.id?.length>0&& navigate(`/new`)
+            result?.id?.length>0&& navigate(`/home`)
           }catch(e){
             console.log(e)
             setLoader(false)

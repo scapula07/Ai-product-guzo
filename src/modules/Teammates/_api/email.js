@@ -7,7 +7,7 @@ export const inviteEmail= {
     sendInvite:async function (invitee,user) {
 
 
-        const url=`http://localhost:7000/api/send-email`
+        const url=`https://guzo-emailing.onrender.com`
     
 
         const config = {
