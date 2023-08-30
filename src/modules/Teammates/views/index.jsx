@@ -6,6 +6,8 @@ import {AiOutlineClose } from "react-icons/ai"
 import { userState,groupState } from '../../Recoil/globalstate'
 import { useRecoilValue } from 'recoil'
 import { teamApi } from '../_api/team'
+import { inviteEmail } from '../_api/email'
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 export default function Teammates() {
@@ -13,17 +15,40 @@ export default function Teammates() {
     const group =useRecoilValue(groupState)
     const currentUser=useRecoilValue(userState)
     const [teams,setTeam]=useState([])
+    const [isLoading,setLoader]=useState(false)
+
+    const [invitee,setInvitee]=useState({})
 
     
     useEffect(()=>{
         const getAllTeammates=async()=>{
             console.log("mmmm")
-           const teammates=await teamApi.getAllTeammates(group?.id,currentUser)
-           console.log(teammates,"teammm")
-           setTeam(teammates)
+            const teammates=await teamApi.getAllTeammates(group?.id,currentUser)
+            console.log(teammates,"teammm")
+            setTeam(teammates)
         }
         getAllTeammates()
-     },[group])
+     }, [group])
+
+     const addTeammates=async()=>{
+        setLoader(true)
+         try{
+            const res =inviteEmail.sendInvite(invitee)
+           if( res.status ===200){
+                const response =teamApi.addInvitee(invitee,group)
+                console.log(response,"ressss")
+                response===undefined&&setTrigger(false)
+                response===undefined&&setLoader(false)
+            }
+            
+            
+
+         }catch(e){
+            console.log(e)
+            setLoader(false)
+         }
+
+        }
   
   return (
     <Layout>
@@ -63,6 +88,8 @@ export default function Teammates() {
 
 
                           <Form 
+                            invitee={ invitee}
+                            setInvitee={setInvitee}
                            
                           />
 
@@ -74,13 +101,22 @@ export default function Teammates() {
                                   Cancel
                        
                                </button>
+                               {isLoading?
+                             
+                                    <ClipLoader 
+                                        color={"rgba(62, 51, 221, 1)"}
+                                        loading={isLoading}
+                                    />
+                             :
                               <button className='text-blue-700 rounded-full px-4 py-1 text-sm'
                                 style={{background: "rgba(236, 235, 254, 1)"}}
+                                onClick={addTeammates}
                              
                                  >
                                     Submit
                        
                                </button>
+                              }
 
                           </div>
 
@@ -94,7 +130,7 @@ export default function Teammates() {
 }
 
 
-const Form=({})=>{
+const Form=({ invitee,setInvitee})=>{
     return(
 
         <div className='flex flex-col py-8 space-y-6'>
@@ -105,6 +141,7 @@ const Form=({})=>{
                         placeholder='First Name'
                         className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
                         name="firstName"
+                        onChange={(e)=>setInvitee({...invitee,firstName:e.target.value})}
                     
 
                     />
@@ -116,7 +153,7 @@ const Form=({})=>{
                             placeholder='Last Name'
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none border '
                             name="lastName"
-                            
+                            onChange={(e)=>setInvitee({...invitee,lastName:e.target.value})}
                         />
 
                 </div>
@@ -128,6 +165,7 @@ const Form=({})=>{
                             placeholder='Email'
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none border '
                             name="lastName"
+                            onChange={(e)=>setInvitee({...invitee,email:e.target.value})}
                             
                         />
 

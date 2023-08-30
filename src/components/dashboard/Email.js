@@ -20,7 +20,7 @@ import axios from "axios";
   import React, { useEffect, useState } from "react";
   import { Link, useNavigate } from "react-router-dom";
   import ReactSelect from "react-select";
-  import FadeIn from "react-fade-in";
+  // import FadeIn from "react-fade-in";
 import CustomizedProgressBars from "../molecules/Progress";
   
   const Email = () => {
@@ -161,8 +161,7 @@ import CustomizedProgressBars from "../molecules/Progress";
                 <div className="col-span-2 py-2 pl-4">Audience</div>
   
               </div>
-  
-            <FadeIn>
+         
             {emails && emails.map((item,index)=> (
              <div className="grid grid-cols-7  items-center divide-x  bg-[#EBF1F5] text-black  px-3 "
              key={index}
@@ -205,8 +204,9 @@ import CustomizedProgressBars from "../molecules/Progress";
              </div> */}
            </div>
            ))}
-            </FadeIn>
-  
+           
+   
+   
 
   {!emails && <div className="mt-3" ><CustomizedProgressBars/></div>}
 

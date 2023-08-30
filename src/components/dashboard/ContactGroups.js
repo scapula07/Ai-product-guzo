@@ -14,7 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReactSelect from "react-select";
 import CreateContactGroupModal from "../molecules/CreateContactGroupModal";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
-import FadeIn from "react-fade-in";
+// import FadeIn from "react-fade-in";
 import CustomizedProgressBars from "../molecules/Progress";
 
 const ContactGroups = () => {
@@ -201,7 +201,7 @@ const ContactGroups = () => {
       :
       (
         <div className="space-y-3 mt-7 mb-20">
-        <FadeIn>
+        
           {contacts &&
             contacts.map((item, index) => (
               <div key={index}>
@@ -312,7 +312,7 @@ const ContactGroups = () => {
                 <Divider />
               </div>
             ))}
-        </FadeIn>
+        
 
         {!contacts  && (<CustomizedProgressBars/>)}
 

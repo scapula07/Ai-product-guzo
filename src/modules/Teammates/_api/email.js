@@ -22,10 +22,10 @@ export const inviteEmail= {
             const response= await axios.post(
                     url,
                      {
-                        receiver,
-                        sender:"",
+                        receiver:invitee?.email,
+                        sender:"communitycare@guzo.io",
                         subject:"Invite to join team on Guzo",
-                        message:""
+                        message:"http://localhost:3001/new/notifications"
 
                      },
                     config

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {useRecoilValue} from "recoil"
 import { accountTypeState } from '../../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
-import FadeIn from "react-fade-in";
+// import FadeIn from "react-fade-in";
 import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
 
 export default function EmailAuth() {
@@ -94,7 +94,8 @@ export default function EmailAuth() {
                  <h5 className='text-xl font-semibold text-center'>Sign up with Email</h5>
                  <div className='px-10 py-1'>
                     {errorMsg && (
-                      <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+                    //   <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+                    <Alert severity="error">{errorMsg}</Alert>
                      )}
 
                  </div>

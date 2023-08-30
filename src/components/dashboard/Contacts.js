@@ -15,7 +15,7 @@ import CreateContactGroupModal from "../molecules/CreateContactGroupModal";
 import DeleteTeammateModal from "../molecules/DeleteTeammateModal";
 import CustomizedProgressBars from "../molecules/Progress";
 import RenameContactGroupModal from "../molecules/RenameContactGroupModal";
-import FadeIn from 'react-fade-in';
+// import FadeIn from 'react-fade-in';
 
 const Contacts = () => {
   const [contactGroups, setContactGroups] = useState(null);
@@ -175,7 +175,7 @@ const Contacts = () => {
       </div>
 
       <div className="space-y-3 mt-7">
-        <FadeIn delay={100} >
+      
         {contactGroups &&
           contactGroups.map((item, index) => (
             <div key={item._id} id={item._id}>
@@ -279,7 +279,7 @@ const Contacts = () => {
               <Divider />
             </div>
           ))}
-        </FadeIn>
+        
 
         {!contactGroups && <CustomizedProgressBars />}
 

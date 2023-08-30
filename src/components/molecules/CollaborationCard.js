@@ -1,12 +1,12 @@
 import { Avatar, Button, Fade } from '@mui/material'
 import React,{useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
-import FadeIn from 'react-fade-in'
+// import FadeIn from 'react-fade-in'
 
 const CollaborationCard = ({collaboration,index}) => {
   const navigate = useNavigate()
   return (
- <FadeIn  delay={(index+1)*200 > 800 ? 800 : (index+1)*200  }>
+
      <div className="shadow-lg py-[18px] px-[17px]">
     <div>
       {" "}
@@ -38,7 +38,7 @@ const CollaborationCard = ({collaboration,index}) => {
       </Button>
     </div>
   </div>
- </FadeIn>
+
   )
 }
 

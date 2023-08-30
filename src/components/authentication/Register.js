@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
-import FadeIn from "react-fade-in";
+// import FadeIn from "react-fade-in";
 const Register = () => {
   const navigate = useNavigate();
   const loggedInUser = JSON.parse(localStorage.getItem("user"));
@@ -173,7 +173,8 @@ const Register = () => {
           </div>
 
           {errorMsg && (
-            <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+            // <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+            <Alert severity="error">{errorMsg}</Alert>
           )}
 
           <div className="mt-4">

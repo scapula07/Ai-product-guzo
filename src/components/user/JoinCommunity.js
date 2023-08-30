@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
-import FadeIn from "react-fade-in";
+// import FadeIn from "react-fade-in";
 import jwtDecode from "jwt-decode";
 
 const JoinCommunity = () => {
@@ -250,9 +250,10 @@ const JoinCommunity = () => {
             </div>
 
             {errorMsg && (
-              <FadeIn>
-                <Alert severity="error">{errorMsg}</Alert>
-              </FadeIn>
+              // <FadeIn>
+              //   <Alert severity="error">{errorMsg}</Alert>
+              // </FadeIn>
+              <Alert severity="error">{errorMsg}</Alert>
             )}
 
             <div className="mt-4">
@@ -410,9 +411,10 @@ const JoinCommunity = () => {
             </div>
 
             {errorMsg && (
-              <FadeIn>
-                <Alert severity="error">{errorMsg}</Alert>
-              </FadeIn>
+              // <FadeIn>
+              //   <Alert severity="error">{errorMsg}</Alert>
+              // </FadeIn>
+              <Alert severity="error">{errorMsg}</Alert>
             )}
 
             <div className="mt-4">

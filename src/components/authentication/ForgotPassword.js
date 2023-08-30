@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
-import FadeIn from 'react-fade-in';
+// import FadeIn from 'react-fade-in';
 
 const ForgotPassword = () => {
   const navigate = useNavigate()
@@ -67,15 +67,17 @@ const ForgotPassword = () => {
 
           <div className="mt-4">
           {error && (
-            <FadeIn>
+            // <FadeIn>
+            // <Alert severity="error">Some error occured try again!</Alert>
+            // </FadeIn>
             <Alert severity="error">Some error occured try again!</Alert>
-            </FadeIn>
          )}
           
          {alert && (
-            <FadeIn>
+            // <FadeIn>
+            // <Alert severity="success">{msg}</Alert>
+            // </FadeIn>
             <Alert severity="success">{msg}</Alert>
-            </FadeIn>
          )}
             
 

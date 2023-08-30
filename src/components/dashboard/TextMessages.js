@@ -20,7 +20,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ReactSelect from "react-select";
-import FadeIn from "react-fade-in";
+// import FadeIn from "react-fade-in";
 import CustomizedProgressBars from "../molecules/Progress";
 
 const TextMessages = () => {
@@ -164,7 +164,7 @@ const TextMessages = () => {
               {/* <div className="col-span-2 py-2 text-center">Action</div> */}
             </div>
 
-           <FadeIn>
+           
            {textMessages && textMessages.map((item,index)=> (
              <div className="grid grid-cols-9  items-center divide-x  bg-[#EBF1F5] text-black  px-3 "
              key={index}
@@ -207,7 +207,7 @@ const TextMessages = () => {
              </div> */}
            </div>
            ))}
-           </FadeIn>
+           
 
            {!textMessages && <div className="mt-3" ><CustomizedProgressBars/></div>}
            {textMessages && textMessages.length < 1 &&  <div className="mt-3">No text messages available</div>}

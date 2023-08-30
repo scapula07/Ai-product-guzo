@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
-import FadeIn from "react-fade-in";
+// import FadeIn from "react-fade-in";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -124,9 +124,10 @@ const Login = () => {
           </div>
 
           {errorMsg && (
-            <FadeIn>
-              <Alert severity="error">{errorMsg}</Alert>
-            </FadeIn>
+            // <FadeIn>
+            //   <Alert severity="error">{errorMsg}</Alert>
+            // </FadeIn>
+            <Alert severity="error">{errorMsg}</Alert>
           )}
 
           <div className="mt-4">

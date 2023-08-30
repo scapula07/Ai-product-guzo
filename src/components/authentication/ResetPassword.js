@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomizedProgressBars from "../molecules/Progress";
-import FadeIn from 'react-fade-in';
+// import FadeIn from 'react-fade-in';
 import jwtDecode from "jwt-decode";
 
 
@@ -100,15 +100,17 @@ const ResetPassword = () => {
 
           <div className="mt-4">
           {error && (
-            <FadeIn>
+            // <FadeIn>
+            // <Alert severity="error">{errorMsg}</Alert>
+            // </FadeIn>
             <Alert severity="error">{errorMsg}</Alert>
-            </FadeIn>
          )}
           
          {alert && (
-            <FadeIn>
+            // <FadeIn>
+            // <Alert severity="success">{msg}</Alert>
+            // </FadeIn>
             <Alert severity="success">{msg}</Alert>
-            </FadeIn>
          )}
             
 
