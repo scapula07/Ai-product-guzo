@@ -33,12 +33,14 @@ export default function Teammates() {
      const addTeammates=async()=>{
         setLoader(true)
          try{
-            const res =inviteEmail.sendInvite(invitee)
-           if( res.status ===200){
+            const res =await inviteEmail.sendInvite(invitee)
+            console.log(res,"res")
+           if( res ===200){
+               console.log("sent succesfully")
                 const response =teamApi.addInvitee(invitee,group)
                 console.log(response,"ressss")
-                response===undefined&&setTrigger(false)
-                response===undefined&&setLoader(false)
+                response&&setTrigger(false)
+                response&&setLoader(false)
             }
             
             

@@ -26,6 +26,41 @@ export const feedApi = {
             console.log(e)
         }
 
-    }
+    },
+
+
+    makeComments: async function (payload,feed) {
+      try{
+        const postRef =doc(db,"posts",feed?.id)
+        const docSnap = await getDoc(postRef);
+
+        console.log(docSnap,"snappp")
+
+
+        if(docSnap?.exists()){
+          const post=docSnap?.data()
+          const comments=post?.comments ==undefined ? [] :post?.comments
+
+          const result = await updateDoc(postRef, {
+            comments:[
+              ...comments,
+              payload
+             ]
+       
+            })
+            console.log(result,"result")
+            return true
+       
+         }
+      }catch(e){
+        console.log(e)
+      }
+      
+
+    //   const pendingRequest =currentRequest?.pending ==undefined ? [] :currentRequest?.pending
+
+    //  const pending=[...pendingRequest,request]
+
+     }
 
 }

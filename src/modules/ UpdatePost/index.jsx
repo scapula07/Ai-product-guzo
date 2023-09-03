@@ -12,7 +12,7 @@ import {MdArrowDropDown} from "react-icons/md"
 import { postApi } from './_api/post'
 import ClipLoader from "react-spinners/ClipLoader";
 
-export default function UpdatePosts ({group,currentUser,setTrigger}) {
+export default function UpdatePosts ({group,currentUser,setTrigger,collab}) {
      const [request,setReq]=useState(false)
      const [event,setEvent]=useState(false)
      const [file,setFile]=useState(false)
@@ -20,11 +20,11 @@ export default function UpdatePosts ({group,currentUser,setTrigger}) {
      const [others,setOthers]=useState(false)
      const [isLoading,setLoader]=useState(false)
 
-     const [requests,setRequests]=useState([])
+     const [requests,setRequests]=useState(collab?.requests)
 
     const [post,setPost]=useState({
-                                  title:"",
-                                  body:"",
+                                  title:collab?.post?.title,
+                                  body:collab?.post?.body,
                                   img:{}
                                 })
     const [requestPost,setRequest]=useState({
@@ -32,13 +32,13 @@ export default function UpdatePosts ({group,currentUser,setTrigger}) {
         body:"",
         })
     const [eventPost,setEvt]=useState({
-        title:"",
-        body:"",
-        img:""
+       ...collab?.eventPost
         })
 
 
-    const [url,setUrl]=useState("")
+    const [url,setUrl]=useState({src:collab?.img_post})
+
+
 
    
 
@@ -46,7 +46,7 @@ export default function UpdatePosts ({group,currentUser,setTrigger}) {
     console.log(others,"others")
     console.log(request,"request")
 
-    const makePost=async(group)=>{
+    const editPost=async(group)=>{
         console.log("groppp")
         setLoader(true)
         const payload={
@@ -56,7 +56,7 @@ export default function UpdatePosts ({group,currentUser,setTrigger}) {
         }
 
         try{
-           const result =await postApi.makePost(group,payload,currentUser)
+           const result =await postApi.editPost(group,payload,currentUser,collab)
            result&&setLoader(false)
            result&&setTrigger(false)
         }catch(e){
@@ -66,6 +66,8 @@ export default function UpdatePosts ({group,currentUser,setTrigger}) {
 
        }
 
+
+       console.log(post,"possttt")
     
 
   return (
@@ -276,7 +278,7 @@ export default function UpdatePosts ({group,currentUser,setTrigger}) {
                             <button
                                 style={{background: "rgba(236, 235, 254, 1)"}}
                                 className='text-blue-700 rounded-full px-12 py-1.5'
-                                onClick={()=>makePost(group)}
+                                onClick={()=>editPost(group)}
                             >
                                 Update
                             </button>

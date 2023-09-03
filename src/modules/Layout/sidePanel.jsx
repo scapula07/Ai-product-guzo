@@ -19,14 +19,15 @@ export default function SidePanel() {
   const [team,setTeam]=useState([])
 
 
+   
   useEffect(()=>{
     const isGroup= organizations?.length >0 || ecosystems?.length >0
  
-    isGroup&&setTeam([...organizations,...ecosystems])
+    isGroup&&setTeam([currentUser,...organizations,...ecosystems])
    
-
+  
     isGroup&&setGroup([currentUser,...organizations,...ecosystems][0])
-     
+    
     },[currentUser])
     console.log(team,"team")
   console.log(currentUser?.img?.length,"lllll")

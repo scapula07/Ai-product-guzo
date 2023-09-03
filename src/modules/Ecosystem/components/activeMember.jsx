@@ -6,15 +6,53 @@ import {BsThreeDots } from "react-icons/bs"
 export default function ActiveMember({member}) {
   return (
 
-    <div className='flex flex-col bg-white py-4 px-4'>
-        <div className='flex flex-col items-center space-y-3'>
-            <img 
-                src={member?.img}
-                className="rounded-full w-32 h-32"
-            />
-            <h5 className=' text-center font-semibold '>{member?.firstName + " " + member?.lastName}</h5>
-            <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
-        </div>
+    <div className='flex flex-col bg-white py-4 px-4 rounded-lg'>
+        {member?.type?.length >0?
+            <div className='flex flex-col items-center space-y-3'>
+                <img 
+                    src={member?.img}
+                    className="rounded-full w-32 h-32"
+                />
+                <h5 className=' text-center font-semibold '>{member?.name}</h5>
+                <h5 className='text-sm font-semibold text-slate-600'>
+                    {member?.type==="eco"?
+                     "Ecosystem"
+                      :
+                      "Organization"
+
+                    }
+                </h5>
+         </div>
+           :
+            <>
+             <div className='flex flex-col items-center space-y-3'>
+                {member?.img?.length >0?
+                   <img 
+                   src={member?.img}
+                   className="rounded-full w-32 h-32"
+                   />
+
+                   :
+                   <div className='rounded-full  w-32 h-32 items-center justify-center flex border'
+                      >
+                    <h5 className='font-semibold text-2xl'> {member?.firstName?.slice(0,1) + member?.lastName?.slice(0,1)}</h5>
+                </div>
+
+                 
+
+                }
+             
+               
+                <h5 className=' text-center font-semibold '>{member?.firstName + " " + member?.lastName}</h5>
+                <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
+             </div>
+             
+            </>
+
+           
+
+        }
+        
 
         <div className='flex flex-col items-center space-y-3 py-4'>
             <p className=' text-center font-light text-sm'>

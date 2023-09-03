@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Table({teams}) {
-
+  console.log(teams,"teammam")
    let count=0
     return(
      

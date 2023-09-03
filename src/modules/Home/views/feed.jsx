@@ -10,9 +10,11 @@ import {RiArrowDownSLine} from "react-icons/ri"
 import {AiOutlineClose} from "react-icons/ai"
 import {MdEdit} from "react-icons/md"
 import { Link } from 'react-router-dom'
+import Comment from '../components/comment'
 
 import { groupState,userState } from '../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
+import BeatLoader from "react-spinners/BeatLoader";
 import Join from "../../JoinPost"
 export default function Feeds() {
     const group =useRecoilValue(groupState)
@@ -148,11 +150,14 @@ const Feed=({feed,group})=>{
                  </div>
 
                <div className='flex flex-col'>
-                   {feed?.requests?.map((req)=>{
+                   {feed?.requests?.map((req,index)=>{
+                    
                       return(
                        <RequestCard 
                         req={req}
                         group={group}
+                        feed={feed}
+                        index={index}
                        />
                       )
 
@@ -162,8 +167,9 @@ const Feed=({feed,group})=>{
 
               </div>
              
-              <Comment 
+              <Comments 
                  group ={ group }
+                 feed={feed}
               />
              
 
@@ -175,7 +181,9 @@ const Feed=({feed,group})=>{
 }
 
 
-const RequestCard=({req,group})=>{
+const RequestCard=({req,group,feed,index})=>{
+  
+
   const randomNumber = Math.floor(Math.random() * 4) + 1;
   const [trigger,setTrigger]=useState(false)
 
@@ -212,6 +220,8 @@ const RequestCard=({req,group})=>{
                    <div className='flex justify-center w-full'>
                        <Join 
                          group={group}
+                         feed={feed}
+                         index={index}
                        />
                     </div>
                   
@@ -225,7 +235,47 @@ const RequestCard=({req,group})=>{
 }
 
 
-const Comment=({ group })=>{
+const Comments=({ group, feed })=>{
+   const [change,setChange]=useState(false)
+   const [text,setText]=useState("")
+   const [isLoading,setLoader]=useState(false)
+
+  const makeComment=async()=>{
+    setLoader(true)
+     try{
+        let payload;
+        if(group?.type?.length >0){
+           payload={
+             name:group?.name,
+             img:group?.img,
+             comment:text
+           }
+        }else if(group?.img.length >0){
+           payload={
+            name:group?.firstName + " " + group?.lastName,
+            img:group?.img,
+            comment:text
+          }
+
+        }else{
+            payload={
+            name:group?.firstName + " " + group?.lastName,
+            img:"",
+            comment:text
+          }
+
+        }
+         console.log(payload,"loaddd")
+          const response= await feedApi.makeComments(payload,feed)
+          response&&setLoader(false)
+          response&&setText("")
+       }catch(e){
+         console.log(e)
+         setLoader(false)
+       }
+
+  }
+
    return(
       <div className='flex flex-col w-full px-4  '>
           <div className='flex items-center w-full space-x-2 px-2'>
@@ -258,21 +308,53 @@ const Comment=({ group })=>{
               </div>
              <div className='flex items-center border px-2 border-black justify-between rounded-full w-full'>
                  <input 
-                   className='border-0  py-1 rounded-full outline-none px-2'
+                   className='border-0 text-sm  py-1 rounded-full outline-none px-2 w-11/12'
                    placeholder='Add a comment...'
+                   value={text}
+                   onMouseOut={()=>setChange(false)}
+                   onChange={(e)=>setText(e.target.value)||setChange(true)}
                  />
-                 <MdEdit 
-                  className='text-slate-400 '
-                 />
-                 
+                 {isLoading?
+                        <BeatLoader
+                          color={"rgba(62, 51, 221, 1)"}
+                          loading={true}
+                          size="6"
+                        
+                        />
+                         :
+                         <>
+                         {change?
+                             <h5 
+                               className='text-xs font-semibold'
+                               onClick={makeComment}
+                             >send</h5>
+                               :
+                             <MdEdit 
+                               className='text-slate-400 '
+                               onMouseOver={()=>setChange(true)}
+                             />
+       
+                           }
+                         </>
+                    
 
-             </div>
+                      }
+                
+                   </div>
             
-          </div>
+                 </div>
+                  {feed?.comments?.length >0 &&
+                    <Comment 
+                      feed={feed}
+                     />
+
+                  }
+                  
 
 
+        
 
-      </div>
-
+            </div>
+  
    )
 }

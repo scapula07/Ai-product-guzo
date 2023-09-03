@@ -1,8 +1,40 @@
 import React ,{useState} from 'react'
 import Modal from '../Modal'
 import {AiOutlineClose } from "react-icons/ai"
+import { postApi } from './_api'
+import ClipLoader from "react-spinners/ClipLoader";
 
-export default function Join({group}) {
+
+export default function Join({group,feed,index}) {
+    console.log(index,"iiiiii")
+    const [request,setRequest]=useState({})
+    const [isLoading,setLoader]=useState(false)
+
+     const join=async()=>{
+        console.log("joining")
+        setLoader(true)
+        if(group?.type?.length>0){
+             request["img"]=group?.img
+         }else if(group?.img?.length >0){
+            request["img"]=group?.img
+
+         }else{
+            request["img"]=""
+
+          }
+        try{
+            const response =await postApi.joinPost(feed,request,index,group)
+            response&&setTrigger(false)
+            response&&setLoader(false)
+          }catch(e){
+            console.log(e)
+            setLoader(false)
+          }
+
+
+    }
+
+    
 
     const [trigger,setTrigger]=useState(false)
   return (
@@ -73,24 +105,37 @@ export default function Join({group}) {
          </div>
 
             <div className=''>
-                <Form />
+                <Form 
+                  request={request}
+                  setRequest={setRequest}
+                />
             </div>
 
             <div className='flex items-center justify-end space-x-4 pb-6'>
                             <button className='text-blue-700 border-blue-700 border rounded-full px-4 py-1 text-sm'
                             
-                                onClick={()=>setTrigger(false)}
+                                onClick={()=>setTrigger(false) || setRequest({})}
                                  >
                                   Cancel
                        
                                </button>
-                              <button className='text-blue-700 rounded-full px-4 py-1 text-sm'
-                                style={{background: "rgba(236, 235, 254, 1)"}}
+
+                               {isLoading?
                              
-                                 >
+                                    <ClipLoader 
+                                        color={"rgba(62, 51, 221, 1)"}
+                                        loading={isLoading}
+                                    />
+                             :
+                              <button className='text-blue-700 rounded-full px-4 py-1 text-sm'
+                                    style={{background: "rgba(236, 235, 254, 1)"}}
+                                    onClick={()=>join()}
+                                
+                                   >
                                     Submit
                        
                                </button>
+                               }
 
               </div>
 
@@ -103,7 +148,7 @@ export default function Join({group}) {
 
 
 
-const Form=({})=>{
+const Form=({request,setRequest})=>{
     return(
 
         <div className='flex flex-col py-8 space-y-6'>
@@ -114,6 +159,8 @@ const Form=({})=>{
                         placeholder='First Name'
                         className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
                         name="firstName"
+                        value={request?.firstName}
+                        onChange={(e)=>setRequest({...request,firstName:e.target.value})}
                     
 
                     />
@@ -125,7 +172,8 @@ const Form=({})=>{
                             placeholder='Last Name'
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none border '
                             name="lastName"
-                            
+                            value={request?.lastName}
+                            onChange={(e)=>setRequest({...request,lastName:e.target.value})}
                         />
 
                 </div>
@@ -136,7 +184,9 @@ const Form=({})=>{
                         <input 
                             placeholder='Email'
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none border '
-                            name="lastName"
+                            name="email"
+                            value={request?.email}
+                            onChange={(e)=>setRequest({...request,email:e.target.value})}
                             
                         />
 
@@ -147,6 +197,8 @@ const Form=({})=>{
                             placeholder='Phone number'
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none border '
                             name="lastName"
+                            value={request?.phone}
+                            onChange={(e)=>setRequest({...request,phone:e.target.value})}
                             
                         />
 
@@ -157,6 +209,8 @@ const Form=({})=>{
                             placeholder='Add a description of your experience..... '
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none border '
                             name="lastName"
+                            value={request?.note}
+                            onChange={(e)=>setRequest({...request,note:e.target.value})}
                             
                         />
 

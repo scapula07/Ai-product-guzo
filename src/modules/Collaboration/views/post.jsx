@@ -8,11 +8,12 @@ import Modal from '../../Modal';
 import UpdatePosts from '../../ UpdatePost';
 import { groupState,userState } from '../../Recoil/globalstate';
 import { useRecoilValue } from 'recoil';
-
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Post() {
     const [collab]= useOutletContext();
     const [trigger,setTrigger]=useState(false)
+    console.log(collab,"coollabes")
 
     const group =useRecoilValue(groupState)
     const currentUser=useRecoilValue(userState)
@@ -59,9 +60,10 @@ export default function Post() {
                     </div>
                     <div className='h-full overflow-y-scroll' style={{height:"500px"}}>
                         <UpdatePosts
-                        group={group}
-                        currentUser={currentUser}
-                        setTrigger={setTrigger}
+                            group={group}
+                            currentUser={currentUser}
+                            setTrigger={setTrigger}
+                            collab={collab}
                         />
 
                     </div>
@@ -188,10 +190,23 @@ const RequestCard=({req})=>{
   
               </div>
               {trigger&&
-                <div className='flex flex-col space-y-2'>
+                <div className='flex flex-col space-y-2 '>
                      <p>{req?.body}</p>
-                     <div className='flex justify-center w-full'>
-                        <button className='text-white font-semibold rounded-full px-8 w-1/4 py-2 ' style={{background: "linear-gradient(70.54deg, #281CF5 17.62%, #5DE4D7 94.09%)"}}>Manage</button>
+                     <div className='flex flex-col  w-full bg-white px-8 py-10'>
+                       <h5 className='text-sm font-semibold'>Pending Request</h5>
+                        <div className='flex flex-col'>
+                           {req?.pending?.map((request)=>{
+                             return(
+                              <Request 
+                                 request={request}
+                              />
+                             )
+                           })
+
+                           }
+                        </div>
+                       
+                        
                   
                       </div>
                     
@@ -246,4 +261,87 @@ const RequestCard=({req})=>{
        </div>
     )
 
+}
+
+
+
+const Request=({request})=>{
+  const [accepted,setAccept]=useState()
+   return(
+    <div className='flex flex-col bg-white rounded-lg w-full space-y-2'>
+        <div className='flex items-center py-6 px-2 rounded-lg w-full justify-between'>
+                <div className='flex items-center space-x-4'>
+                    <>
+    
+                        {request?.img?.length>0?
+                            <img 
+                                src={request?.img}
+                                className="h-10 w-10 rounded-full"
+                              />
+                                :
+                                <div className='rounded-full p-2 items-center justify-center flex border'
+                                >
+                                <h5 className='font-semibold text-sm'> {request?.firstName?.slice(0,1) +request?.lastName?.slice(0,1)}</h5>
+                            </div>
+                                
+
+                            }
+                      
+                    </>
+                  
+                    {request?.type?.length >0?
+                        <div className='flex flex-col'>
+                            <h5 className='text-xl font-semibold'>{request?.name}</h5>
+                            <h5 className='text-sm '>{"Qorem ipsum dolor sit amet, consectetur adipiscing elit. "}</h5>
+                        </div>
+                            :
+                            <div className='flex flex-col'>
+                                <h5 className='text-xl font-semibold'>{request?.firstName + " " + request?.lastName }</h5>
+                                <h5 className='text-sm '>{"Qorem ipsum dolor sit amet, consectetur adipiscing elit. "}</h5>
+                          </div>
+
+
+
+                    }
+                  
+            </div>
+
+            <div className='flex items-center space-x-4 justify-end w-1/4'>
+                <h5 className='text-slate-600 font-semibold text-lg'>Ignore</h5>
+                {accepted?
+            
+                    <ClipLoader 
+                        color={"rgba(62, 51, 221, 1)"}
+                    
+
+                    />
+              
+                  :
+                    <button 
+                        style={{background: "rgba(236, 235, 254, 1)"}}
+                        className='text-blue-700 rounded-full text-xs px-4 py-1'
+                        // onClick={()=>accept(group?.id,member)}
+                    
+                        > 
+                      Accept
+                      
+                    </button>
+                }
+
+            </div>
+        <div>
+        </div>
+    </div>
+      <div className='px-8'>
+              <div className='bg-slate-200 py-3 px-4 h-20 rounded-lg'>
+                  <h5 className='text-xs'>Qorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate consectetur adipiscing... see more. </h5>
+
+
+              </div>
+      </div>
+
+
+
+    </div>
+   )
 }

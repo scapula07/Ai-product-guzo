@@ -11,7 +11,7 @@ import { useOutletContext } from 'react-router-dom';
 export default function MyOpportunities() {
       const group =useRecoilValue(groupState)
       const [collabs,arePosts]= useOutletContext();
-
+   
   return (
 
     <div className='w-full'>
@@ -59,7 +59,7 @@ export default function MyOpportunities() {
                         </p>
 
                         <div className='flex items-center space-x-3 py-2'> 
-                          <Link to={`/new/collaboration/${collab?.id}`}
+                          <Link to={`/collaboration/${collab?.id}`}
                                     state={{
                                     collab
                                 }}

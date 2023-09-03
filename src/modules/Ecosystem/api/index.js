@@ -22,9 +22,10 @@ export const ecosystemApi= {
                     const docSnap = await getDoc(ecoRef);
                     console.log(docSnap?.data())
                     const pending = docSnap?.data()?.pending
+                    console.log(pending,"pending")
                     const activeMembers = docSnap?.data()?.active
 
-                    const newPending = pending?.filter(member=> member?.id !== member?.id);
+                    const newPending = pending?.filter(pendingmember=> pendingmember?.id !== member?.id);
                     console.log(newPending,"new")
 
 
@@ -46,7 +47,7 @@ export const ecosystemApi= {
                         const memberRef=doc(db,collection,member?.id)
                         const memberSnap = await getDoc(memberRef);
                         console.log(memberSnap?.data(),"members")
-                        const members=memberSnap?.data()?.memberships.length ===0? []:memberSnap?.data()?.memberships
+                        const members=memberSnap?.data()?.memberships.length ===undefined? []:memberSnap?.data()?.memberships
                           const result = await updateDoc(memberRef, {
                                 memberships:[
                                     ...members,

@@ -28,44 +28,9 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
     <div className='w-full flex justify-center'>
         
         <div className='w-3/4 flex flex-col space-y-6'>
-                <h5 className='text-2xl font-semibold'>Add a request to your post...</h5>
+                <h5 className='text-2xl font-semibold'>Edit post event...</h5>
 
-
-                <div className='flex flex-col space-y-4'>
-                     <h5  className='text-lg font-semibold'>Add an Image for your Event Post</h5>
-                     <div className='flex justify-center items-center h-48 w-full rounded-lg' style={{background: "rgba(242, 242, 242, 1)"}}>
-                      {url?.length ==0&&
-                            <div className='flex flex-col items-center'
-                            onClick={handleClick}
-                            >
-                                <img 
-                                    src={upload}
-                                />
-                                <input
-                                    type="file"
-                                    className='hidden'
-                                    ref={hiddenFileInput}
-                                    onChange={handleChange}
-                                />
-                                <h5 className='text-sm font-light'>Upload or Drop Images</h5>
-
-                            </div>
-                           }
-                            { url?.src?.length > 0&&
-                             <div className='w-1/2 py-4'>
-                                <img
-                                  src={url?.src}
-                                  className='w-full h-full rounded-lg'
-                                />
-                            </div>
-                          
-                          }
-                          
-                     </div>
-
-                </div>
-
-                <div className='flex flex-col'>
+                {/* <div className='flex flex-col'>
                      <div className="flex items-center space-x-6 ">
                          <div className='flex items-center space-x-1'>
                             <input type={"radio"}/>
@@ -78,7 +43,7 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
 
                      </div>
 
-                </div>
+                </div> */}
 
 
                 <div className='flex flex-col space-y-4'>
@@ -159,12 +124,14 @@ const EventForms=({ eventPost,setEvt})=>{
                     {
                         name:"Timezone",
                         placeholder:"(UTC) Central Time (US and Canada)",
+                        value:eventPost?.timezone,
                         click:(e)=>setEvt({...eventPost,timezone:e.target.value})
 
                     },
                     {
                         name:"Start Date",
                         placeholder:"Start Date",
+                        value:eventPost?.start_date,
                         click:(e)=>setEvt({...eventPost,start_date:e.target.value})
 
 
@@ -172,6 +139,7 @@ const EventForms=({ eventPost,setEvt})=>{
                     {
                         name:"Start Time",
                         placeholder:"Start Time",
+                        value:eventPost?.start_time,
                         click:(e)=>setEvt({...eventPost,start_time:e.target.value})
 
 
@@ -179,6 +147,7 @@ const EventForms=({ eventPost,setEvt})=>{
                     {
                         name:"End Date",
                         placeholder:"End Date",
+                        value:eventPost?.end_date,
                         click:(e)=>setEvt({...eventPost,end_date:e.target.value})
 
 
@@ -186,6 +155,7 @@ const EventForms=({ eventPost,setEvt})=>{
                     {
                         name:"End Time",
                         placeholder:"End Time",
+                        value:eventPost?.end_date,
                         click:(e)=>setEvt({...eventPost,end_time:e.target.value})
 
 
@@ -199,6 +169,7 @@ const EventForms=({ eventPost,setEvt})=>{
                             <input 
                                 placeholder={field?.placeholder}
                                 className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                value={field?.value}
                                 onChange={(e)=>field?.click(e)}
 
 
@@ -218,12 +189,14 @@ const EventForms=({ eventPost,setEvt})=>{
                        {
                         name:"Location/Address",
                         placeholder:"Venue/Address",
+                        value:eventPost?.location,
                         click:(e)=>setEvt({...eventPost,location:e.target.value})
 
                     },
                     {
                         name:"Additional Directions",
                         placeholder:"Floor Number, Room Number, Parking Details",
+                        value:eventPost?.directions,
                         click:(e)=>setEvt({...eventPost,directions:e.target.value})
 
 
@@ -231,13 +204,15 @@ const EventForms=({ eventPost,setEvt})=>{
                     {
                         name:"Event Link",
                         placeholder:"Link",
+                        value:eventPost?.link,
                         click:(e)=>setEvt({...eventPost,link:e.target.value})
 
 
                     },
                     {
                         name:"Featured Participant(s)",
-                        placeholder:"Add Ecosystem, Organization, or Individual accounts...",
+                        placeholder:"Add Ecosydirectionsstem, Organization, or Individual accounts...",
+                        value:eventPost?.participants,
                         click:(e)=>setEvt({...eventPost,participants:e.target.value})
 
 
@@ -251,7 +226,9 @@ const EventForms=({ eventPost,setEvt})=>{
                                 <input 
                                     placeholder={field?.placeholder}
                                     className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                    value={field?.value}
                                     onChange={(e)=>field?.click(e)}
+
 
 
                                 />

@@ -54,7 +54,7 @@ export default function EcoMembers() {
 
             <div className='py-8'>
                <h5 className='font-semibold text-sm'>Active Members</h5>
-                <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full py-6'>
+                <div className='grid grid-flow-row grid-cols-4  gap-4 gap-y-8 h-full w-full py-6'>
                 {members?.active?.map((member)=>{
                     return(
                         <ActiveMember 

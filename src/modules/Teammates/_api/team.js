@@ -17,7 +17,7 @@ export const teamApi= {
             console.log(groupSnap?.data(),"group")
             const array=[]
 
-            const inviteeList=groupSnap?.data()?.invitees ===undefined? array :groupSnap?.data()?.invitees
+            const inviteeList=groupSnap?.data()?.invitees ===undefined? [] :groupSnap?.data()?.invitees
             console.log(inviteeList,"invitessssss")
 
              const result = await updateDoc(groupRef, {
@@ -27,7 +27,7 @@ export const teamApi= {
                   ]
                })
              console.log( result ,"result")
-             return result 
+             return true
 
 
             }catch(e){

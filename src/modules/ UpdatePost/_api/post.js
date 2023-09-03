@@ -15,39 +15,15 @@ const uploadFile=async(file)=>{
 
 }
 export const postApi= {
-    makePost:async function (group,payload,currentUser) {
+    editPost:async function (group,payload,currentUser,collab) {
         console.log(payload,"ppp")
         
-        try{
-            const postImg =await uploadFile(payload?.post?.img)
-            console.log(postImg)
-    
-            delete payload?.post?.img;
-          let postSnap;
-           if(group?.id?.length >0){
-           
-                 postSnap = await addDoc(collection(db, "posts"),{
-                    ...payload,
-                    img_post:postImg ,
-                    creator_id:group?.id,
-                    shared_by:group
-                })
-           }else{
-        
-                postSnap = await addDoc(collection(db, "posts"),{
-                    ...payload,
-                    img_post:postImg ,
-                    creator_id:currentUser?.id,
-                    shared_by:currentUser
-                })
-
-           }
-           
-            
-             console.log(postSnap.exists(),"snapp")
-             return postSnap?.exists()
-
-
+        try{    
+            const postRef =doc(db,"posts",collab?.id)
+            const docSnap = await getDoc(postRef);
+            const result = await updateDoc(postRef,payload)
+          
+            return true
           }catch(e){
             console.log(e)
          }

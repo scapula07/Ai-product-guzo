@@ -15,7 +15,7 @@ export default function PendingMember({group,member,setMembers}) {
             setAccept(true)
             const result =ecosystemApi.acceptMember(id,member)
             console.log(result,"resss")
-            setMembers(result)
+            // setMembers(result)
             setAccept(false)
            
 
