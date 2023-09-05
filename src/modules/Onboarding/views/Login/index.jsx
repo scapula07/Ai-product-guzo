@@ -46,11 +46,12 @@ export default function Login() {
              setLoader(false)
             localStorage.clear();
              user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
-             user?.id.length >0&& navigate(`/new/`)
+             user?.id.length >0&& navigate(`/home`)
 
 
             }catch(e){
                 console.log(e)
+                setErrorMsg(e.message);
                 setLoader(false)
             }
    

@@ -13,24 +13,43 @@ import {useRecoilValue} from "recoil"
 import CreatePosts from '../ CreatePost.'
 import Modal from '../Modal'
 import {AiOutlineClose } from "react-icons/ai"
+import {RiSettings3Fill} from "react-icons/ri"
+
 
 export default function TabsPanel() {
     const group =useRecoilValue(groupState)
     const [trigger,setTrigger]=useState(false)
+    const [hover,setHover]=useState(false)
     const currentUser=useRecoilValue(userState)
   return (
     <>
     <div className='py-6  w-full relative h-full'>
-        <div className='flex flex-col items-center space-y-10 w-full'>
+        <div className='flex flex-col items-center space-y-4 w-full'>
             {group?.type?.length >0?
-                 <h5 className='font-semibold text-lg'>{group?.name}</h5>
+                 <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name}</h5>
                  :
-                 <h5 className='font-semibold text-lg'>{group?.firstName + " " + group?.lastName}</h5>
+                 <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.firstName + " " + group?.lastName}</h5>
 
 
-            }
+             }
+
+             {hover&&
+               <Link to="/settings">
+                  <div className=''>
+                      <div className='flex items-center space-x-3 bg-white rounded-lg px-4 py-2 '>
+                        <RiSettings3Fill  className='text-slate-600'/>
+                        <h5 className='text-sm text-slate-600 font-semibold'>Settings</h5>
+                      </div>
+
+                  </div>
+               </Link>
           
-            <div className='flex flex-col py-20 space-y-6'>
+
+             }
+
+            
+          
+            <div className='flex flex-col py-16 space-y-6'>
                 {navs.map((nav)=>{
                      return(
                         <div className='flex items-center space-x-6'>

@@ -10,7 +10,7 @@ import {useRecoilValue} from "recoil"
 import { groupState,userState } from '../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from 'react-router-dom'
-
+import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
 
 export default function Ecosystems() {
   
@@ -68,7 +68,7 @@ export default function Ecosystems() {
 }
 
 const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
-
+    const [errorMsg, setErrorMsg] = useState(null)
     let navigate = useNavigate();
     const [isLoading,setLoading]=useState(false)
 
@@ -86,6 +86,7 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
           }catch(e){
               console.log(e)
               setLoading(false)
+              setErrorMsg(e)
           }
      }
     return(
@@ -143,6 +144,11 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
           
           
         </div>
+        <Snackbar open={true} autoHideDuration={1000}   anchorOrigin={{ vertical:"top", horizontal:"center"}}>
+            <Alert onClose={""} severity="success" sx={{ width: '100%' }}>
+                This is a success message!
+            </Alert>
+         </Snackbar>
 
     </div>
 

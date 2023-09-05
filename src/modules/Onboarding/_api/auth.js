@@ -27,6 +27,7 @@ export const authApi= {
 
         }catch(e){
             console.log(e)
+            throw new Error(e);
          }
        
 
@@ -51,6 +52,7 @@ export const authApi= {
           
             }catch(e){
                 console.log(e)
+                throw new Error(e);
             }
    
 
@@ -66,6 +68,7 @@ export const authApi= {
                 } else {
                     
                     console.log("No such document!");
+                    
                 }
          
 
@@ -73,6 +76,7 @@ export const authApi= {
 
              }catch(e){
                 console.log(e)
+                throw new Error(e);
              }
 
         }

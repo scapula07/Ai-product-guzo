@@ -45,8 +45,8 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
        useEffect(()=>{
               if(conversations?.length>0){
                 console.log(currentChat?.id,"chat id")
-                // const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id),orderBy("date", "asc"));
-                const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id));
+                 const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id),orderBy("date", "asc"));
+                // const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id));
                 const unsubscribe = onSnapshot(q, (querySnapshot) => {
                     const msgs= [];
                     querySnapshot.forEach((doc) => {

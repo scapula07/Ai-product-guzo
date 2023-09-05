@@ -55,7 +55,9 @@ export default function Contacts() {
                
                            </div>
                         
-                        <ContactTable />
+                        <ContactTable 
+                            collabs={collabs}
+                        />
 
                     </div>
 

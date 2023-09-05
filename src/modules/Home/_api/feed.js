@@ -24,6 +24,7 @@ export const feedApi = {
 
         }catch(e){
             console.log(e)
+            throw new Error(e);
         }
 
     },
@@ -54,6 +55,7 @@ export const feedApi = {
          }
       }catch(e){
         console.log(e)
+        throw new Error(e);
       }
       
 

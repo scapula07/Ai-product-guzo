@@ -11,10 +11,14 @@ import Share from './share'
 import {MdArrowDropDown} from "react-icons/md"
 import { postApi } from './_api/post'
 import ClipLoader from "react-spinners/ClipLoader";
+import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
+
+
 
 export default function CreatePosts ({group,currentUser,setTrigger}) {
 
      console.log(group,"postt")
+     const [errorMsg, setErrorMsg] = useState(null)
 
      const [request,setReq]=useState(false)
      const [event,setEvent]=useState(false)
@@ -59,12 +63,15 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
             contacts:[]
         }
 
+
         try{
            const result =await postApi.makePost(group,payload,currentUser)
-           result&&setLoader(false)
            result&&setTrigger(false)
+           result&&setLoader(false)
+         
         }catch(e){
-            console.log(e)
+            console.log(e,"postttt")
+            setErrorMsg(e)
             setLoader(false)
         }
 
@@ -122,7 +129,10 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 <div className='w-full flex justify-center h-full overflow-y-scroll'>
       
       <div className='w-4/5 flex flex-col h-full space-y-10 py-4 '>
-       
+         {errorMsg && (
+        
+           <Alert severity="error">{errorMsg}</Alert>
+         )}
         <div className='flex items-center space-x-2 w-full'>
               {group?.type?.length>0?
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useMemo} from 'react'
 import org1 from "../assets/org1.png"
 import org2 from "../assets/org2.png"
 import add from "../assets/icons/add.png"
@@ -20,15 +20,19 @@ export default function SidePanel() {
 
 
    
-  useEffect(()=>{
-    const isGroup= organizations?.length >0 || ecosystems?.length >0
+     useEffect(()=>{
+      const isGroup= organizations?.length >0 || ecosystems?.length >0
  
-    isGroup&&setTeam([currentUser,...organizations,...ecosystems])
+      isGroup&&setTeam([currentUser,...organizations,...ecosystems])
    
   
-    isGroup&&setGroup([currentUser,...organizations,...ecosystems][0])
+       isGroup&&setGroup([currentUser,...organizations,...ecosystems][0])
     
-    },[currentUser])
+      },[currentUser])
+
+
+
+  
     console.log(team,"team")
   console.log(currentUser?.img?.length,"lllll")
   return (

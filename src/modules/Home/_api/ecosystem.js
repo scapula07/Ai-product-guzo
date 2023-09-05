@@ -24,6 +24,7 @@ export const ecosystemApi = {
 
             }catch(e){
             console.log(e)
+            throw new Error(e);
             }
       },
 
@@ -65,6 +66,7 @@ export const ecosystemApi = {
 
              }catch(e){
                  console.log(e)
+                 throw new Error(e);
             }
 
              

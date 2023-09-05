@@ -1,13 +1,16 @@
 import React from 'react'
 
-export default function ContactTable() {
+export default function ContactTable({collabs}) {
+  
   return (
     <div className='flex w-full flex-col py-4 w-full overflow-x-auto no-scrollbar'>
          
   
           <div className='px-4 overflow-x-scroll no-scrollbar' style={{width:"200%"}}>
 
-              <Table />
+              <Table
+               collabs={collabs}
+               />
             
             </div>
 
@@ -17,7 +20,7 @@ export default function ContactTable() {
 }
  
 
-const Table=()=>{
+const Table=({collabs})=>{
   let count=0
    return(
     
@@ -40,11 +43,12 @@ const Table=()=>{
       </tr>
     </thead>
     <tbody className='bg-white'>
-      {[1,2,3,4].map(()=>{
+      {collabs?.map((collab)=>{
+
         count++
           return(
             <tr className='py-6 text-sm font-light'>
-              {/* <td className='bg-white text-center text-xs'>{count}</td>
+              <td className='bg-white text-center text-xs'>{count}</td>
               <td className='bg-white text-center'>Malcolm</td>
               <td className='bg-white text-center'>Malcolm</td>
               <td className='bg-white text-center'>Malcolm</td>
@@ -54,7 +58,7 @@ const Table=()=>{
               <td className='bg-white text-center'>Malcolm</td>
               <td className='bg-white text-center' >Malcolm</td>
               <td className='bg-white text-center'>Malcolm</td>
-              <td className='bg-white text-center'>Malcolm</td> */}
+              <td className='bg-white text-center'>Malcolm</td>
            </tr>
           )
          })

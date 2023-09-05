@@ -54,7 +54,7 @@ const NewRoutes = () => {
   useEffect( ()=>{
     
     console.log(JSON.parse(user),"user")
-    setcurrentUser(JSON.parse(user))
+    // setcurrentUser(JSON.parse(user))
   // authListner=onAuthStateChanged(auth,(user)=>{
   //     if (user !== null) {
   //         const uid = user.uid;

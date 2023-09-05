@@ -82,7 +82,9 @@ export default function EmailAuth() {
              user?.id.length >0&& navigate(`/create-profile/${route}`)
 
             }catch(e){
-                console.log(e)
+                console.log(e.message.FirebaseError,"emaillll")
+                setErrorMsg(e.message);
+                setLoader(false);
             }
    
 
