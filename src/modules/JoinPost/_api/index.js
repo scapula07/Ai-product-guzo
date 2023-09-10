@@ -31,13 +31,24 @@ joinPost: async function (feed,request,index,group) {
         console.log(newRequests,"new")
 
 
+        const contacts=docSnap.data()?.contacts?.length ===undefined? []:docSnap.data()?.contacts
+        const contactIds=docSnap.data()?.contactIds?.length ===undefined? []:docSnap.data()?.contactIds
 
         const result = await updateDoc(postRef, {
-           requests:newRequests
+           requests:newRequests,
+           contacts:[
+             ...contacts,
+             request
+           ],
+           contactIds:[
+            ...contactIds,
+               group?.id
+
+             ]
       
            })
-           console.log(result,"ress")
-        }
+            console.log(result,"ress")
+          }
 
 
         return true
@@ -45,6 +56,7 @@ joinPost: async function (feed,request,index,group) {
        
     }catch(e){
       console.log(e)
+      throw new Error(e);
    }
    
   }

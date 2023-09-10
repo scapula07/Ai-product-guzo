@@ -11,25 +11,20 @@ import { userState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
 import { Link } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
+import { useOutletContext } from 'react-router-dom';
+
 
 export default function Pending() {
     const currentUser=useRecoilValue(userState)
     console.log(currentUser,"user")
+    const [connects]= useOutletContext();
 
-    // useEffect(()=>{
-    //     const getPending=async()=>{
-    //         const pending= await connectApi.getPending(currentUser)
-    //         console.log(pending,"pending")
 
-    //     }
-    //     getPending()
-
-    // },[])
   return (
 
     <div className='w-full'>
       
-        {currentUser?.pending?.length ===0&&
+        {/* {connects?.pending?.length ===0&&
             <div className='flex justify-center'>
                 <ClipLoader 
                         color={"rgba(62, 51, 221, 1)"}
@@ -39,11 +34,11 @@ export default function Pending() {
 
             </div>
         
-        }
+        } */}
 
       
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
-        {currentUser?.pending?.map((eco)=>{
+        {connects?.pending?.map((eco)=>{
             return(
                 <Link  to={`/eco-profile/${eco?.id}`}
                     state={{
@@ -80,12 +75,20 @@ export default function Pending() {
                 </div>
                 </Link>
             )
-        })
+           })
 
-        }
+          }
         
 
       </div>
+
+      {connects?.pending?.length ===0&&
+               <div className='w-full flex justify-center py-10'>
+                  <h5 className="text-lg font-semibold">No pending connections</h5>
+               </div>
+
+            } 
+
 
       </div>
   )

@@ -33,6 +33,7 @@ export default function Teammates() {
      const addTeammates=async()=>{
         setLoader(true)
          try{
+        //    const response =teamApi.addInvitee(invitee,group)
             const res =await inviteEmail.sendInvite(invitee)
             console.log(res,"res")
            if( res ===200){
@@ -46,7 +47,7 @@ export default function Teammates() {
             
 
          }catch(e){
-            console.log(e)
+            console.log(e,"Errrr")
             setLoader(false)
          }
 
@@ -98,7 +99,7 @@ export default function Teammates() {
                           <div className='flex items-center justify-center space-x-4'>
                             <button className='text-blue-700 border-blue-700 border rounded-full px-4 py-1 text-sm'
                             
-                                onClick={()=>setTrigger(false)}
+                                onClick={()=>setTrigger(false) || setLoader(false)}
                                  >
                                   Cancel
                        

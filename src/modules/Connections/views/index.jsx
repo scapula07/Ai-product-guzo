@@ -1,13 +1,28 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import Layout from '../../Layout'
 import { Outlet } from 'react-router-dom'
 import Suggestions from '../../Home/views/suggestions'
 import Tabs from '../components/tabs'
-import { userState } from '../../Recoil/globalstate'
+import { userState,groupState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
+import { connectApi } from '../api'
 
 export default function Connections() {
     const currentUser=useRecoilValue(userState)
+    const group=useRecoilValue(groupState)
+    const [connects,setConnect]=useState()
+    
+    useEffect(()=>{
+      const getPending=async()=>{
+          const connects= await connectApi.getConnections(group)
+          console.log(connects,"pending")
+          setConnect(connects)
+
+      }
+      getPending()
+
+  },[group])
+
   return (
     <Layout>
        <div className='py-2 flex-col flex space-y-4'> 
@@ -24,7 +39,7 @@ export default function Connections() {
                 
                 </div>
                   <div className=''>
-                      <Outlet />
+                      <Outlet context={[connects]}/>
                    
                   </div>
       

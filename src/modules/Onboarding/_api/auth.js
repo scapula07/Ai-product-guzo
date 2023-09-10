@@ -3,6 +3,7 @@ import {
         signInWithEmailAndPassword ,
         GoogleAuthProvider,
         signInWithPopup,
+        sendPasswordResetEmail,
         signOut} from "firebase/auth";
        
 import { auth ,db} from "../../Firebase";
@@ -74,6 +75,18 @@ export const authApi= {
 
                 
 
+             }catch(e){
+                console.log(e)
+                throw new Error(e);
+             }
+
+        },
+        resetPassword:async function (email) {
+            try{
+              const res=await sendPasswordResetEmail(auth, email)
+              console.log(res,"ressss")
+
+              return true
              }catch(e){
                 console.log(e)
                 throw new Error(e);

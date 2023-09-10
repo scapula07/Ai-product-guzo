@@ -31,6 +31,16 @@ export const collaborationApi = {
                    requests:requests
                    })
                 console.log(result,"result")
+                const contacts=docSnap.data()?.contacts?.length ===undefined? []:docSnap.data()?.contacts
+
+                const result1= await updateDoc(postRef, {
+                    contacts:[
+                        ...contacts,
+                        request
+                    ]
+                    })
+           
+
                return true
                   
 

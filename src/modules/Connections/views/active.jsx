@@ -9,12 +9,18 @@ import {BsThreeDots} from "react-icons/bs"
 import { userState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
 import {Link} from "react-router-dom"
+import { useOutletContext } from 'react-router-dom';
+
+
 
 export default function Active() {
     const currentUser=useRecoilValue(userState)
+    const [connects]= useOutletContext();
+    console.log(connects?.active?.length ,"acyivee")
   return (
+     <>
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
-        {currentUser?.ecosystems?.map((eco)=>{
+        {connects?.active?.map((eco)=>{
             return(
                 <Link  to={`/eco-profile/${eco?.id}`}
                     state={{
@@ -56,11 +62,23 @@ export default function Active() {
                 </div>
                 </Link>
             )
-        })
+          })
 
         }
 
-      </div>
+    </div>
+
+         {connects?.active?.length ===0 &&
+               <div className='w-full flex justify-center py-10'>
+                  <h5 className="text-lg font-semibold">No active connections</h5>
+               </div>
+
+            } 
+
+
+
+      </>
+
   )
 }
 

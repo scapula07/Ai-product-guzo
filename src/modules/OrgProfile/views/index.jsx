@@ -11,9 +11,8 @@ import EcoFeed from './ecoFeed'
 
 export default function Profile() {
     const group =useRecoilValue(groupState)
-
-    console.log("main profile")
-    console.log(group,"group profile")
+    
+    console.log(group?.type,"group profile")
     
   return (
         <Layout>
@@ -24,10 +23,10 @@ export default function Profile() {
 
             <div className='flex w-full h-full space-x-10'>
              
-                <div className='lg:w-3/5 w-full overflow-y-auto h-full'>
+                <div className='lg:w-3/5 w-full overflow-y-auto h-full no-scrollbar'>
                   <CoverSection group={group}/>
-                  {group?.type==="eco"?
-                     ""
+                     {group?.type==="eco"?
+                         ""
                         :
                         <div className='py-6'>
                             <CreatePost group={group}/>

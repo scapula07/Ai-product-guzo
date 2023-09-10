@@ -107,6 +107,13 @@ export default function Login() {
                         </div>
 
                     </div>
+
+                    <div className='py-2 px-10'>
+                        <Link to="/register/reset">
+                          <h5 className='text-purple-600 text-sm underline'>Forgot password?</h5>
+
+                        </Link>
+                    </div>
                       
 
                       <div className='flex flex-col items-center space-y-3'>
@@ -144,7 +151,7 @@ export default function Login() {
                             <h5 className='h-0.5  w-1/3 text-black border '></h5>
                             <div className='flex flex-col space-y-2 items-center w-full'>
                             <h5>Already have an account?</h5>
-                            <Link to="/register/email-password">
+                            <Link to="/">
                                 <button className='border border-blue-700 text-blue-700 rounded-full px-10 py-1'>Sign up</button>
                             </Link>
         

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ContactTable({collabs}) {
+export default function ContactTable({collab}) {
   
   return (
     <div className='flex w-full flex-col py-4 w-full overflow-x-auto no-scrollbar'>
@@ -9,7 +9,7 @@ export default function ContactTable({collabs}) {
           <div className='px-4 overflow-x-scroll no-scrollbar' style={{width:"200%"}}>
 
               <Table
-               collabs={collabs}
+               collab={collab}
                />
             
             </div>
@@ -20,7 +20,7 @@ export default function ContactTable({collabs}) {
 }
  
 
-const Table=({collabs})=>{
+const Table=({collab})=>{
   let count=0
    return(
     
@@ -43,22 +43,22 @@ const Table=({collabs})=>{
       </tr>
     </thead>
     <tbody className='bg-white'>
-      {collabs?.map((collab)=>{
+      {collab?.contacts?.map((contact)=>{
 
         count++
           return(
             <tr className='py-6 text-sm font-light'>
               <td className='bg-white text-center text-xs'>{count}</td>
-              <td className='bg-white text-center'>Malcolm</td>
-              <td className='bg-white text-center'>Malcolm</td>
-              <td className='bg-white text-center'>Malcolm</td>
-              <td className='bg-white text-center'>Malcolm</td> 
-              <td className='bg-white text-center'>Malcolm</td>
-              <td className='bg-white text-center'>Malcolm</td>
-              <td className='bg-white text-center'>Malcolm</td>
-              <td className='bg-white text-center' >Malcolm</td>
-              <td className='bg-white text-center'>Malcolm</td>
-              <td className='bg-white text-center'>Malcolm</td>
+              <td className='bg-white text-center'>10/9/2023</td>
+              <td className='bg-white text-center'>{contact?.firstName}</td>
+              <td className='bg-white text-center'>{contact?.lastName}</td>
+              <td className='bg-white text-center'>{contact?.phone}</td> 
+              <td className='bg-white text-center'>{contact?.email}</td>
+              <td className='bg-white text-center'></td>
+              <td className='bg-white text-center'></td>
+              <td className='bg-white text-center' ></td>
+              <td className='bg-white text-center'></td>
+              <td className='bg-white text-center'></td>
            </tr>
           )
          })

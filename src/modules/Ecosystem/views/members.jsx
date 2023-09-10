@@ -29,6 +29,8 @@ export default function EcoMembers() {
     console.log(members?.active,"mmmm pending")
 
   return (
+      <>
+        
        <div className='flex flex-col space-y-6 w-full'>
          <h5 className='font-semibold text-sm'>Pending Members</h5>
             {members?.pending?.map((member)=>{
@@ -77,6 +79,8 @@ export default function EcoMembers() {
             </div>
 
       </div>
+
+      </>
   )
 }
 

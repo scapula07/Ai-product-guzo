@@ -8,6 +8,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from 'react-router-dom'
 import { useOutletContext } from 'react-router-dom';
 
+
 export default function MyOpportunities() {
       const group =useRecoilValue(groupState)
       const [collabs,arePosts]= useOutletContext();

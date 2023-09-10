@@ -32,17 +32,17 @@ export default function Ecosystems() {
       
   return (
     <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
-        {ecosystems?.length >0 &&ecosystems?.map((eco)=>{
+        {ecosystems?.length >0 &&ecosystems?.map((eco,)=>{
 
-            const isPending= eco?.pending?.some(e=>e?.id ===currentUser?.id)
-            console.log(isPending,"pendiinn")
+            const isPending= eco?.pending?.some(e=>e?.id ===group?.id)
+            console.log(isPending,eco?.name)
             const isMember= eco?.active?.some(e=>e?.id ===currentUser?.id) || eco?.creator ===currentUser?.id;
-            
+            console.log(isMember,)
             return(
                
                   <EcosystemCard 
                      eco={eco}
-                     isPendingt={isPending}
+                     isPending={isPending}
                      currentUser={currentUser}
                      group={group}
                      isMember={isMember}
@@ -78,9 +78,9 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
           const result =await ecosystemApi.joinRequest(id,currentUser,group)
           setLoading(false)
         //   navigate("/newconnections/pending")
-          result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
-          console.log(result,"result")
-          result?.id?.length>0&&  navigate("/connections/pending")
+        //   result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
+        //   console.log(result,"result")
+          result&&navigate("/connections/pending")
           
 
           }catch(e){
@@ -112,6 +112,7 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
             </p>
      
             {!isPending?
+      
                 <>
                 {isLoading?
                  
@@ -132,10 +133,12 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
                     </>
                   }
                 </>
-                :
+                 :
                 <h5 className='rounded-full p-2 items-center justify-center text-blue-600 text-xs font-semibold' style={{background: "rgba(242, 242, 242, 1)"}}>
-                   Pending...
-                 </h5>
+                         Pending...
+                </h5>
+                   
+
 
 
             }
@@ -144,11 +147,11 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
           
           
         </div>
-        <Snackbar open={true} autoHideDuration={1000}   anchorOrigin={{ vertical:"top", horizontal:"center"}}>
+        {/* <Snackbar open={true} autoHideDuration={1000}   anchorOrigin={{ vertical:"top", horizontal:"center"}}>
             <Alert onClose={""} severity="success" sx={{ width: '100%' }}>
                 This is a success message!
             </Alert>
-         </Snackbar>
+         </Snackbar> */}
 
     </div>
 

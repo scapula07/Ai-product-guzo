@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useState} from 'react'
 import SearchBar from '../components/searchbar'
 import {BsThreeDots} from "react-icons/bs"
 import Contactgroup from './contactgroup'
@@ -7,6 +7,7 @@ import {useOutletContext} from "react-router-dom"
 
 export default function Contacts() {
     const [collabs,arePosts]= useOutletContext();
+    const [collab,setContact]=useState()
   return (
 
         <div className='w-full '>
@@ -21,9 +22,9 @@ export default function Contacts() {
                             </div>
                         
                             <h5 className='text-sm font-semibold w-1/4 flex items-center space-x-4 '>
-                            <span>Guzo Project</span> 
-                            <BsThreeDots />
-                            </h5>
+                              <span>{collab?.post?.title}</span> 
+                               <BsThreeDots />
+                             </h5>
 
                         </div>
                         <div className='flex w-1/4'>
@@ -41,6 +42,8 @@ export default function Contacts() {
                     <div className='w-1/4 h-screen overflow-y-scroll no-scrollbar'>
                         <Contactgroup 
                           collabs={collabs}
+                          setContact={setContact}
+                          collab={collab}
                         />
 
                     </div>
@@ -56,7 +59,9 @@ export default function Contacts() {
                            </div>
                         
                         <ContactTable 
-                            collabs={collabs}
+                            collab={collab}
+                            setContact={setContact}
+                           
                         />
 
                     </div>

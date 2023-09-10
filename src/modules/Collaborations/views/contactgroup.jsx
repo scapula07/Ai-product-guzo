@@ -1,9 +1,11 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 
 import {BsThreeDots} from "react-icons/bs"
 
-export default function Contactgroup({collabs}) {
-    
+export default function Contactgroup({collabs,collab,setContact}) {
+    useEffect(()=>{
+         setContact(collabs[0])
+    },[])
 
   return (
     <div className='flex flex-col py-4'>
@@ -16,7 +18,9 @@ export default function Contactgroup({collabs}) {
         <div className=' flex flex-col overflow-y-scroll h-screen space-y-2 py-2'>
             {collabs?.map((collab)=>{
                  return(
-                    <div className='bg-white rounded-lg flex justify-between py-2 px-2'>
+                    <div className='bg-white rounded-lg flex justify-between py-2 px-2'
+                     onClick={()=>setContact(collab)}
+                    >
                         <div className='flex flex-col'>
                             <h5 className='text-sm font-semibold'>{collab?.post?.title}</h5>
                             <h5 className='text-xs font-light'># of Contacts: {collab?.partners?.length}</h5>

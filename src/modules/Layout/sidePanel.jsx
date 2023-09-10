@@ -67,7 +67,7 @@ export default function SidePanel() {
             
                 {team?.map((group)=>{
                   const isTeammate=group?.teammates?.some(e=>e?.id ===currentUser?.id)
-
+                  console.log(group,"side nav")
                   return(
                     <>
                     {isTeammate&&

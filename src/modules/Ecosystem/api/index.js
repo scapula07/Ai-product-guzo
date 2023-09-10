@@ -51,7 +51,9 @@ export const ecosystemApi= {
                           const result = await updateDoc(memberRef, {
                                 memberships:[
                                     ...members,
+                                    {
                                     ...docSnap?.data()
+                                    }
                                   ]
                               })
                               console.log( result ,"member log")
@@ -85,11 +87,12 @@ export const ecosystemApi= {
                     const memberSnap = await getDoc(ecoRef);
                     console.log(memberSnap,"ecosystem");
                     console.log({active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending },"new memeber")
-                    return {active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending }
+                    return {active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending,status:true }
 
            
             }catch(e){
                 console.log(e)
+                throw new Error(e);
             }
            
 

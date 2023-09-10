@@ -44,6 +44,7 @@ import ViewProfile from "./ViewProfile";
 import Feed from "./Feed";
 import { Collaboration,Post,CollabContacts } from "./Collaboration";
 import Teammates from "./Teammates";
+import ForgetPassword from "./Onboarding/views/ForgetPassword";
 
 
 const NewRoutes = () => {
@@ -83,6 +84,8 @@ const NewRoutes = () => {
                           <Route path="" element={<AuthTypes/>} />
                           <Route path="email-password" element={<EmailAuth/>} />
                           <Route path="login" element={<Login/>} />
+                          <Route path="reset" element={<ForgetPassword/>} />
+
                       </Route>
                     
                       <Route path="2fa" element={<FactorAuth/>} />
@@ -94,12 +97,9 @@ const NewRoutes = () => {
                 </Route>
                 <Route path="/share" element={<Share/>} />
                 <Route path="/invite" element={<Invite/>} />
-                 <Route path="/profile" element={<Profile/>} >
-                     <Route path="" element={<Posts/>} />
-                     <Route path="members" element={<Members />} />
-
-                  </Route>
-                  <Route path="/eco-profile/:id/*" element={<ViewProfile/>}>
+                 <Route path="/profile" element={<Profile/>}  />
+                  
+                 <Route path="/eco-profile/:id/*" element={<ViewProfile/>}>
                      
                      
                   </Route>

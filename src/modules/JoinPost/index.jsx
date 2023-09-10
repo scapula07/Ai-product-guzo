@@ -3,12 +3,25 @@ import Modal from '../Modal'
 import {AiOutlineClose } from "react-icons/ai"
 import { postApi } from './_api'
 import ClipLoader from "react-spinners/ClipLoader";
-
+import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
 
 export default function Join({group,feed,index}) {
     console.log(index,"iiiiii")
-    const [request,setRequest]=useState({})
+    const [request,setRequest]=useState({active:false})
     const [isLoading,setLoader]=useState(false)
+    const [errorMsg, setErrorMsg] = useState(null)
+    const [open, setOpen] = useState(false);
+
+
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
+    
 
      const join=async()=>{
         console.log("joining")
@@ -26,9 +39,11 @@ export default function Join({group,feed,index}) {
             const response =await postApi.joinPost(feed,request,index,group)
             response&&setTrigger(false)
             response&&setLoader(false)
+            response&&setOpen(true)
           }catch(e){
             console.log(e)
             setLoader(false)
+            setErrorMsg(e.message)
           }
 
 
@@ -46,6 +61,19 @@ export default function Join({group,feed,index}) {
         
           Join now
      </button>
+
+        <Snackbar 
+          open={open}
+          autoHideDuration={3000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical:"top", horizontal:"center"}}>
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+               You succesfully join this posts
+            </Alert>
+         </Snackbar>
+
+
+
 
      <Modal trigger={trigger}  cname="w-1/2 py-2   px-8 rounded-lg " >
         <div className='w-full flex justify-end px-6 py-2'>
@@ -103,6 +131,14 @@ export default function Join({group,feed,index}) {
 
                  }
          </div>
+               <div className='px-10 py-1'>
+                        {errorMsg && (
+                        // <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+                        <Alert severity="error">{errorMsg}</Alert>
+                        )}
+
+                 </div>
+
 
             <div className=''>
                 <Form 

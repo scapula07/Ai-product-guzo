@@ -2,27 +2,33 @@ import { Face2 } from '@mui/icons-material';
 import React,{useState} from 'react'
 import ClipLoader from "react-spinners/ClipLoader";
 import { ecosystemApi } from '../api';
+import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
+
 
 export default function PendingMember({group,member,setMembers}) {
     const [accepted,setAccept]=useState(false)
     // const [isLoading,setLoading]=useState(false)
     const [loading,setLoader]=useState(false)
+    const [errorMsg, setErrorMsg] = useState(null)
 
     const accept=async(id,member)=>{
        
-       
+        setErrorMsg(null)
          try{
             setAccept(true)
-            const result =ecosystemApi.acceptMember(id,member)
-            console.log(result,"resss")
-            // setMembers(result)
-            setAccept(false)
+            const result =await ecosystemApi.acceptMember(id,member)
+            console.log(result?.status,"resss")
+            result?.status&&setMembers({active:result?.active,pending:result?.pending})
+            result?.status&&setAccept(false)
            
 
          }catch(e){
             console.log(e)
             setLoader(false)
             setAccept(false)
+
+            setErrorMsg(e.message)
+
          }
          
        }
@@ -115,7 +121,14 @@ export default function PendingMember({group,member,setMembers}) {
                 </div>
         </div>
 
-    
+          {errorMsg && (
+
+                <Snackbar open={true} autoHideDuration={1000}   anchorOrigin={{ vertical:"top", horizontal:"center"}}>
+                    <Alert onClose={""} severity="success" sx={{ width: '100%' }}>
+                        {errorMsg}
+                    </Alert>
+                </Snackbar>
+          )}
 
     </div>
   )
