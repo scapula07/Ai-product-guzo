@@ -1,18 +1,38 @@
 import React,{useState} from 'react'
 import ClipLoader from "react-spinners/ClipLoader";
 import { collaborationApi } from '../_api';
+import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
 
-export default function Request({request,group,index,collab}){
+
+
+
+export default function Request({request,group,index,collab,setReq}){
     const [accepted,setAccept]=useState()
-    // const [isLoading,setLoading]
+    const [errorMsg, setErrorMsg] = useState(null)
+
+    const [open, setOpen] = useState(false);
+
+
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
 
     const accept=async()=>{
         setAccept(true)
          try{
             const response= await collaborationApi.acceptRequest(request,group,index,collab)
-            response&&setAccept(false)
+            response?.status&&setAccept(false)
+            console.log(response?.reqs,"pppp")
+            response?.status&&setReq(response?.reqs)
           }catch(e){
-
+               console.log(e)
+               setErrorMsg(e.message)
+               setOpen(true)
           }
 
       }
@@ -90,7 +110,17 @@ export default function Request({request,group,index,collab}){
         </div>
   
   
-  
+        <Snackbar 
+          open={open}
+          autoHideDuration={3000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical:"top", horizontal:"center"}}>
+            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+               {errorMsg}
+            </Alert>
+         </Snackbar>
       </div>
+
+
      )
   }

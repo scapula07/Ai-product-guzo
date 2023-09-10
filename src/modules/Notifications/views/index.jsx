@@ -11,7 +11,7 @@ export default function Notifications() {
             <h5 className='text-slate-700 font-semibold text-xl'>Notifications</h5>
            
         </div>
-        <div className='flex flex-col w-full h-full space-y-7 overflow-y-scroll py-6'>
+        <div className='flex flex-col w-full h-full space-y-7 overflow-y-scroll py-6 no-scrollbar'>
             {notifications?.map((notification)=>{
                 return(
                 <Notification 

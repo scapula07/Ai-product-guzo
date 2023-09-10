@@ -60,7 +60,7 @@ export const ecosystemApi= {
                     
 
                    }else{
-                       const memberRef =doc(db,"users",member?.id)
+                         const memberRef =doc(db,"users",member?.id)
                          const memberSnap = await getDoc(memberRef);
                          console.log(memberSnap?.data(),"usersss")
                           const result2 = await updateDoc(memberRef, {

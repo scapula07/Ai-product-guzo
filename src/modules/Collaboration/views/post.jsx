@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 import ClipLoader from "react-spinners/ClipLoader";
 import Request from '../components/request';
 import Partner from '../components/partners';
+import DeletePost from '../../DeletePost';
 
 export default function Post() {
     const [collab]= useOutletContext();
@@ -20,10 +21,18 @@ export default function Post() {
     const group =useRecoilValue(groupState)
     const currentUser=useRecoilValue(userState)
 
+    const deleteCollab=()=>{
+       try{
+
+         }catch(e){
+           console.log(e)
+         }
+     }
+
   return (
     <>
 
-<div className='flex flex-col w-full rounded-lg'>
+  <div className='flex flex-col w-full rounded-lg'>
           <div className='flex w-full items-center justify-end space-x-4'>
               <button
                     style={{background: "rgba(236, 235, 254, 1)"}}
@@ -33,12 +42,7 @@ export default function Post() {
                 Edit Post
              </button>
 
-             <h5 className='bg-red-600 flex items-center justify-center rounded-full p-2'>
-                <MdDelete 
-                  className='text-black'
-                />
-
-             </h5>
+             <DeletePost collab={collab}/>
 
           </div>
 
@@ -82,6 +86,7 @@ export default function Post() {
 
 
 const Details=({collab,group})=>{
+  const [reqs,setReq]=useState(collab?.requests)
     return(
         <div className='w-full py-4 bg-white h-full '>
         <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
@@ -136,13 +141,14 @@ const Details=({collab,group})=>{
               </div>
 
                <div className='flex flex-col'>
-                   {collab?.requests?.map((req,index)=>{
+                   {reqs?.map((req,index)=>{
                       return(
                        <RequestCard 
                         req={req}
                         group={group}
                         index={index}
                         collab={collab}
+                        setReq={setReq}
                        />
                       )
 
@@ -164,9 +170,10 @@ const Details=({collab,group})=>{
 
 
 
-const RequestCard=({req,group,index,collab})=>{
+const RequestCard=({req,group,index,collab,setReq})=>{
     const randomNumber = Math.floor(Math.random() * 4) + 1;
     const [trigger,setTrigger]=useState(false)
+
   
       const color=[
           "",
@@ -208,6 +215,7 @@ const RequestCard=({req,group,index,collab})=>{
                                  group={group}
                                  index={index}
                                  collab={collab}
+                                 setReq={setReq}
                               />
                              )
                            })

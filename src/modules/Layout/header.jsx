@@ -8,7 +8,7 @@ import TabsPanel from './tabsPanel';
 import {useRecoilState,useRecoilValue} from "recoil"
 import { userState } from '../Recoil/globalstate'
 import LogOut from './logout';
-
+import { Link } from 'react-router-dom';
 
 export default function Header({hover,setHover}) {
     const [trigger,setTrigger]=useState(false)
@@ -30,12 +30,15 @@ export default function Header({hover,setHover}) {
             <SearchBar />
 
             <div className='flex items-center space-x-4'>
-                <h5 className='flex '>
-                   <IoMdNotificationsOutline 
-                       className='lg:text-3xl text-xl '
-                   />
-                   <span className='bg-red-500 lg:h-1.5 lg:w-1.5 h-1 w-1 rounded-full -ml-3 mt-1'></span>
-                </h5>
+                <Link to="/notifications">
+                    <h5 className='flex '>
+                    <IoMdNotificationsOutline 
+                        className='lg:text-3xl text-xl '
+                    />
+                    <span className='bg-red-500 lg:h-1.5 lg:w-1.5 h-1 w-1 rounded-full -ml-3 mt-1'></span>
+                    </h5>
+                </Link>
+          
 
                 <div className='relatiive' onMouseOver={()=>setHover(true)} >
                     {currentUser?.img?.length >0 ?

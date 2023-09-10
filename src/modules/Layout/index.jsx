@@ -4,16 +4,34 @@ import TabsPanel from './tabsPanel'
 import Header from './header'
 import {useRecoilValue,useRecoilState} from "recoil"
 import { groupState,userState } from '../Recoil/globalstate'
-
+import NotificationPermission from '../NotificationPermission'
 
 export default function Layout({children}) {
     const [hover,setHover]=useState(false)
     const [currentUser,setcurrentUser]=useRecoilState(userState)
     const user = localStorage.getItem("user");
+    const [notificationOpen, setNotificationOpen] = useState(false);
+
+
+    const handleNotificationOpen = () => {
+      setNotificationOpen(true);
+  
+      // Close the notification after a specified duration
+       setTimeout(() => {
+        setNotificationOpen(false);
+       }, 100000); // Adjust the duration as needed (in milliseconds)
+    };
+  
+
+
+
+
     useEffect( ()=>{
       
       console.log(JSON.parse(user),"user")
+      JSON.parse(user)?.notificationToken?.length===undefined&&handleNotificationOpen()
       setcurrentUser(JSON.parse(user))
+
       },[])
   return (
      <div className='w-full overflow-x-hidden overflow-y-hidden h-screen' 
@@ -43,6 +61,14 @@ export default function Layout({children}) {
                <div className='lg:pt-20 pt-8 overflow-y-auto h-full w-full no-scrollbar' >
                 {children}
                </div>
+                {notificationOpen&&
+                   <div className='absolute bottom-0 w-full flex justify-end px-10 z-30 py-8 '>
+                        <NotificationPermission
+                          setNotificationOpen={setNotificationOpen} 
+                          currentUser={currentUser}
+                        />
+                    </div>
+                }
                 
             </div>
 

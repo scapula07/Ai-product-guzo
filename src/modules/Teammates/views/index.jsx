@@ -8,6 +8,7 @@ import { useRecoilValue } from 'recoil'
 import { teamApi } from '../_api/team'
 import { inviteEmail } from '../_api/email'
 import ClipLoader from "react-spinners/ClipLoader";
+import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
 
 
 export default function Teammates() {
@@ -16,8 +17,20 @@ export default function Teammates() {
     const currentUser=useRecoilValue(userState)
     const [teams,setTeam]=useState([])
     const [isLoading,setLoader]=useState(false)
-
+    const [errorMsg, setErrorMsg] = useState(null)
     const [invitee,setInvitee]=useState({})
+
+    const [open, setOpen] = useState(false);
+
+
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
 
     
     useEffect(()=>{
@@ -32,23 +45,31 @@ export default function Teammates() {
 
      const addTeammates=async()=>{
         setLoader(true)
+        setErrorMsg(null)
+
          try{
-        //    const response =teamApi.addInvitee(invitee,group)
-            const res =await inviteEmail.sendInvite(invitee)
-            console.log(res,"res")
-           if( res ===200){
-               console.log("sent succesfully")
-                const response =teamApi.addInvitee(invitee,group)
+   
+            // const res =await inviteEmail.sendInvite(invitee)
+            // console.log(res,"res")
+        //    if( res ===200){
+        //        console.log("sent succesfully")
+        //         const response =await teamApi.addInvitee(invitee,group)
+        //         console.log(response,"ressss")
+        //         response?.status&&setTrigger(false)
+        //         response?.status&&setLoader(false)
+        //         response?.status&&setTeam(response)
+        //     }
+            
+                const response =await teamApi.addInvitee(invitee,group)
                 console.log(response,"ressss")
-                response&&setTrigger(false)
-                response&&setLoader(false)
-            }
-            
-            
+                response?.status&&setTrigger(false)
+                response?.status&&setLoader(false)
+                response?.status&&setTeam(response)
 
          }catch(e){
             console.log(e,"Errrr")
             setLoader(false)
+            setErrorMsg(e?.message)
          }
 
         }
@@ -88,6 +109,11 @@ export default function Teammates() {
                             <h5 className='font-semibold text-xl'>Invite others to join your team</h5>
 
                          </div>
+                         {errorMsg && (
+                            // <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+                            <Alert severity="error">{errorMsg}</Alert>
+                          )}
+
 
 
                           <Form 
@@ -127,6 +153,16 @@ export default function Teammates() {
                     </div>
 
             </Modal>
+
+            <Snackbar 
+          open={open}
+          autoHideDuration={3000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical:"top", horizontal:"center"}}>
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+               Invite sent!
+            </Alert>
+         </Snackbar>
 
     </Layout>
   )

@@ -28,9 +28,8 @@ export const teamApi= {
               
 
 
-            const collection=group?.type ==="eco"?"ecosystems" :"organizations"
-            console.log(collection,"ccccc")
-            const groupRef=doc(db,collection,group?.id)
+            const collectionName=group?.type ==="eco"?"ecosystems" :"organizations"
+            const groupRef=doc(db,collectionName,group?.id)
             const groupSnap = await getDoc(groupRef);
             console.log(groupSnap?.data(),"group")
             const array=[]
@@ -42,10 +41,14 @@ export const teamApi= {
                 invitees:[
                     ...inviteeList,
                     invitee
-                  ]
+                   ]
                })
        
-        
+           
+
+            if(user===undefined) {
+                throw new Error("This user does not exist")
+            }
 
              const notifications=user?.notifications?.length ===undefined ? []:user?.notifications
               await updateDoc(doc(db,"users",user?.id), {
@@ -60,7 +63,10 @@ export const teamApi= {
                     ]
                  })
 
-               return true
+          
+            const docSnap = await getDoc(groupRef);
+
+            return {teammates:docSnap?.data()?.teammates,invitees:docSnap?.data()?.invitees,status:true}
 
 
             }catch(e){

@@ -6,6 +6,7 @@ import eco4 from  "../../assets/eco4.png"
 import eco5 from  "../../assets/orgcover.png"
 import { Link } from 'react-router-dom'
 import { ecosystemApi } from '../_api/ecosystem'
+import { notificationApi } from '../_api/notification'
 import {useRecoilValue} from "recoil"
 import { groupState,userState } from '../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
@@ -72,15 +73,15 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
     let navigate = useNavigate();
     const [isLoading,setLoading]=useState(false)
 
-    const join=async(id)=>{
+     const join=async(id)=>{
         setLoading(true)
         try{
           const result =await ecosystemApi.joinRequest(id,currentUser,group)
           setLoading(false)
-        //   navigate("/newconnections/pending")
-        //   result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
-        //   console.log(result,"result")
+     
           result&&navigate("/connections/pending")
+
+        //  const response =await notificationApi.sendNotification(currentUser?.accessToken,currentUser?.notificationToken)
           
 
           }catch(e){
@@ -111,7 +112,7 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
             Worem ipsum dolor sit amet, consectetur adi...
             </p>
      
-            {!isPending?
+            {isPending?
       
                 <>
                 {isLoading?

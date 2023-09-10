@@ -19,7 +19,7 @@ export const authApi= {
             await setDoc(ref,payload)
             const docSnap = await getDoc(ref);
             if (docSnap.exists()) {
-                return {id:docSnap?.id,...docSnap?.data()}
+                return {id:docSnap?.id,...docSnap?.data(),accessToken:user?.accessToken}
               } else {
                 
                 console.log("No such document!");
@@ -65,7 +65,7 @@ export const authApi= {
                 const ref =doc(db,"users",response?.user?.uid)
                 const docSnap = await getDoc(ref);
                 if (docSnap.exists()) {
-                    return {id:docSnap?.id,...docSnap?.data()}
+                    return {id:docSnap?.id,...docSnap?.data(),accessToken:response?.user?.accessToken}
                 } else {
                     
                     console.log("No such document!");

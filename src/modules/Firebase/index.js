@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getFirestore} from "firebase/firestore"
 import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut} from "firebase/auth";
-import { getMessaging } from "firebase/messaging";
+import { getMessaging , getToken } from "firebase/messaging";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBCCrk78nJ-ipfhxDlodPoUlSgJSUP_jTo",
@@ -18,7 +18,7 @@ const firebaseConfig = {
   const app = initializeApp(firebaseConfig);
   export const auth =getAuth(app)
   export const db=getFirestore()
-  const messaging = getMessaging(app);
+  export const messaging = getMessaging(app);
 
 
 

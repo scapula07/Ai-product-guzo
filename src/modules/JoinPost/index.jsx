@@ -26,6 +26,7 @@ export default function Join({group,feed,index}) {
      const join=async()=>{
         console.log("joining")
         setLoader(true)
+        setErrorMsg(null)
         if(group?.type?.length>0){
              request["img"]=group?.img
          }else if(group?.img?.length >0){
