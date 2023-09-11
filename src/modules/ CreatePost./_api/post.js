@@ -14,6 +14,32 @@ const uploadFile=async(file)=>{
     return `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`
 
 }
+
+
+const createGroupChat=async(id,data,group)=>{
+    try{
+        const ref=doc(db,"group",id)
+        const payload={
+            name:data?.post?.title,
+            img:data?.img_post,
+            members:[group?.id]
+        }
+        await setDoc(ref,payload)
+
+        const docSnap = await getDoc(ref);
+        return docSnap.exists()
+
+     }catch(e){
+        console.log(e)
+        throw new Error(e);
+     }
+     
+ }
+
+
+
+
+
 export const postApi= {
     makePost:async function (group,payload,currentUser) {
         console.log(payload,"ppp")
@@ -35,7 +61,12 @@ export const postApi= {
              
            const postRef=doc(db,"posts",postSnap?.id)
            const docSnap = await getDoc(postRef);
-           return docSnap.exists()
+           if(docSnap.exists()){
+             const response=await createGroupChat(docSnap?.id,docSnap?.data(),group)
+
+             return response
+
+           }
             
 
           }catch(e){

@@ -2,7 +2,7 @@ import React,{useEffect,useRef,useState} from 'react'
 import Layout from '../../Layout'
 import Contacts from '../components/contacts'
 import Chatbox from './chatbox'
-import { userState } from '../../Recoil/globalstate'
+import { userState,groupState } from '../../Recoil/globalstate'
 import { useRecoilValue } from 'recoil'
 import { io } from "socket.io-client";
 import {doc,setDoc,

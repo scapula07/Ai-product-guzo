@@ -11,7 +11,7 @@ import Share from './share'
 import {MdArrowDropDown} from "react-icons/md"
 import { postApi } from './_api/post'
 import ClipLoader from "react-spinners/ClipLoader";
-import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
+import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
 
 
 
@@ -46,6 +46,19 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
 
     const [url,setUrl]=useState("")
+
+    const [open, setOpen] = useState(false);
+
+
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
+
 
    
 
@@ -127,6 +140,16 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
 
 <div className='w-full flex justify-center h-full overflow-y-scroll'>
+        <Snackbar 
+          open={open}
+          autoHideDuration={3000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical:"top", horizontal:"center"}}>
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+               Post created!
+            </Alert>
+         </Snackbar>
+
       
       <div className='w-4/5 flex flex-col h-full space-y-10 py-4 '>
          {errorMsg && (
