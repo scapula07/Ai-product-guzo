@@ -21,6 +21,43 @@ export default function TabsPanel() {
     const [trigger,setTrigger]=useState(false)
     const [hover,setHover]=useState(false)
     const currentUser=useRecoilValue(userState)
+
+
+
+const navs=[
+  {
+      name:"Home",
+      icon:home,
+      link:`/home/${group?.id}`
+
+  },
+  {
+      name:"Connections",
+      icon:connections,
+      link:`/connections/${group?.id}`
+
+  },
+  {
+      name:"Posts",
+      icon:opportunity,
+      link:`/collaborations/${group?.id}`
+  },
+  {
+      name:"Ecosystem",
+      icon:ecosystem,
+      link:`/ecosystem/${group?.id}`
+  },
+  {
+      name:"Messages",
+      icon:message,
+      link:`/messages/${group?.id}`
+  },
+  {
+      name:"Profile",
+      icon:user,
+      link:`/profile/${group?.id}`
+  },
+]
   return (
     <>
     <div className='py-6  w-full relative h-full'>
@@ -113,38 +150,3 @@ export default function TabsPanel() {
   )
 }
 
-
-const navs=[
-    {
-        name:"Home",
-        icon:home,
-        link:"/home"
-
-    },
-    {
-        name:"Connections",
-        icon:connections,
-        link:"/connections"
-
-    },
-    {
-        name:"Posts",
-        icon:opportunity,
-        link:"/collaborations"
-    },
-    {
-        name:"Ecosystem",
-        icon:ecosystem,
-        link:"/ecosystem"
-    },
-    {
-        name:"Messages",
-        icon:message,
-        link:"/messages"
-    },
-    {
-        name:"Profile",
-        icon:user,
-        link:"/profile"
-    },
-]

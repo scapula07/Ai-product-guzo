@@ -63,7 +63,7 @@ export default function Eco({currentUser}) {
             result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
             console.log(result,"result")
             setLoader(false)
-            result?.id?.length>0&& navigate(`/home`)
+            result?.id?.length>0&& navigate(`/home/${result?.id}`)
           }catch(e){
             console.log(e)
             setLoader(false)

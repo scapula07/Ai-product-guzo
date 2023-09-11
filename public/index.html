@@ -31,7 +31,51 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Guzo</title>
+    <script>
+        if (!('serviceWorker' in navigator)) {
+          // Service Worker isn't supported on this browser, disable or hide UI.
+          console.log("no service")
+          
+        }else{
+          console.log(" service")
+          navigator.serviceWorker
+          .register('/service-worker.js')
+          .then(function (registration) {
+            console.log('Service worker successfully registered.');
+            return registration;
+          })
+          .catch(function (err) {
+            console.error('Unable to register service worker.', err);
+          });
+
+
+        }
+
+        if (!('PushManager' in window)) {
+
+          // Push isn't supported on this browser, disable or hide UI.
+          console.log("no service")
+          
+        }else{
+          console.log(" service")
+          navigator.serviceWorker
+          .register('/service-worker.js')
+          .then(function (registration) {
+            console.log('Service worker successfully registered.');
+            return registration;
+          })
+          .catch(function (err) {
+            console.error('Unable to register service worker.', err);
+          });
+
+
+        }
+
+
+     </script>
+    
     <script src="https://accounts.google.com/gsi/client" async defer ></script>
+    
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

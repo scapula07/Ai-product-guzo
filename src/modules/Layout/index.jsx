@@ -29,6 +29,7 @@ export default function Layout({children}) {
     useEffect( ()=>{
       
       console.log(JSON.parse(user),"user")
+      console.log()
       JSON.parse(user)?.notificationToken?.length===undefined&&handleNotificationOpen()
       setcurrentUser(JSON.parse(user))
 

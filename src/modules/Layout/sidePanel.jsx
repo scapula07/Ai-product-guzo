@@ -10,6 +10,8 @@ import ioncover from "../assets/ionCover.png"
 import orgcover from "../assets/orgcover1.png"
 import orgprofile from "../assets/orgcover.png"
 import { userState } from '../Recoil/globalstate'
+import { Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 
 export default function SidePanel() {
   const [group,setGroup]=useRecoilState(groupState)
@@ -17,22 +19,24 @@ export default function SidePanel() {
   const organizations=currentUser?.organizations
   const ecosystems=currentUser?.ecosystems
   const [team,setTeam]=useState([])
-
+  const { id} = useParams();
+   console.log(id,"iddd")
 
    
      useEffect(()=>{
       const isGroup= organizations?.length >0 || ecosystems?.length >0
  
-      isGroup&&setTeam([currentUser,...organizations,...ecosystems])
+       isGroup&&setTeam([currentUser,...organizations,...ecosystems])
    
-  
-       isGroup&&setGroup([currentUser,...organizations,...ecosystems][0])
+      
+       isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
     
       },[currentUser])
 
 
 
-  
+      const currentPath = window.location.pathname;
+      
     console.log(team,"team")
   console.log(currentUser?.img?.length,"lllll")
   return (
@@ -41,13 +45,15 @@ export default function SidePanel() {
           {currentUser?.id?.length >0 &&
             <>
               {currentUser?.img?.length ===0?
+                   <Link to={`${currentPath}`}>
                    <div className='rounded-lg p-2 items-center justify-center flex border'
                       onClick={()=>setGroup(currentUser)}
-                   >
+                     >
                        <h5 className='font-semibold text-sm'> {currentUser?.firstName?.slice(0,1) +currentUser?.lastName?.slice(0,1)}</h5>
                     </div>
+                    </Link>
                    :
-                 
+                   <Link to={`${currentPath}`}>
                     <div className='rounded-lg p-0.5 items-center justify-center flex border'>
                 
                       <img 
@@ -56,6 +62,7 @@ export default function SidePanel() {
                           onClick={()=>setGroup(currentUser)}
                         />
                     </div>
+                    </Link>
 
               }
         
@@ -71,13 +78,15 @@ export default function SidePanel() {
                   return(
                     <>
                     {isTeammate&&
-                       <div className='rounded-lg p-0.5 items-center justify-center flex border'>
-                          <img 
-                            src={group?.img}
-                            className="h-8 w-8 rounded-full"
-                            onClick={()=>setGroup(group)}
-                          />
-                       </div>
+                        <Link to={`${currentPath}`}>
+                          <div className='rounded-lg p-0.5 items-center justify-center flex border'>
+                              <img 
+                                src={group?.img}
+                                className="h-8 w-8 rounded-full"
+                                onClick={()=>setGroup(group)}
+                              />
+                          </div>
+                       </Link>
                     }
                     
                   </>
@@ -85,23 +94,7 @@ export default function SidePanel() {
               })}
             </>
           }
-          {/* {ecosystems?.length >0 &&
-          <>
-            
-                {[...ecosystems].map((group)=>{
-                  console.log(group,"ggg")
-                  return(
-                    <div className='rounded-lg p-1 items-center justify-center flex border'>
-                      <img 
-                        src={group?.img}
-                        className="h-8 w-8  rounded-full"
-                        onClick={()=>setGroup(group)}
-                      />
-                    </div>
-                  )
-              })}
-            </>
-          } */}
+
         
 
              <div className='rounded-full h-10 w-10  flex justify-center items-center  ' style={{background: "linear-gradient(70.54deg, #281CF5 17.62%, #5DE4D7 94.09%)"}}>

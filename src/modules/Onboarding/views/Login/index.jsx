@@ -46,7 +46,7 @@ export default function Login() {
              setLoader(false)
             localStorage.clear();
              user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
-             user?.id.length >0&& navigate(`/home`)
+             user?.id.length >0&& navigate(`/home/${user?.id}`)
 
 
             }catch(e){

@@ -70,6 +70,8 @@ const NewRoutes = () => {
   //     return(
   //       authListner()
   //     )
+
+  
     },[user])
 
 
@@ -97,42 +99,42 @@ const NewRoutes = () => {
                 </Route>
                 <Route path="/share" element={<Share/>} />
                 <Route path="/invite" element={<Invite/>} />
-                 <Route path="/profile" element={<Profile/>}  />
+                 <Route path="/profile/:id/*" element={<Profile/>}  />
                   
                  <Route path="/eco-profile/:id/*" element={<ViewProfile/>}>
                      
                      
                   </Route>
-                <Route path="/home" element={<Home/>} >
+                <Route path="/home/:id/*" element={<Home/>} >
                     <Route path="" element={<Feeds/>} />
                     <Route path="ecosystems" element={<Ecosystems/>} />
                 </Route>
-                <Route path="/connections" element={<Connections/>} >
+                <Route path="/connections/:id/*" element={<Connections/>} >
                      <Route path="" element={<Active/>} />
                      <Route path="pending" element={<Pending/>} />
                 </Route>
-                <Route path="/collaborations" element={<Collaborations/>} >
+                <Route path="/collaborations/:id/*" element={<Collaborations/>} >
                      <Route path="" element={<Myopportunities/>} />
                      <Route path="joined" element={<JoinedOpportunities/>} />
                      <Route path="contacts" element={<Contacts/>} />
                 </Route>
-                <Route path="/collaboration/:id" element={<Collaboration/>} >
+                <Route path="/collaboration/:id/*" element={<Collaboration/>} >
                      <Route path="" element={<Post/>} />
                      <Route path="contacts" element={<CollabContacts/>} />
                 </Route>
-                <Route path="/messages" element={<Messenger/>} >
+                <Route path="/messages/:id/*" element={<Messenger/>} >
                      <Route path="" element={<DM/>} />
                      <Route path="group" element={<GroupChat/>} />
                 
                 </Route>
-                <Route path="/notifications" element={<Notifications/>} />
-                <Route path="/settings" element={<Settings/>} />
-                <Route path="/setting-edit-profile" element={<EditProfile/>} />
-                <Route path="/ecosystem" element={< Ecosystem />} >
+                <Route path="/notifications/:id/*" element={<Notifications/>} />
+                <Route path="/settings/:id/*" element={<Settings/>} />
+                <Route path="/setting-edit-profile/:id/*" element={<EditProfile/>} />
+                <Route path="/ecosystem/:id/*" element={< Ecosystem />} >
                     <Route path="" element={<EcoMembers/>} />
                 </Route>
                 <Route path="/feed/:id" element={<Feed/>} />
-                <Route path="/team" element={<Teammates/>} />
+                <Route path="/team/:id/*" element={<Teammates/>} />
     
             </Routes>
     </>
