@@ -30,6 +30,7 @@ export const createProfile= {
 
             }catch(e){
                 console.log(e)
+                throw new Error(e);
             }
 
 
@@ -93,6 +94,7 @@ export const createProfile= {
 
                 }catch(e){
                     console.log(e)
+                    throw new Error(e);
                 }
 
         
@@ -160,6 +162,7 @@ export const createProfile= {
 
             }catch(e){
                 console.log(e)
+                throw new Error(e);
             }
         
     }

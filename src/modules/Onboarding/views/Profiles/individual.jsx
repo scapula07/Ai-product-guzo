@@ -4,6 +4,8 @@ import { createProfile } from '../../_api/createProfile'
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useOutletContext } from 'react-router-dom'
+import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
+
 
 export default function Individual({currentUser}) {
     console.log(currentUser,"indiv")
@@ -18,7 +20,7 @@ export default function Individual({currentUser}) {
     const [file,setFile]=useState()
     const [url,setUrl]=useState("")
     const [isLoading,setLoader]=useState(false)
-
+    const [errorMsg, setErrorMsg] = useState(null)
     const hiddenFileInput = useRef()
 
     const handleClick = event => {
@@ -40,6 +42,7 @@ export default function Individual({currentUser}) {
 
       const create=async()=>{
         setLoader(true)
+        setErrorMsg(null)
         try{
             const result =await createProfile.createUserProfile(user?.id,displayName,file)
             setLoader(true)
@@ -51,9 +54,8 @@ export default function Individual({currentUser}) {
           }catch(e){
             console.log(e)
             setLoader(false)
+            setErrorMsg(e.message)
           }
-
-    //   
            
        }
 
@@ -63,6 +65,13 @@ export default function Individual({currentUser}) {
         <div className='w-full flex bg-white rounded-lg  border flex-col  space-y-8 py-28' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
                <div className='flex flex-col items-center w-full space-y-10'>
                   <h5 className='text-xl font-semibold'>Create your profile...</h5>
+                  <div className='px-10 py-1'>
+                        {errorMsg && (
+                        // <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+                        <Alert severity="error">{errorMsg}</Alert>
+                        )}
+
+                 </div>
                   {url?.length ==0&&
                     <div className='rounded-full h-44 w-44 flex flex-col justify-center items-center' style={{background: "rgba(242, 242, 242, 0.6)"}}
                         onClick={handleClick}
