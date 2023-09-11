@@ -57,7 +57,8 @@ export const teamApi= {
                      {
                         name:group?.name,
                         img:group?.img,
-                        message:"Requested to join your network."
+                        message:"Requested to join your network.",
+                        type:"join request"
 
                      }
                     ]

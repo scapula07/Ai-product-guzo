@@ -19,9 +19,12 @@ export default function Teammates() {
     const [isLoading,setLoader]=useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
     const [invitee,setInvitee]=useState({})
-
+  
+    
     const [open, setOpen] = useState(false);
+    const currentDomain = window.location.hostname;
 
+    console.log(currentDomain,"domain")
 
 
     const handleClose = (event, reason) => {
@@ -49,22 +52,22 @@ export default function Teammates() {
 
          try{
    
-            // const res =await inviteEmail.sendInvite(invitee)
-            // console.log(res,"res")
-        //    if( res ===200){
-        //        console.log("sent succesfully")
-        //         const response =await teamApi.addInvitee(invitee,group)
-        //         console.log(response,"ressss")
-        //         response?.status&&setTrigger(false)
-        //         response?.status&&setLoader(false)
-        //         response?.status&&setTeam(response)
-        //     }
-            
+            const res =await inviteEmail.sendInvite(invitee)
+            console.log(res,"res")
+           if( res ===200){
+               console.log("sent succesfully")
                 const response =await teamApi.addInvitee(invitee,group)
                 console.log(response,"ressss")
                 response?.status&&setTrigger(false)
                 response?.status&&setLoader(false)
                 response?.status&&setTeam(response)
+            }
+            
+                // const response =await teamApi.addInvitee(invitee,group)
+                // console.log(response,"ressss")
+                // response?.status&&setTrigger(false)
+                // response?.status&&setLoader(false)
+                // response?.status&&setTeam(response)
 
          }catch(e){
             console.log(e,"Errrr")

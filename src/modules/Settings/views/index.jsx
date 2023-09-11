@@ -1,7 +1,11 @@
 import React from 'react'
 import Layout from "../../Layout"
 import { Link } from 'react-router-dom'
+import { groupState,userState } from '../../Recoil/globalstate'
+import { useRecoilValue } from 'recoil'
+
 export default function Settings() {
+  const group =useRecoilValue(groupState)
   return (
     <Layout>
          <div className='py-2 flex-col flex space-y-4'> 
@@ -19,7 +23,7 @@ export default function Settings() {
                       },
                       {
                         text: "Teammates",
-                        link:"/team"
+                        link:`/team/${group?.id}`
 
                       },
                       {

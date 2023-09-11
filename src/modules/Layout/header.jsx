@@ -6,13 +6,14 @@ import { Drawer } from "@mui/material";
 import SidePanel from './sidePanel';
 import TabsPanel from './tabsPanel';
 import {useRecoilState,useRecoilValue} from "recoil"
-import { userState } from '../Recoil/globalstate'
+import { userState,groupState } from '../Recoil/globalstate'
 import LogOut from './logout';
 import { Link } from 'react-router-dom';
 
 export default function Header({hover,setHover}) {
     const [trigger,setTrigger]=useState(false)
     const currentUser =useRecoilValue(userState)
+    const group =useRecoilValue(groupState)
     console.log(currentUser)
   return (
     <>
@@ -30,7 +31,7 @@ export default function Header({hover,setHover}) {
             <SearchBar />
 
             <div className='flex items-center space-x-4'>
-                <Link to="/notifications">
+                <Link to={`/notifications/${group?.id}`}>
                     <h5 className='flex '>
                     <IoMdNotificationsOutline 
                         className='lg:text-3xl text-xl '

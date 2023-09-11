@@ -17,46 +17,17 @@ export default function Messenger() {
    const socket = useRef();
 
    const location =useLocation()
-
-  //  const receiver=location?.state?.member
-  //  console.log(receiver,"redd")
-
-   const currentUser=useRecoilValue(userState)
+   const currentUser=useRecoilValue(groupState)
    const [currentChat,setCurrentChat] =useState()
    const [receiverInfo,setReceiver] =useState({})
    const [messages,setMessages]=useState([])
 
    const [conversations,setConversations]=useState([])
-   const [arrivalMessage, setArrivalMessage] = useState(null);
+   const [groups,setGroups]=useState([])
    const [textsubmit,setTextsubmit]=useState(false)
-   const [socketUsers,setSocketUsers]=useState([])
+
 
    const [newMessage, setNewMessage] = useState("");
-
-    useEffect(() => {
-      socket.current = io("ws://localhost:4000");
-      socket.current.on("getMessage", (data) => {
-        setArrivalMessage({
-          sender: data.sender,
-          text: data.text,
-          createdAt: Date.now(),
-        });
-      });
-     }, []);
-
-    useEffect(() => {
-      arrivalMessage &&
-        currentChat?.members.includes(arrivalMessage?.sender?.id) &&
-        setMessages((prev) => [...prev, arrivalMessage]);
-    }, [arrivalMessage, currentChat]);
-
-    useEffect(() => {
-      socket.current.emit("addUser", currentUser.id);
-      socket.current.on("getUsers", (users) => {
-       
-      setSocketUsers(users)
-       })
-    }, [currentUser]);
 
     useEffect(()=>{
       const getConversations = async () => {
@@ -67,6 +38,11 @@ export default function Messenger() {
             const convSnapshot =await getDocs(q)
             const conversations= convSnapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
             console.log(conversations,"conversation")
+            const qG = query(collection(db, "group"), where("members", "array-contains",currentUser?.id));
+       
+            const groupSnapshot =await getDocs(qG)
+            const groups= groupSnapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
+            console.log(groups,"grrgrggrg")
             setConversations(conversations)
          
           }catch(error){
@@ -92,16 +68,7 @@ export default function Messenger() {
         const receiverId = currentChat?.members.find(
           (member) => member !== currentUser.id
         );
-        // socket.current.emit("addUser", receiverId);
-        // console.log(receiverId,"rrrr");
-        // console.log(socketUsers,"usersss")
-        // const u=socketUsers.find((user)=>user.userId ===receiverId)
-        // console.log(u,"urur>>>>>>>>>>>>>")
-        // socket.current.emit("sendMessage", {
-        //   sender: currentUser.id,
-        //   socketId: u.socketId,
-        //   text: newMessage,
-        // });
+ 
           setTextsubmit(false)
         try{
           
@@ -135,6 +102,7 @@ export default function Messenger() {
                 currentUser={currentUser}
                 receiverInfo={receiverInfo}
                 setReceiver={setReceiver}
+                groups={groups}
                
                />
           </div>

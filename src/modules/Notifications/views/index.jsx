@@ -3,8 +3,11 @@ import img1 from "../../assets/orgcover.png"
 import img2 from "../../assets/feedorg.png"
 import img3 from "../../assets/gordon.png"
 import Layout from '../../Layout'
+import { groupState,userState } from '../../Recoil/globalstate'
+import { useRecoilValue } from 'recoil'
 
 export default function Notifications() {
+    const currentUser =useRecoilValue(userState)
   return (
     <Layout>
         <div className='py-2 flex-col flex space-y-4'> 
@@ -12,7 +15,7 @@ export default function Notifications() {
            
         </div>
         <div className='flex flex-col w-full h-full space-y-7 overflow-y-scroll py-6 no-scrollbar'>
-            {notifications?.map((notification)=>{
+            {currentUser?.notifications?.map((notification)=>{
                 return(
                 <Notification 
                     notification={notification}
@@ -40,12 +43,12 @@ const Notification=({notification})=>{
 
                 <div className='flex flex-col '>
                     <h5 className='font-semibold'>{notification?.name}</h5>
-                    <h5 className='text-sm font-light'>{notification?.account}</h5>
+                    {/* <h5 className='text-sm font-light'>{notification?.account}</h5> */}
 
                 </div>
              </div>
               <div className='flex items-center justify-between w-full'>
-                <h5 className='font-light text-sm'>{notification?.msg}</h5>
+                <h5 className='font-light text-sm'>{notification?.message}</h5>
                     {notification?.type=="Message"&&
                       <h5 className='text-blue-700 font-semibold text-sm'>Message</h5>
 
@@ -78,85 +81,3 @@ const Notification=({notification})=>{
         </div>
     )
 }
-
-const notifications=[
-    {
-        img:img1,
-        account:"Org",
-        name:"Common Desk",
-        msg:"Has sent you a message.",
-        type:"Message"
-
-    },
-    {
-        img:img2,
-        account:"Ecosystem",
-        msg:"Has accepted  “Activation Festival” collaboration for the Ion Houston Network Feed.",
-        type:"",
-        name:"Ion Houston",
-    },
-    {
-        img:img3,
-        account:"",
-        msg:"Requested to join your network.",
-        type:"join request",
-        name:"Gordon Taylor",
-    },
-    {
-        img:img3,
-        account:"",
-        msg:"Has sent you a message.",
-        type:"Message",
-        name:"Gordon Taylor",
-    },
-    {
-        img:img2,
-        account:"Ecosystem",
-        msg:"Has declined  “Food Truck Extravanganza” collaboration for the Ion Houston Network Feed.",
-        type:"Message",
-        name:"Ion Houston"
-        
-    },
-    {
-        img:img1,
-        account:"Ecosystem",
-        msg:"Requested to post “Wellness Wednesday”  to your network.",
-        type:"post request",
-        name:"Common Desk",
-    },
-    {
-        img:img2,
-        account:"Ecosystem",
-        msg:"Has accepted  “Activation Festival” collaboration for the Ion Houston Network Feed.",
-        type:"",
-        name:"Ion Houston",
-    },
-    {
-        img:img2,
-        account:"Ecosystem",
-        msg:"Has accepted  “Activation Festival” collaboration for the Ion Houston Network Feed.",
-        type:"",
-        name:"Ion Houston",
-    },
-    {
-        img:img2,
-        account:"Ecosystem",
-        msg:"Has accepted  “Activation Festival” collaboration for the Ion Houston Network Feed.",
-        type:"",
-        name:"Ion Houston",
-    },
-    {
-        img:img2,
-        account:"Ecosystem",
-        msg:"Has accepted  “Activation Festival” collaboration for the Ion Houston Network Feed.",
-        type:"",
-        name:"Ion Houston",
-    },
-    {
-        img:img2,
-        account:"Ecosystem",
-        msg:"Has accepted  “Activation Festival” collaboration for the Ion Houston Network Feed.",
-        type:"",
-        name:"Ion Houston",
-    },
-]
