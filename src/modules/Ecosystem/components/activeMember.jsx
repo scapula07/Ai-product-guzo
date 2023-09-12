@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import {FiMessageSquare } from "react-icons/fi"
 import {BsThreeDots } from "react-icons/bs"
 
-export default function ActiveMember({member}) {
+export default function ActiveMember({member,group}) {
   return (
 
     <div className='flex flex-col bg-white py-4 px-4 rounded-lg'>
@@ -35,7 +35,7 @@ export default function ActiveMember({member}) {
                    :
                    <div className='rounded-full  w-32 h-32 items-center justify-center flex border'
                       >
-                    <h5 className='font-semibold text-2xl'> {member?.firstName?.slice(0,1) + member?.lastName?.slice(0,1)}</h5>
+                    <h5 className='font-semibold text-4xl'> {member?.firstName?.slice(0,1) + member?.lastName?.slice(0,1)}</h5>
                 </div>
 
                  
@@ -61,7 +61,7 @@ export default function ActiveMember({member}) {
 
             <div className='flex items-center space-x-3 py-2'> 
                 <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
-                    <Link to="/new/messages">
+                    <Link to={`/messages/${group?.id}`}>
                     <FiMessageSquare 
                         className='text-blue-600 text-2xl '
                     />

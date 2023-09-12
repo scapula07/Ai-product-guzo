@@ -7,9 +7,12 @@ import {doc,setDoc,
     query, where,onSnapshot,orderBy} from "firebase/firestore"
 import { db } from '../../Firebase'
 import Chat from '../components/chat'
+import { userState,groupState } from '../../Recoil/globalstate'
+import { useRecoilValue } from 'recoil'
 
 
 export default function Chatbox({currentChat,messages,send,setNewMessage,receiverInfo, conversations}) {
+    const group=useRecoilValue(groupState)
      const [msgs,setMsg]=useState([])
        useEffect(()=>{
               if(conversations?.length>0){
@@ -73,6 +76,7 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
              return(
                 <Chat
                  msg={msg}
+                 group={group}
                  />
              )
            })
@@ -106,5 +110,10 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
     </div>
   )
 }
+
+
+
+
+
 
 

@@ -43,7 +43,7 @@ export default function MyOpportunities() {
                           src={collab?.img_post}
                           className="rounded-md w-full h-36"
                         />
-                        <h5 className=' text-center font-semibold '>{collab?.eventPost?.title}</h5>
+                        <h5 className=' text-center font-semibold '>{collab?.post?.title}</h5>
                         <h5 className='text-sm font-semibold text-slate-600 flex items-center space-x-2'>
                            <span>Hosted by </span> 
                             <img 
@@ -56,11 +56,11 @@ export default function MyOpportunities() {
 
                     <div className='flex flex-col items-center space-y-3 py-4'>
                         <p className=' text-center font-light text-sm'>
-                        {collab?.eventPost?.body + "..."}
+                        {collab?.post?.body + "..."}
                         </p>
 
                         <div className='flex items-center space-x-3 py-2'> 
-                          <Link to={`/collaboration/${collab?.id}`}
+                          <Link to={`/collaboration/${group?.id}`}
                                     state={{
                                     collab
                                 }}

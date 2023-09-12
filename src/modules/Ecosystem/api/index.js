@@ -8,11 +8,10 @@ export const ecosystemApi= {
 
         const ecoRef =doc(db,"ecosystems",id)
         const docSnap = await getDoc(ecoRef);
-        // console.log(docSnap?.data())
-        // console.log(docSnap?.data().creator===currentUser?.id)
-         if(docSnap?.data()?.creator===currentUser?.id){
-           return docSnap?.data()
-         }
+        return docSnap?.data()
+        //  if(docSnap?.data()?.creator===currentUser?.id){
+        
+        //  }
        
        },
        acceptMember:async function (id,member) {

@@ -7,7 +7,7 @@ import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/materia
 import { useNavigate } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 
-export default function DeletePost({collab}) {
+export default function DeletePost({collab,group}) {
      const [trigger,setTrigger]=useState(false)
      const [isLoading,setLoader]=useState(false)
      const [errorMsg, setErrorMsg] = useState(null)
@@ -32,7 +32,7 @@ export default function DeletePost({collab}) {
             response&&setTrigger(false)
             response&&setLoader(false)
             response&&setOpen(true)
-            response&&navigate("/collaborations")
+            response&&navigate(`/collaborations/${group?.id}`)
           }catch(e){
             console.log(e)
             setErrorMsg(e.message)

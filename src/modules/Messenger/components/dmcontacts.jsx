@@ -10,7 +10,7 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
       conversations?.length >0 && setCurrentChat(conversations[0])
     },[conversations?.length])
     
-   
+   console.log(conversations,currentChat,"dmmmm")
   return (
     <div className='w-full flex flex-col space-y-6'>
         {conversations?.map((conv)=>{
@@ -43,13 +43,13 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
 const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv})=>{
   console.log(contact,"ccc")
   return(
-        <div className='flex hover:bg-slate-100  space-x-4 px-2 py-2 rounded-md ' 
+        <div className='flex hover:bg-slate-100  space-x-4 px-4 border-b py-2 rounded-md ' 
              onClick={()=>setCurrentChat(conv) || setReceiver(contact) }
           >
-          <img 
-          className="rounded-full h-10 w-10"
-          src={contact?.img}
-          />
+           <img 
+             className="rounded-full h-10 w-10"
+              src={contact?.img}
+           />
 
         <div className='flex justify-between items-center w-full'>
           {contact?.type?.length>0?

@@ -63,9 +63,21 @@ const navs=[
     <div className='py-6  w-full relative h-full'>
         <div className='flex flex-col items-center space-y-4 w-full'>
             {group?.type?.length >0?
-                 <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name}</h5>
+                  <div className='flex flex-col'>
+                     <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name}</h5>
+
+                      <div>
+                      </div>
+                 </div>
                  :
-                 <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.firstName + " " + group?.lastName}</h5>
+                 <>
+                   {
+                     group?.id?.length>0&&
+                    <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.firstName + " " + group?.lastName}</h5>
+                  }
+                    
+                 </>
+                
 
 
              }
@@ -89,16 +101,39 @@ const navs=[
             <div className='flex flex-col py-16 space-y-6'>
                 {navs.map((nav)=>{
                      return(
-                        <div className='flex items-center space-x-6'>
-                            <img 
-                              src={nav?.icon}
-                              className="h-5 w-5"
-                            />
-                            <Link to={nav?.link}>
-                            <h5 className='font-semibold'>{nav?.name}</h5>
-                            </Link>
-                           
-                        </div>
+                      <>
+                       {nav?.name==="Ecosystem"?
+                        <>
+                         {
+                             group?.type==="eco"&&
+                              <div className='flex items-center space-x-6'>
+                              <img 
+                                src={nav?.icon}
+                                className="h-5 w-5"
+                              />
+                              <Link to={nav?.link}>
+                              <h5 className='font-semibold'>{nav?.name}</h5>
+                              </Link>
+                            
+                            </div>
+                         }
+
+                          </>
+                            :
+                            <div className='flex items-center space-x-6'>
+                                <img 
+                                  src={nav?.icon}
+                                  className="h-5 w-5"
+                                />
+                                <Link to={nav?.link}>
+                                <h5 className='font-semibold'>{nav?.name}</h5>
+                                </Link>
+                              
+                             </div>
+
+                       }
+
+                        </>
                      )
                 })
 

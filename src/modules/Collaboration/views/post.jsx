@@ -42,7 +42,7 @@ export default function Post() {
                 Edit Post
              </button>
 
-             <DeletePost collab={collab}/>
+             <DeletePost collab={collab} group={group}/>
 
           </div>
 

@@ -3,8 +3,8 @@ import SearchBar from './saarch'
 import Dmcontacts from './dmcontacts'
 import GroupContacts from './groupContacts'
 
-export default function Contacts({conversations,setCurrentChat,currentChat, currentUser, receiverInfo, setReceiver,groups}) {
-    const [active,setActive]=useState("dm")
+export default function Contacts({conversations,setCurrentChat,currentChat, currentUser, receiverInfo, setReceiver,groups,active,setActive}) {
+    // const [active,setActive]=useState("dm")
   return (
     <div className='h-full flex flex-col w-full py-8 px-6 space-y-6'>
         <SearchBar />
@@ -18,23 +18,25 @@ export default function Contacts({conversations,setCurrentChat,currentChat, curr
 
         </div>
             <div>
-               {active==="dm"&&<Dmcontacts 
-                                    conversations={conversations}
-                                    setCurrentChat={setCurrentChat}
-                                    currentChat={currentChat}
-                                    currentUser={ currentUser}
-                                    receiverInfo={receiverInfo}
-                                    setReceiver={setReceiver}
+               {active==="dm"&&
+               <Dmcontacts 
+                  conversations={conversations}
+                  setCurrentChat={setCurrentChat}
+                  currentChat={currentChat}
+                  currentUser={ currentUser}
+                  receiverInfo={receiverInfo}
+                  setReceiver={setReceiver}
                
-                                  />  }
-               {active==="group"&&<GroupContacts 
-                                       conversations={groups}
-                                       setCurrentChat={setCurrentChat}
-                                       currentChat={currentChat}
-                                       currentUser={ currentUser}
-                                       receiverInfo={receiverInfo}
-                                       setReceiver={setReceiver}
-                                        />  }
+               />  }
+               {active==="group"&&
+               <GroupContacts 
+                  conversations={groups}
+                  setCurrentChat={setCurrentChat}
+                  currentChat={currentChat}
+                  currentUser={ currentUser}
+                  receiverInfo={receiverInfo}
+                  setReceiver={setReceiver}
+                  />  }
             </div>
 
     </div>

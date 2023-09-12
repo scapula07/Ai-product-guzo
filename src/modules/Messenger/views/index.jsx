@@ -11,7 +11,7 @@ import {doc,setDoc,
        query, where} from "firebase/firestore"
 import { db } from '../../Firebase'
 import { useLocation} from "react-router-dom";
-
+import GroupChat from './groupchat'
 
 export default function Messenger() {
    const socket = useRef();
@@ -21,7 +21,7 @@ export default function Messenger() {
    const [currentChat,setCurrentChat] =useState()
    const [receiverInfo,setReceiver] =useState({})
    const [messages,setMessages]=useState([])
-
+   const [active,setActive]=useState("dm")
    const [conversations,setConversations]=useState([])
    const [groups,setGroups]=useState([])
    const [textsubmit,setTextsubmit]=useState(false)
@@ -43,7 +43,9 @@ export default function Messenger() {
             const groupSnapshot =await getDocs(qG)
             const groups= groupSnapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
             console.log(groups,"grrgrggrg")
+            setGroups(groups)
             setConversations(conversations)
+            console.log(conversations,"conv in index")
          
           }catch(error){
             console.log(error)
@@ -82,7 +84,7 @@ export default function Messenger() {
             }catch (err) {
               console.log(err)
           }
-    }
+      }
   
     console.log(newMessage,"conversations")
 
@@ -103,21 +105,41 @@ export default function Messenger() {
                 receiverInfo={receiverInfo}
                 setReceiver={setReceiver}
                 groups={groups}
+                active={active}
+                setActive={setActive}
                
                />
           </div>
           <div className='w-3/5 h-96 bg-white' style={{height:"80vh"}}>
-              <Chatbox 
+            {active==="dm"&&
+                <Chatbox 
                 currentChat={currentChat}
                 messages={messages}
                 send={send}
                 setNewMessage={setNewMessage}
                 currentUser={currentUser}
                 receiverInfo={receiverInfo}
-                conversations={conversations}
+                conversations={groups}
                 
-               
+              
               />
+
+            }
+
+             {active==="group"&&
+              <GroupChat 
+              currentChat={currentChat}
+              messages={messages}
+              send={send}
+              setNewMessage={setNewMessage}
+              currentUser={currentUser}
+              receiverInfo={receiverInfo}
+              conversations={conversations}
+
+            />
+
+             }
+
          </div>
 
 

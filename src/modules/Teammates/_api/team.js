@@ -50,20 +50,31 @@ export const teamApi= {
                 throw new Error("This user does not exist")
             }
 
-             const notifications=user?.notifications?.length ===undefined ? []:user?.notifications
-              await updateDoc(doc(db,"users",user?.id), {
-                notifications:[
-                     ...notifications,
-                     {
-                        name:group?.name,
-                        img:group?.img,
-                        message:"Requested to join your network.",
-                        type:"join request"
+            //  const notifications=user?.notifications?.length ===undefined ? []:user?.notifications
+            //   await updateDoc(doc(db,"users",user?.id), {
+            //     notifications:[
+            //          ...notifications,
+            //          {
+            //             name:group?.name,
+            //             img:group?.img,
+            //             message:"Requested to join your network.",
+            //             type:"join request"
 
-                     }
-                    ]
-                 })
-
+            //          }
+            //         ]
+            //      })
+             const notificationSnap = await addDoc(collection(db, "notifications"),{
+                name:group?.name,
+                img:group?.img,
+                message:"Requested to join your network.",
+                type:"join request",
+                from:{
+                    id:group?.id,
+                    type:group?.type
+                },
+                to:user?.id
+    
+              })
           
             const docSnap = await getDoc(groupRef);
 

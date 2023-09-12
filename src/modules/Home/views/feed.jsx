@@ -280,14 +280,14 @@ const Comments=({ group, feed })=>{
       <div className='flex flex-col w-full px-4  '>
           <div className='flex items-center w-full space-x-2 px-2'>
               <div>
-              { group.type?.length>0?
+              { group?.type?.length>0?
                          <img
                          src={group ?.img}
                          className="rounded-full h-8 w-8"
                        />
                         :
                         <>
-                          { group.img?.length>0?
+                          { group?.img?.length>0?
                                <img
                                src={ group?.img}
                                className="rounded-full h-8 w-8"

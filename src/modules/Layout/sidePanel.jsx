@@ -32,6 +32,15 @@ export default function SidePanel() {
        isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
     
       },[currentUser])
+      useEffect(()=>{
+        const isGroup= organizations?.length >0 || ecosystems?.length >0
+   
+         isGroup&&setTeam([currentUser,...organizations,...ecosystems])
+     
+        
+         isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
+      
+        },[])
 
       console.log(group,"side pannel")
 

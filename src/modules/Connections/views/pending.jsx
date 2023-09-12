@@ -18,10 +18,11 @@ export default function Pending() {
     const currentUser=useRecoilValue(userState)
     console.log(currentUser,"user")
     const [connects]= useOutletContext();
-
+     console.log(connects?.pending?.length,"length of pending")
 
   return (
-
+   
+    <>
     <div className='w-full'>
       
         {/* {connects?.pending?.length ===0&&
@@ -82,15 +83,18 @@ export default function Pending() {
 
       </div>
 
-      {connects?.pending?.length ===0&&
-               <div className='w-full flex justify-center py-10'>
-                  <h5 className="text-lg font-semibold">No pending connections</h5>
-               </div>
 
-            } 
 
 
       </div>
+
+     {connects?.pending?.length ==undefined &&
+          <div className='w-full flex justify-center py-10'>
+            <h5 className="text-lg font-semibold">No pending connections</h5>
+           </div>
+
+     } 
+     </>
   )
 }
 

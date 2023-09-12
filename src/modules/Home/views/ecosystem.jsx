@@ -79,7 +79,7 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
           const result =await ecosystemApi.joinRequest(id,currentUser,group)
           setLoading(false)
      
-          result&&navigate("/connections/pending")
+          result&&navigate(`/connections/${group?.id}/pending`)
 
         //  const response =await notificationApi.sendNotification(currentUser?.accessToken,currentUser?.notificationToken)
           

@@ -61,6 +61,7 @@ export default function EcoMembers() {
                     return(
                         <ActiveMember 
                             member={member}
+                            group={group}
                            
                         />
                 

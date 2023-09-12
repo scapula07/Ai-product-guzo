@@ -16,7 +16,7 @@ import { useOutletContext } from 'react-router-dom';
 export default function Active() {
     const currentUser=useRecoilValue(userState)
     const [connects]= useOutletContext();
-    console.log(connects?.active?.length ,"acyivee")
+    console.log(connects?.active,"acyivee")
   return (
      <>
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
@@ -28,14 +28,43 @@ export default function Active() {
                 }}
                 >
                 <div className='flex flex-col bg-white py-4 px-4'>
-                    <div className='flex flex-col items-center space-y-3'>
-                        <img 
-                          src={eco.img}
-                          className="rounded-full w-32 h-32"
-                        />
+                   {eco?.type?.length >0?
+                      <div className='flex flex-col items-center space-y-3'>
+                 
+
+                          <img 
+                             src={eco?.img}
+                            className="rounded-full w-32 h-32"
+                           />
+                       
                         <h5 className=' text-center font-semibold '>{eco?.name}</h5>
                         <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
-                    </div>
+                       </div>
+                       :
+                       <div className='flex flex-col items-center space-y-3'>
+                 
+                           {eco?.img?.length>0?
+                            <img 
+                                src={eco?.img}
+                                className="rounded-full w-32 h-32"
+                              />
+                              :
+                              <div className='rounded-full  w-32 h-32 items-center justify-center flex border'
+                                >
+                               <h5 className='font-semibold text-5xl'> {eco?.firstName?.slice(0,1) + eco?.lastName?.slice(0,1)}</h5>
+                             </div>
+        
+        
+
+
+                           }
+
+                        
+                          <h5 className=' text-center font-semibold '>{eco?.firstName + " " + eco?.lastName}</h5>
+                          <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
+                       </div>
+
+                       }
 
                     <div className='flex flex-col items-center space-y-3 py-4'>
                         <p className=' text-center font-light text-sm'>

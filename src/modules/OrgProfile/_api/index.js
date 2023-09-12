@@ -21,6 +21,23 @@ export const feedApi= {
         }catch(e){
             console.log(e)
         }
-    }
+    },
+    getAllMembers:async function (id) {
+         try{
+          const ecoRef =doc(db,"ecosystems",id)
+          const docSnap = await getDoc(ecoRef);
+ 
+          return docSnap?.data()?.active
+ 
+         }catch(e){
+          throw new Error(e)
+
+         }
+      //  if(docSnap?.data()?.creator===currentUser?.id){
+      //    return docSnap?.data()
+      //  }
+     
+     },
+    
 
 }

@@ -25,8 +25,8 @@ export const inviteEmail= {
                         receiver:invitee?.email,
                         sender:"communitycare@guzo.io",
                         subject:"Invite to join team on Guzo",
-                        message:"https://guzo.vercel.app/"
-
+                        message:"https://guzo.vercel.app/register/login"
+                        // message:"http://localhost:3000/register/login"
                      },
                     config
                )
