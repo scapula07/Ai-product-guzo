@@ -62,14 +62,14 @@ export default function Layout({children}) {
                <div className='lg:pt-20 pt-8 overflow-y-auto h-full w-full no-scrollbar' >
                 {children}
                </div>
-                {notificationOpen&&
+                {/* {notificationOpen&&
                    <div className='absolute bottom-0 w-full flex justify-end px-10 z-30 py-8 '>
                         <NotificationPermission
                           setNotificationOpen={setNotificationOpen} 
                           currentUser={currentUser}
                         />
                     </div>
-                }
+                } */}
                 
             </div>
 
