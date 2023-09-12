@@ -25,9 +25,9 @@ export const notificationApi = {
 
    acceptTeamInvite:async function (from,user) {
        try{  
-              const collection =from?.type=="eco"?"ecosystems":"organizations"
-              console.log(collection,"ccolll")
-              const ref =doc(db,collection,from?.id)
+              const collectionName =from?.type=="eco"?"ecosystems":"organizations"
+            //   console.log(collection,"ccolll")
+              const ref =doc(db,collectionName,from?.id)
               const docSnap = await getDoc(ref);
               console.log(docSnap?.data(),"ecossye")
 

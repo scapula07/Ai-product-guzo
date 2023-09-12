@@ -70,13 +70,13 @@ const Notification=({notification,currentUser,setNotifications})=>{
        }
     return(
         <div className='flex items-center border-b py-2 space-x-7'>
-             <div className='px-10 py-1'>
-                        {errorMsg && (
-                        // <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
-                        <Alert severity="error">{errorMsg}</Alert>
-                        )}
+            
+            {errorMsg && (
+            // <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
+            <Alert severity="error">{errorMsg}</Alert>
+            )}
 
-            </div>
+            
            <div className='flex items-center space-x-2 w-1/4'>
                 <img 
                 src={notification?.img}
