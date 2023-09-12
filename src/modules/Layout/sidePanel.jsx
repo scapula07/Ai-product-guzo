@@ -33,6 +33,7 @@ export default function SidePanel() {
     
       },[currentUser])
 
+      console.log(group,"side pannel")
 
 
       const currentPath = window.location.pathname;

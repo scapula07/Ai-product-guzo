@@ -112,7 +112,7 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
             Worem ipsum dolor sit amet, consectetur adi...
             </p>
      
-            {isPending?
+            {!isPending?
       
                 <>
                 {isLoading?
