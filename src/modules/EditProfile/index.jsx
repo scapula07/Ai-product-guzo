@@ -1,4 +1,4 @@
-import React ,{useState,useRef} from 'react'
+import React ,{useState,useRef,useEffect} from 'react'
 import "./edit.css"
 import {AiOutlineClose } from "react-icons/ai"
 import guzo from "../assets/guzoLogo.png"
@@ -16,8 +16,12 @@ export default function EditProfile() {
      
     const group =useRecoilValue(groupState)
     const [trigger,setTrigger]=useState(false)
-    const [url,setUrl]=useState("")
+
     const [profile,setUpdate]=useState(group)
+    const [url,setUrl]=useState({
+        img:profile?.img,
+        cover:""
+        })
      console.log(profile,"profileeee")
     const hiddenFileInput = useRef()
 
@@ -41,7 +45,8 @@ export default function EditProfile() {
             const dir = e.target.files[0]
             console.log(dir,"dir")
             if (dir) {
-            setUrl({
+            setUpdate({
+                ...profile,
                 img: URL.createObjectURL(dir)
                 })
             }
@@ -122,39 +127,57 @@ export default function EditProfile() {
                                        { [
                                          {
                                             name:"Profile photo",
-                                            change:handlePhotoChange
+                                            change:(e)=>handlePhotoChange(e),
+                                            url:url?.img,
+                                            click:()=>handleClick()
 
                                           },
                                           {
                                             name:"Cover photo",
-                                            change:handleCoverChange
+                                            change:(e)=>handleCoverChange(e),
+                                            url:url?.cover,
+                                            click:()=>handleClick()
 
                                           }
 
                                         ].map((upload)=>{
+                                            console.log(upload?.url,"urllllll")
                                              return(
                                                 <div className='flex flex-col w-full space-y-3'>
                                                      <h5 className='text-sm font-semibold w-full '>{upload?.name}</h5>
 
                                                      <div className='flex flex-col items-center w-full space-y-4'>
+                                                       {upload?.url?.length>0?
+                                                             <div className='rounded-full h-56 w-56 flex flex-col justify-center items-center'
+                                                                  >
+                                                                     <img 
+                                                                       src={upload?.url}
+                                                                       className="rounded-lg w-full h-full"
+                                                                     />
+                                                            
+         
+                                                                 </div>
+                                                                 :
+                                                                 <div className='rounded-full h-56 w-56 flex flex-col justify-center items-center' style={{background: "rgba(242, 242, 242, 0.6)"}}
+                                                                 >
+                                                                    <h5 className='text-sm font-light'>No {upload?.name} *</h5> 
+                                                                    <input 
+                                                                       type="file"
+                                                                       className='hidden'
+                                                                       ref={hiddenFileInput}
+                                                                       onChange={(e)=>upload?.change(e)}
+                                                                    />
+        
+                                                                </div>
 
-                                                        <div className='rounded-full h-56 w-56 flex flex-col justify-center items-center' style={{background: "rgba(242, 242, 242, 0.6)"}}
-                                                         >
-                                                            <h5 className='text-sm font-light'>No {upload?.name} *</h5> 
-                                                            <input 
-                                                               type="file"
-                                                               className='hidden'
-                                                               ref={hiddenFileInput}
-                                                               onChange={upload?.change}
-                                                            />
+                                                       }
+                                                 
 
-                                                        </div>
-
-                                                        <div className='flex items-center space-x-6'>
+                                                          <div className='flex items-center space-x-6'>
                                                              <button
                                                                 style={{background: "rgba(236, 235, 254, 1)"}}
                                                                 className='text-blue-700 rounded-full px-8 py-1.5'
-                                                                onClick={handleClick}
+                                                                onClick={upload?.click}
                                                                 
                                                                
                                                                 >
@@ -180,13 +203,23 @@ export default function EditProfile() {
                                       {group?.type?.length>0?
                                         <>
                                           {group?.type=="eco"?
-                                            <EcoForms />
+                                            <EcoForms 
+                                            profile={group}
+                                            setUpdate={setUpdate}
+
+                                            />
                                             :
-                                            <OrgForms />
+                                            <OrgForms 
+                                            profile={profile}
+                                            setUpdate={setUpdate}
+                                            />
                                          }
                                         </>
                                         :
-                                        <IndividualForms />
+                                        <IndividualForms 
+                                        profile={profile}
+                                        setUpdate={setUpdate}
+                                        />
                                      }
                                  
 

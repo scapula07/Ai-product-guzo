@@ -49,13 +49,21 @@ export const postApi= {
             console.log(postImg)
     
             delete payload?.post?.img;
+            let file=""
+            if(payload?.file?.name?.length>0){
+                file =await uploadFile(payload?.post?.file)
+                delete payload?.post?.file;
+
+            }
       
       
             const  postSnap = await addDoc(collection(db, "posts"),{
                 ...payload,
                 img_post:postImg ,
                 creator_id:group?.id,
-                shared_by:group
+                shared_by:group,
+                file:file,
+                createdAt:new Date()
             })
     
              

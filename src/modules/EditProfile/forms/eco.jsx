@@ -11,13 +11,13 @@ import axios from "axios"
 import { BsFlag } from 'react-icons/bs'
 
 
-export default function EcoForms() {
+export default function EcoForms({profile,setUpdate}) {
 
         const [country, setSelectedCountry] = useState();
         const [city, setSelectedCity] = useState();
         const [countries, setCountries] = useState(null);
 
-
+        console.log(profile,"eoc profile")
         useEffect(() => {
             getCountries();
         }, []);
@@ -58,7 +58,7 @@ export default function EcoForms() {
                                 className=' py-2 px-4 w-full rounded-md text-sm outline-none'
                                 style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                                 // name="ecoName"
-                                // value={ecoName}
+                                value={profile?.name}
                                 // onChange={(e)=>setName(e.target.value)}
                             />
         
@@ -78,8 +78,8 @@ export default function EcoForms() {
                                         placeholder='Email'
                                         className=' py-2  w-full rounded-md text-sm outline-none'
                                         style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
-                                        // name="ecoEmail"
-                                        // value={ecoEmail}
+                                        name="ecoEmail"
+                                        value={profile?.email}
                                         // onChange={(e)=>setEmail(e.target.value)}
                                 
                                     />

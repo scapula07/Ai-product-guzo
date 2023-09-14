@@ -35,6 +35,20 @@ export default function Org({currentUser}) {
     const [city, setSelectedCity] = useState();
     const [countries, setCountries] = useState(null);
 
+    const options = [
+      { value: "tech", label: "Tech" },
+      { value: "media", label: "Media" },
+      { value: "business", label: "Businnes" },
+      { value: "art", label: "Art" },
+    ];
+  
+    const [selectedOption, setSelectedOption] = useState("");
+  
+    const handleTagChange = (selectedOption) => {
+      console.log(selectedOption);
+      setSelectedOption(selectedOption.value);
+    };
+
 
     useEffect(() => {
         getCountries();

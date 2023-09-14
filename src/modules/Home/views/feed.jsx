@@ -149,6 +149,12 @@ const Feed=({feed,group})=>{
 
                  </div>
 
+                 <div className='px-4 w-full'>
+                    <EventCard 
+                      event={feed?.eventPost}
+                    />
+                 </div>
+
                <div className='flex flex-col'>
                    {feed?.requests?.map((req,index)=>{
                     
@@ -181,10 +187,43 @@ const Feed=({feed,group})=>{
 }
 
 
-const RequestCard=({req,group,feed,index})=>{
-  
 
-  const randomNumber = Math.floor(Math.random() * 4) + 1;
+const EventCard=({event})=>{
+   return(
+     <div className='w-full flex flex-col space-y-4'>
+         <div className='flex w-full justify-between'>
+            <div className='flex flex-col'>
+                <h5 className='text-lg font-semibold text-slate-600'>Date/Time</h5>
+                <h5 className='font-light text-sm'>{event?.start_date},{event?.start_time } - {event?.end_time}</h5>
+
+            </div>
+            <div className='flex flex-col'>
+                <h5 className='text-lg font-semibold text-slate-600'>Location</h5>
+                <h5 className='font-light text-sm'>{event?.location},{event?.directions }</h5>
+
+            </div>
+         </div>
+         <div className='flex flex-co'>
+             <h5 className='text-lg font-semibold text-slate-600'>Host(s)</h5>
+
+         </div>
+
+     </div>
+   )
+}
+
+
+
+
+
+
+
+const RequestCard=({req,group,feed,index})=>{
+   const [randomNumber,setRandom]=useState()
+    useEffect(()=>{
+     setRandom(Math.floor(Math.random() * 4) + 1)
+    },[])
+  
   const [trigger,setTrigger]=useState(false)
 
     const color=[

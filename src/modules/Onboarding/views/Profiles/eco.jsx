@@ -36,6 +36,20 @@ export default function Eco({currentUser}) {
     const [city, setSelectedCity] = useState();
     const [countries, setCountries] = useState(null);
 
+    const options = [
+      { value: "tech", label: "Tech" },
+      { value: "media", label: "Media" },
+      { value: "business", label: "Businnes" },
+      { value: "art", label: "Art" },
+    ];
+  
+    const [selectedOption, setSelectedOption] = useState("");
+  
+    const handleTagChange = (selectedOption) => {
+      console.log(selectedOption);
+      setSelectedOption(selectedOption.value);
+    };
+
 
     useEffect(() => {
         getCountries();
@@ -319,11 +333,12 @@ export default function Eco({currentUser}) {
             <div className='flex flex-col w-full px-10'>  
 
                 <label className='text-sm text-slate-600 font-semibold'>Descriptive Tags</label>
-                    <input 
-                        placeholder='Add tags separated by a comma...'
-                        className=' py-2 px-4 w-full rounded-md text-sm outline-none'
-                        style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
-                    />
+                       <ReactSelect 
+                         placeholder='Add tags separated by a comma...'
+                         styles={style}
+                         isMulti 
+                         onChange={handleTagChange} 
+                         options={options} />
 
                     <h5 className='font-light text-slate-500 text-sm '>Tags help Guzo curate relevant connections and opportunities.</h5>
 
@@ -333,7 +348,7 @@ export default function Eco({currentUser}) {
     <div className='flex  items-center w-full justify-between'>
           <h5 style={{color: "rgba(37, 31, 134, 1)"}}
             onClick={()=>window.history.go(-1)}
-        >Back</h5>
+            >Back</h5>
                      {isLoading?
                              
                              <ClipLoader 

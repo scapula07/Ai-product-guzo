@@ -3,10 +3,18 @@ import upload from "../../modules/assets/upload.png"
 import {IoMdRadioButtonOn,IoMdRadioButtonOff} from "react-icons/io"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import DateForm from './components/dateForm';
+
 
 export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setEvent}) {
     const [choice,setChoice]=useState("In Person")
-  
+    
+    const close=()=>{
+        setOthers(false) 
+        setEvent(false)
+        setEvt("")
+
+      }
 
    
   return (
@@ -88,7 +96,7 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
                           <button 
                         
                              className='text-blue-700 rounded-full px-12 py-1.5 border border-blue-700'
-                             onClick={()=>setOthers(false) || setEvent(false)}
+                             onClick={close}
                             >
                             Back
                         </button>
@@ -98,6 +106,7 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
                         <button
                              style={{background: "rgba(236, 235, 254, 1)"}}
                              className='text-blue-700 rounded-full px-12 py-1.5'
+                             onClick={()=>setOthers(false) || setEvent(false)}
                             >
                             Next
                         </button>
@@ -118,87 +127,108 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
 
 
 const EventForms=({ eventPost,setEvt,choice})=>{
-    const [pickDate, setPick] = useState("");
+    // const [pickDate, setPick] = useState("");
     const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [pickStartDate, setStart] = useState(false);
+    const [pickEndDate, setEnd] = useState(false);
+      console.log(eventPost,"postte ")
 
-
+      const onsetStartDate=(e)=>{
+         
+      }
      return(
         <div className='flex flex-col py-4 space-y-4'>
             <div  className='grid grid-flow-row lg:grid-cols-2 grid-cols-1 gap-4 gap-y-8 h-full w-full' >
-                { [
-                    {
-                        name:"Timezone",
-                        placeholder:"(UTC) Central Time (US and Canada)",
-
-                        click:(e)=>setEvt({...eventPost,timezone:e.target.value})
-                      
-                    },
-                    {
-                        name:"Start Date",
-                        placeholder:"Start Date",
-                        value:eventPost?.start_date,
-                        click:(e)=>setEvt({...eventPost,start_date:e.target.value}),
-                        change:(bool)=>setPick(bool)
+                    <div className='flex flex-col w-full space-y-2'>
+                         <label className='text-sm text-black font-semibold'>Timezone</label>
+                
+                    
+                            <input 
+                                placeholder="(UTC) Central Time (US and Canada)"
+                                className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                onChange={(e)=>setEvt({...eventPost,timezone:e.target.value})}
+                                value={eventPost?.timezone}
+                                name={"time"}
                         
 
 
+                            />
+                    </div>
+                    <div className='flex flex-col w-full space-y-2'>
+                         <label className='text-sm text-black font-semibold'>Start Date</label>
+                
+                    
+                         <DateForm 
+                           selectdate={startDate}
+                           setDate={setStartDate}
+                           onSet={(e)=>{
+                            const date = new Date(e);
 
-                    },
-                    {
-                        name:"Start Time",
-                        placeholder:"Start Time",
-                        click:(date)=>setEvt({...eventPost,start_time:date})
-
-
-                    },
-                    {
-                        name:"End Date",
-                        placeholder:"End Date",
-                        click:(e)=>setEvt({...eventPost,end_date:e.target.value})
-
-
-                    },
-                    {
-                        name:"End Time",
-                        placeholder:"End Time",
-                        click:(e)=>setEvt({...eventPost,end_time:e.target.value})
-
-
-                    }
-
-                    ].map((field)=>{
-                        return(
+                            const day = date.getDate();
+                            const month = date.toLocaleString('default', { month: 'short' }); 
+                            const year = date.getFullYear(); 
+                            setEvt({...eventPost,start_date: `${day} ${month} ${year}`})
+                           }
+                          }
+                           pickDate={pickStartDate}
+                           
+                         />
+                    </div>
 
                     <div className='flex flex-col w-full space-y-2'>
-                            <label className='text-sm text-black font-semibold'>{field?.name}</label>
-                            {pickDate===field?.name?
-                                <DatePicker
-                                    selected={field?.value} 
-                                    onChange={(date) => field?.click(date)} 
-                                    onSelect={false}
-                                    className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
-                                 />
-                                  :
-                                 <input 
-                                  placeholder={field?.placeholder}
-                                  className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
-                                  onChange={(e)=>field?.change(e.target.name)}
-                                  value={field?.value}
-                                  name={field?.name}
-                                //   onClick={(e)=>setPick(true)}
+                         <label className='text-sm text-black font-semibold'>Start Time</label>
+                
+                    
+                            <input 
+                               placeholder="Start Time"
+                                className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                onChange={(e)=>setEvt({...eventPost,start_time:e.target.value})}
+                                name={"time"}
+                        
 
 
-                              />
-                             
+                            />
+                    </div>
 
+                    <div className='flex flex-col w-full space-y-2'>
+                         <label className='text-sm text-black font-semibold'>End Date</label>
+                
+                    
+                         <DateForm 
+                           selectdate={endDate}
+                           setDate={setEndDate}
+                           onSet={(e)=>{
+                            const date = new Date(e);
+
+                            const day = date.getDate();
+                            const month = date.toLocaleString('default', { month: 'short' }); 
+                            const year = date.getFullYear(); 
+                            setEvt({...eventPost,end_date: `${day} ${month} ${year}`})
+                           }
                           }
-            
-                        </div> 
-                        )
-                    })
-        
+                           pickDate={pickStartDate}
+                           
+                         />
+                    </div>
 
-                    }
+                    <div className='flex flex-col w-full space-y-2'>
+                         <label className='text-sm text-black font-semibold'>End Time</label>
+                
+                    
+                            <input 
+                               placeholder="Start Time"
+                                className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                onChange={(e)=>setEvt({...eventPost,end_time:e.target.value})}
+                                name={"time"}
+                        
+
+
+                            />
+                    </div>
+
+                    
+                 
 
             </div>
             {choice==="In Person"&&

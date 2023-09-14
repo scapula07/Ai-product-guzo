@@ -2,11 +2,18 @@ import React from 'react'
 
 export default function Request({setOthers, requestPost, setRequest,setRequests,requests,setReq}) {
 
-    const close=()=>{
+    const next=()=>{
         setOthers(false) 
         setReq(false) 
         
         requestPost?.title?.length>0&&setRequests([...requests,requestPost])
+     }
+     const close=()=>{
+        setOthers(false) 
+        setReq(false) 
+        setRequest(null)
+        
+        requestPost?.title?.length>0&&setRequests([...requests])
      }
   return (
     <div className='w-full flex justify-center'>
@@ -59,6 +66,7 @@ export default function Request({setOthers, requestPost, setRequest,setRequests,
                         <button
                              style={{background: "rgba(236, 235, 254, 1)"}}
                              className='text-blue-700 rounded-full px-12 py-1.5'
+                             onClick={next}
                             >
                             Next
                         </button>

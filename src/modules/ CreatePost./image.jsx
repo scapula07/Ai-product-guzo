@@ -20,6 +20,13 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
             setPost({...post,img:dir})
     
         }
+
+        const close=()=>{
+          setOthers(false) 
+          setImg(false)
+          setPost({...post,img:null})
+          setUrl("")
+        }
   return (
     <div className='w-full flex justify-center'>
         
@@ -29,8 +36,9 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
 
                     <div className='flex flex-col space-y-4'>
                     <h5 className='text-lg font-semibold'>Select file(s)</h5>
+                     {url?.length ==0&&
                         <div className='flex justify-center items-center h-48 w-full rounded-lg' style={{background: "rgba(242, 242, 242, 1)"}}>
-                        {url?.length ==0&&
+                        
                             <div className='flex flex-col items-center'
                             onClick={handleClick}
                             >
@@ -46,8 +54,13 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
                                 <h5 className='text-sm font-light'>Upload or Drop Images</h5>
 
                             </div>
-                           }
-                            { url?.src?.length > 0&&
+                           
+
+                            
+                        </div>
+                      }
+
+                        { url?.src?.length > 0&&
                              <div className='w-1/2 py-4'
                                onClick={handleClick}
                              >
@@ -65,8 +78,6 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
                             </div>
                           
                           }
-                            
-                        </div>
 
                     </div>
 
@@ -78,7 +89,7 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
                           <button 
                         
                              className='text-blue-700 rounded-full px-12 py-1.5 border border-blue-700'
-                             onClick={()=>setOthers(false) || setImg(false)}
+                             onClick={()=>close()}
                             >
                             Back
                         </button>
