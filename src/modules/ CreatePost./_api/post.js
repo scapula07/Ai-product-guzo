@@ -27,7 +27,7 @@ const createGroupChat=async(id,data,group)=>{
         await setDoc(ref,payload)
 
         const docSnap = await getDoc(ref);
-        return docSnap.exists()
+        return true
 
      }catch(e){
         console.log(e)
