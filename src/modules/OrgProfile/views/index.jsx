@@ -47,7 +47,7 @@ export default function Profile() {
                   
                 </div>
                 <div className='w-2/5 lg:block hidden'>
-                     <Suggestions />
+                     {/* <Suggestions /> */}
 
                 </div>
                

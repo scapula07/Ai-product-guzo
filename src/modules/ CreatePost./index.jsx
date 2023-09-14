@@ -6,6 +6,7 @@ import {ImFilesEmpty} from "react-icons/im"
 import {RiCheckboxBlankFill,RiArrowDropDownLine} from "react-icons/ri"
 import Request from './request'
 import Files from './files'
+import Image from './image'
 import Events from './events'
 import Share from './share'
 import {MdArrowDropDown} from "react-icons/md"
@@ -23,6 +24,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
      const [request,setReq]=useState(false)
      const [event,setEvent]=useState(false)
      const [file,setFile]=useState(false)
+     const [img,setImg]=useState(false)
      const [share,setShare]=useState(false)
      const [others,setOthers]=useState(false)
      const [isLoading,setLoader]=useState(false)
@@ -123,6 +125,17 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                 post={post}
                 setFile={setFile}
                />}
+               {img&&<Image
+                setOthers={setOthers}
+                url={url}
+                setUrl={setUrl}
+                setPost={setPost}
+                post={post}
+                setImg={setImg}
+               />}
+               {
+
+               }
               {share&&<Share  
                    setOthers={setOthers}
                    group={group}
@@ -297,7 +310,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                     <div className='flex items-center space-x-4'>
                         {[{
                             icon:<IoMdImage/>,
-                            click:()=>setFile(true)
+                            click:()=>setImg(true)
                            },
                             {
                                 icon:<AiTwotoneCalendar />,
@@ -305,7 +318,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                             },
                             {
                                 icon:<ImFilesEmpty/>,
-                                click:()=>setFile()
+                                click:()=>setFile(true)
                          }
                         ].map((action)=>{
                             return(

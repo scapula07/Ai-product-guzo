@@ -14,6 +14,16 @@ export default function ForgetPassword() {
      const [sent,setSent]=useState(false)
 
      const reset=async()=>{
+        if (email.length < 3) {
+          setErrorMsg(' Email is invalid ');
+          setLoader(false);
+          return;
+        }
+
+        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)){
+            setErrorMsg( "Email is invalid" );
+            setLoader(false);
+        }
          try{
             setLoader(true)
             console.log("resssss")
@@ -36,15 +46,17 @@ export default function ForgetPassword() {
         {sent?
            <>
                        
-           <div className='w-full flex flex-col items-center bg-white py-10 px-6 space-y-3'>
+           <div className='w-4/5 flex flex-col items-center border rounded-lg bg-white py-10 px-6 space-y-3' 
+             style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}
+           >
              <h5 className='text-2xl font-semibold'>Link Sent! </h5>
                <div className='flex flex-col w-full items-center space-y-4'>
                   <p className='w-4/5 text-sm font-semibold'>
                      A password reset link has been sent to the email provided.  If this email is connected to an account on Guzo, you will receive an email that will enable you to reset the password to the account.
                  </p>
                    <Link to="/register/login">
-                        <button
-                                style={{background: "rgba(236, 235, 254, 1)"}}
+                           <button
+                              style={{background: "rgba(236, 235, 254, 1)"}}
                                 className='text-blue-700 rounded-full px-12 py-1.5 text-sm'
                             
 
@@ -65,15 +77,16 @@ export default function ForgetPassword() {
            :
 
         
-           <div className='w-full flex flex-col items-center bg-white py-10 px-6 space-y-3'>
+           <div className='w-4/5 flex flex-col items-center border rounded-lg bg-white py-10 px-6 space-y-3'
+            style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}
+            >
              <h5 className='text-2xl font-semibold'>Reset your Guzo Password</h5>
-                <div className='px-10 py-1'>
+                {/* <div className='px-10 py-1'>
                     {errorMsg && (
-                    //   <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
-                    <Alert severity="error">{errorMsg}</Alert>
+                      <Alert severity="error">{errorMsg}</Alert>
                      )}
 
-                 </div>
+                 </div> */}
                  
 
                <div className='flex flex-col space-y-4'>
@@ -89,6 +102,10 @@ export default function ForgetPassword() {
                                 value={email}
                                 onChange={(e)=>setEmail(e.target.value)}
                             />
+                            {errorMsg && 
+                              <h5 className='text-red-500 text-sm'>{errorMsg}</h5>
+
+                            }
                         </div>
 
 
@@ -96,7 +113,7 @@ export default function ForgetPassword() {
                 </div>
 
                 <div className='flex flex-col items-center space-y-2 py-4'>
-                  {isLoading?
+                     {isLoading?
                              
                              <ClipLoader 
                                  color={"rgba(62, 51, 221, 1)"}
@@ -113,7 +130,11 @@ export default function ForgetPassword() {
                                 Reset password
                             </button>
                          }
-                     <h5 className='text-blue-700'>Back</h5>
+                      <h5 className='text-blue-700'
+                        onClick={()=>window.history.go(-1)}
+                       >
+                      Back
+                     </h5>
 
                 </div>
 

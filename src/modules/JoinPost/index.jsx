@@ -7,7 +7,7 @@ import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/materia
 
 export default function Join({group,feed,index}) {
     console.log(index,"iiiiii")
-    const [request,setRequest]=useState({active:false})
+    const [request,setRequest]=useState({id:group?.id,active:false})
     const [isLoading,setLoader]=useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
     const [open, setOpen] = useState(false);
@@ -95,19 +95,20 @@ export default function Join({group,feed,index}) {
 
                   <img 
                     src={group?.img}
-                    className="h-10 w-10 rounded-full"
+                    className="h-20 w-20 rounded-full"
                   />
                  :
                  <>
                    {group?.img?.length>0?
                        <img 
                         src={group?.img}
-                        className="h-10 w-10 rounded-full"
+                        className="h-20 w-20 rounded-full"
                        />
                         :
                         <div className='rounded-full p-2 items-center justify-center flex border'
                           >
-                         <h5 className='font-semibold text-sm'> {group?.firstName?.slice(0,1) +group?.lastName?.slice(0,1)}</h5>
+                   
+                         <h5 className='font-semibold text-2xl'> {group?.firstName?.slice(0,1) +group?.lastName?.slice(0,1)}</h5>
                       </div>
                         
 
@@ -126,7 +127,13 @@ export default function Join({group,feed,index}) {
                     </div>
                     :
                     <div className='flex flex-col '>
-                        <h5 className='font-semibold'>{group?.firstName + " " + group?.lastName}</h5>
+                        {group?.firstName?.length != undefined?
+                              <h5 className='font-semibold'>{group?.firstName + " " + group?.lastName}</h5>
+                               :
+                              <h5 className='font-semibold'>{group?.display}</h5>
+
+                           }
+                     
 
                     </div>
 

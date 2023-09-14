@@ -53,7 +53,7 @@ export default function Messenger() {
         };
       getConversations();
    
-     },[currentUser?.id])  
+     },[currentUser?.id,active])  
 
      console.log(currentChat,"chatatt")
      const send=async (e)=>{

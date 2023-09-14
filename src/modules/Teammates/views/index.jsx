@@ -39,12 +39,12 @@ export default function Teammates() {
     useEffect(()=>{
         const getAllTeammates=async()=>{
             console.log("mmmm")
-            const teammates=await teamApi.getAllTeammates(group?.id,currentUser)
+            const teammates=await teamApi.getAllTeammates(group)
             console.log(teammates,"teammm")
             setTeam(teammates)
          }
         getAllTeammates()
-     }, [group])
+     })
 
      const addTeammates=async()=>{
         setLoader(true)
@@ -86,7 +86,9 @@ export default function Teammates() {
             </div>
             <div className=' w-full h-full space-y-4 px-10 flex flex-col'>
                 <div className='flex items-center justify-between'>
-                     <h5 className='text-blue-700'>Back to settings</h5>
+                     <h5 className='text-blue-700' 
+                       onClick={()=>window.history.back(-1)}
+                     >Back to settings</h5>
 
                  <button className='text-blue-700 rounded-full px-8 py-1.5'
                     style={{background: "rgba(236, 235, 254, 1)"}}

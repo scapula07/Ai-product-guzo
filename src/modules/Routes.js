@@ -45,6 +45,17 @@ import Feed from "./Feed";
 import { Collaboration,Post,CollabContacts } from "./Collaboration";
 import Teammates from "./Teammates";
 import ForgetPassword from "./Onboarding/views/ForgetPassword";
+import { CreateAccount,
+         AccountTypes,
+         AccountProfiles,
+         IndividualAccount,
+         EcoAccount,
+         OrgAccount
+         } from "./CreateAccount";
+
+
+import PostManagemnet from "./Ecosystem/views/post";
+import ErrorBoundary from "./ErrorBoundary";
 
 
 const NewRoutes = () => {
@@ -77,8 +88,9 @@ const NewRoutes = () => {
 
 
   return (
-    <>
-            <Routes>
+    <>       <ErrorBoundary>
+              <Routes>
+       
                 <Route path="/auth/*" element={<Index/>} />
                 <Route path="/" element={<Onboarding/>} >
                      <Route path="" element={<Accounts/>} />
@@ -94,7 +106,7 @@ const NewRoutes = () => {
                     <Route path="create-profile" element={<CreateProfiles />} >
                         <Route path="" element={<Individual currentUser={currentUser}/>}   />
                         <Route path="org" element={<Org currentUser={currentUser}/>} />
-                        <Route path="network" element={<Eco currentUser={currentUser}/>} />
+                        <Route path="ecosystem" element={<Eco currentUser={currentUser}/>} />
                     </Route>
                 </Route>
                 <Route path="/share" element={<Share/>} />
@@ -132,11 +144,23 @@ const NewRoutes = () => {
                 <Route path="/setting-edit-profile/:id/*" element={<EditProfile/>} />
                 <Route path="/ecosystem/:id/*" element={< Ecosystem />} >
                     <Route path="" element={<EcoMembers/>} />
+                    <Route path="post" element={<PostManagemnet/>} />
                 </Route>
                 <Route path="/feed/:id" element={<Feed/>} />
                 <Route path="/team/:id/*" element={<Teammates/>} />
-    
+                <Route path="/create-account" element={<CreateAccount/>} >
+                   <Route path="" element={<AccountTypes/>} />
+                    <Route path="profile" element={<AccountProfiles/>} >
+                       <Route path="Individual" element={<IndividualAccount/>} />
+                       <Route path="ecosystem" element={<EcoAccount/>} />
+                       <Route path="organization" element={<OrgAccount/>} />
+                    </Route>
+
+                </Route>
+              
             </Routes>
+        </ErrorBoundary>
+       
     </>
   );
 };

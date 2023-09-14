@@ -1,7 +1,7 @@
 import React,{useState,useRef,useEffect} from 'react'
 import {AiOutlineMail} from "react-icons/ai"
 import {MdLocationPin} from "react-icons/md"
-import { createProfile } from '../../_api/createProfile'
+import { createProfile } from '../_api/createProfile'
 import { useNavigate } from "react-router-dom";
 import {BsFlag} from "react-icons/bs"
 import ClipLoader from "react-spinners/ClipLoader";
@@ -10,7 +10,7 @@ import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
 import ReactSelect from "react-select";
 import axios from "axios"
 
-export default function Org({currentUser}) {
+export default function OrgAccount({currentUser}) {
     console.log(currentUser,"indiv")
     let navigate = useNavigate();
 
@@ -127,7 +127,7 @@ export default function Org({currentUser}) {
                 creator:user?.id,
                 name:orgName,
                 email:orgEmail,
-                location:country?.label,
+                location:country,
                 memberships:[],
                 invitees:[]
 

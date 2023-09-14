@@ -2,10 +2,10 @@ import React from 'react'
 import cover from "../../assets/orgcover1.png"
 import orgPic from "../../assets/orgcover.png"
 import EditProfile from '../../EditProfile'
-
+import {RiShareBoxFill} from "react-icons/ri"
 
 export default function CoverSection({group}) {
-    console.log(group,"groupp")
+    console.log(group?.location,"groupp")
  
   return (
     <div className='w-full flex flex-col space-y-4'>
@@ -43,15 +43,31 @@ export default function CoverSection({group}) {
                     <div className='flex  flex-col w-full'>
                          <div className='flex items-center justify-between w-full'>
                             {group?.name?.length >0?
-                              <h5 className='text-xl font-semibold'>{group?.name}</h5>
+                              <h5 className='text-xl font-semibold w-full'>{group?.name}</h5>
                               :
-                              <h5 className='text-xl font-semibold'> {group?.firstName + " " + group?.lastName } </h5>
+                              <h5 className='text-xl font-semibold w-full'> {group?.firstName + " " + group?.lastName } </h5>
                            }
                              
+                           <div className='flex items-center w-full space-x-1'>
+                                <EditProfile 
+                                  group={group}
+                                />  
 
-                          <EditProfile 
-                            group={group}
-                          />     
+                             <h5 className='rounded-full p-2 flex items-center justify-center ' 
+                                    style={{background: "rgba(236, 235, 254, 1)"}}
+                               >
+                                          
+                                  <RiShareBoxFill
+                                    className='text-blue-600 text-lg '
+                                  />
+                      
+                             
+                             </h5>  
+
+
+
+                           </div>
+                          
                                                                                   
 {/*   
                             <button className=' border rounded-full py-1 px-8 text-sm font-semibold' style={{borderColor: "rgba(40, 28, 245, 1)"}}>Edit profile</button> */}
@@ -62,7 +78,7 @@ export default function CoverSection({group}) {
                                 Worem ipsum dolor sit amet, consectetur adipiscing. 
                                 </p>
 
-                                <h5 className='text-slate-500 font-semibold'>{group?.location}</h5>
+                                <h5 className='text-slate-500 font-semibold'>{group?.location?.value} </h5>
 
                         </div>
                     

@@ -1,12 +1,12 @@
 import React from 'react'
-import guzo from "../../../assets/guzoLogo.png"
-import guzo1 from "../../../assets/img1.png"
-import guzo2 from "../../../assets/img2.png"
-import guzo3 from "../../../assets/img3.png"
-import { accountTypeState } from '../../../Recoil/globalstate'
+import guzo from "../../assets/guzoLogo.png"
+import guzo1 from "../../assets/img1.png"
+import guzo2 from "../../assets/img2.png"
+import guzo3 from "../../assets/img3.png"
+import { accountTypeState } from '../../Recoil/globalstate'
 import { useRecoilValue,useRecoilState} from 'recoil';
 import { Link } from 'react-router-dom'
-  export default function Accounts() {
+  export default function AccountTypes() {
     const [active,setActive]=useRecoilState(accountTypeState)
 
     return (
@@ -56,7 +56,7 @@ import { Link } from 'react-router-dom'
                               Back
                             </h5>
                          
-                               <Link to="register">
+                               <Link to={`/create-account/profile/${active}`}>
                                <button className='px-6 py-2 text-blue-600 rounded-full' style={{background: "rgba(237, 237, 237, 1)"}}> Continue</button>
                          
                              </Link>

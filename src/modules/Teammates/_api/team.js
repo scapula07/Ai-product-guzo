@@ -50,19 +50,6 @@ export const teamApi= {
                 throw new Error("This user does not exist")
             }
 
-            //  const notifications=user?.notifications?.length ===undefined ? []:user?.notifications
-            //   await updateDoc(doc(db,"users",user?.id), {
-            //     notifications:[
-            //          ...notifications,
-            //          {
-            //             name:group?.name,
-            //             img:group?.img,
-            //             message:"Requested to join your network.",
-            //             type:"join request"
-
-            //          }
-            //         ]
-            //      })
              const notificationSnap = await addDoc(collection(db, "notifications"),{
                 name:group?.name,
                 img:group?.img,
@@ -86,8 +73,9 @@ export const teamApi= {
                 throw new Error(e);
             }
     },
-        getAllTeammates:async function (id,currentUser) {
-            const ecoRef =doc(db,"ecosystems",id)
+        getAllTeammates:async function (group,currentUser) {
+            const collection=group?.type=="eco"?"ecosystems":"organizations"
+            const ecoRef =doc(db,collection,group?.id)
             const docSnap = await getDoc(ecoRef);
             console.log(docSnap?.data()?.invitees,"api")
             return {teammates:docSnap?.data()?.teammates,invitees:docSnap?.data()?.invitees}

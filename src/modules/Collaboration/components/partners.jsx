@@ -73,7 +73,7 @@ export default function Partner({partner}) {
      </div>
        <div className='px-8'>
                <div className='bg-slate-200 py-3 px-4 h-20 rounded-lg'>
-                   <h5 className='text-xs'>Qorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate consectetur adipiscing... see more. </h5>
+                   <h5 className='text-xs'>{partner?.note}... see more. </h5>
  
  
                </div>

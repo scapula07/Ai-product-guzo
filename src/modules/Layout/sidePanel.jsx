@@ -33,15 +33,16 @@ export default function SidePanel() {
     
       },[currentUser])
       useEffect(()=>{
-        const isGroup= organizations?.length >0 || ecosystems?.length >0
+        // const isGroup= organizations?.length >0 || ecosystems?.length >0
    
-         isGroup&&setTeam([currentUser,...organizations,...ecosystems])
+        //  isGroup&&setTeam([currentUser,...organizations,...ecosystems])
      
         
-         isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
+         setGroup(currentUser)
       
         },[])
-
+        const isGroup= organizations?.length >0 || ecosystems?.length >0
+        currentUser?.id?.length>0&&!isGroup&&setGroup(currentUser)
       console.log(group,"side pannel")
 
 
@@ -108,9 +109,12 @@ export default function SidePanel() {
         
 
              <div className='rounded-full h-10 w-10  flex justify-center items-center  ' style={{background: "linear-gradient(70.54deg, #281CF5 17.62%, #5DE4D7 94.09%)"}}>
+               <Link to="/create-account">
                 <img 
-                  src={add}
-                  />
+                    src={add}
+                    />
+               </Link>
+               
              </div>
 
 

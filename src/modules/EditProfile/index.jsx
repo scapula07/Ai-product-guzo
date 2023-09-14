@@ -5,6 +5,12 @@ import guzo from "../assets/guzoLogo.png"
 import { useRecoilValue } from 'recoil'
 import { groupState } from '../Recoil/globalstate'
 import { profileApi } from './api'
+import {BiSolidPencil} from "react-icons/bi"
+import {AiOutlineMail} from "react-icons/ai"
+import EcoForms from './forms/eco'
+import IndividualForms from './forms/individual'
+import OrgForms from './forms/org'
+
 
 export default function EditProfile() {
      
@@ -54,13 +60,25 @@ export default function EditProfile() {
   return (
       <>
         <div className='w-full flex justify-end'>
-            <button 
+               <h5 className='rounded-full p-2 items-center justify-center' 
+                  style={{background: "rgba(236, 235, 254, 1)"}}
+                  onClick={()=>setTrigger(true)}
+               >
+                         
+                <BiSolidPencil
+                  className='text-blue-600 text-lg '
+                />
+    
+                             
+              </h5>
+
+            {/* <button 
                 className=' border rounded-full py-1 px-8 text-sm font-semibold' 
                 style={{borderColor: "rgba(40, 28, 245, 1)"}}
-                onClick={()=>setTrigger(true)}
+               
             >
                 Edit profile
-                </button>
+                </button> */}
 
 
         </div>
@@ -87,7 +105,18 @@ export default function EditProfile() {
                             <div className='w-3/5 h-full py-6 px-6 overflow-y-scroll no-scrollbar bg-white'>
 
                                 <div className='flex flex-col w-full'>
-                                     <h5 className='text-xl font-semibold'>Edit  profile...</h5>
+                                 {group?.type?.length>0?
+                                        <>
+                                          {group?.type=="eco"?
+                                         <h5 className='text-xl font-semibold'>Edit ecosystem profile...</h5>
+                                            :
+                                            <h5 className='text-xl font-semibold'>Edit organization profile...</h5>
+                                         }
+                                        </>
+                                        :
+                                        <h5 className='text-xl font-semibold'>Edit individual profile...</h5>
+                                     }
+                                    
 
                                      <div className='flex flex-col items-center w-full py-8 space-y-14'>
                                        { [
@@ -148,8 +177,18 @@ export default function EditProfile() {
                                       }
 
                                      </div>
-
-                                     <Forms />
+                                      {group?.type?.length>0?
+                                        <>
+                                          {group?.type=="eco"?
+                                            <EcoForms />
+                                            :
+                                            <OrgForms />
+                                         }
+                                        </>
+                                        :
+                                        <IndividualForms />
+                                     }
+                                 
 
 
                                 </div>
@@ -182,34 +221,7 @@ export default function EditProfile() {
 
 
 
-const Forms=()=>{
-    return(
-        <div children="py-6">
-            {[1,2].map(()=>{
-                 return(
-              <div className='flex flex-col w-full '>  
 
-                       <label className='text-sm text-slate-600 font-semibold'>Ecosystem Space Name*</label>
-                        <input 
-                            placeholder='Ecosystem Space Name'
-                            className=' py-2 px-4 w-full rounded-md text-sm outline-none'
-                            style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
-                            // name="ecoName"
-                            // value={ecoName}
-                            // onChange={(e)=>setName(e.target.value)}
-                        />
-    
-                        <h5 className='font-light text-slate-500 text-sm '>This email will NOT be shared on the organization profile. This email will be used for all Guzo correspondence.</h5>
-    
-                 </div>
-                 )
-              })
-
-            }
-        
-        </div>
-    )
-}
 
 function Modal({children ,cname,trigger,onClose}) {
     return (

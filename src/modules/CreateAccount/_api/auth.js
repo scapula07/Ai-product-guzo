@@ -8,7 +8,7 @@ import {
        
 import { auth ,db} from "../../Firebase";
 import { doc,getDoc,setDoc }  from "firebase/firestore";
-import axios from "axios";
+
 
 export const authApi= {
     register:async function (email,password,payload) {
@@ -107,58 +107,5 @@ export const authApi= {
                 throw new Error(e);
              }
 
-        },
-        googleLogin:async function (email) {
-           try{
-
-                const provider = new GoogleAuthProvider();
-                const res =  await signInWithPopup(auth,provider)
-                const credential = GoogleAuthProvider.credentialFromResult(res);
-                const token = credential.accessToken;
-                const user = res.user;
-                const ref =doc(db,"users",user?.uid)
-
-                const docSnap = await getDoc(ref);
-                console.log(docSnap.data(),"user data")
-                 if (docSnap.exists()) {
-                    return {id:docSnap?.id,...docSnap?.data(),accessToken:user?.accessToken}
-             
-
-                  } else {
-                    throw new Error("You are not signed up")
-                    console.log("No such document!");
-                  }
-
-             }catch(e){
-            console.log(e)
-            throw new Error(e)
-             }
-
-        },
-        linkedinAuth:async function (email) {
-          const url=`http://localhost:7000/api/linkedin-auth`
-    
-
-              const config = {
-                  headers:{
-                      'Content-Type': 'application/json',
-                      },
-                      };
-      
-              
-              try{
-              
-                  const response= await axios.get(
-                          url,
-                          config
-                    )
-                
-                  console.log(response,"response")
-                  }catch(e){
-                  console.log(e)
-                  throw new Error(e)
-                  }
-
         }
-
 }

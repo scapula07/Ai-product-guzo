@@ -2,7 +2,7 @@ import React,{useState,useRef,useEffect} from 'react'
 import {AiOutlineMail} from "react-icons/ai"
 import {MdLocationPin} from "react-icons/md"
 import { useNavigate } from 'react-router-dom'
-import { createProfile } from '../../_api/createProfile'
+import { createProfile } from '../_api/createProfile'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useOutletContext } from 'react-router-dom'
 import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
@@ -10,7 +10,7 @@ import ReactSelect from "react-select";
 import axios from "axios"
 import { BsFlag } from 'react-icons/bs'
 
-export default function Eco({currentUser}) {
+export default function EcoAccount({currentUser}) {
     console.log(currentUser,"indiv")
     let navigate = useNavigate();
 
@@ -127,7 +127,7 @@ export default function Eco({currentUser}) {
                 creator:user?.id,
                 name:ecoName,
                 email:ecoEmail,
-                location:country?.label,
+                location:country,
                 memberships:[],
                 invitees:[]
 
@@ -274,8 +274,16 @@ export default function Eco({currentUser}) {
                     <MdLocationPin 
                     className="text-slate-500 font-semibold text-lg "
                     />
-                   
-                        <div className="border-[1px] border-[rgba(242,242,242,0.6)] rounded-[8px] w-full">
+                        {/* <input 
+                            placeholder='Neighborhood, City, or Zip'
+                            className=' py-2  w-full rounded-md text-sm outline-none'
+                            style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
+                            name="ecoLocation"
+                            value={ecoLocation}
+                            onChange={(e)=>setLocation(e.target.value)}
+                        
+                        /> */}
+                                                           <div className="border-[1px] border-[rgba(242,242,242,0.6)] rounded-[8px] w-full">
                                         <ReactSelect
                                             styles={style}
                                             placeholder='Neighborhood, City, or Zip'

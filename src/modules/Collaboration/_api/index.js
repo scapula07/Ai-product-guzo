@@ -2,7 +2,7 @@ import { collection,  onSnapshot,
     doc, getDocs,
     query, orderBy, 
     limit,getDoc,setDoc ,
-   updateDoc,addDoc ,deleteDoc } from 'firebase/firestore'
+   updateDoc,addDoc ,deleteDoc ,where} from 'firebase/firestore'
 import { db } from '../../Firebase';
 
 
@@ -46,6 +46,19 @@ export const collaborationApi = {
            
                
                     const postSnap = await getDoc(postRef);
+                    const groupRef=doc(db,"group",postSnap?.id)
+                    const postChat = await getDoc(groupRef);
+                    const members =postChat?.data()?.members?.length==undefined?[]:postChat?.data()?.members
+                    await updateDoc(groupRef, {
+                      members:[
+                         ...members,
+                         request?.id
+
+                         
+                       ],
+                     
+                      })
+
             
                     return {reqs:postSnap?.data()?.requests,status:true }
 
@@ -58,8 +71,35 @@ export const collaborationApi = {
             console.log(e)
             throw new Error(e);
           }
-    },
+       },
+    ignoreRequest: async function (request,group,index,collab) {
+         try{
+          const postRef =doc(db,"posts",collab?.id)
+          const docSnap = await getDoc(postRef);
+          if(docSnap?.exists()){
+             
+              const currentRequest=docSnap.data()?.requests[index]
+           
+              const pending= currentRequest?.pending
+              const newPending = pending?.filter(pendingmember=> pendingmember?.id !== request?.id);
+              currentRequest["pending"]=newPending
+              const requests=docSnap.data()?.requests
+               requests[index]=currentRequest
+               await updateDoc(postRef, {
+                requests:requests
+                })
+       
+           
+                const postSnap = await getDoc(postRef);
+        
+              return {reqs:postSnap?.data()?.requests,status:true }
+          } 
 
+         }catch(e){
+            console.log(e)
+            throw new Error(e)
+         }
+    },
     deletePost: async function (collab) {
          try{
             await deleteDoc(doc(db, "posts", collab?.id));

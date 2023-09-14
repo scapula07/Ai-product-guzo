@@ -5,19 +5,19 @@ import linkdin from "../../../assets/icons/linkdin.png"
 import {useRecoilValue} from "recoil"
 import { accountTypeState } from '../../../Recoil/globalstate'
 import { Link } from 'react-router-dom'
-import { click } from '@testing-library/user-event/dist/click'
+
 import { useNavigate } from "react-router-dom";
 import { authApi } from '../../_api/auth'
 
 
-
 export default function AuthTypes() {
-  
+   let navigate = useNavigate();
+
     const [activeAuth,setAuth]=useState("")
     const account =useRecoilValue(accountTypeState)
     console.log(account,"avcc")
 
-    let navigate = useNavigate();
+ 
 
 
 
@@ -26,7 +26,24 @@ export default function AuthTypes() {
             icon:gmail,
             name:"Sign up with Google",
             link:"",
-            click:()=>{authApi.googleAuth()}
+            click:async()=>{
+             const user=await authApi.googleAuth(account)
+             let route=""
+              if(account==="Organization"){
+                  route="org"
+                }else if(account==="Ecosystem"){
+                  route="ecosystem"
+              }
+
+               localStorage.clear();
+               localStorage.setItem('user',JSON.stringify(user));
+
+               user?.id.length >0&& navigate(`/create-profile/${route}`)
+
+               console.log(route,"rrrr")
+             
+
+            }
             
     
         },
@@ -34,7 +51,24 @@ export default function AuthTypes() {
             icon:linkdin,
             name:"Sign up with LinkedIn",
             link:"",
-            click:()=>{navigate("email-password")}
+            click:async()=>{
+              const user=await authApi.linkedinAuth()
+              // let route=""
+              //  if(account==="Organization"){
+              //      route="org"
+              //    }else if(account==="Ecosystem"){
+              //      route="ecosystem"
+              //  }
+ 
+              //   localStorage.clear();
+              //   localStorage.setItem('user',JSON.stringify(user));
+ 
+              //   user?.id.length >0&& navigate(`/create-profile/${route}`)
+ 
+              //   console.log(route,"rrrr")
+              
+ 
+             }
     
         },
         {

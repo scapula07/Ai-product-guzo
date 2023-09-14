@@ -9,7 +9,7 @@ import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/materia
 export default function Request({request,group,index,collab,setReq}){
     const [accepted,setAccept]=useState()
     const [errorMsg, setErrorMsg] = useState(null)
-
+    const [ignore,setIgnore]=useState(false)
     const [open, setOpen] = useState(false);
 
 
@@ -27,6 +27,21 @@ export default function Request({request,group,index,collab,setReq}){
          try{
             const response= await collaborationApi.acceptRequest(request,group,index,collab)
             response?.status&&setAccept(false)
+            console.log(response?.reqs,"pppp")
+            response?.status&&setReq(response?.reqs)
+          }catch(e){
+               console.log(e)
+               setErrorMsg(e.message)
+               setOpen(true)
+          }
+
+      }
+
+      const ignoreRequest=async()=>{
+        setIgnore(true)
+         try{
+            const response= await collaborationApi.ignoreRequest(request,group,index,collab)
+            response?.status&&setIgnore(false)
             console.log(response?.reqs,"pppp")
             response?.status&&setReq(response?.reqs)
           }catch(e){
@@ -76,16 +91,30 @@ export default function Request({request,group,index,collab,setReq}){
               </div>
   
               <div className='flex items-center space-x-4 justify-end w-1/4'>
-                  <h5 className='text-slate-600 font-semibold text-lg'>Ignore</h5>
-                  {accepted?
-              
-                      <ClipLoader 
+                      {ignore?
+                          <ClipLoader 
                           color={"rgba(62, 51, 221, 1)"}
                       
-  
-                      />
+
+                          />
                 
-                    :
+                           :
+                        <h5 className='text-slate-600 font-semibold text-lg'
+                           onClick={()=>ignoreRequest()}  
+                          >Ignore
+                          </h5>
+
+                        }
+                  
+                   {accepted?
+                  
+                          <ClipLoader 
+                              color={"rgba(62, 51, 221, 1)"}
+                          
+      
+                          />
+                    
+                        :
                       <button 
                           style={{background: "rgba(236, 235, 254, 1)"}}
                           className='text-blue-700 rounded-full text-xs px-4 py-1'
@@ -95,7 +124,7 @@ export default function Request({request,group,index,collab,setReq}){
                         Accept
                         
                       </button>
-                  }
+                    }
   
               </div>
           <div>
@@ -103,7 +132,7 @@ export default function Request({request,group,index,collab,setReq}){
       </div>
         <div className='px-8'>
                 <div className='bg-slate-200 py-3 px-4 h-20 rounded-lg'>
-                    <h5 className='text-xs'>Qorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate consectetur adipiscing... see more. </h5>
+                    <h5 className='text-xs'>{request?.note}... see more. </h5>
   
   
                 </div>

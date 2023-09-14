@@ -15,21 +15,15 @@ export const ecosystemApi= {
        
        },
        acceptMember:async function (id,member) {
-        // console.log(member,"mmm")
+  
             try{
-                    const ecoRef =doc(db,"ecosystems",id)
-                    const docSnap = await getDoc(ecoRef);
-                    console.log(docSnap?.data())
-                    const pending = docSnap?.data()?.pending
-                    console.log(pending,"pending")
-                    const activeMembers = docSnap?.data()?.active
+                const ecoRef =doc(db,"ecosystems",id)
+                const docSnap = await getDoc(ecoRef);
+                const pending = docSnap?.data()?.pending
+                const activeMembers = docSnap?.data()?.active
 
-                    const newPending = pending?.filter(pendingmember=> pendingmember?.id !== member?.id);
-                    console.log(newPending,"new")
+                const newPending = pending?.filter(pendingmember=> pendingmember?.id !== member?.id);
 
-
-                
-                console.log(pending,"pending")
                   const result = await updateDoc(ecoRef, {
                     pending:[...newPending],
                     active:[
@@ -38,30 +32,26 @@ export const ecosystemApi= {
                      ]
                    })
 
-                   console.log(result,"eco log")
 
                    if(member?.type?.length >0){
                         const collection=member?.type ==="eco"?"ecosystems" :"organizations"
-                        console.log(collection,"ccccc")
                         const memberRef=doc(db,collection,member?.id)
                         const memberSnap = await getDoc(memberRef);
                         console.log(memberSnap?.data(),"members")
-                        const members=memberSnap?.data()?.memberships.length ===undefined? []:memberSnap?.data()?.memberships
+                        const memberships=memberSnap?.data()?.memberships.length ===undefined? []:memberSnap?.data()?.memberships
                           const result = await updateDoc(memberRef, {
                                 memberships:[
-                                    ...members,
+                                    ...memberships,
                                     {
                                     ...docSnap?.data()
                                     }
                                   ]
                               })
-                              console.log( result ,"member log")
                     
 
-                   }else{
-                         const memberRef =doc(db,"users",member?.id)
-                         const memberSnap = await getDoc(memberRef);
-                         console.log(memberSnap?.data(),"usersss")
+                      }else{
+                          const memberRef =doc(db,"users",member?.id)
+                          const memberSnap = await getDoc(memberRef);
                           const result2 = await updateDoc(memberRef, {
                                 ecosystems:[
                                     ...member?.ecosystems,
@@ -70,13 +60,13 @@ export const ecosystemApi= {
 
 
                                     }
-                                ]
+                                 ]
                                 
-                            })
-                            console.log( result2 ,"user log")
+                              })
+                            
                                
 
-                    }
+                        }
                    
                   
               
@@ -94,6 +84,60 @@ export const ecosystemApi= {
                 throw new Error(e);
             }
            
+
+        },
+       ignore:async function (id,member) {
+          try{
+            const ecoRef =doc(db,"ecosystems",id)
+            const docSnap = await getDoc(ecoRef);
+            const pending = docSnap?.data()?.pending
+
+            const newPending = pending?.filter(pendingmember=> pendingmember?.id !== member?.id);
+
+            const result = await updateDoc(ecoRef, {
+                pending:[...newPending]
+               })
+
+               if(member?.type?.length >0){
+                const collection=member?.type ==="eco"?"ecosystems" :"organizations"
+                const memberRef=doc(db,collection,member?.id)
+                const memberSnap = await getDoc(memberRef);
+                console.log(memberSnap?.data(),"members")
+                const pending=memberSnap?.data()?.pendingMemberships?.length ===undefined? []:memberSnap?.data()?.pendingMemberships
+                const newPendingRequest= pending?.filter(request=> request?.id !== docSnap?.id);
+                  const result = await updateDoc(memberRef, {
+                    pendingMemberships:[
+                            ...newPendingRequest,
+                          ]
+                      })
+            
+
+              }else{
+                  const memberRef =doc(db,"users",member?.id)
+                  const memberSnap = await getDoc(memberRef);
+                  const pending=memberSnap?.data()?.pending?.length ===undefined? []:memberSnap?.data()?.pending
+                  const newPendingRequest= pending?.filter(request=> request?.id !== docSnap?.id);
+                  const result2 = await updateDoc(memberRef, {
+                        pending:[
+                            ...newPendingRequest
+                         ]
+                        
+                      })
+                    
+                       
+
+                }
+
+                const memberSnap = await getDoc(ecoRef);
+                console.log(memberSnap,"ecosystem");
+                console.log({active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending },"new memeber")
+                return {active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending,status:true }
+
+
+           }catch(e){
+             console.log(e)
+             throw new Error(e);
+           }
 
         }
     

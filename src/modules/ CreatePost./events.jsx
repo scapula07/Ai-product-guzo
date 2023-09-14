@@ -1,6 +1,8 @@
 import React,{useRef,useState} from 'react'
 import upload from "../../modules/assets/upload.png"
 import {IoMdRadioButtonOn,IoMdRadioButtonOff} from "react-icons/io"
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setEvent}) {
     const [choice,setChoice]=useState("In Person")
@@ -11,7 +13,7 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
     <div className='w-full flex justify-center'>
         
         <div className='w-3/4 flex flex-col space-y-6'>
-                <h5 className='text-2xl font-semibold'>Add a request to your post...</h5>
+                <h5 className='text-2xl font-semibold'>Add Event Details to your post...</h5>
                 <div className='flex flex-col'>
                      <div className="flex items-center space-x-6 ">
                          {["In Person","Online"].map((text)=>{
@@ -116,6 +118,9 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
 
 
 const EventForms=({ eventPost,setEvt,choice})=>{
+    const [pickDate, setPick] = useState("");
+    const [startDate, setStartDate] = useState(new Date());
+
 
      return(
         <div className='flex flex-col py-4 space-y-4'>
@@ -124,20 +129,25 @@ const EventForms=({ eventPost,setEvt,choice})=>{
                     {
                         name:"Timezone",
                         placeholder:"(UTC) Central Time (US and Canada)",
-                        click:(e)=>setEvt({...eventPost,timezone:e.target.value})
 
+                        click:(e)=>setEvt({...eventPost,timezone:e.target.value})
+                      
                     },
                     {
                         name:"Start Date",
                         placeholder:"Start Date",
-                        click:(e)=>setEvt({...eventPost,start_date:e.target.value})
+                        value:eventPost?.start_date,
+                        click:(e)=>setEvt({...eventPost,start_date:e.target.value}),
+                        change:(bool)=>setPick(bool)
+                        
+
 
 
                     },
                     {
                         name:"Start Time",
                         placeholder:"Start Time",
-                        click:(e)=>setEvt({...eventPost,start_time:e.target.value})
+                        click:(date)=>setEvt({...eventPost,start_time:date})
 
 
                     },
@@ -161,13 +171,27 @@ const EventForms=({ eventPost,setEvt,choice})=>{
 
                     <div className='flex flex-col w-full space-y-2'>
                             <label className='text-sm text-black font-semibold'>{field?.name}</label>
-                            <input 
-                                placeholder={field?.placeholder}
-                                className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
-                                onChange={(e)=>field?.click(e)}
+                            {pickDate===field?.name?
+                                <DatePicker
+                                    selected={field?.value} 
+                                    onChange={(date) => field?.click(date)} 
+                                    onSelect={false}
+                                    className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                 />
+                                  :
+                                 <input 
+                                  placeholder={field?.placeholder}
+                                  className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                  onChange={(e)=>field?.change(e.target.name)}
+                                  value={field?.value}
+                                  name={field?.name}
+                                //   onClick={(e)=>setPick(true)}
 
 
-                            />
+                              />
+                             
+
+                          }
             
                         </div> 
                         )

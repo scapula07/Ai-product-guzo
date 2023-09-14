@@ -3,9 +3,11 @@ import {BiSolidUserCircle} from "react-icons/bi"
 import { userApi } from './_api'
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
-
+import { groupState } from '../Recoil/globalstate';
+import { useRecoilValue } from 'recoil';
 export default function LogOut({currentUser}) {
     let navigate = useNavigate();
+    const group =useRecoilValue(groupState)
 
     const logout=async()=>{
         localStorage.clear();
@@ -39,7 +41,14 @@ export default function LogOut({currentUser}) {
 
             </div>
             <div className='flex flex-col items-center px-2'>
-                <h5 className='font-semibold text-black text-sm'>{currentUser?.firstName + " " +currentUser?.lastName  }</h5>
+                {currentUser?.firstName?.length !=undefined?
+                   <h5 className='font-semibold text-black text-sm'>{currentUser?.firstName + " " +currentUser?.lastName  }</h5>
+                   :
+                   <h5 className='font-semibold text-black text-sm'>{currentUser?.display}</h5>
+
+
+                }
+                
                 <h5 className='font-light text-slate-600 text-xs'>{currentUser?.email }</h5>
 
             </div>
@@ -47,7 +56,7 @@ export default function LogOut({currentUser}) {
 
         </div>
         <div className='flex flex-col text-sm'>
-            <Link to="/settings">
+            <Link to={`/settings/${group?.id}`}>
               <h5>Settings</h5>
             </Link>
            

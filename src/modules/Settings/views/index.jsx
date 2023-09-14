@@ -34,14 +34,41 @@ export default function Settings() {
                       ]}
               
                 />
-              {/* <Card 
+              <Card 
                   title="Subscriptions and Payments"
-                  body={["Billing Information","Manage Subscription","View Payment History"]}
+                  body={[
+                    {
+                     text: "Billing Information",
+                     link:""
+                    },
+                    {
+                      text: "Manage Subscription",
+                      link:``
+
+                    },
+                    {
+                      text: "View Payment History",
+                      link:""
+
+                    }
+                    ]}
+                 
               />
               <Card 
                   title="Monetization & Privacy"
-                  body={["Manage Ecosystem Privacy","Setup Paywall"]}
-              /> */}
+                  body={[
+                    {
+                     text: "Manage Ecosystem Privacy",
+                     link:""
+                    },
+                    {
+                      text:"Setup Paywall",
+                      link:``
+
+                    }
+                    ]}
+                
+                 />
 
           </div>
 

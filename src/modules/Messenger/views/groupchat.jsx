@@ -42,7 +42,7 @@ export default function GroupChat({currentChat,send,setNewMessage,receiverInfo, 
       
   return (
     <div className='flex flex-col py-8 px-4 h-full'>
-             {currentChat.id?.length>0 &&
+             {currentChat?.id?.length>0 &&
                     <div className='flex items-center justify-center space-x-4 '>
 
                         <h5 className='text-lg font-semibold'>
