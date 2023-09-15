@@ -16,7 +16,7 @@ export default function EcoMembers() {
   
 
     const [members,setMembers]=useState([])
-    useEffect(()=>{
+     useEffect(()=>{
         const getAllMembers=async()=>{
             console.log("mmmm")
            const members=await ecosystemApi.getAllMembers(group?.id,currentUser)
@@ -25,7 +25,7 @@ export default function EcoMembers() {
            console.log("running again")
            }
            getAllMembers()
-          },[group])
+          })
     console.log(members?.active,"mmmm pending")
 
   return (
