@@ -1,5 +1,5 @@
 import eco from "../../assets/img3.png"
- 
+import org from "../../assets/img2.png"
  const Chat=({msg,group})=>{
     console.log(msg,"msg chat")
     return(
@@ -28,10 +28,10 @@ import eco from "../../assets/img3.png"
                                        :
                                        <div className="flex items-center space-x-1">
                                              <img 
-                                             src={eco}
+                                             src={org}
                                              className="w-3 h-3"
                                              />
-                                       <h5>Ecosystem</h5>
+                                       <h5>Organization</h5>
 
                                      </div>
                                        }
