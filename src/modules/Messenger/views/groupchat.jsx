@@ -18,7 +18,7 @@ export default function GroupChat({currentChat,send,setNewMessage,receiverInfo, 
      console.log(conversations,"conversation in group[")
      
      useEffect(()=>{
-            if(conversations?.length>0){
+            if(conversations?.length>0&&currentChat?.id?.length >0){
               console.log(currentChat?.id,"chat id")
                const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id),orderBy("date", "asc"));
               // const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id));
