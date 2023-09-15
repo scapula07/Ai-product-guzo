@@ -45,6 +45,9 @@ export default function Eco({currentUser}) {
   
     const [selectedOption, setSelectedOption] = useState("");
   
+    console.log(country?.label,"coountry label")
+
+
     const handleTagChange = (selectedOption) => {
       console.log(selectedOption);
       setSelectedOption(selectedOption.value);
@@ -124,8 +127,8 @@ export default function Eco({currentUser}) {
               setLoader(false);
           }
       
-          if (country?.length < 3) {
-            setErrorMsg( "Location is required" );
+          if (country?.label?.length< 3) {
+            setErrorMsg(' Location is invalid ');
             setLoader(false);
             return;
           }

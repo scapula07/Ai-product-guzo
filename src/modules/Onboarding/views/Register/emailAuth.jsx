@@ -23,7 +23,7 @@ export default function EmailAuth() {
     const [lastName,setLast]=useState("")
     const [isLoading,setLoader]=useState(false)
     const [view,setView]=useState(false)
-    const [country, setSelectedCountry] = useState();
+    const [country, setSelectedCountry] = useState("");
     const [city, setSelectedCity] = useState();
     const [countries, setCountries] = useState(null);
 
@@ -57,9 +57,17 @@ export default function EmailAuth() {
         }),
       };
 
+      console.log(country,"countryyyy")
+
     const signUpWithEmail=async()=>{
        
         setErrorMsg(null)
+        console.log(country,"country")
+        if (country?.length < 3) {
+          setErrorMsg(' Location is invalid ');
+          setLoader(false);
+          return;
+        }
 
         if (firstName.length < 3) {
           setErrorMsg( 'first name is invalid ');
@@ -75,6 +83,11 @@ export default function EmailAuth() {
     
         if (email.length < 3) {
           setErrorMsg(' email is invalid ');
+          setLoader(false);
+          return;
+        }
+        if (country?.label?.length < 3) {
+          setErrorMsg(' Location is invalid ');
           setLoader(false);
           return;
         }
@@ -102,27 +115,27 @@ export default function EmailAuth() {
 
           }
           setLoader(true)
-          try{
+          // try{
              
-             const user =await authApi.register(email,password,payload)
-             console.log(user,"user")
-             let route=""
-             if(account==="Organization"){
-                route="org"
-             }else if(account==="Ecosystem"){
-                route="ecosystem"
-             }
-             setLoader(true)
-               localStorage.clear();
-               localStorage.setItem('user',JSON.stringify(user));
+          //    const user =await authApi.register(email,password,payload)
+          //    console.log(user,"user")
+          //    let route=""
+          //    if(account==="Organization"){
+          //       route="org"
+          //    }else if(account==="Ecosystem"){
+          //       route="ecosystem"
+          //    }
+          //    setLoader(true)
+          //      localStorage.clear();
+          //      localStorage.setItem('user',JSON.stringify(user));
 
-             user?.id.length >0&& navigate(`/create-profile/${route}`)
+          //    user?.id.length >0&& navigate(`/create-profile/${route}`)
 
-            }catch(e){
-                console.log(e.message.FirebaseError,"emaillll")
-                setErrorMsg(e.message);
-                setLoader(false);
-            }
+          //   }catch(e){
+          //       console.log(e.message.FirebaseError,"emaillll")
+          //       setErrorMsg(e.message);
+          //       setLoader(false);
+          //   }
    
 
 
@@ -241,8 +254,8 @@ export default function EmailAuth() {
                                             countries &&
                                             countries?.map((item, index) => ({
                                                 label: item?.country + "," + item?.iso3,
-                                                value: item?.country,
-                                                cities: item?.cities,
+                                                // value: item?.country,
+                                                // cities: item?.cities,
                                             }))
                                             }
                                             value={country}
@@ -260,7 +273,7 @@ export default function EmailAuth() {
                                             }}
                                             onChange={(opt) => {
                                             setSelectedCountry(opt);
-                                            setSelectedCity({label:opt?.cities[0], value :opt?.cities[0]})
+                                            // setSelectedCity({label:opt?.cities[0], value :opt?.cities[0]})
                                             }}
                                         />
                                     </div>
