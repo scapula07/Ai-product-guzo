@@ -115,27 +115,27 @@ export default function EmailAuth() {
 
           }
           setLoader(true)
-          // try{
+          try{
              
-          //    const user =await authApi.register(email,password,payload)
-          //    console.log(user,"user")
-          //    let route=""
-          //    if(account==="Organization"){
-          //       route="org"
-          //    }else if(account==="Ecosystem"){
-          //       route="ecosystem"
-          //    }
-          //    setLoader(true)
-          //      localStorage.clear();
-          //      localStorage.setItem('user',JSON.stringify(user));
+             const user =await authApi.register(email,password,payload)
+             console.log(user,"user")
+             let route=""
+             if(account==="Organization"){
+                route="org"
+             }else if(account==="Ecosystem"){
+                route="ecosystem"
+             }
+             setLoader(true)
+               localStorage.clear();
+               localStorage.setItem('user',JSON.stringify(user));
 
-          //    user?.id.length >0&& navigate(`/create-profile/${route}`)
+             user?.id.length >0&& navigate(`/create-profile/${route}`)
 
-          //   }catch(e){
-          //       console.log(e.message.FirebaseError,"emaillll")
-          //       setErrorMsg(e.message);
-          //       setLoader(false);
-          //   }
+            }catch(e){
+                console.log(e.message.FirebaseError,"emaillll")
+                setErrorMsg(e.message);
+                setLoader(false);
+            }
    
 
 

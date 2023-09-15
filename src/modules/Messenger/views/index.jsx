@@ -26,7 +26,7 @@ export default function Messenger() {
    const [groups,setGroups]=useState([])
    const [textsubmit,setTextsubmit]=useState(false)
 
-
+   const [isLoading,setLoader]=useState(false)
    const [newMessage, setNewMessage] = useState("");
 
     useEffect(()=>{
@@ -55,10 +55,11 @@ export default function Messenger() {
    
      },[currentUser?.id,active])  
 
-     console.log(currentChat,"chatatt")
+     console.log(groups,"grou chatatt")
      const send=async (e)=>{
-        console.log("sending")
+        console.log(newMessage,"sending")
         e.preventDefault();
+        setLoader(true)
         
         const message = {
           sender: currentUser,
@@ -77,12 +78,14 @@ export default function Messenger() {
             const docRef = await addDoc(collection(db, "messages"),message);
         
             const docSnap = await getDoc(docRef);
-          
+             console.log(docSnap?.data(),"came")
             setMessages([...messages,{...docSnap.data(),id:docSnap.id}]);
-            setNewMessage("")
+            docSnap?.exists()&& setNewMessage("")
+            docSnap?.exists()&& setLoader(false)
       
             }catch (err) {
               console.log(err)
+              setLoader(false)
           }
       }
   
@@ -119,7 +122,10 @@ export default function Messenger() {
                 setNewMessage={setNewMessage}
                 currentUser={currentUser}
                 receiverInfo={receiverInfo}
-                conversations={groups}
+                conversations={conversations}
+                newMessage={newMessage}
+                isLoading={isLoading}
+                
                 
               
               />
@@ -134,7 +140,10 @@ export default function Messenger() {
               setNewMessage={setNewMessage}
               currentUser={currentUser}
               receiverInfo={receiverInfo}
-              conversations={conversations}
+              conversations={groups}
+              newMessage={newMessage}
+              isLoading={isLoading}
+       
 
             />
 

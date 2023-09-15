@@ -9,9 +9,9 @@ import { db } from '../../Firebase'
 import Chat from '../components/chat'
 import { userState,groupState } from '../../Recoil/globalstate'
 import { useRecoilValue } from 'recoil'
+import BeatLoader from "react-spinners/BeatLoader";
 
-
-export default function Chatbox({currentChat,messages,send,setNewMessage,receiverInfo, conversations}) {
+export default function Chatbox({currentChat,messages,send,setNewMessage,receiverInfo, conversations, isLoading,newMessage}) {
     const group=useRecoilValue(groupState)
      const [msgs,setMsg]=useState([])
        useEffect(()=>{
@@ -97,11 +97,26 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
             placeholder='Type a message'
             className='py-1 px-4 rounded-md w-full text-sm font-semibold border outline-none'
             onChange={(e)=>setNewMessage(e.target.value)}
+            value={newMessage}
           />
+             {isLoading?
+                    <BeatLoader
+                    color={"rgba(62, 51, 221, 1)"}
+                      loading={true}
+                      size="6"
+                    
+                    />
+                      :
           <button 
             className='text-white bg-blue-600 rounded-lg py-2 px-6 text-sm '
             onClick={send}
-           >Send</button>
+           >
+
+                 Send
+
+                
+           </button>
+          } 
 
           
 

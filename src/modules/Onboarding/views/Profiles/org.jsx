@@ -125,7 +125,7 @@ export default function Org({currentUser}) {
             setLoader(false);
         }
     
-        if (country?.label?.length< 3) {
+        if (country?.length< 3) {
           setErrorMsg(' Location is invalid ');
           setLoader(false);
           return;

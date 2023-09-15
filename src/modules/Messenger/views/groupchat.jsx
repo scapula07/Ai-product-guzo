@@ -9,20 +9,25 @@ import { db } from '../../Firebase'
 import Chat from '../components/chat'
 import { userState,groupState } from '../../Recoil/globalstate'
 import { useRecoilValue } from 'recoil'
-
-export default function GroupChat({currentChat,send,setNewMessage,receiverInfo, conversations}) {
+import BeatLoader from "react-spinners/BeatLoader";
+import { MdSportsGolf } from 'react-icons/md'
+export default function GroupChat({currentChat,send,setNewMessage,receiverInfo, conversations, isLoading,newMessage}) {
      const group=useRecoilValue(groupState)
      const [msgs,setMsg]=useState([])
+
+     console.log(conversations,"conversation in group[")
      
      useEffect(()=>{
             if(conversations?.length>0){
               console.log(currentChat?.id,"chat id")
-               const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id),orderBy("date", "asc"));
-              // const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id));
+              //  const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id),orderBy("date", "asc"));
+              const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id));
+              console.log(q,"query")
               const unsubscribe = onSnapshot(q, (querySnapshot) => {
                   const msgs= [];
                   querySnapshot.forEach((doc) => {
-                      msgs.push({...doc?.data(),id:doc?.id});
+                      msgs.push({...doc?.data(), id:doc?.id});
+                      console.log(doc.data(),"query")
                   });
                 
                   setMsg(msgs)
@@ -32,13 +37,10 @@ export default function GroupChat({currentChat,send,setNewMessage,receiverInfo, 
      
               };
           }
-          
-       
-      }
+          },[currentChat]
+)  
 
-      ,[currentChat])  
-
-      console.log(currentChat,"group chat")
+      console.log(msgs,"group chat")
       
   return (
     <div className='flex flex-col py-8 px-4 h-full'>
@@ -83,11 +85,26 @@ export default function GroupChat({currentChat,send,setNewMessage,receiverInfo, 
             placeholder='Type a message'
             className='py-1 px-4 rounded-md w-full text-sm font-semibold border outline-none'
             onChange={(e)=>setNewMessage(e.target.value)}
+            value={newMessage}
           />
+          {isLoading?
+                    <BeatLoader
+                    color={"rgba(62, 51, 221, 1)"}
+                      loading={true}
+                      size="6"
+                    
+                    />
+                      :
           <button 
             className='text-white bg-blue-600 rounded-lg py-2 px-6 text-sm '
             onClick={send}
-           >Send</button>
+           >
+
+                 Send
+
+                
+           </button>
+          } 
 
           
 
