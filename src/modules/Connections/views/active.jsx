@@ -59,9 +59,14 @@ export default function Active() {
 
                            }
 
-                        
-                          <h5 className=' text-center font-semibold '>{eco?.firstName + " " + eco?.lastName}</h5>
-                          <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
+                          {eco?.firstName !=undefined?
+                              <h5 className=' text-center font-semibold '>{eco?.firstName + " " + eco?.lastName}</h5>
+                              :
+                              <h5 className=' text-center font-semibold '>{eco?.display}</h5>
+
+                          } 
+                         
+                          {/* <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5> */}
                        </div>
 
                        }

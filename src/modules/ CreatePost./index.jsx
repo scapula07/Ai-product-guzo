@@ -213,7 +213,13 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                     </div>
                     :
                     <div className='flex flex-col '>
-                        <h5 className='font-semibold'>{group?.firstName + " " + group?.lastName}</h5>
+                        {group?.firstName?.length !=undefined?
+                              <h5 className='font-semibold'>{group?.firstName + " " + group?.lastName}</h5>
+                              :
+                              <h5 className='font-semibold'>{group?.display}</h5>
+
+                        }
+                     
                         <div className='flex items-center space-x-1'>
                             <h5 className='text-sm font-semibold '>Share Options</h5>
                             <MdArrowDropDown 
@@ -255,7 +261,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                  </div>
 
                  <div className='flex flex-col w-full space-y-2'>
-                        <label className='text-sm text-slate-700'>Post Title*</label>
+                        <label className='text-sm text-slate-700'>Post body*</label>
                         <textarea
                             placeholder='Include a description of your opportunity, request, project, event, initiative, need.....'
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
