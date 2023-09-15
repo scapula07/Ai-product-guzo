@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import org from "../../assets/orgcover.png"
 import feedorg from "../../assets/feedorg.png"
 import {doc,setDoc,
@@ -14,14 +14,14 @@ import { MdSportsGolf } from 'react-icons/md'
 export default function GroupChat({currentChat,send,setNewMessage,receiverInfo, conversations, isLoading,newMessage}) {
      const group=useRecoilValue(groupState)
      const [msgs,setMsg]=useState([])
-
+     const chatRef= useRef(null);
      console.log(conversations,"conversation in group[")
      
      useEffect(()=>{
             if(conversations?.length>0){
               console.log(currentChat?.id,"chat id")
-              //  const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id),orderBy("date", "asc"));
-              const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id));
+               const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id),orderBy("date", "asc"));
+              // const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id));
               console.log(q,"query")
               const unsubscribe = onSnapshot(q, (querySnapshot) => {
                   const msgs= [];
@@ -41,6 +41,11 @@ export default function GroupChat({currentChat,send,setNewMessage,receiverInfo, 
 )  
 
       console.log(msgs,"group chat")
+      useEffect(() => {
+        if (chatRef.current) {
+          chatRef.current.scrollTop = chatRef?.current?.scrollHeight;
+        }
+      },[msgs])
       
   return (
     <div className='flex flex-col py-8 px-4 h-full'>
@@ -59,7 +64,8 @@ export default function GroupChat({currentChat,send,setNewMessage,receiverInfo, 
 
                 }
 
-       <div className='flex flex-col w-full space-y-6 overflow-y-scroll h-full'>
+        <div className='flex flex-col w-full space-y-6 overflow-y-scroll h-full no-scrollbar'
+             ref={chatRef}>
           {msgs?.length>0&&msgs?.map((msg)=>{
              return(
                <Chat

@@ -13,11 +13,9 @@ export default function Files({setOthers,setPost,post,setFile,url,setUrl}) {
             const dir = e.target.files[0]
             console.log(dir,"dir")
             if (dir) {
-            setUrl({
-                src: URL.createObjectURL(dir)
-                })
-            }
+          
             setPost({...post,file:dir})
+            }
     
         }
   return (

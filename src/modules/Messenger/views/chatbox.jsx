@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import org from "../../assets/orgcover.png"
 import feedorg from "../../assets/feedorg.png"
 import {doc,setDoc,
@@ -13,6 +13,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 
 export default function Chatbox({currentChat,messages,send,setNewMessage,receiverInfo, conversations, isLoading,newMessage}) {
     const group=useRecoilValue(groupState)
+    const chatRef= useRef(null);
      const [msgs,setMsg]=useState([])
        useEffect(()=>{
               if(conversations?.length>0){
@@ -38,7 +39,14 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
 
         ,[currentChat])  
 
-        console.log(msgs,"checking order")
+      
+        useEffect(() => {
+          if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight;
+          }
+        },[msgs])
+      
+
   return (
     <div className='flex flex-col py-8 px-4 h-full'>
         {receiverInfo?.type?.length >0?
@@ -71,7 +79,9 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
 
         }
 
-       <div className='flex flex-col w-full space-y-6 overflow-y-scroll h-full'>
+       <div className='flex flex-col w-full space-y-6 overflow-y-auto h-full no-scrollbar' 
+        ref={chatRef}>
+       
           {msgs?.length>0&&msgs?.map((msg)=>{
              return(
                 <Chat

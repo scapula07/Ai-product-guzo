@@ -1,3 +1,5 @@
+import eco from "../../assets/img3.png"
+ 
  const Chat=({msg,group})=>{
     console.log(msg,"msg chat")
     return(
@@ -13,7 +15,27 @@
 
                                 <div className='flex flex-col '>
                                     <h5 className='font-semibold'>{msg?.sender?.name}</h5>
-                                    <h5 className='text-sm font-light'>{msg?.type}</h5>
+                                    <div className='text-xs  font-semiibold'>
+                                       {msg?.sender?.type=="eco"?
+                                         <div className="flex items-center space-x-1">
+                                           <img 
+                                            src={eco}
+                                            className="w-3 h-3"
+                                           />
+                                           <h5>Ecosystem</h5>
+
+                                         </div>
+                                       :
+                                       <div className="flex items-center space-x-1">
+                                             <img 
+                                             src={eco}
+                                             className="w-3 h-3"
+                                             />
+                                       <h5>Ecosystem</h5>
+
+                                     </div>
+                                       }
+                                    </div>
 
                                 </div>
                         </div>
