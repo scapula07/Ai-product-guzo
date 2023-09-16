@@ -34,7 +34,7 @@ export default function EcoAccount({currentUser}) {
 
     const [country, setSelectedCountry] = useState();
     const [city, setSelectedCity] = useState();
-    const [countries, setCountries] = useState(null);
+    const [countries, setCountries] = useState([]);
 
 
     useEffect(() => {

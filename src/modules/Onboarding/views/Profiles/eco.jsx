@@ -34,7 +34,7 @@ export default function Eco({currentUser}) {
 
     const [country, setSelectedCountry] = useState();
     const [city, setSelectedCity] = useState();
-    const [countries, setCountries] = useState(null);
+    const [countries, setCountries] = useState([]);
 
     const options = [
       { value: "tech", label: "Tech" },
@@ -145,6 +145,7 @@ export default function Eco({currentUser}) {
                 name:ecoName,
                 email:ecoEmail,
                 location:country?.label,
+                phone:phoneNum,
                 memberships:[],
                 invitees:[]
 

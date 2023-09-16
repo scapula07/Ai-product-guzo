@@ -82,7 +82,7 @@ export const authApi= {
                 if (docSnap.exists()) {
                     return {id:docSnap?.id,...docSnap?.data(),accessToken:response?.user?.accessToken}
                 } else {
-                    
+                  throw new Error("You are not signed up")
                     console.log("No such document!");
                     
                 }

@@ -10,7 +10,7 @@ export default function Collaboration() {
   const [collab,setCollab]=useState(location?.state?.collab)
   return (
     <Layout>
-       <div className='py-2 flex-col flex space-y-4 px-28'> 
+       <div className='py-2 flex-col flex space-y-4 px-32'> 
             <h5 className='text-slate-700 font-semibold lg:text-xl text-sm'>Opportunities</h5>
            
         </div>

@@ -16,7 +16,7 @@ export default function Profile({ shareBy}) {
            </div>
               :
              <div className='flex flex-col items-center space-y-2'>
-             <img 
+              <img 
                src={shareBy?.img}
                className="w-28 h-28 rounded-full"
              />

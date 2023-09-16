@@ -25,7 +25,7 @@ export default function EmailAuth() {
     const [view,setView]=useState(false)
     const [country, setSelectedCountry] = useState("");
     const [city, setSelectedCity] = useState();
-    const [countries, setCountries] = useState(null);
+    const [countries, setCountries] = useState([]);
 
 
     useEffect(() => {
@@ -262,7 +262,7 @@ export default function EmailAuth() {
                                             menuPlacement="auto"
                                             menuPosition="fixed"
                                             noOptionsMessage={(opt) => {
-                                            if (opt.inputValue === "") {
+                                            if (opt?.inputValue === "") {
                                                 return "Select your country";
                                             } else {
                                                 return "no search results for " + opt?.inputValue;

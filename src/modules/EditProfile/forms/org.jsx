@@ -11,7 +11,7 @@ import axios from "axios"
 import { BsFlag } from 'react-icons/bs'
 
 
-export default function OrgForms() {
+export default function OrgForms({profile,setUpdate}) {
 
         const [country, setSelectedCountry] = useState();
         const [city, setSelectedCity] = useState();
@@ -58,8 +58,8 @@ export default function OrgForms() {
                                 className=' py-2 px-4 w-full rounded-md text-sm outline-none'
                                 style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                                 // name="ecoName"
-                                // value={ecoName}
-                                // onChange={(e)=>setName(e.target.value)}
+                                value={profile?.name}
+                                onChange={(e)=>setUpdate({...profile,name:e.target.value})}
                             />
         
                             <h5 className='font-light text-slate-500 text-sm '>This email will NOT be shared on the organization profile. This email will be used for all Guzo correspondence.</h5>
@@ -79,8 +79,8 @@ export default function OrgForms() {
                                         className=' py-2  w-full rounded-md text-sm outline-none'
                                         style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                                         // name="ecoEmail"
-                                        // value={ecoEmail}
-                                        // onChange={(e)=>setEmail(e.target.value)}
+                                        value={profile?.email}
+                                        onChange={(e)=>setUpdate({...profile,email:e.target.value})}
                                 
                                     />
                           </div>
@@ -103,8 +103,8 @@ export default function OrgForms() {
                                     className=' py-2  w-full rounded-md text-sm outline-none'
                                     style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                                     name="phoneNum"
-                                    // value={phoneNum}
-                                    // onChange={(e)=>setNum(e.target.value)}
+                                    value={profile?.phone}
+                                    onChange={(e)=>setUpdate({...profile,phone:e.target.value})}
                             
                             
                                 />
@@ -172,8 +172,9 @@ export default function OrgForms() {
                             className=' pb-6 pt-2 px-4  w-full rounded-md text-sm outline-none'
                             style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                             name="phoneNum"
-                            // value={phoneNum}
-                            // onChange={(e)=>setNum(e.target.value)}
+                            value={profile?.about}
+                            onChange={(e)=>setUpdate({...profile,about:e.target.value})}
+                            
                     
                     
                         />

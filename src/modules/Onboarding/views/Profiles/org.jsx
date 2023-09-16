@@ -33,7 +33,7 @@ export default function Org({currentUser}) {
 
     const [country, setSelectedCountry] = useState();
     const [city, setSelectedCity] = useState();
-    const [countries, setCountries] = useState(null);
+    const [countries, setCountries] = useState([]);
 
     const options = [
       { value: "tech", label: "Tech" },

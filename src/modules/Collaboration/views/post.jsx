@@ -46,7 +46,7 @@ export default function Post() {
 
           </div>
 
-          <div className='py-8'>
+          <div className='py-8 '>
              <Details 
                collab={collab}
                group={group}
@@ -88,7 +88,7 @@ export default function Post() {
 const Details=({collab,group})=>{
   const [reqs,setReq]=useState(collab?.requests)
     return(
-        <div className='w-full py-4 bg-white h-full '>
+        <div className='w-full py-4 bg-white h-full px-4 '>
         <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
               <div className='flex items-center space-x-3'>
                   <img
@@ -140,7 +140,7 @@ const Details=({collab,group})=>{
                   </div>
               </div>
 
-               <div className='flex flex-col'>
+               <div className='flex flex-col px-4'>
                    {reqs?.map((req,index)=>{
                       return(
                        <RequestCard 

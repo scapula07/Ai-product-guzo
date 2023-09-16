@@ -11,7 +11,7 @@ import axios from "axios"
 import { BsFlag } from 'react-icons/bs'
 
 
-export default function IndividualForms() {
+export default function IndividualForms(profile,setUpdate) {
 
         const [country, setSelectedCountry] = useState();
         const [city, setSelectedCity] = useState();
@@ -58,8 +58,8 @@ export default function IndividualForms() {
                         className=' py-2 px-4 w-full rounded-md text-sm outline-none'
                         style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                         name="displayName"
-                        // value={displayName}
-                        // onChange={(e)=>setName(e.target.value)}
+                        value={profile?.display}
+                        onChange={(e)=>setUpdate({...profile,display:e.target.value})}
                     />
 
                     <h5 className='font-light text-slate-500 text-sm '>
@@ -138,9 +138,9 @@ export default function IndividualForms() {
                             className=' pb-6 pt-2 px-4  w-full rounded-md text-sm outline-none'
                             style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                             name="phoneNum"
-                            // value={phoneNum}
-                            // onChange={(e)=>setNum(e.target.value)}
-                    
+                            value={profile?.about}
+                            onChange={(e)=>setUpdate({...profile,about:e.target.value})}
+                            
                     
                         />
                 

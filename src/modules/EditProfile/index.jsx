@@ -10,58 +10,47 @@ import {AiOutlineMail} from "react-icons/ai"
 import EcoForms from './forms/eco'
 import IndividualForms from './forms/individual'
 import OrgForms from './forms/org'
-
-
+import Cover from './imgUpload/cover'
+import Photo from './imgUpload/photo'
+import ClipLoader from "react-spinners/ClipLoader";
 export default function EditProfile() {
      
     const group =useRecoilValue(groupState)
     const [trigger,setTrigger]=useState(false)
+    const [isLoading,setLoader]=useState(false)
 
-    const [profile,setUpdate]=useState(group)
+    const [profile,setUpdate]=useState()
     const [url,setUrl]=useState({
-        img:profile?.img,
+        img:"",
         cover:""
         })
-     console.log(profile,"profileeee")
-    const hiddenFileInput = useRef()
 
-    const handleClick = event => {
-            hiddenFileInput.current.click()
-        }
 
-        const handleCoverChange = async(e)=> {
-            const dir = e.target.files[0]
-            console.log(dir,"dir")
-            if (dir) {
-            setUpdate({
-                ...profile,
-            cover: URL.createObjectURL(dir)
-                })
-            }
-       
     
-        }
-        const handlePhotoChange = async(e)=> {
-            const dir = e.target.files[0]
-            console.log(dir,"dir")
-            if (dir) {
-            setUpdate({
-                ...profile,
-                img: URL.createObjectURL(dir)
-                })
+        useEffect(()=>{
+           const fetchProfile=async()=>{
+              const response =await profileApi.fetchProfile(group)
+              console.log(response,"res profile")
+              setUpdate(response,"response")
             }
-       
-    
-        }
 
-    const editApi=async()=>{
+           fetchProfile()
+
+         })
+
+     
+
+    const edit=async()=>{
          try{
-            const response =await profileApi.edit()
+            const response =await profileApi.editProfile()
           }catch(e){
             console.log(e)
           }
       }
   
+
+      console.log(profile,"Edittt")
+
   return (
       <>
         <div className='w-full flex justify-end'>
@@ -107,124 +96,87 @@ export default function EditProfile() {
                             className="w-1/7"
                             />
 
-                            <div className='w-3/5 h-full py-6 px-6 overflow-y-scroll no-scrollbar bg-white'>
+                            <div className='w-3/5 h-full overflow-y-scroll no-scrollbar '>
 
-                                <div className='flex flex-col w-full'>
-                                 {group?.type?.length>0?
-                                        <>
-                                          {group?.type=="eco"?
-                                         <h5 className='text-xl font-semibold'>Edit ecosystem profile...</h5>
+                                <div className='flex flex-col w-full bg-white py-6 px-6 '>
+                                     {group?.type?.length>0?
+                                            <>
+                                              {group?.type=="eco"?
+                                            <h5 className='text-xl font-semibold'>Edit ecosystem profile...</h5>
+                                                :
+                                                <h5 className='text-xl font-semibold'>Edit organization profile...</h5>
+                                            }
+                                            </>
                                             :
-                                            <h5 className='text-xl font-semibold'>Edit organization profile...</h5>
+                                            <h5 className='text-xl font-semibold'>Edit individual profile...</h5>
                                          }
-                                        </>
-                                        :
-                                        <h5 className='text-xl font-semibold'>Edit individual profile...</h5>
-                                     }
-                                    
+                                  
+                                      <div className='flex flex-col w-full space-y-4'>
+                                          <Photo 
+                                            url={url}
+                                            setUrl={setUrl}
+                                            setUpdate={setUpdate}
+                                            group={profile}
+                                          />
+                                          <Cover 
+                                              url={url}
+                                              setUrl={setUrl}
+                                              setUpdate={setUpdate}
+                                              group={profile}
+                                          />
 
-                                     <div className='flex flex-col items-center w-full py-8 space-y-14'>
-                                       { [
-                                         {
-                                            name:"Profile photo",
-                                            change:(e)=>handlePhotoChange(e),
-                                            url:url?.img,
-                                            click:()=>handleClick()
-
-                                          },
-                                          {
-                                            name:"Cover photo",
-                                            change:(e)=>handleCoverChange(e),
-                                            url:url?.cover,
-                                            click:()=>handleClick()
-
-                                          }
-
-                                        ].map((upload)=>{
-                                            console.log(upload?.url,"urllllll")
-                                             return(
-                                                <div className='flex flex-col w-full space-y-3'>
-                                                     <h5 className='text-sm font-semibold w-full '>{upload?.name}</h5>
-
-                                                     <div className='flex flex-col items-center w-full space-y-4'>
-                                                       {upload?.url?.length>0?
-                                                             <div className='rounded-full h-56 w-56 flex flex-col justify-center items-center'
-                                                                  >
-                                                                     <img 
-                                                                       src={upload?.url}
-                                                                       className="rounded-lg w-full h-full"
-                                                                     />
-                                                            
-         
-                                                                 </div>
-                                                                 :
-                                                                 <div className='rounded-full h-56 w-56 flex flex-col justify-center items-center' style={{background: "rgba(242, 242, 242, 0.6)"}}
-                                                                 >
-                                                                    <h5 className='text-sm font-light'>No {upload?.name} *</h5> 
-                                                                    <input 
-                                                                       type="file"
-                                                                       className='hidden'
-                                                                       ref={hiddenFileInput}
-                                                                       onChange={(e)=>upload?.change(e)}
-                                                                    />
-        
-                                                                </div>
-
-                                                       }
-                                                 
-
-                                                          <div className='flex items-center space-x-6'>
-                                                             <button
-                                                                style={{background: "rgba(236, 235, 254, 1)"}}
-                                                                className='text-blue-700 rounded-full px-8 py-1.5'
-                                                                onClick={upload?.click}
-                                                                
-                                                               
-                                                                >
-                                                                Edit
-                                                             </button>
-                                                             <button
-                                                               className='text-white bg-black rounded-full px-8 py-1.5'
-                                                               >
-                                                                Delete
-                                                            </button>
-
-                                                        </div>
-
-                                                    </div>
+                                            
+                                        
+                                      </div>
 
 
-                                                </div>
-                                             )
-                                        })
-                                      }
-
-                                     </div>
+                                   
                                       {group?.type?.length>0?
                                         <>
-                                          {group?.type=="eco"?
+                                           {group?.type=="eco"?
                                             <EcoForms 
-                                            profile={group}
-                                            setUpdate={setUpdate}
-
+                                               profile={profile}
+                                               setUpdate={setUpdate}
+ 
                                             />
                                             :
                                             <OrgForms 
-                                            profile={profile}
-                                            setUpdate={setUpdate}
+                                              profile={profile}
+                                              setUpdate={setUpdate}
                                             />
                                          }
                                         </>
                                         :
                                         <IndividualForms 
-                                        profile={profile}
-                                        setUpdate={setUpdate}
+                                          profile={profile}
+                                          setUpdate={setUpdate}
                                         />
                                      }
                                  
 
 
                                 </div>
+
+                                <div className='flex  py-6  items-center w-full justify-between'
+                                   style={{background: "rgba(248, 248, 248, 1)"}}
+                                >
+                                    <h5 style={{color: "rgba(37, 31, 134, 1)"}}
+                                      onClick={()=>window.history.go(-1)}
+                                        >Back</h5>
+                                        {isLoading?
+                                                
+                                                <ClipLoader 
+                                                    color={"rgba(62, 51, 221, 1)"}
+                                                    loading={isLoading}
+                                                />
+                                                              :
+                                                <button className='px-6 py-2 text-blue-600 rounded-full' 
+                                                style={{background: "rgba(237, 237, 237, 1)"}}
+                                                onClick={edit}
+                                                > Continue</button>
+                                              }
+                            
+                                  </div>
 
 
 
@@ -235,6 +187,13 @@ export default function EditProfile() {
                           
 
                      </div>
+
+
+
+
+
+
+                  
 
 
 

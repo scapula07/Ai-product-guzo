@@ -95,9 +95,9 @@ export default function Login() {
 
   return (
     <div className='w-full flex justify-center  '>
-            <div className='w-4/5 flex bg-white rounded-lg  border flex-col  space-y-8 py-8' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
+            <div className='w-4/5 flex bg-white rounded-lg  border flex-col items-center space-y-8 py-8' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
                  <h5 className='text-xl font-semibold text-center'>Sign in to your Guzo account.</h5>
-                    <div className='px-10 py-1'>
+                    <div className='px-8 py-1 w-3/5'>
                         {errorMsg && (
                         // <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
                         <Alert severity="error">{errorMsg}</Alert>
