@@ -38,6 +38,29 @@ export const feedApi= {
       //  }
      
      },
+
+     fetchProfile:async function (group) {
+      try{
+       let collectionName="users"
+       if(group?.type?.length >0){
+         collectionName= group?.type=="eco"?"ecosystems":"organizations"
+
+       }
+     
+       const profileRef =doc(db,collectionName,group?.id)
+       const docSnap = await getDoc(profileRef);
+
+       return docSnap.data()
+
+
+
+
+       }catch(e){
+         console.log(e)
+         throw new Error(e)
+      }
+  }
+
     
 
 }

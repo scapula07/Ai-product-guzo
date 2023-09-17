@@ -147,8 +147,9 @@ const EventForms=({ eventPost,setEvt,choice})=>{
           border: "0px solid rgba(242,242,242,0.6)",
           width: "100%",
           boxShadow: "none",
-          backgroundColor: "white",
+          backgroundColor: "rgba(242,242,242,0.6)",
           fontSize: "10px",
+          color:"black",
           "@media (min-width:600px)": {
             width: "100%",
           },
@@ -169,9 +170,21 @@ const EventForms=({ eventPost,setEvt,choice})=>{
 
       async function getTimeZones() {
         await axios
-          .get("https://timeapi.io/api/TimeZone/AvailableTimeZones")
+          .get("http://worldtimeapi.org/api/timezone")
           .then((response) => {
+            const zones=[]
             console.log(response,"timeemmm")
+            for (let i = 0; i < response?.data; i++) {
+                let subarray =response?.data[i]; // Access the current subarray
+                console.log(`Subarray ${i + 1}:`);
+                
+                for (let j = 0; j < subarray.length; j++) {
+                    let element = subarray[j]; // Access the current element in the subarray
+                    console.log(`Element ${j} in Subarray ${i + 1}: ${element}`);
+                      zones.push(element)
+
+                }
+            }
             setTime(response?.data);
           });
       }

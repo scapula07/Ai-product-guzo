@@ -18,7 +18,7 @@ export default function EditProfile() {
     const group =useRecoilValue(groupState)
      
     const [isUpdate,setUpdatedState]=useRecoilState(updateUserState)
-    const [currentUser,setCurrentUser]=useRecoilValue(userState)
+    const [currentUser,setCurrentUser]=useRecoilState(userState)
     const [trigger,setTrigger]=useState(false)
     const [isLoading,setLoader]=useState(false)
 
@@ -33,7 +33,7 @@ export default function EditProfile() {
       })
 
 
-    
+    console.log(file,"fileee")
         useEffect(()=>{
            const fetchProfile=async()=>{
               const response =await profileApi.fetchProfile(group)

@@ -33,10 +33,10 @@ export const profileApi= {
             profile["img"]=img
          }
          if(file?.cover?.name?.length  >0 ){
-            const img =await uploadFile(file?.img)
-            console.log(img)
+            const imgCover =await uploadFile(file?.cover)
+            console.log(imgCover)
 
-            profile["cover"]=img
+            profile["cover"]=imgCover
          }
          
            
