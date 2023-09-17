@@ -15,3 +15,10 @@ export const userState =atom({
     key:"user",
     default:{}
  })
+
+
+
+ export const updateUserState =atom({
+   key:"updateuser",
+   default:false
+})

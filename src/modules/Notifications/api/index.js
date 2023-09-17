@@ -2,7 +2,7 @@ import { collection,  onSnapshot,
     doc, getDocs,
     query, orderBy, 
     limit,getDoc,setDoc ,
-   updateDoc,addDoc ,where} from 'firebase/firestore'
+   updateDoc,addDoc ,deleteDoc, where} from 'firebase/firestore'
 import { db } from '../../Firebase';
 
 
@@ -23,7 +23,7 @@ export const notificationApi = {
 
    },
 
-   acceptTeamInvite:async function (from,user) {
+   acceptTeamInvite:async function (id,from,user) {
        try{  
               const collectionName =from?.type=="eco"?"ecosystems":"organizations"
             //   console.log(collection,"ccolll")
@@ -50,19 +50,24 @@ export const notificationApi = {
                     ...invitees
                  ]
                })
-               
+               const snap = await getDoc(ref);
                 await updateDoc(doc(db,"users",user?.id), {
-                ecosystems:[
+                 ecosystems:[
                     ...user?.ecosystems,
                     {
-                        ...docSnap?.data()
+                         id:snap.id,
+                        ...snap?.data()
 
 
                     }
                   ]
                 
                })
-
+               const userSnap = await getDoc(doc(db,"users",user?.id));
+               const userData=userSnap?.data()
+               userSnap?.id?.length &&localStorage.clear();
+               userSnap?.id.length >0&&localStorage.setItem('user',JSON.stringify(userData));
+               await deleteDoc(doc(db, "notifications", id));
                const q = query(collection(db, "notifications"), where("to","==",user?.id));
         
                const snapshot =await getDocs(q)

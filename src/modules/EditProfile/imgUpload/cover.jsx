@@ -1,6 +1,6 @@
 import React ,{useState,useRef,useEffect} from 'react'
 
-export default function Cover({url,setUrl,group}) {
+export default function Cover({url,setUrl,group,file,setFile}) {
 
 
     const hiddenFileInput = useRef()
@@ -22,6 +22,10 @@ export default function Cover({url,setUrl,group}) {
           ...url,
           cover: URL.createObjectURL(dir)
         })
+        setFile({
+            ...file,
+            cover:dir
+         })
       }
    
 

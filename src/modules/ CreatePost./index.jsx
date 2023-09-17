@@ -13,7 +13,7 @@ import {MdArrowDropDown} from "react-icons/md"
 import { postApi } from './_api/post'
 import ClipLoader from "react-spinners/ClipLoader";
 import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
-
+import ReactSelect from "react-select";
 
 
 export default function CreatePosts ({group,currentUser,setTrigger}) {
@@ -50,6 +50,20 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
     const [url,setUrl]=useState("")
 
     const [open, setOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState("");
+
+    const options = [
+        { value: "tech", label: "Tech" },
+        { value: "media", label: "Media" },
+        { value: "business", label: "Businnes" },
+        { value: "art", label: "Art" },
+      ];
+    
+    const handleTagChange = (selectedOption) => {
+      console.log(selectedOption);
+      setSelectedOption(selectedOption.value);
+    };
+     
 
 
 
@@ -63,6 +77,22 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
 
    
+      const style = {
+        control: (base) => ({
+          ...base,
+          border: "0px solid rgba(242,242,242,0.6)",
+          width: "100%",
+          boxShadow: "none",
+          backgroundColor: "rgba(242,242,242,0.6)",
+          fontSize: "14px",
+          "@media (min-width:600px)": {
+            width: "100%",
+          },
+          "@media (min-width:1200px)": {
+            width: "100%",
+          },
+        }),
+       };
 
 
     console.log(others,"others")
@@ -296,11 +326,12 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
               
                  <div className='flex flex-col w-full space-y-2'>
                         <label className='text-sm text-slate-700'>Tags</label>
-                        <input 
-                            placeholder='Add up to (5) descriptive tags that will help people discover your post.....'
-                            className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
-     
-                        />
+                        <ReactSelect 
+                         placeholder='Add up to (5) descriptive tags that will help people discover your post....'
+                         styles={style}
+                         isMulti 
+                         onChange={handleTagChange} 
+                         options={options} />
 
                  </div> 
                  {eventPost?.title?.length >0&&

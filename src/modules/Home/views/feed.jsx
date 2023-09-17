@@ -118,6 +118,40 @@ const Feed=({feed,group})=>{
         </div>
 
          <div className='flex flex-col w-full py-6 space-y-8'>
+
+              <div className='flex flex-col px-4 space-y-6'>
+                  <h5 className='text-lg font-light'>Event Announcement!!!</h5>
+
+                  <p className='text-sm text-black'>{feed?.eventPost?.body}...
+                  <span className='text-black font-semibold'>see more</span>  
+                  </p>
+                 
+              </div>
+
+
+              <div className='flex flex-col px-4'>
+                   {feed?.requests?.map((req,index)=>{
+                    
+                      return(
+                       <RequestCard 
+                        req={req}
+                        group={group}
+                        feed={feed}
+                        index={index}
+                       />
+                      )
+
+                     })
+
+                   }
+                    
+                    <div className='pt-12 pb-2'>
+                       
+                         <h5 className='h-0.5 bg-slate-700 w-full font-light'></h5>
+                    </div>
+              </div>
+
+
               <div className='flex flex-col px-4 '>
                   <h5 className='font-light text-lg'>{feed?.post?.title}</h5>
                   <h5 className='text-xs font-semibold text-slate-500'>1d ago</h5>
@@ -155,7 +189,7 @@ const Feed=({feed,group})=>{
                     />
                  </div>
 
-               <div className='flex flex-col'>
+               {/* <div className='flex flex-col'>
                    {feed?.requests?.map((req,index)=>{
                     
                       return(
@@ -171,7 +205,7 @@ const Feed=({feed,group})=>{
 
                    }
 
-              </div>
+              </div> */}
              
               <Comments 
                  group ={ group }

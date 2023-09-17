@@ -3,7 +3,7 @@ import org1 from "../assets/org1.png"
 import org2 from "../assets/org2.png"
 import add from "../assets/icons/add.png"
 import {IoMdAdd} from "react-icons/io"
-import { groupState } from '../Recoil/globalstate'
+import { groupState ,updateUserState} from '../Recoil/globalstate'
 import {useRecoilState,useRecoilValue} from "recoil"
 import ionprofile from "../assets/ionProfile.png"
 import ioncover from "../assets/ionCover.png"
@@ -14,6 +14,8 @@ import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
 
 export default function SidePanel() {
+
+  const isUpdate=useRecoilValue(updateUserState)
   const [group,setGroup]=useRecoilState(groupState)
   const currentUser =useRecoilValue(userState)
   const organizations=currentUser?.organizations
@@ -31,7 +33,7 @@ export default function SidePanel() {
       
        isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
     
-      },[currentUser])
+      },[currentUser,isUpdate])
       useEffect(()=>{
         // const isGroup= organizations?.length >0 || ecosystems?.length >0
    
@@ -49,7 +51,7 @@ export default function SidePanel() {
       const currentPath = window.location.pathname;
       
     console.log(team,"team")
-  console.log(currentUser?.img?.length,"lllll")
+  console.log(currentUser,"user current lllll")
   return (
     <div className='lg:px-4 py-8 '>
       <div className='flex flex-col space-y-4 items-center'>

@@ -135,8 +135,18 @@ export const authApi= {
              }
 
         },
-        linkedinAuth:async function (email) {
-          const url=`http://localhost:7000/api/linkedin-auth`
+        linkedinAuth:async function (code) {
+         
+
+
+            const url = `http://localhost:7000/api/linkedin-auth`
+            // const data = new URLSearchParams();
+            // data.append('grant_type', 'authorization_code');
+            // data.append('code', code); // Replace with your actual authorization code
+            // data.append('client_id', '77qrf2uomwidm7');
+            // data.append('client_secret', 'cMbWDEISFgzpzkK1');
+            // data.append('redirect_uri', 'http%3A%2F%2Flocalhost%3A3001%2Fregister');
+
     
 
               const config = {
@@ -148,8 +158,11 @@ export const authApi= {
               
               try{
               
-                  const response= await axios.get(
+                  const response= await axios.post(
                           url,
+                          {code
+
+                          },
                           config
                     )
                 
@@ -159,6 +172,6 @@ export const authApi= {
                   throw new Error(e)
                   }
 
-        }
+        },
 
 }

@@ -75,7 +75,7 @@ export default function Login() {
              const user=await authApi.login(email,password)
             
              setLoader(false)
-             localStorage.clear();
+             user?.id.length &&localStorage.clear();
              user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
              user?.id.length >0&& navigate(`/home/${user?.id}`)
 

@@ -1,6 +1,6 @@
 import React ,{useState,useRef,useEffect} from 'react'
 
-export default function Photo({url,setUrl,group,setUpdate}) {
+export default function Photo({url,setUrl,group,setUpdate,file,setFile}) {
 
     console.log(url,"url photo")
     
@@ -24,6 +24,10 @@ export default function Photo({url,setUrl,group,setUpdate}) {
           ...url,
           img: URL.createObjectURL(dir)
         })
+        setFile({
+            ...file,
+            img:dir
+         })
 
         
       }

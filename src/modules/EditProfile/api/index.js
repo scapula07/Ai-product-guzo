@@ -2,22 +2,59 @@ import { doc,getDoc,setDoc , updateDoc,collection,addDoc}  from "firebase/firest
 import {getStorage, ref, uploadBytes } from "firebase/storage"
 import { db } from "../../Firebase";
 
+
+
+
+const uploadFile=async(file)=>{
+   const storage = getStorage();
+   const fileId=Math.random().toString(36).substring(2,8+2);
+   const storageRef = ref(storage, `/${fileId}`);
+   console.log(storageRef,"shote")
+   const snapshot=await uploadBytes(storageRef, file)
+
+   return `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`
+
+}
+
+
 export const profileApi= {
-   editProfile:async function (group,payload,currentUser,collab) {
-      console.log(payload,"ppp")
+   editProfile:async function (group,file,profile) {
+      console.log(profile,"ppp")
       let collectionName="users"
       if(group?.type?.length >0){
         collectionName= group?.type=="eco"?"ecosystems":"organizations"
 
       }
+
+         if(file?.img?.name?.length  >0 ){
+            const img =await uploadFile(file?.img)
+            console.log(img)
+
+            profile["img"]=img
+         }
+         if(file?.cover?.name?.length  >0 ){
+            const img =await uploadFile(file?.img)
+            console.log(img)
+
+            profile["cover"]=img
+         }
+         
+           
+        console.log(profile,"propfild apiii")
       try{    
-          const postRef =doc(db,"posts",collab?.id)
-          const docSnap = await getDoc(postRef);
-          const result = await updateDoc(postRef,payload)
+          const profileRef =doc(db,collectionName,group?.id)
+
+          const result = await updateDoc(profileRef,profile)
+          const docSnap = await getDoc(profileRef);
+         
+          console.log(docSnap?.data(),"resulttt")
+          return {profile:docSnap?.data(),status:true}
+          
         
           return true
         }catch(e){
           console.log(e)
+          throw new Error(e)
        }
 
 

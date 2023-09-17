@@ -12,7 +12,7 @@ export default function DateForm({selectdate,setDate,onSet,pickDate}) {
                 selected={selectdate} 
                 onChange={(date) =>setDate(date)} 
                 onSelect={onSet}
-                className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                className=' py-2 px-4 w-full rounded-md text-xs outline-none border'
             />
             
             

@@ -3,22 +3,28 @@ import img1 from "../../assets/orgcover.png"
 import img2 from "../../assets/feedorg.png"
 import img3 from "../../assets/gordon.png"
 import Layout from '../../Layout'
-import { groupState,userState } from '../../Recoil/globalstate'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue,useRecoilState } from 'recoil'
+import { groupState ,updateUserState,userState} from '../../Recoil/globalstate'
 import { notificationApi } from '../api'
 import ClipLoader from "react-spinners/ClipLoader";
 import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
 
 
 export default function Notifications() {
-    const currentUser =useRecoilValue(userState)
+    const [currentUser,setCurrentUser] =useRecoilState(userState)
+    const [isUpdate,setUpdatedState]=useRecoilState(updateUserState)
     const [notifications,setNotifications]=useState([])
+    const [isLoading,setLoading]=useState(false)
+    const [areNotification,setAre]=useState("")
+
 
 
     useEffect(()=>{
          const getNotifications=async()=>{ 
             console.log(currentUser?.id,"iddd")
             const response =await  notificationApi.getNotifications(currentUser?.id)
+            response?.length===0 &&setAre("No notifications")
+            response?.length>0 &&setAre("")
             setNotifications(response)
             console.log(response,"notifications")
          }
@@ -38,11 +44,30 @@ export default function Notifications() {
                     notification={notification}
                     currentUser={currentUser}
                     setNotifications={setNotifications}
+                    setCurrentUser={setCurrentUser}
+                    isUpdate={isUpdate}
+                    setUpdatedState={setUpdatedState}
                 />
                 )
             })
 
             }
+
+        {areNotification?.length===0&&notifications?.length ===0&&
+                    <div className='w-full flex justify-center py-10'>
+                      <ClipLoader 
+                            color={"rgba(62, 51, 221, 1)"}
+                            loading={true}
+                        />
+                    </div>
+                    }
+
+                    {areNotification?.length >0&&
+                      <div className='w-full flex justify-center py-10'>
+                          <h5 className="text-lg font-semibold">You dont have any notification</h5>
+                      </div>
+
+                    }
 
         </div>
 
@@ -51,30 +76,59 @@ export default function Notifications() {
   )
 }
 
-const Notification=({notification,currentUser,setNotifications})=>{
+const Notification=({notification,currentUser,setNotifications,setCurrentUser,isUpdate,setUpdatedState})=>{
     const [accepted,setAccept]=useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
+
+    const [open, setOpen] = useState(false);
+
+
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
+    
+
 
       const accept=async()=>{
         setErrorMsg(null)
         setAccept(true)
           try{
-            const response =await notificationApi.acceptTeamInvite(notification?.from,currentUser)
+            const response =await notificationApi.acceptTeamInvite(notification?.id,notification?.from,currentUser)
             response?.status&&setNotifications(response?.notifications)
+            // const user = localStorage.getItem("user");
+            // console.log(JSON.parse(user),"user")
+            // console.log(user,"user notification")
+            // response?.status&&setCurrentUser(JSON.parse(user))
+            // response?.status&&setUpdatedState(!isUpdate)
+         
             response?.status&&setAccept(false)
-          }catch(e){
+           }catch(e){
             console.log(e)
             setAccept(false)
             setErrorMsg(e.message)
           }
        }
     return(
+      <>
+          <Snackbar 
+          open={open}
+          autoHideDuration={3000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical:"bottom", horizontal:"left"}}>
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+               {errorMsg}
+            </Alert>
+         </Snackbar>
+
+     
         <div className='flex items-center border-b py-2 space-x-7'>
             
-            {errorMsg && (
-            // <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
-            <Alert severity="error">{errorMsg}</Alert>
-            )}
+           
 
             
            <div className='flex items-center space-x-2 w-1/4'>
@@ -133,5 +187,7 @@ const Notification=({notification,currentUser,setNotifications})=>{
              </div>
 
         </div>
+
+        </>
     )
 }

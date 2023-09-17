@@ -2,8 +2,8 @@ import React ,{useState,useRef,useEffect} from 'react'
 import "./edit.css"
 import {AiOutlineClose } from "react-icons/ai"
 import guzo from "../assets/guzoLogo.png"
-import { useRecoilValue } from 'recoil'
-import { groupState } from '../Recoil/globalstate'
+import { useRecoilValue,useRecoilState } from 'recoil'
+import { groupState ,updateUserState,userState} from '../Recoil/globalstate'
 import { profileApi } from './api'
 import {BiSolidPencil} from "react-icons/bi"
 import {AiOutlineMail} from "react-icons/ai"
@@ -16,6 +16,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 export default function EditProfile() {
      
     const group =useRecoilValue(groupState)
+     
+    const [isUpdate,setUpdatedState]=useRecoilState(updateUserState)
+    const [currentUser,setCurrentUser]=useRecoilValue(userState)
     const [trigger,setTrigger]=useState(false)
     const [isLoading,setLoader]=useState(false)
 
@@ -24,6 +27,10 @@ export default function EditProfile() {
         img:"",
         cover:""
         })
+    const [file,setFile]=useState({
+      img:{},
+      cover:{}
+      })
 
 
     
@@ -36,20 +43,27 @@ export default function EditProfile() {
 
            fetchProfile()
 
-         })
+         },[group])
 
      
 
     const edit=async()=>{
+      setLoader(true)
          try{
-            const response =await profileApi.editProfile()
+            const response =await profileApi.editProfile(group,file,profile)
+            response?.status&&setUpdate(response?.profile)
+            response?.status&&setLoader(false)
+            response?.status&&setTrigger(false)
+            response?.status&&setUpdatedState(!isUpdate)
           }catch(e){
             console.log(e)
+            setLoader(false)
           }
       }
   
 
       console.log(profile,"Edittt")
+      console.log(file,"Edittt file")
 
   return (
       <>
@@ -81,11 +95,11 @@ export default function EditProfile() {
         <Modal trigger={trigger}  cname="w-full py-2 h-full  px-4 rounded-lg overflow-y-scroll " >
                <div className='w-full flex justify-end px-6 py-2'>
                     <AiOutlineClose 
-                    onClick={()=>setTrigger(false)}
+                    onClick={()=>setTrigger(false) || setUrl({cover:"",img:""})}
                     className="text-xl"
-                 />
+                  />
 
-              </div>
+               </div>
 
               <div className='h-full'>
                     <div className='w-full h-full'>
@@ -117,12 +131,16 @@ export default function EditProfile() {
                                             setUrl={setUrl}
                                             setUpdate={setUpdate}
                                             group={profile}
+                                            file={file}
+                                            setFile={setFile}
                                           />
                                           <Cover 
                                               url={url}
                                               setUrl={setUrl}
                                               setUpdate={setUpdate}
                                               group={profile}
+                                              file={file}
+                                              setFile={setFile}
                                           />
 
                                             

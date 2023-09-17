@@ -1,13 +1,16 @@
-import React,{useRef,useState} from 'react'
+import React,{useRef,useState,useEffect} from 'react'
 import upload from "../../modules/assets/upload.png"
 import {IoMdRadioButtonOn,IoMdRadioButtonOff} from "react-icons/io"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import DateForm from './components/dateForm';
+import axios from 'axios';
+import ReactSelect from "react-select";
 
 
 export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setEvent}) {
     const [choice,setChoice]=useState("In Person")
+
     
     const close=()=>{
         setOthers(false) 
@@ -15,6 +18,8 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
         setEvt("")
 
       }
+
+     
 
    
   return (
@@ -132,11 +137,48 @@ const EventForms=({ eventPost,setEvt,choice})=>{
     const [endDate, setEndDate] = useState(new Date());
     const [pickStartDate, setStart] = useState(false);
     const [pickEndDate, setEnd] = useState(false);
+
+    const [timezones,setTime]=useState([])
+
+
+    const style = {
+        control: (base) => ({
+          ...base,
+          border: "0px solid rgba(242,242,242,0.6)",
+          width: "100%",
+          boxShadow: "none",
+          backgroundColor: "white",
+          fontSize: "10px",
+          "@media (min-width:600px)": {
+            width: "100%",
+          },
+          "@media (min-width:1200px)": {
+            width: "100%",
+          },
+        }),
+      };
+
+
+
       console.log(eventPost,"postte ")
 
-      const onsetStartDate=(e)=>{
-         
+      useEffect(() => {
+        getTimeZones();
+      }, []);
+    
+
+      async function getTimeZones() {
+        await axios
+          .get("https://timeapi.io/api/TimeZone/AvailableTimeZones")
+          .then((response) => {
+            console.log(response,"timeemmm")
+            setTime(response?.data);
+          });
       }
+     
+
+      console.log(timezones,"time zonesssss")
+
      return(
         <div className='flex flex-col py-4 space-y-4'>
             <div  className='grid grid-flow-row lg:grid-cols-2 grid-cols-1 gap-4 gap-y-8 h-full w-full' >
@@ -144,7 +186,7 @@ const EventForms=({ eventPost,setEvt,choice})=>{
                          <label className='text-sm text-black font-semibold'>Timezone</label>
                 
                     
-                            <input 
+                            {/* <input 
                                 placeholder="(UTC) Central Time (US and Canada)"
                                 className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
                                 onChange={(e)=>setEvt({...eventPost,timezone:e.target.value})}
@@ -153,7 +195,36 @@ const EventForms=({ eventPost,setEvt,choice})=>{
                         
 
 
-                            />
+                            /> */}
+                                  <div className="border-[1px] border-[rgba(242,242,242,0.6)] rounded-[8px] w-full">
+                                        <ReactSelect
+                                            styles={style}
+                                            placeholder='(UTC) Central Time (US and Canada)'
+                                            options={
+                                            timezones &&
+                                            timezones?.map((item, index) => ({
+                                        
+                                                value: item,
+                                            }))
+                                            }
+                                            value={eventPost?.timezone}
+                                            menuPlacement="auto"
+                                            menuPosition="fixed"
+                                            noOptionsMessage={(opt) => {
+                                            if (opt.inputValue === "") {
+                                                return "Select your time zone";
+                                            } else {
+                                                return "no search results for " + opt?.inputValue;
+                                            }
+                                            }}
+                                            components={{
+                                            IndicatorSeparator: () => null,
+                                            }}
+                                            onChange={(opt) => {
+                                                setEvt({...eventPost,timezone:opt?.value})
+                                            }}
+                                        />
+                                    </div>
                     </div>
                     <div className='flex flex-col w-full space-y-2'>
                          <label className='text-sm text-black font-semibold'>Start Date</label>
@@ -182,7 +253,7 @@ const EventForms=({ eventPost,setEvt,choice})=>{
                     
                             <input 
                                placeholder="Start Time"
-                                className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                className=' py-2 px-4 w-full rounded-md text-xs outline-none border'
                                 onChange={(e)=>setEvt({...eventPost,start_time:e.target.value})}
                                 name={"time"}
                         
@@ -218,7 +289,7 @@ const EventForms=({ eventPost,setEvt,choice})=>{
                     
                             <input 
                                placeholder="Start Time"
-                                className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                                className=' py-2 px-4 w-full rounded-md text-xs outline-none border'
                                 onChange={(e)=>setEvt({...eventPost,end_time:e.target.value})}
                                 name={"time"}
                         
