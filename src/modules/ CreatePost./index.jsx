@@ -182,7 +182,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
         :
 
 
-<div className='w-full flex justify-center h-full overflow-y-scroll'>
+<div className='w-full flex justify-center h-full overflow-y-scroll no-scrollbar'>
         <Snackbar 
           open={open}
           autoHideDuration={3000}

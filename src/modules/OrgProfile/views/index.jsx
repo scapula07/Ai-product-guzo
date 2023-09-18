@@ -27,7 +27,7 @@ export default function Profile() {
 
            fetchProfile()
 
-         },[group])
+         })
  
     
   return (
@@ -56,7 +56,9 @@ export default function Profile() {
                       
                       :
                       <div className=''>
-                       <Posts />
+                       <Posts 
+                         group={group}
+                       />
                        </div>
 
                    }

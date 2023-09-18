@@ -36,12 +36,19 @@ export default function Login() {
             name:"Sign up with Google",
             link:"",
             click:async()=>{ 
-                const user=await authApi.googleLogin()
+                setErrorMsg(null)
+                 try{
+                    const user=await authApi.googleLogin()
             
-                setLoader(false)
-                localStorage.clear();
-                user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
-                user?.id.length >0&& navigate(`/home/${user?.id}`)
+                    setLoader(false)
+                    localStorage.clear();
+                    user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
+                    user?.id.length >0&& navigate(`/home/${user?.id}`)
+                   }catch(e){
+                     console.log(e)
+                     setErrorMsg(e.message)
+                  }
+
             }
             
     

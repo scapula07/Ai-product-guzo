@@ -52,7 +52,7 @@ export default function Layout({children}) {
                
                
             </div>
-            <div className='lg:w-3/4 w-full relative pt-8 lg:px-8 px-4 h-full'>
+            <div className='lg:w-4/5 w-full relative pt-8 lg:px-8 px-4 h-full'>
                <div className='absolute top-0 w-full py-8 lg:px-16 px-4 z-30' style={{background: "rgba(242, 242, 242, 0.6)"}}>
                    <Header 
                     hover={hover}

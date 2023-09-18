@@ -4,6 +4,9 @@ import orgPic from "../../assets/orgcover.png"
 import EditProfile from '../../EditProfile'
 import {RiShareBoxFill} from "react-icons/ri"
 import { profileApi } from '../../EditProfile/api'
+import icon from "../../assets/icon.png"
+import eco from "../../assets/img3.png"
+
 
 export default function CoverSection({group}) {
     console.log(group?.location,"groupp")
@@ -57,7 +60,18 @@ export default function CoverSection({group}) {
                     <div className='flex  flex-col w-full'>
                          <div className='flex items-center justify-between w-full'>
                             {group?.name?.length >0?
-                              <h5 className='text-xl font-semibold w-full'>{group?.name}</h5>
+                              <div className='flex flex-col'>
+                               <h5 className='text-xl font-semibold w-full'>{group?.name}</h5>
+                                { group?.type=="eco"&&
+                                <div className='flex items-center space-x-1.5'>
+                                    <img 
+                                      src={eco}
+                                      className="w-3 h-3"
+                                    />
+                                    <h5 className='text-xs'>Ecosystem</h5>
+                                </div>
+                                }
+                              </div>
                               :
                               <h5 className='text-xl font-semibold w-full'> {group?.firstName + " " + group?.lastName } </h5>
                            }
@@ -92,7 +106,7 @@ export default function CoverSection({group}) {
                                 Worem ipsum dolor sit amet, consectetur adipiscing. 
                                 </p>
 
-                                <h5 className='text-slate-500 font-semibold'>{group?.location?.value} </h5>
+                                <h5 className='text-slate-500 font-semibold'>{group?.location} </h5>
 
                         </div>
                     

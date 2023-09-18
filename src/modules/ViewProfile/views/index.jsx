@@ -41,7 +41,7 @@ export default function ViewProfile() {
 
             <div className='flex w-full h-full space-x-10'>
              
-                <div className='lg:w-3/5 w-full overflow-y-auto h-full'>
+                <div className='lg:w-3/5 w-full overflow-y-auto h-full no-scrollbar'>
                   <CoverSection group={ecosystem}/>
                   {eco?.type==="eco"?
                      ""
@@ -58,14 +58,16 @@ export default function ViewProfile() {
                       
                       :
                       <div className=''>
-                       <Posts />
+                       <Posts  
+                         group={ecosystem}
+                       />
                        </div>
 
                    }
                   
                 </div>
                 <div className='w-2/5 lg:block hidden'>
-                     <Suggestions />
+                     {/* <Suggestions /> */}
 
                 </div>
                

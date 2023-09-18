@@ -27,7 +27,7 @@ export default function Header({hover,setHover}) {
         </div>
        
 
-        <div className='flex items-center space-x-10 '>
+        <div className='flex items-center space-x-6 '>
             <SearchBar />
 
             <div className='flex items-center space-x-4'>
@@ -45,7 +45,7 @@ export default function Header({hover,setHover}) {
                     {currentUser?.img?.length >0 ?
                         <img 
                             src={currentUser?.img}
-                            className='lg:w-12 lg:h-10 w-6 h-6 rounded-full'
+                            className='lg:w-8 lg:h-6 w-6 h-6 rounded-full'
                            
                         />
                     :

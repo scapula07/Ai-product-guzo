@@ -53,10 +53,24 @@ export const createProfile= {
                     img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                     pending:[],
                     active:[
-                        currentUser
-                     ],
+                        {
+                            id:currentUser?.id,
+                            img:currentUser?.img,
+                            firstName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
+                            lastName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
+                            email:currentUser?.lastName,
+    
+                        }
+                    ],
                     teammates:[
-                        currentUser
+                        {
+                            id:currentUser?.id,
+                            img:currentUser?.img,
+                            firstName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
+                            lastName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
+                            email:currentUser?.lastName,
+    
+                        }
 
                       ],
                     type:"org"
@@ -115,10 +129,23 @@ export const createProfile= {
                 img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                 pending:[],
                 active:[
-                    currentUser
+                    {
+                        id:currentUser?.id,
+                        img:currentUser?.img,
+                        firstName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
+                        lastName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
+                        email:currentUser?.lastName,
+
+                    }
                 ],
                 teammates:[
-                    currentUser
+                    {
+                        id:currentUser?.id,
+                        img:currentUser?.img,
+                        firstName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
+                        lastName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
+                        email:currentUser?.lastName,
+                    }
                 ],
                 type:"eco",
             })

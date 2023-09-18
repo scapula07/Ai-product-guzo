@@ -17,7 +17,7 @@ export default function Posts({group}) {
    const [feeds,setFeed]=useState([])
    const [arePosts,setPost]=useState("")
 
-
+    
    useEffect(()=>{
 
       const getProfileFeeds=async()=>{
@@ -30,7 +30,7 @@ export default function Posts({group}) {
          }
          getProfileFeeds()
 
-   })
+   },[group?.id])
   return (
     <div className='flex flex-col space-y-4'>
       {feeds?.map((feed)=>{

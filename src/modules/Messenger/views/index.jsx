@@ -56,13 +56,20 @@ export default function Messenger() {
      },[currentUser?.id,active])  
 
      console.log(groups,"grou chatatt")
+
+
      const send=async (e)=>{
         console.log(newMessage,"sending")
         e.preventDefault();
         setLoader(true)
         
         const message = {
-          sender: currentUser,
+          sender: {
+               img: currentUser?.img?.length >0?currentUser?.img :"",
+               type:currentUser?.type?.length>0&&currentUser?.type ,
+               firstName:currentUser?.type?.length==undefined&&currentUser?.firstName,
+               lastName:currentUser?.type?.length==undefined&&currentUser?.lastName
+          },
           text: newMessage,
           conversationid:currentChat.id,
           date:Number(Date.now()),
@@ -79,7 +86,7 @@ export default function Messenger() {
         
             const docSnap = await getDoc(docRef);
              console.log(docSnap?.data(),"came")
-            setMessages([...messages,{...docSnap.data(),id:docSnap.id}]);
+            // setMessages([...messages,{...docSnap.data(),id:docSnap.id}]);
             docSnap?.exists()&& setNewMessage("")
             docSnap?.exists()&& setLoader(false)
       

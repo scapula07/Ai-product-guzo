@@ -127,7 +127,7 @@ export default function OrgAccount({currentUser}) {
                 creator:user?.id,
                 name:orgName,
                 email:orgEmail,
-                location:country,
+                location:country?.label,
                 memberships:[],
                 invitees:[]
 

@@ -169,7 +169,7 @@ export const authApi= {
                   console.log(response,"response")
                   }catch(e){
                   console.log(e)
-                  throw new Error(e)
+                  throw new Error("You dont have permissions")
                   }
 
         },

@@ -5,6 +5,7 @@ import linkdin from "../../../assets/icons/linkdin.png"
 import {useRecoilValue} from "recoil"
 import { accountTypeState } from '../../../Recoil/globalstate'
 import { Link } from 'react-router-dom'
+import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 import { authApi } from '../../_api/auth'
@@ -12,16 +13,29 @@ import { authApi } from '../../_api/auth'
 
 export default function AuthTypes() {
    let navigate = useNavigate();
-
+   const [errorMsg, setErrorMsg] = useState(null)
     const [activeAuth,setAuth]=useState("")
     const account =useRecoilValue(accountTypeState)
     console.log(account,"avcc")
 
     useEffect(()=>{
-      const urlSearchParams = new URLSearchParams(window?.location?.search);
-      const code= urlSearchParams?.get('code');
-      code?.length>0&&authApi.linkedinAuth(code)
-      console.log(code,"codee")
+      const getAuthorizationCode=()=>{
+        setErrorMsg(null)
+         try{
+           const urlSearchParams = new URLSearchParams(window?.location?.search);
+            const code= urlSearchParams?.get('code');
+           code?.length>0&&authApi.linkedinAuth(code)
+           console.log(code,"codee")
+           code?.length>0&&setErrorMsg("You dont have permissions");
+         }catch(e){
+            console.log(e)
+          
+
+         }
+
+
+      }
+      getAuthorizationCode()
 
      },[])
  
@@ -34,20 +48,29 @@ export default function AuthTypes() {
             name:"Sign up with Google",
             link:"",
             click:async()=>{
-             const user=await authApi.googleAuth(account)
-             let route=""
-              if(account==="Organization"){
-                  route="org"
-                }else if(account==="Ecosystem"){
-                  route="ecosystem"
+              setErrorMsg(null)
+              try{
+                const user=await authApi.googleAuth(account)
+                let route=""
+                 if(account==="Organization"){
+                     route="org"
+                   }else if(account==="Ecosystem"){
+                     route="ecosystem"
+                 }
+   
+                  localStorage.clear();
+                  localStorage.setItem('user',JSON.stringify(user));
+   
+                  user?.id.length >0&& navigate(`/create-profile/${route}`)
+   
+                  console.log(route,"rrrr")
+
+              }catch(e){
+                 console.log(e)
+                 setErrorMsg(e.message);
+
               }
-
-               localStorage.clear();
-               localStorage.setItem('user',JSON.stringify(user));
-
-               user?.id.length >0&& navigate(`/create-profile/${route}`)
-
-               console.log(route,"rrrr")
+        
              
 
             }
@@ -59,6 +82,7 @@ export default function AuthTypes() {
             name:"Sign up with LinkedIn",
             link:"",
             click:async()=>{
+              setErrorMsg(null)
               // const user=await authApi.linkedinAuth()
               // let route=""
               //  if(account==="Organization"){
@@ -87,9 +111,15 @@ export default function AuthTypes() {
         }
      ]
   return (
-    <div className='w-full flex justify-center  '>
-            <div className='w-4/5 flex bg-white rounded-lg  border flex-col items-center py-8 space-y-8 ' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
+      <div className='w-full flex justify-center  '>
+            <div className='w-4/5 flex bg-white rounded-lg  border flex-col items-center py-8 space-y-6 ' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
                  <h5 className='text-xl font-semibold '>Sign up for Guzo</h5>
+                  {errorMsg && <div className='px-8 py-1 '>
+                      <Alert severity="error">{errorMsg}</Alert>
+                        
+
+                    </div>
+                  }
 
                  {auths?.map((auth)=>{
                    

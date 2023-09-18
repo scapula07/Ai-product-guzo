@@ -71,7 +71,7 @@ export default function CoverSection({group}) {
                                 Worem ipsum dolor sit amet, consectetur adipiscing. 
                                 </p>
 
-                                <h5 className='text-slate-500 font-semibold'>Houston, Texas, United States</h5>
+                                <h5 className='text-slate-500 font-semibold'>{group?.location} </h5>
 
                         </div>
                     
@@ -85,7 +85,7 @@ export default function CoverSection({group}) {
                     <div className='flex flex-col space-y-2 px-4 py-2 rounded-lg'  style={{background: "linear-gradient(0deg, #ECEBFE, #ECEBFE)"}} >
                         <h5 className='text-lg font-semibold'>About {group?.name}</h5>
                         <p className='text-xs '>
-                        Qorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis ipsum dolor.... 
+                        {group?.about}....
                         <span className='font-semibold'>see more</span>.
                         </p>
 
