@@ -1,9 +1,34 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Link } from 'react-router-dom'
 import {FiMessageSquare } from "react-icons/fi"
 import {BsThreeDots } from "react-icons/bs"
+import { messageApi } from '../api/message'
+import { useNavigate } from 'react-router-dom'
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 export default function ActiveMember({member,group}) {
+   
+    let navigate = useNavigate();
+    const [isLoading,setLoading]=useState(false)
+  
+  
+     const startConversation=async()=>{
+        setLoading(true)
+        try{
+            const response=await messageApi.startConversation(member,group)
+            console.log(response,"msg res")
+            setLoading(false)
+            response && navigate(`/messages/${group?.id}`)
+            setLoading(false)
+            
+  
+          }catch(e){
+            console.log(e)
+          }
+  
+        }
+  
   return (
 
     <div className='flex flex-col bg-white py-4 px-4 rounded-lg'>
@@ -66,11 +91,24 @@ export default function ActiveMember({member,group}) {
 
             <div className='flex items-center space-x-3 py-2'> 
                 <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
-                    <Link to={`/messages/${group?.id}`}>
-                    <FiMessageSquare 
-                        className='text-blue-600 text-2xl '
-                    />
-                    </Link>
+                {isLoading?
+                            
+                            <ClipLoader 
+                                color={"rgba(62, 51, 221, 1)"}
+                                loading={isLoading}
+                            />
+                            :
+                         <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
+
+                        
+                            <FiMessageSquare 
+                                className='text-blue-600 text-2xl '
+                                onClick={startConversation}
+                            />
+                        
+                        
+                            </h5>
+                    }
                     
                 </h5>
                 <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>

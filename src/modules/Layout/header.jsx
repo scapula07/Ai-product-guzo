@@ -41,7 +41,7 @@ export default function Header({hover,setHover}) {
                 </Link>
           
 
-                <div className='relatiive' onMouseOver={()=>setHover(true)} >
+                <div className='relatiive ' onMouseOver={()=>setHover(true)} >
                     {currentUser?.img?.length >0 ?
                         <img 
                             src={currentUser?.img}

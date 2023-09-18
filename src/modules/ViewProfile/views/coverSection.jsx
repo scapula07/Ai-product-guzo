@@ -5,6 +5,8 @@ import {BsThreeDots} from "react-icons/bs"
 import {IoMdNotifications} from "react-icons/io"
 import { groupState,userState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
+import { ecosystemApi } from '../../Home/_api/ecosystem'
+import { useNavigate } from 'react-router-dom'
 
 export default function CoverSection({group}) {
     console.log(group,"group")
@@ -18,7 +20,27 @@ export default function CoverSection({group}) {
       console.log(pending)
        
     
-
+      const [errorMsg, setErrorMsg] = useState(null)
+      let navigate = useNavigate();
+      const [isLoading,setLoading]=useState(false)
+  
+       const join=async(id)=>{
+          setLoading(true)
+          try{
+            const result =await ecosystemApi.joinRequest(id,currentUser,group)
+            setLoading(false)
+       
+            result&&navigate(`/connections/${group?.id}/pending`)
+  
+          //  const response =await notificationApi.sendNotification(currentUser?.accessToken,currentUser?.notificationToken)
+            
+  
+            }catch(e){
+                console.log(e)
+                setLoading(false)
+                setErrorMsg(e)
+            }
+       }
      
  
   return (
