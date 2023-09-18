@@ -31,7 +31,7 @@ export default function OrgAccount({currentUser}) {
     const [file,setFile]=useState()
     const [url,setUrl]=useState("")
 
-    const [country, setSelectedCountry] = useState();
+    const [country, setSelectedCountry] = useState("");
     const [city, setSelectedCity] = useState();
     const [countries, setCountries] = useState([]);
 

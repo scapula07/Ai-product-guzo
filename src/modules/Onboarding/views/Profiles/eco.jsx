@@ -32,7 +32,7 @@ export default function Eco({currentUser}) {
 
     const hiddenFileInput = useRef()
 
-    const [country, setSelectedCountry] = useState();
+    const [country, setSelectedCountry] = useState("");
     const [city, setSelectedCity] = useState();
     const [countries, setCountries] = useState([]);
 
@@ -127,7 +127,7 @@ export default function Eco({currentUser}) {
               setLoader(false);
           }
       
-          if (country?.length< 3) {
+          if (country?.length < 3 ) {
             setErrorMsg(' Location is invalid ');
             setLoader(false);
             return;

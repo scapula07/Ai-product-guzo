@@ -32,7 +32,7 @@ export default function EcoAccount({currentUser}) {
 
     const hiddenFileInput = useRef()
 
-    const [country, setSelectedCountry] = useState();
+    const [country, setSelectedCountry] = useState("");
     const [city, setSelectedCity] = useState();
     const [countries, setCountries] = useState([]);
 

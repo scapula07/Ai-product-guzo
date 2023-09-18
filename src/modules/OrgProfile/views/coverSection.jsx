@@ -17,7 +17,7 @@ export default function CoverSection({group}) {
       
           <div className='w-full flex flex-col  bg-white  rounded-lg'>
               { group?.cover?.length>0?
-                    <img 
+                     <img 
                       src={group?.cover}
                       className="w-full h-28"
   
@@ -36,21 +36,23 @@ export default function CoverSection({group}) {
 
                 <div className='flex lg:flex-row flex-col py-6 space-x-4 px-4'>
                     {group?.name?.length > 0?
-                        <img 
-                            src={group?.img}
+                         <img 
+                            src={group?.img !=undefined&&group?.img}
                             className="rounded-full h-28 w-28 "
                         />
                              :
                         <>
                           {group?.img?.length>0?
-                            <img 
-                               src={group?.img}
+                             <img 
+                               src={group?.img !=undefined&&group?.img}
                                 className="rounded-full sm:h-28 sm:w-28"
                              />
                              :
                              <div className='rounded-full h-28 w-28  p-2 items-center justify-center flex border'
                                  >
-                               <h5 className='font-semibold text-6xl'> {group?.firstName?.slice(0,1) +group?.lastName?.slice(0,1)}</h5>
+                                  {group?.firstName !=undefined&&
+                                   <h5 className='font-semibold text-6xl'> {group?.firstName?.slice(0,1) +group?.lastName?.slice(0,1)}</h5>
+                                  } 
                              </div>
                               }
                            </>
@@ -73,7 +75,12 @@ export default function CoverSection({group}) {
                                 }
                               </div>
                               :
-                              <h5 className='text-xl font-semibold w-full'> {group?.firstName + " " + group?.lastName } </h5>
+                              <>
+                                  {group?.firstName !=undefined&&
+                                 <h5 className='text-xl font-semibold w-full'> {group?.firstName + " " + group?.lastName } </h5>
+                                  }
+                              </>
+                              
                            }
                              
                            <div className='flex items-center w-full space-x-1'>
