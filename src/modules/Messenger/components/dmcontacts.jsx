@@ -59,7 +59,14 @@ const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv
               </div>
               :
               <div className='flex flex-col'>
-                <h5 className='font-semibold text-sm'>{contact?.firstName + " " +contact?.lastName}</h5>
+                {contact?.firstName !==undefined? 
+                   <h5 className='font-semibold text-sm'>{contact?.firstName + " " +contact?.lastName}</h5>
+                     :
+                   <h5 className='font-semibold text-sm'>{contact?.display}</h5>
+
+
+                }
+                
                 <h5 className='text-sm'>{contact?.type}</h5>
             </div>
 
