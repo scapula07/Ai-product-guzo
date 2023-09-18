@@ -123,7 +123,7 @@ function ActiveMember({member,group}) {
 
                }
                 
-                <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
+   
              </div>
              
             </>
