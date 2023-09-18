@@ -33,7 +33,13 @@ export default function Partner({partner}) {
                          </div>
                              :
                              <div className='flex flex-col'>
-                                 <h5 className='text-xl font-semibold'>{partner?.firstName + " " + partner?.lastName }</h5>
+                                {partner?.firstName != undefined?
+                                    <h5 className='text-xl font-semibold'>{partner?.firstName + " " + partner?.lastName }</h5>
+                                    :
+                                    <h5 className='text-xl font-semibold'>{partner?.display }</h5>
+
+                                }
+                                
                                  <h5 className='text-sm '>{"Qorem ipsum dolor sit amet, consectetur adipiscing elit. "}</h5>
                            </div>
  

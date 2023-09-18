@@ -116,8 +116,13 @@ function ActiveMember({member,group}) {
 
                 }
              
-               
-                <h5 className=' text-center font-semibold '>{member?.firstName + " " + member?.lastName}</h5>
+               {member?.firstName !=undefined?
+                 <h5 className=' text-center font-semibold '>{member?.firstName + " " + member?.lastName}</h5>
+                 :
+                 <h5 className=' text-center font-semibold '>{member?.display}</h5>
+
+               }
+                
                 <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
              </div>
              
