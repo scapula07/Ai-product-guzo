@@ -117,7 +117,7 @@ export default function PendingMember({group,member,setMembers}) {
                        
                  </div>
 
-                <div className='flex items-center justify-end w-1/4 '>
+                <div className='flex items-center justify-end w-1/3 '>
                     <div className='w-1/3 flex items-center space-x-8 '>
                          {ignore?
                     
