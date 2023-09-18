@@ -92,12 +92,12 @@ export default function CoverSection({group}) {
                     </div>
 
                     <div className='flex justify-between w-full items-center'>
-                        {/* <div className='flex space-x-4'>
-                            <h5 className='text-slate-700 text-sm font-semibold'>Membership</h5>
-                            <h5 className='text-slate-700 text-sm font-semibold'>Members</h5>
+                        <div className='flex space-x-4'>
+                            <h5 className='text-slate-700 text-sm font-semibold'>Membership 0</h5>
+                            <h5 className='text-slate-700 text-sm font-semibold'>Members 0</h5>
 
 
-                        </div> */}
+                        </div>
                         {active?
                            ""
                            :
