@@ -31,7 +31,10 @@ export default function CreatePost({group}) {
                />
 
         </div>
-        <button className='bg-blue-600 py-2 rounded-full w-full text-white font-semibold text-sm'>Post</button>
+        <button className='bg-blue-600 py-2 rounded-full w-full text-white font-semibold text-sm'
+           onClick={()=>setTrigger(true)}
+        >Post
+        </button>
 
     </div>
 
