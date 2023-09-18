@@ -326,7 +326,7 @@ const Comments=({ group, feed })=>{
            }
         }else if(group?.img.length >0){
            payload={
-            name:group?.firstName + " " + group?.lastName,
+            name:group?.firstName?.length !=undefined?group?.firstName + " " + group?.lastName :group?.display,
             img:group?.img,
             comment:text
           }
