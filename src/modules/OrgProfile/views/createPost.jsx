@@ -1,11 +1,13 @@
-import React from 'react'
+import React ,{useState} from 'react'
 import orgPic from "../../assets/orgcover.png"
 import CreatePosts from '../../ CreatePost.'
 import Modal from '../../Modal'
 import {AiOutlineClose } from "react-icons/ai"
-
+import { userState } from '../../Recoil/globalstate'
+import { useRecoilValue } from 'recoil'
 export default function CreatePost({group}) {
   const [trigger,setTrigger]=useState(false)
+  const currentUser=useRecoilValue(userState)
 
   return (
     <>
