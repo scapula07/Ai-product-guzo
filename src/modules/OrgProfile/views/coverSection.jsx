@@ -133,10 +133,10 @@ export default function CoverSection({group}) {
 
                     </div>
 
-                    <div className=''>
+                    {/* <div className=''>
                         <h5 className='text-slate-700 text-sm font-semibold'>Membership</h5>
 
-                    </div>
+                    </div> */}
                 </div>
                
 
