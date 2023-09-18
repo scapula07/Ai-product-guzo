@@ -18,7 +18,7 @@ import ReactSelect from "react-select";
 
 export default function CreatePosts ({group,currentUser,setTrigger}) {
 
-     console.log(group,"postt")
+   
      const [errorMsg, setErrorMsg] = useState(null)
 
      const [request,setReq]=useState(false)
@@ -46,7 +46,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
         img:""
         })
 
-
+    const [participant,setParticipants]=useState([])
     const [url,setUrl]=useState("")
 
     const [open, setOpen] = useState(false);
@@ -99,18 +99,40 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
     console.log(request,"request")
 
     const makePost=async(group)=>{
+      setErrorMsg(null)
+      if (post?.title?.length< 3) {
+        setErrorMsg(' Post Title is required ');
+        setLoader(false);
+        return;
+      }
+
+      if (post?.body?.length< 3) {
+        setErrorMsg( 'Post body is required ');
+        setLoader(false);
+        return;
+      }
+  
+  
+  
+     
+
         console.log("groppp")
         setLoader(true)
+
+
         const payload={
             post,
             requests,
             eventPost,
-            contacts:[]
+            contacts:[],
+            participant:[]
         }
 
 
         try{
+           console.log(payload?.post?.img?.name,"post image")
            const result =await postApi.makePost(group,payload,currentUser)
+          setTrigger(false)
            result&&setTrigger(false)
            result&&setLoader(false)
          
@@ -144,6 +166,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                        eventPost={eventPost}
                        setEvt={setEvt}
                        setEvent={setEvent}
+                       setParticipants={setParticipants}
                       
 
               />}
@@ -195,10 +218,10 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
       
       <div className='w-4/5 flex flex-col h-full space-y-10 py-4 '>
-         {errorMsg && (
+         {/* {errorMsg && (
         
            <Alert severity="error">{errorMsg}</Alert>
-         )}
+         )} */}
         <div className='flex items-center space-x-2 w-full'>
               {group?.type?.length>0?
 
@@ -275,6 +298,12 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                         </div>
                       }
                     </>
+
+                    {errorMsg && (
+        
+                      <Alert severity="error">{errorMsg}</Alert>
+                    )}
+
                      
 
                 <div className='flex flex-col w-full space-y-2'>

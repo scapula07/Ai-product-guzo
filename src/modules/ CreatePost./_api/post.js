@@ -45,12 +45,17 @@ export const postApi= {
         console.log(payload,"ppp")
         
         try{
-            const postImg =await uploadFile(payload?.post?.img)
-            console.log(postImg)
-    
+             let postImg=""
+             if(payload?.post?.img?.name !=undefined){
+                 postImg =await uploadFile(payload?.post?.img)
+                console.log(postImg)
+        
+             }
+           
+         
             delete payload?.post?.img;
             let file=""
-            if(payload?.file?.name?.length>0){
+            if(payload?.file?.name?.length !=undefined){
                 file =await uploadFile(payload?.post?.file)
                 delete payload?.post?.file;
 
@@ -73,9 +78,9 @@ export const postApi= {
            const postRef=doc(db,"posts",postSnap?.id)
            const docSnap = await getDoc(postRef);
            if(docSnap.exists()){
-             const response=await createGroupChat(docSnap?.id,docSnap?.data(),group)
+              const response=await createGroupChat(docSnap?.id,docSnap?.data(),group)
 
-             return response
+              return true
 
            }
             

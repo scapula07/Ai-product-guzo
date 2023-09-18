@@ -33,7 +33,7 @@ export default function Feeds() {
         }
         getAllEcoFeed()
 
-    })
+    },[])
   
   return (
     <div className='flex flex-col space-y-4'>
@@ -69,7 +69,7 @@ export default function Feeds() {
 
 
 const Feed=({feed,group})=>{
-     
+      console.log(typeof(feed?.img_post.length),"imgggg")
      return(
         <div className='w-full py-4 bg-white h-full '>
         <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
@@ -165,11 +165,14 @@ const Feed=({feed,group})=>{
                      feed
                   }}
                   >
-                
-                    <img
-                      src={feed?.img_post}
-                      className="w-full h-72"
-                    />
+                    {feed?.img_post?.length >0&&
+                         <img
+                         src={feed?.img_post}
+                         className="w-full h-72"
+                       />
+
+                    }
+                 
                    </Link>
                   <div className='flex flex-col space-y-2'>
                         <h5 className='font-semibold text-lg text-slate-600'>Description</h5>

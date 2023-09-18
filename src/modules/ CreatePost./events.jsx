@@ -8,7 +8,7 @@ import axios from 'axios';
 import ReactSelect from "react-select";
 
 
-export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setEvent}) {
+export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setEvent,setParticipants}) {
     const [choice,setChoice]=useState("In Person")
 
     
@@ -93,6 +93,7 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
                    eventPost={eventPost}
                    setEvt={setEvt}
                    choice={choice}
+                   setParticipants={setParticipants}
                   />
 
 
@@ -131,7 +132,7 @@ export default function Events({setOthers, eventPost,setEvt,setSelectedFile,setE
 
 
 
-const EventForms=({ eventPost,setEvt,choice})=>{
+const EventForms=({ eventPost,setEvt,choice,setParticipants})=>{
     // const [pickDate, setPick] = useState("");
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -147,7 +148,7 @@ const EventForms=({ eventPost,setEvt,choice})=>{
           border: "0px solid rgba(242,242,242,0.6)",
           width: "100%",
           boxShadow: "none",
-          backgroundColor: "rgba(242,242,242,0.6)",
+          backgroundColor: "white",
           fontSize: "10px",
           color:"black",
           "@media (min-width:600px)": {
@@ -367,7 +368,7 @@ const EventForms=({ eventPost,setEvt,choice})=>{
                     {
                         name:"Featured Participant(s)",
                         placeholder:"Add Ecosystem, Organization, or Individual accounts...",
-                        click:(e)=>setEvt({...eventPost,participants:e.target.value})
+                        click:(e)=>setParticipants(e.target.value.split(',') )
 
 
                     }
