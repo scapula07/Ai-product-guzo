@@ -91,7 +91,7 @@ const Feed=({feed,group})=>{
                              <div className='rounded-full p-2 items-center justify-center flex border'
                                 >
 
-                                <h5 className='font-semibold text-sm'> {feed?.shared_by?.firstName?.slice(0,1) + feed?.shared_by?.lastName?.slice(0,1)}</h5>
+                                <h5 className='font-semibold text-sm'> {feed?.shared_by?.firstName?.slice(0,1)} </h5>
                              </div>
                              
 
