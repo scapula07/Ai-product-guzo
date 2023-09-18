@@ -54,7 +54,7 @@ export default function EditProfile() {
             response?.status&&setUpdate(response?.profile)
             response?.status&&setLoader(false)
             response?.status&&setTrigger(false)
-            response?.status&&setUpdatedState(!isUpdate)
+            // response?.status&&setUpdatedState(!isUpdate)
           }catch(e){
             console.log(e)
             setLoader(false)

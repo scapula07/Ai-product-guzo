@@ -398,7 +398,7 @@ return(
                      {change?
                          <h5 
                            className='text-xs font-semibold'
-                           onClick={makeComment}
+                           onClick={()=>makeComment()}
                          >send</h5>
                            :
                          <MdEdit 
