@@ -16,6 +16,7 @@ import { groupState,userState } from '../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 import Join from "../../JoinPost"
+import { calculateTimeOfPost } from '../../Utils/calculateTime'
 export default function Feeds() {
     const group =useRecoilValue(groupState)
     const [feeds,setFeeds]=useState([])
@@ -70,6 +71,7 @@ export default function Feeds() {
 
 const Feed=({feed,group})=>{
       console.log(typeof(feed?.img_post.length),"imgggg")
+      const time =calculateTimeOfPost(feed)
      return(
         <div className='w-full py-4 bg-white h-full '>
         <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
@@ -91,7 +93,7 @@ const Feed=({feed,group})=>{
                              <div className='rounded-full p-2 items-center justify-center flex border'
                                 >
 
-                                <h5 className='font-semibold text-sm'> {feed?.shared_by?.firstName?.slice(0,1)} </h5>
+                                <h5 className='font-semibold text-sm'> {feed?.shared_by?.firstName?.slice(0,1) } </h5>
                              </div>
                              
 
@@ -176,7 +178,7 @@ const Feed=({feed,group})=>{
                    </Link>
                   <div className='flex flex-col space-y-2'>
                         <h5 className='font-semibold text-lg text-slate-600'>Description</h5>
-                        <p className='font-light text-xs '>
+                        <p className='font-light text-sm '>
                             {feed?.post?.body}
                         </p>
 

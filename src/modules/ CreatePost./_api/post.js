@@ -61,14 +61,14 @@ export const postApi= {
 
             }
       
-      
+             const name =group?.firstName?.length !=undefined? group?.firstName + " " + group?.lastName:group?.display
             const  postSnap = await addDoc(collection(db, "posts"),{
                 ...payload,
                 img_post:postImg ,
                 creator_id:group?.id,
                 shared_by:{
                     img:group?.img?.length>0?group?.img :"",
-                    name:group?.type?.length>0? group?.name :group?.firstName + " " + group?.lastName
+                    name:group?.type?.length>0? group?.name : name
                  },
                 file:file,
                 createdAt:new Date()
