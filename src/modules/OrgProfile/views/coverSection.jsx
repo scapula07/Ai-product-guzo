@@ -17,18 +17,16 @@ export default function CoverSection({group}) {
       
           <div className='w-full flex flex-col  bg-white  rounded-lg'>
               { group?.cover?.length>0?
+                  
                      <img 
                       src={group?.cover}
                       className="w-full h-28"
   
                       />
                            :
+                      <div className="w-full h-28 rounded-t-lg" style={{background:"#5A5A5A"}}>
+                      </div>
 
-                          <img 
-                          src={cover}
-                          className="w-full h-28"
-        
-                        />
 
 
               }
@@ -51,7 +49,7 @@ export default function CoverSection({group}) {
                              <div className='rounded-full h-28 w-28  p-2 items-center justify-center flex border'
                                  >
                                   {group?.firstName !=undefined&&
-                                   <h5 className='font-semibold text-6xl'> {group?.firstName?.slice(0,1) +group?.lastName?.slice(0,1)}</h5>
+                                    <h5 className='font-semibold text-6xl'> {group?.firstName?.slice(0,1) +group?.lastName?.slice(0,1)}</h5>
                                   } 
                              </div>
                               }
@@ -64,20 +62,37 @@ export default function CoverSection({group}) {
                             {group?.name?.length >0?
                               <div className='flex flex-col'>
                                <h5 className='text-xl font-semibold w-full'>{group?.name}</h5>
-                                { group?.type=="eco"&&
-                                <div className='flex items-center space-x-1.5'>
-                                    <img 
-                                      src={eco}
-                                      className="w-3 h-3"
-                                    />
-                                    <h5 className='text-xs'>Ecosystem</h5>
-                                </div>
+                                { group?.type?.length >0&&
+                                  <>
+                                    {group?.type==="eco"?
+                                          <div className='flex items-center space-x-1.5'>
+                                          <img 
+                                            src={eco}
+                                            className="w-3 h-3"
+                                          />
+                                          <h5 className='text-xs'>Ecosystem</h5>
+                                      </div>
+                                      :
+                                      <div className='flex items-center space-x-1.5'>
+                                      <img 
+                                        src={icon}
+                                        className="w-3 h-3"
+                                      />
+                                      <h5 className='text-xs'>Organization</h5>
+                                    </div>
+
+                                    }
+                                    </>
+                                
+
                                 }
                               </div>
                               :
                               <>
-                                  {group?.firstName !=undefined&&
+                                  {group?.firstName !=undefined?
                                  <h5 className='text-xl font-semibold w-full'> {group?.firstName + " " + group?.lastName } </h5>
+                                    :
+                                 <h5 className='text-xl font-semibold w-full'> {group?.display } </h5>
                                   }
                               </>
                               
@@ -109,9 +124,9 @@ export default function CoverSection({group}) {
 
                          </div>
                         <div className='flex flex-col py-2 space-y-4'>
-                                <p className='font-semibold text-sm'>
+                                {/* <p className='font-semibold text-sm'>
                                 Worem ipsum dolor sit amet, consectetur adipiscing. 
-                                </p>
+                                </p> */}
 
                                 <h5 className='text-slate-500 font-semibold'>{group?.location} </h5>
 
@@ -124,12 +139,16 @@ export default function CoverSection({group}) {
               
 
                 <div className='px-4 py-2 flex flex-col space-y-6'>
-                    <div className='flex flex-col space-y-2 px-4 py-2 rounded-lg'  style={{background: "linear-gradient(0deg, #ECEBFE, #ECEBFE)"}} >
-                        <h5 className='text-lg font-semibold'>About {group?.type?.length>0? group?.name :group?.firstName}</h5>
-                        <p className='text-xs '>
-                          {group?.about}....
-                        <span className='font-semibold'>see more</span>.
+                    <div className='flex flex-col space-y-2 px-4 py-2 rounded-lg '  style={{background: "linear-gradient(0deg, #ECEBFE, #ECEBFE)"}} >
+                        <h5 className='text-lg font-semibold pb-6'>About {group?.type?.length>0? group?.name :group?.firstName}</h5>
+                        {group?.about?.length >0&&
+
+                        
+                            <p className='text-xs '>
+                              {group?.about}....
+                            <span className='font-semibold'>see more</span>.
                         </p>
+                       }
 
                     </div>
 

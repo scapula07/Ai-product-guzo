@@ -12,7 +12,7 @@ export default function GroupContacts({conversations,setCurrentChat,currentChat,
      console.log(conversations,"convers")
    
   return (
-    <div className='w-full flex flex-col space-y-6'>
+    <div className='w-full flex flex-col space-y-6 overflow-y-scroll no-scrollbar'>
         {conversations?.map((conv)=>{
             
            

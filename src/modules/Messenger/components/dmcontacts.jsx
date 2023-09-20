@@ -12,7 +12,7 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
     
    console.log(conversations,currentChat,"dmmmm")
   return (
-    <div className='w-full flex flex-col space-y-6'>
+    <div className='w-full flex flex-col space-y-6 overflow-y-scroll no-scrollbar h-full'>
         {conversations?.map((conv)=>{
             
            

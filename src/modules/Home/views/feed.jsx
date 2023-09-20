@@ -34,7 +34,7 @@ export default function Feeds() {
         }
         getAllEcoFeed()
 
-    },[])
+    })
   
   return (
     <div className='flex flex-col space-y-4'>
@@ -70,8 +70,11 @@ export default function Feeds() {
 
 
 const Feed=({feed,group})=>{
-      console.log(typeof(feed?.img_post.length),"imgggg")
-      const time =calculateTimeOfPost(feed)
+      console.log(typeof(feed?.img_post),"imgggg")
+
+      const time =calculateTimeOfPost(feed?.createdAt?.seconds)
+      console.log(feed?.createdAt,"created at")
+      console.log(time,"timeeee")
      return(
         <div className='w-full py-4 bg-white h-full '>
         <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
@@ -120,16 +123,18 @@ const Feed=({feed,group})=>{
 
         </div>
 
-         <div className='flex flex-col w-full py-6 space-y-8'>
+         <div className='flex flex-col w-full py-4 space-y-4'>
+            {feed?.eventPost?.body?.length >0&&
+                  <div className='flex flex-col px-4 space-y-6'>
+                      <h5 className='text-lg font-light'>Event Announcement!!!</h5>
 
-              <div className='flex flex-col px-4 space-y-6'>
-                  <h5 className='text-lg font-light'>Event Announcement!!!</h5>
-
-                  <p className='text-sm text-black'>{feed?.eventPost?.body}...
-                  <span className='text-black font-semibold'>see more</span>  
-                  </p>
-                 
-              </div>
+                        <p className='text-sm text-black'>{feed?.eventPost?.body}...
+                        <span className='text-black font-semibold'>see more</span>  
+                        </p>
+                        
+                    
+                  </div>
+                  }
 
 
               <div className='flex flex-col px-4'>
@@ -147,22 +152,25 @@ const Feed=({feed,group})=>{
                      })
 
                    }
-                    
-                    <div className='pt-12 pb-2'>
-                       
-                         <h5 className='h-0.5 bg-slate-700 w-full font-light'></h5>
-                    </div>
-              </div>
+                      {feed?.eventPost?.body?.length >0&&
+                        <div className='pt-12 pb-2'>
+      
+                          <h5 className='h-0.5 bg-slate-700 w-full font-light'></h5>
+                        </div>
 
-
-              <div className='flex flex-col px-4 '>
-                  <h5 className='font-light text-lg'>{feed?.post?.title}</h5>
-                  <h5 className='text-xs font-semibold text-slate-500'>1d ago</h5>
+                     }
 
               </div>
 
-              <div className='flex flex-col space-y-5 px-4 '>
-               <Link  to={`/feed/${feed?.id}`}
+
+              <div className='flex justify-between px-4 '>
+                  <h5 className='font-semibold '>{feed?.post?.title}</h5>
+                  <h5 className='text-xs font-light text-slate-500'>{time}</h5>
+
+              </div>
+
+              <div className='flex flex-col space-y-4 px-4 '>
+                <Link  to={`/feed/${feed?.id}`}
                     state={{
                      feed
                   }}
@@ -177,8 +185,8 @@ const Feed=({feed,group})=>{
                  
                    </Link>
                   <div className='flex flex-col space-y-2'>
-                        <h5 className='font-semibold text-lg text-slate-600'>Description</h5>
-                        <p className='font-light text-sm '>
+                        {/* <h5 className='font-semibold text-sm text-slate-600'>Description</h5> */}
+                        <p className='font-light text-xl  '>
                             {feed?.post?.body}
                         </p>
 
@@ -188,12 +196,13 @@ const Feed=({feed,group})=>{
                  <div>
 
                  </div>
-
-                 <div className='px-4 w-full'>
-                    <EventCard 
-                      event={feed?.eventPost}
-                    />
-                 </div>
+                 {feed?.eventPost?.location?.length >0&&feed?.eventPost?.start_time?.length >0&&
+                    <div className='px-4 w-full'>
+                        <EventCard 
+                          event={feed?.eventPost}
+                        />
+                    </div>
+                 }
 
                {/* <div className='flex flex-col'>
                    {feed?.requests?.map((req,index)=>{
@@ -327,20 +336,23 @@ const Comments=({ group, feed })=>{
            payload={
              name:group?.name,
              img:group?.img,
-             comment:text
+             comment:text,
+             createdAt:new Date()
            }
         }else if(group?.img.length >0){
            payload={
             name:group?.firstName?.length !=undefined?group?.firstName + " " + group?.lastName :group?.display,
             img:group?.img,
-            comment:text
+            comment:text,
+            createdAt:new Date()
           }
 
         }else{
             payload={
             name:group?.firstName + " " + group?.lastName,
             img:"",
-            comment:text
+            comment:text,
+            createdAt:new Date()
           }
 
         }

@@ -53,13 +53,13 @@ export default function ViewProfile() {
 
                     {eco?.type==="eco"?
                         <div className=''>
-                            <EcoFeed group={ecosystem}/>
+                            <EcoFeed group={{...ecosystem,id:eco?.id}}/>
                         </div>
                       
                       :
                       <div className=''>
                        <Posts  
-                         group={ecosystem}
+                         group={{...ecosystem,id:eco?.id}}
                        />
                        </div>
 

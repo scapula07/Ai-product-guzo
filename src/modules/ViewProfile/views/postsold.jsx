@@ -10,26 +10,14 @@ import {AiOutlineClose} from "react-icons/ai"
 import {MdEdit} from "react-icons/md"
 import { Link } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
-import { feedApi } from '../_api'
-import Comment from '../components/comment'
-import BeatLoader from "react-spinners/BeatLoader";
-import Join from '../../JoinPost'
-import { calculateTimeOfPost } from '../../Utils/calculateTime'
 
 
-
-export default function Posts({group}) {
+export default function ViewPosts({group}) {
    const [feeds,setFeed]=useState([])
-   const [arePosts,setPost]=useState("")
-
-    
    useEffect(()=>{
 
       const getProfileFeeds=async()=>{
-          const feeds=await feedApi.getProfileFeeds(group?.id)
-          feeds?.length===0 &&setPost("No Feeds")
-          feeds?.length >0 &&setPost("")
-
+          const feeds=await ecosystemApi.getProfileFeeds(group?.id)
           setFeed(feeds)
 
          }
@@ -42,34 +30,26 @@ export default function Posts({group}) {
          return(
           <Post 
             feed={feed}
-            group={group}
           />
          )
        })
 
       }
-       {arePosts?.length===0&&feeds?.length ===0&&
+     {feeds?.length ===0&&
             <div className='w-full flex justify-center py-10'>
                <ClipLoader 
                     color={"rgba(62, 51, 221, 1)"}
                     loading={true}
                 />
             </div>
-       }
-
-    {arePosts?.length >0&&
-               <div className='w-full flex justify-center py-10'>
-                  <h5 className="text-lg font-semibold">No posts</h5>
-               </div>
-
-      }
-
+            }
 
     </div>
   )
 }
 
-const Post=({feed,group})=>{
+
+const Feed=({feed,group})=>{
   console.log(typeof(feed?.img_post),"imgggg")
 
   const time =calculateTimeOfPost(feed?.createdAt?.seconds)
@@ -306,17 +286,11 @@ return(
           <div className='flex flex-col space-y-2'>
                <p>{req?.body}</p>
                <div className='flex justify-center w-full'>
-                  <button className='text-white font-semibold rounded-full px-8 w-1/2 py-2 '
-                      style={{background: "linear-gradient(70.54deg, #281CF5 17.62%, #5DE4D7 94.09%)"}}
-                     >
-                      
-                        Manage 
-                  </button>
-                   {/* <Join 
+                   <Join 
                      group={group}
                      feed={feed}
                      index={index}
-                   /> */}
+                   />
                 </div>
               
           </div>

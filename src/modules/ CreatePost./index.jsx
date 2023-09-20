@@ -132,7 +132,6 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
         try{
            console.log(payload?.post?.img?.name,"post image")
            const result =await postApi.makePost(group,payload,currentUser)
-          setTrigger(false)
            result&&setTrigger(false)
            result&&setLoader(false)
          

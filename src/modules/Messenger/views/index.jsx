@@ -106,7 +106,7 @@ export default function Messenger() {
            
         </div>
        <div className='flex w-full space-x-6'>
-          <div className='w-2/5  bg-white' style={{height:"80vh"}}>
+          <div className='w-2/5  bg-white overflow-y-scroll no-scrollbar' style={{height:"80vh"}}>
              <Contacts 
                 conversations={conversations}
                 setCurrentChat={setCurrentChat}

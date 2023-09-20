@@ -181,6 +181,7 @@ const navs=[
                 <CreatePosts 
                   group={group}
                   currentUser={currentUser}
+                  setTrigger={setTrigger}
                 />
 
               </div>
