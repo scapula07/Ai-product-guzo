@@ -127,7 +127,7 @@ export default function EcoAccount({currentUser}) {
                 creator:user?.id,
                 name:ecoName,
                 email:ecoEmail,
-                location:country?.label,
+                location:country?.label?.length != undefined ?country?.label :"" ,
                 memberships:[],
                 invitees:[]
 
