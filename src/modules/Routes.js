@@ -89,6 +89,7 @@ const NewRoutes = () => {
 
   return (
     <>       
+            <ErrorBoundary>
               <Routes>
        
                 <Route path="/auth/*" element={<Index/>} />
@@ -159,6 +160,7 @@ const NewRoutes = () => {
                 </Route>
               
             </Routes>
+            </ErrorBoundary>
      
        
     </>
