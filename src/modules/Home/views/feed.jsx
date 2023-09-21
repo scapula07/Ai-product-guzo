@@ -255,7 +255,9 @@ const EventCard=({event,participants})=>{
             </div>
          </div>
          <div className='flex flex-col'>
+            {participants?.length >0&&
              <h5 className=' font-semibold text-slate-600'>Host(s)</h5>
+            }
              <div className='flex flex-col space-y-2'>
                 {participants?.map((participant)=>{
                    return (
