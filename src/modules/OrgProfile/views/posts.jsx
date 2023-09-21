@@ -70,7 +70,7 @@ export default function Posts({group}) {
 }
 
 const Post=({feed,group})=>{
-  console.log(typeof(feed?.img_post),"imgggg")
+  console.log(feed,"imgggg pppppp")
 
   const time =calculateTimeOfPost(feed?.createdAt?.seconds)
   console.log(feed?.createdAt,"created at")
@@ -200,6 +200,7 @@ const Post=({feed,group})=>{
                 <div className='px-4 w-full'>
                     <EventCard 
                       event={feed?.eventPost}
+                      participants={feed?.participant}
                     />
                 </div>
              }
@@ -237,7 +238,8 @@ const Post=({feed,group})=>{
 
 
 
-const EventCard=({event})=>{
+const EventCard=({event,participants})=>{
+console.log(participants,"evevveve")
 return(
  <div className='w-full flex flex-col space-y-4'>
      <div className='flex w-full justify-between'>
@@ -252,8 +254,18 @@ return(
 
         </div>
      </div>
-     <div className='flex flex-co'>
-         <h5 className='text-lg font-semibold text-slate-600'>Host(s)</h5>
+     <div className='flex flex-col'>
+         <h5 className=' font-semibold text-slate-600'>Host(s)</h5>
+         <div className='flex flex-col space-y-2'>
+            {participants?.map((participant)=>{
+               return (
+                <h5 className='text-sm '>{participant}</h5>
+               )
+            })
+
+            }
+
+         </div>
 
      </div>
 
@@ -306,17 +318,11 @@ return(
           <div className='flex flex-col space-y-2'>
                <p>{req?.body}</p>
                <div className='flex justify-center w-full'>
-                  <button className='text-white font-semibold rounded-full px-8 w-1/2 py-2 '
-                      style={{background: "linear-gradient(70.54deg, #281CF5 17.62%, #5DE4D7 94.09%)"}}
-                     >
-                      
-                        Manage 
-                  </button>
-                   {/* <Join 
+                   <Join 
                      group={group}
                      feed={feed}
                      index={index}
-                   /> */}
+                   />
                 </div>
               
           </div>

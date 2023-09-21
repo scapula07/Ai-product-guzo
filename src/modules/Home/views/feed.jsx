@@ -70,7 +70,7 @@ export default function Feeds() {
 
 
 const Feed=({feed,group})=>{
-      console.log(typeof(feed?.img_post),"imgggg")
+      console.log(feed,"imgggg pppppp")
 
       const time =calculateTimeOfPost(feed?.createdAt?.seconds)
       console.log(feed?.createdAt,"created at")
@@ -128,8 +128,8 @@ const Feed=({feed,group})=>{
                   <div className='flex flex-col px-4 space-y-6'>
                       <h5 className='text-lg font-light'>Event Announcement!!!</h5>
 
-                        <p className='text-sm text-black'>{feed?.eventPost?.body}...
-                        <span className='text-black font-semibold'>see more</span>  
+                        <p className='text-lg text-black'>{feed?.eventPost?.body}...
+                        <span className='text-black font-semibold text-sm'>see more</span>  
                         </p>
                         
                     
@@ -200,6 +200,7 @@ const Feed=({feed,group})=>{
                     <div className='px-4 w-full'>
                         <EventCard 
                           event={feed?.eventPost}
+                          participants={feed?.participant}
                         />
                     </div>
                  }
@@ -237,7 +238,8 @@ const Feed=({feed,group})=>{
 
 
 
-const EventCard=({event})=>{
+const EventCard=({event,participants})=>{
+    console.log(participants,"evevveve")
    return(
      <div className='w-full flex flex-col space-y-4'>
          <div className='flex w-full justify-between'>
@@ -252,8 +254,18 @@ const EventCard=({event})=>{
 
             </div>
          </div>
-         <div className='flex flex-co'>
-             <h5 className='text-lg font-semibold text-slate-600'>Host(s)</h5>
+         <div className='flex flex-col'>
+             <h5 className=' font-semibold text-slate-600'>Host(s)</h5>
+             <div className='flex flex-col space-y-2'>
+                {participants?.map((participant)=>{
+                   return (
+                    <h5 className='text-sm '>{participant}</h5>
+                   )
+                })
+
+                }
+
+             </div>
 
          </div>
 

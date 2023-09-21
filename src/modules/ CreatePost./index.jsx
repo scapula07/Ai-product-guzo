@@ -46,7 +46,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
         img:""
         })
 
-    const [participant,setParticipants]=useState([])
+    const [participants,setParticipants]=useState([])
     const [url,setUrl]=useState("")
 
     const [open, setOpen] = useState(false);
@@ -96,7 +96,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
 
     console.log(others,"others")
-    console.log(request,"request")
+    console.log(participants,"requestiii")
 
     const makePost=async(group)=>{
       setErrorMsg(null)
@@ -125,7 +125,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
             requests,
             eventPost,
             contacts:[],
-            participant:[]
+            participant:participants
         }
 
 
