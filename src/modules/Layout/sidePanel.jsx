@@ -32,6 +32,7 @@ export default function SidePanel() {
    
       
        isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
+       
     
       },[currentUser,isUpdate])
       useEffect(()=>{
@@ -58,7 +59,7 @@ export default function SidePanel() {
           {currentUser?.id?.length >0 &&
             <>
               {currentUser?.img?.length ===0?
-                   <Link to={`${currentPath}`}>
+                   <Link to={`/home/${group?.id}`}>
                    <div className='rounded-lg p-2 items-center justify-center flex border'
                       onClick={()=>setGroup(currentUser)}
                      >
@@ -66,7 +67,7 @@ export default function SidePanel() {
                     </div>
                     </Link>
                    :
-                   <Link to={`${currentPath}`}>
+                   <Link to={`/home/${group?.id}`}>
                     <div className='rounded-lg p-0.5 items-center justify-center flex border'>
                 
                       <img 
@@ -91,7 +92,7 @@ export default function SidePanel() {
                   return(
                     <>
                     {isTeammate&&
-                        <Link to={`${currentPath}`}>
+                        <Link to={`/home/${group?.id}`}>
                           <div className='rounded-lg p-0.5 items-center justify-center flex border'>
                               <img 
                                 src={group?.img}
