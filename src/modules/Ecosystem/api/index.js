@@ -38,22 +38,28 @@ export const ecosystemApi= {
                         const memberRef=doc(db,collection,member?.id)
                         const memberSnap = await getDoc(memberRef);
                         console.log(memberSnap?.data(),"members")
-                        const memberships=memberSnap?.data()?.memberships.length ===undefined? []:memberSnap?.data()?.memberships
+                        const active=memberSnap?.data()?.active.length ===undefined? []:memberSnap?.data()?.active
+                        const newNetworkPending = memberSnap?.data()?.pendingMemberships?.filter(eco=>eco?.id !== docSnap?.id);
                           const result = await updateDoc(memberRef, {
-                                memberships:[
-                                    ...memberships,
+                                active:[
+                                    ...active,
                                     {
                                       id:docSnap.id,
                                     ...docSnap?.data()
                                     }
+                                  ],
+                                pendingMemberships:[
+                                    ...newNetworkPending
                                   ]
-                              })
+                               })
                     
 
                       }else{
                           const memberRef =doc(db,"users",member?.id)
                           const memberSnap = await getDoc(memberRef);
-                          const result2 = await updateDoc(memberRef, {
+                           console.log(memberSnap?.data()?.pending) 
+                           const newUserPending = memberSnap?.data()?.pending?.filter(eco=>eco?.id !== docSnap?.id);
+                           const result2 = await updateDoc(memberRef, {
                                 ecosystems:[
                                     ...member?.ecosystems,
                                     {
@@ -62,6 +68,9 @@ export const ecosystemApi= {
 
 
                                     }
+                                 ],
+                                 pending:[
+                                  ...newUserPending
                                  ]
                                 
                               })

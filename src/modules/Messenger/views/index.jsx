@@ -37,15 +37,8 @@ export default function Messenger() {
        
             const convSnapshot =await getDocs(q)
             const conversations= convSnapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
-            console.log(conversations,"conversation")
-            const qG = query(collection(db, "group"), where("members", "array-contains",currentUser?.id));
-       
-            const groupSnapshot =await getDocs(qG)
-            const groups= groupSnapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
-            console.log(groups,"grrgrggrg")
-            setGroups(groups)
             setConversations(conversations)
-            console.log(conversations,"conv in index")
+      
          
           }catch(error){
             console.log(error)
@@ -142,7 +135,7 @@ export default function Messenger() {
 
             }
 
-             {active==="group"&&
+             {/* {active==="group"&&
               <GroupChat 
               currentChat={currentChat}
               messages={messages}
@@ -157,7 +150,7 @@ export default function Messenger() {
 
             />
 
-             }
+             } */}
 
          </div>
 

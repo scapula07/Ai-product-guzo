@@ -5,7 +5,9 @@ import {BsThreeDots } from "react-icons/bs"
 import { messageApi } from '../api/message'
 import { useNavigate } from 'react-router-dom'
 import ClipLoader from "react-spinners/ClipLoader";
-
+import eco from "../../assets/img3.png"
+import org from "../../assets/img2.png"
+import indiv from "../../assets/indiv.png"
 
 export default function ActiveMember({member,group}) {
    
@@ -84,13 +86,46 @@ export default function ActiveMember({member,group}) {
         }
         
 
-        <div className='flex flex-col items-center space-y-3 py-4'>
-            {/* <p className=' text-center font-light text-sm'>
-            Worem ipsum dolor sit amet, consectetur adi...
-            </p> */}
+            <div className='flex flex-col items-center space-y-3 py-4'>
+             
+                 {member?.type=="eco"?
+                    <div className="flex items-center space-x-1">
+                    <img 
+                    src={eco}
+                    className="w-3 h-3"
+                    />
+                    <h5 className='text-xs'>Ecosystem</h5>
 
-            <div className='flex items-center space-x-3 py-2'> 
-                <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
+                    </div>
+                  :
+                  <>
+                       {member?.type==="org"?
+                           <div className="flex items-center space-x-1">
+                                <img 
+                                src={org}
+                                className="w-3 h-3"
+                                />
+                              <h5 className='text-xs'>Organization</h5>
+                             </div>
+                             :
+                             <div className="flex items-center space-x-1">
+                                <img 
+                                src={indiv}
+                                className="w-3 h-3"
+                                />
+                              <h5 className='text-xs'>Individual</h5>
+                             </div>
+
+                         }
+                       
+                  </>
+             
+
+           
+                }
+
+              <div className='flex items-center space-x-3 py-2'> 
+              
                 {isLoading?
                             
                             <ClipLoader 
@@ -110,7 +145,7 @@ export default function ActiveMember({member,group}) {
                             </h5>
                     }
                     
-                </h5>
+               
                 <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
                     <BsThreeDots 
                         className='text-blue-600 text-2xl'

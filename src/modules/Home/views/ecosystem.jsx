@@ -18,7 +18,7 @@ import { collection,  onSnapshot,
     query, orderBy, 
     limit,getDoc,setDoc ,
    updateDoc,addDoc } from 'firebase/firestore'
-
+import ecoImg from "../../assets/img3.png"
 export default function Ecosystems() {
   
     const [ecosystems,setEco] =useState([])
@@ -125,8 +125,15 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
                 />
            </Link>
             <h5 className=' text-center font-semibold '>{eco?.name}</h5>
-            <h5 className='text-sm font-semibold text-slate-600'>Ecosystem</h5>
-        </div>
+             <div className="flex items-center space-x-1">
+                    <img 
+                    src={ecoImg}
+                    className="w-3 h-3"
+                    />
+                    <h5 className='text-xs'>Ecosystem</h5>
+
+                </div>
+                </div>
 
         <div className='flex flex-col items-center space-y-3 py-4'>
      

@@ -1,7 +1,12 @@
 import eco from "../../assets/img3.png"
 import org from "../../assets/img2.png"
+import { calculateTimeOfPost } from "../../Utils/calculateTime"
+
+
  const Chat=({msg,group})=>{
     console.log(msg,"msg chat")
+    const time=calculateTimeOfPost(msg?.time)
+    
     return(
        <div className='flex flex-col w-full space-y-1'>
              <div className='flex items-center justify-between w-full' >
@@ -60,7 +65,7 @@ import org from "../../assets/img2.png"
                    
 
                  
-                 <h5 className='text-slate-500 font-light text-sm'>12:30</h5>
+                 <h5 className='text-slate-500 font-light text-sm'>{time}</h5>
 
              </div>
               {group?.id ==msg?.sender?.id?

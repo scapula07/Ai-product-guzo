@@ -2,7 +2,7 @@ import { collection,  onSnapshot,
     doc, getDocs,
     query, orderBy, 
     limit,getDoc,setDoc ,
-   updateDoc,addDoc } from 'firebase/firestore'
+   updateDoc,addDoc ,where} from 'firebase/firestore'
 import { db } from '../../Firebase';
 
 
@@ -13,6 +13,22 @@ export const messageApi = {
         console.log(member,"api")
         console.log(currentUser,"user")
         try{
+            const q = query(collection(db, "conversations"), where("members", "array-contains",currentUser?.id));
+       
+            const convSnapshot =await getDocs(q)
+            console.log(typeof(convSnapshot?.size),convSnapshot?.size,"size of conv")
+            const conversations= convSnapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
+            console.log(conversations,"conerseee")
+            const isContact=conversations?.some(conv=>conv?.members?.includes(member?.id))
+            console.log(isContact,"msg filterrrr")
+            if(!isContact){
+            
+            
+
+           
+
+     
+    
             const payload={
                 members:[
                     currentUser?.id,
@@ -35,6 +51,10 @@ export const messageApi = {
              }catch (err) {
              console.log(err)
             }
+        
+        }else{
+            return true
+        }
         }catch(e){
             console.log(e)
         }

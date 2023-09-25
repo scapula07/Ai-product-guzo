@@ -27,7 +27,7 @@ export default function Profile() {
 
            fetchProfile()
 
-         })
+         },[])
  
     
   return (

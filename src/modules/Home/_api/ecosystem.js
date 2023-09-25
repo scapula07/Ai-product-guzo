@@ -91,7 +91,11 @@ export const ecosystemApi = {
                       pendingMemberships:[
                           ...pending,
                           {
-                          ...docSnap?.data()
+                            id:docSnap?.id,
+                            name:docSnap?.data()?.name,
+                            teammates:docSnap?.data()?.teammates,
+                            img:docSnap?.data()?.img,
+                            type:docSnap?.data()?.type
                           }
                         ]
                     })
@@ -101,7 +105,7 @@ export const ecosystemApi = {
           
 
             }else{
-                   const userRef =doc(db,"users",group?.id)
+                    const userRef =doc(db,"users",group?.id)
                     const userSnap = await getDoc(userRef);
                     console.log(userSnap?.data(),"usersss")
                     const pending=userSnap?.data()?.pending?.length ===undefined? []:userSnap?.data()?.pending
@@ -110,7 +114,11 @@ export const ecosystemApi = {
                          pending:[
                               ...pending,
                               {
-                                  ...docSnap?.data()
+                                 id:docSnap?.id,
+                                name:docSnap?.data()?.name,
+                                teammates:docSnap?.data()?.teammates,
+                                img:docSnap?.data()?.img,
+                                type:docSnap?.data()?.type
 
 
                               }

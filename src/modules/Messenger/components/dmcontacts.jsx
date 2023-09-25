@@ -3,6 +3,8 @@ import dm1 from "../../assets/feedorg.png"
 import dm2 from "../../assets/orgcover.png"
 import {BsThreeDots} from "react-icons/bs"
 import { useEffect } from 'react'
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 export default function Dmcontacts({conversations,setCurrentChat,currentChat, currentUser,receiverInfo,setReceiver}) {
    useEffect(( )=>{
@@ -11,7 +13,7 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
     },[conversations?.length])
     
    console.log(conversations,currentChat,"dmmmm")
-  return (
+   return (
     <div className='w-full flex flex-col space-y-6 overflow-y-scroll no-scrollbar h-full'>
         {conversations?.map((conv)=>{
             
@@ -33,6 +35,15 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
         })
 
         }
+
+          {conversations?.length ===0&&
+            <div className='w-full flex justify-center py-10'>
+               <ClipLoader 
+                    color={"rgba(62, 51, 221, 1)"}
+                    loading={true}
+                />
+            </div>
+            }
 
 
     </div>

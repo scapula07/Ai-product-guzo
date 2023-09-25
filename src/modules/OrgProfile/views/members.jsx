@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import { messageApi } from '../_api/message'
 import { useNavigate } from 'react-router-dom'
+import eco from "../../assets/img3.png"
+import org from "../../assets/img2.png"
+import indiv from "../../assets/indiv.png"
+
+
 
 export default function Members({group}) {
    const [members,setMembers]=useState([])
@@ -88,15 +93,8 @@ function ActiveMember({member,group}) {
                     className="rounded-full w-32 h-32"
                 />
                 <h5 className=' text-center font-semibold '>{member?.name}</h5>
-                <h5 className='text-sm font-semibold text-slate-600'>
-                    {member?.type==="eco"?
-                     "Ecosystem"
-                      :
-                      "Organization"
-
-                    }
-                </h5>
-         </div>
+        
+            </div>
            :
             <>
              <div className='flex flex-col items-center space-y-3'>
@@ -122,7 +120,43 @@ function ActiveMember({member,group}) {
                  <h5 className=' text-center font-semibold '>{member?.display}</h5>
 
                }
+                        <h5 className='text-sm font-semibold text-slate-600'>
+                      {member?.type=="eco"?
+                                  <div className="flex items-center space-x-1">
+                                  <img 
+                                  src={eco}
+                                  className="w-3 h-3"
+                                  />
+                                  <h5 className='text-xs'>Ecosystem</h5>
+
+                              </div>
+                            :
+                            <>
+                       {member?.type==="org"?
+                           <div className="flex items-center space-x-1">
+                                <img 
+                                src={org}
+                                className="w-3 h-3"
+                                />
+                              <h5 className='text-xs'>Organization</h5>
+                             </div>
+                             :
+                             <div className="flex items-center space-x-1">
+                                <img 
+                                src={indiv}
+                                className="w-3 h-3"
+                                />
+                              <h5 className='text-xs'>Individual</h5>
+                             </div>
+
+                              }
+                            
+                        </>
+                  
+
                 
+                      }
+                </h5>
    
              </div>
              
