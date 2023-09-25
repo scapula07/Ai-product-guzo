@@ -10,7 +10,7 @@ import { userState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
 import {Link} from "react-router-dom"
 import { useOutletContext } from 'react-router-dom';
-
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 export default function Active() {
@@ -22,11 +22,7 @@ export default function Active() {
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
         {connects?.active?.map((eco)=>{
             return(
-                <Link  to={`/eco-profile/${eco?.id}`}
-                    state={{
-                    eco
-                }}
-                >
+        
                 <div className='flex flex-col bg-white py-4 px-4'>
                    {eco?.type?.length >0?
                       <div className='flex flex-col items-center space-y-3'>
@@ -72,9 +68,7 @@ export default function Active() {
                        }
 
                     <div className='flex flex-col items-center space-y-3 py-4'>
-                        <p className=' text-center font-light text-sm'>
-                        Worem ipsum dolor sit amet, consectetur adi...
-                        </p>
+                    
 
                         <div className='flex items-center space-x-3 py-2'> 
                            <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
@@ -94,7 +88,7 @@ export default function Active() {
                     </div>
 
                 </div>
-                </Link>
+           
             )
           })
 
@@ -102,12 +96,21 @@ export default function Active() {
 
     </div>
 
-         {connects?.active?.length ===0 &&
+         {connects?.active?.length ===undefined &&
                <div className='w-full flex justify-center py-10'>
                   <h5 className="text-lg font-semibold">No active connections</h5>
                </div>
 
             } 
+
+          {/* {arePosts?.length===0&&feeds?.length ===0&&
+            <div className='w-full flex justify-center py-10'>
+               <ClipLoader 
+                    color={"rgba(62, 51, 221, 1)"}
+                    loading={true}
+                />
+            </div>
+            } */}
 
 
 

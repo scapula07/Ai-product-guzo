@@ -9,6 +9,7 @@ import { useOutletContext } from 'react-router-dom'
 import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
 import ReactSelect from "react-select";
 import axios from "axios"
+import { formatPhoneNumber } from '../../../Utils/formatPhoneNumber';
 
 export default function Org({currentUser}) {
     console.log(currentUser,"indiv")
@@ -269,7 +270,7 @@ export default function Org({currentUser}) {
                                 style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                                 name="phoneNum"
                                 value={phoneNum}
-                                onChange={(e)=>setNum(e.target.value)}
+                                onChange={(e)=>setNum(formatPhoneNumber(e.target.value))}
                         
                             />
                          </div>

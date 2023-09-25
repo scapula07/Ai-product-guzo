@@ -14,13 +14,10 @@ export default function Settings() {
           </div>
 
           <div className='flex flex-col w-full space-y-4  '>
+              
               <Card 
-                    title="Profile Information & Accounts"
+                    title="Options"
                     body={[
-                      {
-                       text: "Edit Profile",
-                       link:""
-                      },
                       {
                         text: "Teammates",
                         link:`/team/${group?.id}`
@@ -34,7 +31,7 @@ export default function Settings() {
                       ]}
               
                 />
-              <Card 
+              {/* <Card 
                   title="Subscriptions and Payments"
                   body={[
                     {
@@ -53,8 +50,8 @@ export default function Settings() {
                     }
                     ]}
                  
-              />
-              <Card 
+              /> */}
+              {/* <Card 
                   title="Monetization & Privacy"
                   body={[
                     {
@@ -68,7 +65,7 @@ export default function Settings() {
                     }
                     ]}
                 
-                 />
+                 /> */}
 
           </div>
 

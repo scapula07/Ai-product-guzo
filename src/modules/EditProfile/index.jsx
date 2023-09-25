@@ -179,7 +179,7 @@ export default function EditProfile() {
                                    style={{background: "rgba(248, 248, 248, 1)"}}
                                 >
                                     <h5 style={{color: "rgba(37, 31, 134, 1)"}}
-                                      onClick={()=>window.history.go(-1)}
+                                      onClick={()=>setTrigger(false)}
                                         >Back</h5>
                                         {isLoading?
                                                 

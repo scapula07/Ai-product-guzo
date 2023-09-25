@@ -7,15 +7,26 @@ import { groupState,userState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
 import { ecosystemApi } from '../../Home/_api/ecosystem'
 import { useNavigate } from 'react-router-dom'
+import eco from "../../assets/img3.png"
+
+
 
 export default function CoverSection({group}) {
     console.log(group,"group")
     const currentUser =useRecoilValue(userState)
-
+    const account=useRecoilValue(groupState)
 
  
-      const active=group?.active?.some(member => member?.id===currentUser?.id) || group?.creator ===currentUser?.id
-      const pending=group?.active?.some(member => member?.id===currentUser?.id)
+      const active=group?.active?.some(member => member?.id===account?.id) || group?.creator ===currentUser?.id
+      const pending=group?.pending?.some(member => member?.id===account?.id)
+
+
+      const isPending= eco?.pending?.some(e=>e?.id ===group?.id)
+      console.log(isPending,eco?.name)
+      const isMember= eco?.active?.some(e=>e?.id ===currentUser?.id) || eco?.creator ===currentUser?.id;
+
+
+
       console.log(active)
       console.log(pending)
        
@@ -61,7 +72,19 @@ export default function CoverSection({group}) {
 
                     <div className='flex  flex-col w-full'>
                         <div className='flex items-center justify-between w-full'>
-                            <h5 className='text-xl font-semibold'>{group?.name }</h5>
+                            <div className='flex flex-col space-x-1'>
+                                 <h5 className='text-xl font-semibold'>{group?.name }</h5>
+                                  <div className='flex items-center space-x-1.5'>
+                                          <img 
+                                            src={eco}
+                                            className="w-2.5 h-2.5"
+                                          />
+                                          <h5 className='text-xs'>Ecosystem</h5>
+                                      </div>
+
+                            </div>
+                          
+                              
 
                             {/* <button className=' border rounded-full py-1 px-8 text-sm font-semibold' style={{borderColor: "rgba(40, 28, 245, 1)"}}>Edit profile</button> */}
                             <div className='flex items-center space-x-4'>
@@ -74,7 +97,7 @@ export default function CoverSection({group}) {
                                             className="text-xl text-blue-700"
                                             />
                                     </h5>
-                                    <h5 className='rounded-full flex items-center justify-center p-2'
+                                    {/* <h5 className='rounded-full flex items-center justify-center p-2'
                                         style={{background:" rgba(236, 235, 254, 1)"}}
                                     >
                                         <IoMdNotifications
@@ -83,17 +106,13 @@ export default function CoverSection({group}) {
                                     </h5>
                                    <BsThreeDots 
                                       className="text-xl text-blue-700"
-                                   />
+                                   /> */}
 
                             </div>
 
                         </div>
-                        <div className='flex flex-col py-2 space-y-4'>
-                                <p className='font-semibold text-sm'>
-                                Worem ipsum dolor sit amet, consectetur adipiscing. 
-                                </p>
-
-                                <h5 className='text-slate-500 font-semibold'>{group?.location} </h5>
+                        <div className='flex flex-col py-8 space-y-4 '>
+                            <h5 className='text-slate-900 font-semibold text-sm'>{group?.location} </h5>
 
                         </div>
                     
@@ -104,28 +123,28 @@ export default function CoverSection({group}) {
               
 
                 <div className='px-4 py-2 flex flex-col space-y-6'>
-                    <div className='flex flex-col space-y-2 px-4 py-2 rounded-lg'  style={{background: "linear-gradient(0deg, #ECEBFE, #ECEBFE)"}} >
-                        <h5 className='text-lg font-semibold'>About {group?.name}</h5>
-                        <p className='text-xs '>
-                        {group?.about}....
-                        <span className='font-semibold'>see more</span>.
-                        </p>
-
-                    </div>
-
-                    <div className='flex justify-between w-full items-center'>
-                        <div className='flex space-x-4'>
-                            <h5 className='text-slate-700 text-sm font-semibold'>Membership 0</h5>
-                            <h5 className='text-slate-700 text-sm font-semibold'>Members 0</h5>
-
+                    {group?.about?.length !=undefined&&
+                            <div className='flex flex-col space-y-2 px-4 py-2 rounded-lg'  style={{background: "linear-gradient(0deg, #ECEBFE, #ECEBFE)"}} >
+                            <h5 className='text-lg font-semibold'>About {group?.name}</h5>
+                            <p className='text-xs '>
+                            {group?.about}....
+                            <span className='font-semibold'>see more</span>.
+                            </p>
 
                         </div>
+                     }
+
+
+                    <div className='flex justify-center w-full items-center'>
+                       
                         {active?
                            ""
                            :
                            <>
                               {pending?
-                                 <button className='bg-blue-600 rounded-full py-2 text-white px-20'>Join</button>
+                                 <button className=' rounded-full py-2 text-white px-20'
+                                   style={{background:"rgba(142, 142, 142, 1) "}}
+                                 >Pending...</button>
                                  :
                                  <button className='bg-blue-600 rounded-full py-2 text-white px-20'>Join</button>
              }

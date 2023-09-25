@@ -41,11 +41,7 @@ export default function Pending() {
     <div className='grid grid-flow-row lg:grid-cols-3 grid-cols-2  gap-4 gap-y-8 h-full w-full'>
         {connects?.pending?.map((eco)=>{
             return(
-                <Link  to={`/eco-profile/${eco?.id}`}
-                    state={{
-                    eco
-                        }}
-                    >
+           
                 <div className='flex flex-col bg-white py-4 px-4 rounded-lg'>
                     <div className='flex flex-col items-center space-y-3'>
                         <img 
@@ -57,9 +53,7 @@ export default function Pending() {
                     </div>
 
                     <div className='flex flex-col items-center space-y-3 py-4'>
-                        <p className=' text-center font-light lg:text-sm text-xs'>
-                        Worem ipsum dolor sit amet, consectetur adi...
-                        </p>
+                  
 
                         <div className='flex items-center space-x-3 py-2'> 
                            <h5 className='rounded-full p-2 items-center justify-center text-blue-600 text-xs font-semibold' style={{background: "rgba(242, 242, 242, 1)"}}>
@@ -74,7 +68,7 @@ export default function Pending() {
                     </div>
 
                 </div>
-                </Link>
+           
             )
            })
 

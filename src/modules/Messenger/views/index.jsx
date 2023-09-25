@@ -60,6 +60,9 @@ export default function Messenger() {
 
      const send=async (e)=>{
         console.log(newMessage,"sending")
+        if (newMessage?.length == 0) {
+          return;
+        }
         e.preventDefault();
         setLoader(true)
         
@@ -101,12 +104,12 @@ export default function Messenger() {
 
   return (
     <Layout>
-        <div className='py-2 flex-col flex space-y-4'> 
+        <div className='py-2 flex-col flex space-y-4 px-12'> 
             <h5 className='text-slate-700 font-semibold text-xl'>Messages</h5>
            
         </div>
-       <div className='flex w-full space-x-6'>
-          <div className='w-2/5  bg-white overflow-y-scroll no-scrollbar' style={{height:"80vh"}}>
+       <div className='flex w-full space-x-6 px-12'>
+          <div className='w-1/3   overflow-y-scroll no-scrollbar' style={{ height:"80vh"}}>
              <Contacts 
                 conversations={conversations}
                 setCurrentChat={setCurrentChat}

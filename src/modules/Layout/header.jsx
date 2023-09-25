@@ -28,7 +28,7 @@ export default function Header({hover,setHover}) {
        
 
         <div className='flex items-center space-x-6 '>
-            <SearchBar />
+            {/* <SearchBar /> */}
 
             <div className='flex items-center space-x-4'>
                 <Link to={`/notifications/${group?.id}`}>
@@ -41,7 +41,7 @@ export default function Header({hover,setHover}) {
                 </Link>
           
 
-                <div className='relatiive ' onMouseOver={()=>setHover(true)} >
+                <div className='relatiive ' onClick={()=>setHover(true)} >
                     {currentUser?.img?.length >0 ?
                         <img 
                             src={currentUser?.img}

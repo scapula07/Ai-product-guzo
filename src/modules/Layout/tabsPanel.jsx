@@ -38,11 +38,11 @@ const navs=[
       link:`/connections/${group?.id}`
 
   },
-  {
-      name:"Posts",
-      icon:opportunity,
-      link:`/collaborations/${group?.id}`
-  },
+  // {
+  //     name:"Posts",
+  //     icon:opportunity,
+  //     link:`/collaborations/${group?.id}`
+  // },
   {
       name:"Ecosystem",
       icon:ecosystem,
@@ -79,10 +79,8 @@ const navs=[
                  :
                  <>
                    {
-                     group?.id?.length>0&&group?.firstName?.length !=undefined?
-                        <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.firstName + " " + group?.lastName}</h5>
-                        :
-                        <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.display}</h5>
+                     group?.id?.length>0&&
+                    <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.display}</h5>
                   }
                     
                  </>

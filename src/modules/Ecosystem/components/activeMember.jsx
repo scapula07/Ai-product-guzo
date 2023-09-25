@@ -85,9 +85,9 @@ export default function ActiveMember({member,group}) {
         
 
         <div className='flex flex-col items-center space-y-3 py-4'>
-            <p className=' text-center font-light text-sm'>
+            {/* <p className=' text-center font-light text-sm'>
             Worem ipsum dolor sit amet, consectetur adi...
-            </p>
+            </p> */}
 
             <div className='flex items-center space-x-3 py-2'> 
                 <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>

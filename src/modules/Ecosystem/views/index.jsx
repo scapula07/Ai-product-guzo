@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { ecosystemApi } from '../api'
 import { groupState,userState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
+import EcoMembers from './members'
 
 export default function Ecosystem() {
     const currentUser=useRecoilValue(userState)
@@ -20,7 +21,7 @@ export default function Ecosystem() {
 
           <div className=' w-full h-full space-x-10'>
             <div className='w-full overflow-y-auto h-full no-scrollbar'>
-                 <Tabs />
+                 {/* <Tabs /> */}
                 
 
                 <div className='py-6'>
@@ -28,7 +29,7 @@ export default function Ecosystem() {
                 
                 </div>
                   <div className='w-full'>
-                      <Outlet />
+                      <EcoMembers/>
                    
                   </div>
       

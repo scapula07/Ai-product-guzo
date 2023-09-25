@@ -48,7 +48,7 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
       
 
   return (
-    <div className='flex flex-col py-8 px-4 h-full'>
+    <div className='flex flex-col py-8 px-4 h-full rounded-lg'>
         {receiverInfo?.type?.length >0?
             <div className='flex items-center justify-center space-x-4 '>
                     <h5 className='text-lg font-semibold'>{receiverInfo?.name}</h5>

@@ -1,6 +1,7 @@
 import React,{useRef,useState} from 'react'
 import upload from "../../modules/assets/upload.png"
-
+import {BiSolidPencil} from "react-icons/bi"
+import {MdDelete } from "react-icons/md"
 export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
   
     const hiddenFileInput = useRef()
@@ -32,7 +33,7 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
         
         <div className='w-3/4 flex flex-col space-y-6'>
                    
-                    <h5  className='text-2xl font-semibold'>Add an Image for your Event Post</h5>
+                    <h5  className='text-2xl font-semibold'>Add an Image to your Post</h5>
 
                     <div className='flex flex-col space-y-4'>
                     <h5 className='text-lg font-semibold'>Select file(s)</h5>
@@ -79,6 +80,33 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
                           
                           }
 
+
+
+                     <div className='flex items-center justify-center space-x-4'>
+                          <h5 className='rounded-full p-2 items-center justify-center' 
+                                  style={{background: "rgba(236, 235, 254, 1)"}}
+                                  // onClick={()=>setTrigger(true)}
+                              >
+                                        
+                              <BiSolidPencil
+                                className='text-blue-600 text-lg '
+                              />
+                    
+                                            
+                          </h5>
+
+                          <h5 className='rounded-full p-2 items-center justify-center bg-red-600' 
+                                
+                                  // onClick={()=>setTrigger(true)}
+                              >
+
+                                <MdDelete 
+                                    className='text-white'
+                                    />
+                              </h5>
+
+                      </div>
+
                     </div>
 
 
@@ -88,7 +116,7 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
                    <div className='flex items-center items-center space-x-6'>
                           <button 
                         
-                             className='text-blue-700 rounded-full px-12 py-1.5 border border-blue-700'
+                             className='text-blue-700 rounded-full px-12 py-1.5 text-sm'
                              onClick={()=>close()}
                             >
                             Back
@@ -98,10 +126,10 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
 
                         <button
                              style={{background: "rgba(236, 235, 254, 1)"}}
-                             className='text-blue-700 rounded-full px-12 py-1.5'
+                             className='text-blue-700 rounded-full px-10 py-1.5 text-sm'
                              onClick={()=>setOthers(false) || setImg(false)}
                             >
-                            Next
+                          Save and Continue
                         </button>
 
 

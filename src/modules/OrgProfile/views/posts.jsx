@@ -69,6 +69,7 @@ export default function Posts({group}) {
   )
 }
 
+
 const Post=({feed,group})=>{
   console.log(feed,"imgggg pppppp")
 
@@ -79,6 +80,7 @@ const Post=({feed,group})=>{
     <div className='w-full py-4 bg-white h-full '>
     <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
           <div className='flex items-center space-x-3'>
+              
                <>
                  {feed?.shared_by?.type?.length>0?
                      <img
@@ -108,121 +110,38 @@ const Post=({feed,group})=>{
                  }
                  
               </>
-              <h5 className='text-lg font-semibold'>{feed?.shared_by?.name}</h5>
+              <div className='flex items-center space-x-3'>
+                 <h5 className='text-lg font-semibold'>{feed?.shared_by?.name}</h5>
+                <span className='text-xs text-slate-700 '>{time}</span> 
+
+              </div>
+
 
           </div>
 
-          <div className='flex items-center space-x-4'>
+          {/* <div className='flex items-center space-x-4'>
               <img 
                 src={share}
                 className="h-4 w-4"
               />
               <h5 className='text-sm font-semibold text-slate-600'>Share </h5>
 
-          </div>
+          </div> */}
 
     </div>
 
      <div className='flex flex-col w-full py-4 space-y-4'>
-        {feed?.eventPost?.body?.length >0&&
+        
               <div className='flex flex-col px-4 space-y-6'>
-                  <h5 className='text-lg font-light'>Event Announcement!!!</h5>
+               
 
-                    <p className='text-sm text-black'>{feed?.eventPost?.body}...
-                    <span className='text-black font-semibold'>see more</span>  
-                    </p>
+                    <p className='text-lg text-black'>
+                      {feed?.post?.body}
+                    {/* <span className='text-black font-semibold text-sm'>see more</span>   */}
+                   </p>
                     
                 
-              </div>
-              }
-
-
-          <div className='flex flex-col px-4'>
-               {feed?.requests?.map((req,index)=>{
-                
-                  return(
-                   <RequestCard 
-                    req={req}
-                    group={group}
-                    feed={feed}
-                    index={index}
-                   />
-                  )
-
-                 })
-
-               }
-                  {feed?.eventPost?.body?.length >0&&
-                    <div className='pt-12 pb-2'>
-  
-                      <h5 className='h-0.5 bg-slate-700 w-full font-light'></h5>
-                    </div>
-
-                 }
-
-          </div>
-
-
-          <div className='flex justify-between px-4 '>
-              <h5 className='font-semibold '>{feed?.post?.title}</h5>
-              <h5 className='text-xs font-light text-slate-500'>{time}</h5>
-
-          </div>
-
-          <div className='flex flex-col space-y-4 px-4 '>
-            <Link  to={`/feed/${feed?.id}`}
-                state={{
-                 feed
-              }}
-              >
-                {feed?.img_post?.length >0&&
-                     <img
-                     src={feed?.img_post}
-                     className="w-full h-72"
-                   />
-
-                }
-             
-               </Link>
-              <div className='flex flex-col space-y-2'>
-                    {/* <h5 className='font-semibold text-sm text-slate-600'>Description</h5> */}
-                    <p className='font-light text-xl  '>
-                        {feed?.post?.body}
-                    </p>
-
-               </div>
-             </div>
-
-             <div>
-
-             </div>
-             {feed?.eventPost?.location?.length >0&&feed?.eventPost?.start_time?.length >0&&
-                <div className='px-4 w-full'>
-                    <EventCard 
-                      event={feed?.eventPost}
-                      participants={feed?.participant}
-                    />
-                </div>
-             }
-
-           {/* <div className='flex flex-col'>
-               {feed?.requests?.map((req,index)=>{
-                
-                  return(
-                   <RequestCard 
-                    req={req}
-                    group={group}
-                    feed={feed}
-                    index={index}
-                   />
-                  )
-
-                 })
-
-               }
-
-          </div> */}
-         
+              </div> 
           <Comments 
              group ={ group }
              feed={feed}
@@ -255,7 +174,9 @@ return(
         </div>
      </div>
      <div className='flex flex-col'>
+        {participants?.length >0&&
          <h5 className=' font-semibold text-slate-600'>Host(s)</h5>
+        }
          <div className='flex flex-col space-y-2'>
             {participants?.map((participant)=>{
                return (

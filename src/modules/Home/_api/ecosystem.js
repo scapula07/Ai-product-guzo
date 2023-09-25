@@ -12,15 +12,33 @@ export const ecosystemApi = {
        
 
         const q = query(collection(db, "ecosystems"));
-        const ecosystems = []
+        // const ecosystems = []
           try{
-            const querySnapshot = await getDocs(q);
-            querySnapshot.docs.map((doc) => {
-                ecosystems.push({ ...doc.data(), id: doc.id })
+            // const querySnapshot = await getDocs(q);
+            // querySnapshot.docs.map((doc) => {
+            //     ecosystems.push({ ...doc.data(), id: doc.id })
               
-            })
+            // })
            
-            return ecosystems 
+            // return ecosystems 
+
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+              const ecosystems = []
+              querySnapshot.forEach((doc) => {
+                    ecosystems.push({ ...doc.data(), id: doc.id })
+                    console.log({ ...doc.data(), id: doc.id },"ecosystem")
+              });
+
+              console.log(ecosystems,"apiii")
+              return ecosystems 
+
+         
+            });
+            // unsubscribe()
+
+            // console.log(ecosystems,"api eee")
+           
+           
 
             }catch(e){
             console.log(e)

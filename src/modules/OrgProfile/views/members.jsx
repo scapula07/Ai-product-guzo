@@ -134,9 +134,7 @@ function ActiveMember({member,group}) {
         
 
         <div className='flex flex-col items-center space-y-3 py-4'>
-            <p className=' text-center font-light text-sm'>
-            Worem ipsum dolor sit amet, consectetur adi...
-            </p>
+      
 
             <div className='flex items-center space-x-3 py-2'> 
            

@@ -6,22 +6,23 @@ import {ImFilesEmpty} from "react-icons/im"
 import {RiCheckboxBlankFill} from "react-icons/ri"
 import {MdArrowDropUp} from "react-icons/md"
 import { shareApi } from './_api/share'
+import ClipLoader from "react-spinners/ClipLoader";
+import {ImCheckboxChecked,ImCheckboxUnchecked} from "react-icons/im"
+
+export default function Share({setOthers,currentUser,group,setShare,access,setAccess,eco,checked,setChecked}) {
 
 
-export default function Share({setOthers,currentUser,group,setShare}) {
-    const [eco,setEco]=useState([])
-     useEffect(()=>{
-        const getAllEcosystems=async()=>{
-            const ecosystems=await shareApi.getAllEcosytems()
-            setEco(ecosystems)
-            console.log(ecosystems,"ecosystems")
+    const [arePosts,setPost]=useState("")
 
-        }
-        getAllEcosystems()
 
-      },[])
+    const close=()=>{
+      setOthers(false) 
+  
+      setChecked(false)
+      
+    }
   return (
-    <div className='w-full flex justify-center'>
+    <div className='w-full flex justify-center no-scrollbar'>
       
          <div className='w-4/5 flex flex-col h-full space-y-10 py-4 '>
          <div className='flex items-center space-x-2 w-full'>
@@ -90,48 +91,36 @@ export default function Share({setOthers,currentUser,group,setShare}) {
                  <div className='flex flex-col'>
                     <h5 className='text-sm font-semibold'>Which ecosystem(s) do you want your post to appear in?</h5>
 
-                    <div className='flex flex-col bg-white' style={{background: "rgba(255, 255, 255, 1)"}}>
-                        <div className='flex flex-col space-y-5 py-4'>
-                            {["Guzo feed","Post to My Profile"].map((text)=>{
-                                 return(
-                                    <div className='flex items-center space-x-2'>
-                                        <input
-                                          type={"checkbox"}
-                                         />
-                                        <h5 className='text-sm font-semibold'>{text}</h5>
-        
-                                    </div>
-    
-
-                                 )
-                               })
-
-                            }
-                           
-                        </div>
-                        <div className='flex flex-col space-y-5 py-4'>
-                           <h5 className='text-sm font-semibold'>Ecosystems</h5>
-                           <div className='flex items-center space-x-2'>
-                                <input
-                                    type={"checkbox"}
-                                    />
-                                <h5 className='text-sm font-semibold'>Select All Ecosystems</h5>
-
-                          </div>
+                    <div className='flex flex-col bg-white px-4 py-4 rounded-lg' style={{background: "white"}}>
+                        <div className='flex flex-col space-y-5 py-1'>
+                     
                           <div className='flex flex-col space-y-2 px-3'>
-                            {eco.map((eco)=>{
+                             {eco?.map((eco)=>{
+                              
                                     return(
-                                        <div className='flex items-center space-x-2'>
-                                            <input
-                                            type={"checkbox"}
-                                            />
-                                            <h5 className='text-sm font-semibold'>{eco?.name}</h5>
-            
-                                        </div>
-        
+                                       <Pick  
+                                       eco={eco}
+                                       access={access}
+                                       setAccess={setAccess}
+                                       checked={checked}
+                                       setChecked={setChecked}
+                                       />
+                                )
 
-                                    )
-                                })
+                               
+                            })}
+                              {arePosts?.length===0&&eco?.length ===0&&
+                                <div className='w-full flex justify-center py-10'>
+                                <ClipLoader 
+                                        color={"rgba(62, 51, 221, 1)"}
+                                        loading={true}
+                                    />
+                                </div>
+                              }
+                               {arePosts?.length >0&&
+                                  <div className='w-full flex justify-center py-10'>
+                                    <h5 className="text-sm font-semibold">No ecosystem</h5>
+                                </div>
 
                                 }
 
@@ -152,8 +141,8 @@ export default function Share({setOthers,currentUser,group,setShare}) {
                    <div className='flex items-center items-center space-x-6'>
                           <button 
                         
-                             className='text-blue-700 rounded-full px-12 py-1.5 border border-blue-700'
-                             onClick={()=>setOthers(false)}
+                             className='text-blue-700 rounded-full px-12 py-1.5'
+                             onClick={close}
                             >
                             Back
                         </button>
@@ -162,9 +151,10 @@ export default function Share({setOthers,currentUser,group,setShare}) {
 
                         <button
                              style={{background: "rgba(236, 235, 254, 1)"}}
-                             className='text-blue-700 rounded-full px-12 py-1.5'
+                             className='text-blue-700 rounded-full text-sm px-8 py-1.5'
+                             onClick={()=>setOthers(false)}
                             >
-                            Next
+                            Save and continue
                         </button>
 
 
@@ -175,4 +165,48 @@ export default function Share({setOthers,currentUser,group,setShare}) {
        </div>
     </div>
   )
+}
+
+
+
+
+const Pick=({eco,access,setAccess,checked,setChecked})=>{
+
+    const add=()=>{
+
+      console.log(eco)
+
+      setAccess([...access,eco?.name])
+       setChecked(true)
+    }
+    const remove=()=>{
+      setChecked(false)
+      access?.filter((id)=>id===eco?.name)
+      setAccess( access?.filter((id)=>id !=eco?.name))
+   }
+
+   console.log(access,"accesss")
+    return(
+        <div className='flex items-center space-x-2'>
+           {checked?
+                  <ImCheckboxChecked
+                    className='text-slate-500 text-sm'
+                    onClick={remove}
+
+                />
+                :
+                <ImCheckboxUnchecked
+                className='text-slate-500 text-sm'
+                onClick={add}
+              />
+
+           }
+         
+           
+
+
+            <h5 className='text-sm font-semibold'>{eco?.name}</h5>
+
+        </div>
+     )
 }

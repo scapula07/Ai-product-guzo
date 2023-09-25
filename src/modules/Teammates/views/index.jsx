@@ -178,31 +178,6 @@ const Form=({ invitee,setInvitee})=>{
     return(
 
         <div className='flex flex-col py-8 space-y-6'>
-            <div className='flex items-center w-full space-x-4'>
-                <div className='flex flex-col w-1/2 space-y-2'>
-                    <label className='text-sm text-slate-700'>First Name</label>
-                    <input 
-                        placeholder='First Name'
-                        className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
-                        name="firstName"
-                        onChange={(e)=>setInvitee({...invitee,firstName:e.target.value})}
-                    
-
-                    />
-
-                </div>
-                <div className='flex flex-col w-1/2 space-y-2'>
-                    <label className='text-sm text-slate-700'>Last Name</label>
-                        <input 
-                            placeholder='Last Name'
-                            className=' py-2 px-4 w-full rounded-md text-sm outline-none border '
-                            name="lastName"
-                            onChange={(e)=>setInvitee({...invitee,lastName:e.target.value})}
-                        />
-
-                </div>
-
-            </div>
             <div className='flex flex-col w-full space-y-2'>
                     <label className='text-sm text-slate-700'>Email</label>
                         <input 

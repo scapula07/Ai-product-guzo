@@ -12,6 +12,12 @@ import { groupState,userState } from '../../Recoil/globalstate'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from 'react-router-dom'
 import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
+import { db } from '../../Firebase'
+import { collection,  onSnapshot,
+    doc, getDocs,
+    query, orderBy, 
+    limit,getDoc,setDoc ,
+   updateDoc,addDoc } from 'firebase/firestore'
 
 export default function Ecosystems() {
   
@@ -22,22 +28,37 @@ export default function Ecosystems() {
    
 
     useEffect(()=>{
-        const getEcosytems=async()=>{
-            const ecosystems=await ecosystemApi.getAllEcosystems()
+        // const getEcosytems=async()=>{
+        //     const ecosystems=await ecosystemApi.getAllEcosystems()
+        //     console.log(ecosystems,"eccccc")
+        //     setEco(ecosystems)
+        //      }
+        // getEcosytems()
+        const q = query(collection(db, "ecosystems"));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const ecosystems = []
+            querySnapshot.forEach((doc) => {
+                  ecosystems.push({ ...doc.data(), id: doc.id })
+                  console.log({ ...doc.data(), id: doc.id },"ecosystem")
+            });
+
+            console.log(ecosystems?.filter((e)=>e?.creator != "89KrYw1jUimaAgpyjx2s"),"filterrrrr eco")
             setEco(ecosystems)
-             }
-        getEcosytems()
+    
+
+       
+          });
        },[])
         
        console.log(ecosystems,"ecosystem home")
       
   return (
     <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
-        {ecosystems?.length >0 &&ecosystems?.map((eco,)=>{
+        {ecosystems?.length >0 &&ecosystems?.filter((e)=>e?.id !== group?.id)?.map((eco,)=>{
 
             const isPending= eco?.pending?.some(e=>e?.id ===group?.id)
             console.log(isPending,eco?.name)
-            const isMember= eco?.active?.some(e=>e?.id ===currentUser?.id) || eco?.creator ===currentUser?.id;
+            const isMember= eco?.active?.some(e=>e?.id ===group?.id) || eco?.creator ===group?.id;
             console.log(isMember,)
             return(
                
@@ -77,9 +98,9 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
         setLoading(true)
         try{
           const result =await ecosystemApi.joinRequest(id,currentUser,group)
-          setLoading(false)
+          result&&setLoading(false)
      
-          result&&navigate(`/connections/${group?.id}/pending`)
+        //   result&&navigate(`/connections/${group?.id}/pending`)
 
         //  const response =await notificationApi.sendNotification(currentUser?.accessToken,currentUser?.notificationToken)
           
@@ -108,9 +129,6 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
         </div>
 
         <div className='flex flex-col items-center space-y-3 py-4'>
-            <p className=' text-center font-light text-sm'>
-            Worem ipsum dolor sit amet, consectetur adi...
-            </p>
      
             {!isPending?
       

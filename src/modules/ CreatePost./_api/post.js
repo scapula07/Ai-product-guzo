@@ -77,12 +77,13 @@ export const postApi= {
              
            const postRef=doc(db,"posts",postSnap?.id)
            const docSnap = await getDoc(postRef);
-           if(docSnap.exists()){
-              const response=await createGroupChat(docSnap?.id,docSnap?.data(),group)
+           return docSnap.exists()
+        //    if(docSnap.exists()){
+        //       const response=await createGroupChat(docSnap?.id,docSnap?.data(),group)
 
-              return true
+        //       return true
 
-           }
+        //    }
             
 
           }catch(e){

@@ -43,6 +43,7 @@ export const ecosystemApi= {
                                 memberships:[
                                     ...memberships,
                                     {
+                                      id:docSnap.id,
                                     ...docSnap?.data()
                                     }
                                   ]
@@ -56,6 +57,7 @@ export const ecosystemApi= {
                                 ecosystems:[
                                     ...member?.ecosystems,
                                     {
+                                        id:docSnap.id,
                                         ...docSnap?.data()
 
 

@@ -12,6 +12,12 @@ import orgprofile from "../assets/orgcover.png"
 import { userState } from '../Recoil/globalstate'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
+import { collection,  onSnapshot,
+  doc, getDocs,
+  query, orderBy, 
+  limit,getDoc,setDoc ,
+ updateDoc,addDoc,where } from 'firebase/firestore'
+import { db } from '../Firebase'
 
 export default function SidePanel() {
 
@@ -24,39 +30,37 @@ export default function SidePanel() {
   const { id} = useParams();
    console.log(id,"iddd")
 
-   
+   const isGroup= organizations?.length >0 || ecosystems?.length >0
+
      useEffect(()=>{
       const isGroup= organizations?.length >0 || ecosystems?.length >0
  
-       isGroup&&setTeam([currentUser,...organizations,...ecosystems])
+       isGroup&&setTeam([...organizations,...ecosystems])
    
       
-       isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
+       isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
        
     
       },[currentUser,isUpdate])
-      useEffect(()=>{
-        // const isGroup= organizations?.length >0 || ecosystems?.length >0
-   
-        //  isGroup&&setTeam([currentUser,...organizations,...ecosystems])
-     
-        
-         setGroup(currentUser)
-      
-        },[])
-        const isGroup= organizations?.length >0 || ecosystems?.length >0
-        currentUser?.id?.length>0&&!isGroup&&setGroup(currentUser)
-      console.log(group,"side pannel")
+ 
+    
+    //  group?.id?.length ==undefined&&!isGroup&&setGroup(team[0])
+     const isTeammate=team?.some((group)=>group?.teammates?.some(e=>e?.id ===currentUser?.id) )
+     currentUser?.id?.length>0&&!isGroup&&setGroup(currentUser)
+
+     console.log(isTeammate,"iiiisssss")
+          
+
 
 
       const currentPath = window.location.pathname;
       
-    console.log(team,"team")
+    console.log(group,"team ppppp")
   console.log(currentUser,"user current lllll")
   return (
     <div className='lg:px-4 py-8 '>
       <div className='flex flex-col space-y-4 items-center'>
-          {currentUser?.id?.length >0 &&
+          {currentUser?.id?.length >0 &&!isTeammate&&
             <>
               {currentUser?.img?.length ===0?
                    <Link to={`/home/${group?.id}`}>
@@ -82,7 +86,7 @@ export default function SidePanel() {
         
           </>
 
-          }
+           }
           {team?.length >0 &&
           <>
             
@@ -93,13 +97,17 @@ export default function SidePanel() {
                     <>
                     {isTeammate&&
                         <Link to={`/home/${group?.id}`}>
-                          <div className='rounded-lg p-0.5 items-center justify-center flex border'>
+                          {/* <div className='rounded-lg p-0.5 items-center justify-center flex border'>
                               <img 
                                 src={group?.img}
                                 className="h-8 w-8 rounded-full"
                                 onClick={()=>setGroup(group)}
                               />
-                          </div>
+                          </div> */}
+                          <TeamTile 
+                            group={group}
+                            setGroup={setGroup}
+                          />
                        </Link>
                     }
                     
@@ -130,23 +138,30 @@ export default function SidePanel() {
 }
 
 
-const groups=[
-  {
-    img:org1,
-    type:"eco",
-    name:"Ion Houston",
-    profile:ionprofile,
-    cover:ioncover
-   
 
-   },
-  {
-    img:org2,
-    type:"org",
-    name:"Common Desk",
-    profile:orgprofile,
-    cover:orgcover
-   
 
-  }
-]
+const TeamTile=({group,setGroup})=>{
+  const [img,setImg]=useState("")
+  useEffect(()=>{
+    const collectionName= group?.type=="eco"?"ecosystems":"organizations"
+    const unsub = onSnapshot(doc(db,collectionName,group?.id), (doc) => {
+      console.log("Current data: ", doc.data()?.img);
+      setImg(doc.data()?.img)
+    });
+  
+  
+    
+  },[])
+     
+
+   return(
+    <div className='rounded-lg p-0.5 items-center justify-center flex border'>
+        <img 
+          src={img}
+          className="h-8 w-8 rounded-full"
+          onClick={()=>setGroup(group)}
+        />
+   </div>
+
+   )
+}

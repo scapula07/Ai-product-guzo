@@ -8,7 +8,7 @@ export default function Tabs({setActive,active}) {
           onClick={()=>setActive("feed")}
         >
           
-               <h5 className='text-sm font-semibold'>Ecosystem Feed</h5>
+               <h5 className='text-sm font-semibold'> Feed</h5>
            
            
         </div>

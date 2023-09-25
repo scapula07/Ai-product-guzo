@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useRef,useEffect} from 'react'
 import img2 from "../assets/feedorg.png"
 import {IoMdImage} from "react-icons/io"
 import {AiTwotoneCalendar,AiOutlineHistory} from "react-icons/ai"
@@ -14,7 +14,9 @@ import { postApi } from './_api/post'
 import ClipLoader from "react-spinners/ClipLoader";
 import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
 import ReactSelect from "react-select";
-
+import eco from "../assets/img3.png"
+import org from "../assets/img2.png"
+import { shareApi } from './_api/share'
 
 export default function CreatePosts ({group,currentUser,setTrigger}) {
 
@@ -28,8 +30,11 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
      const [share,setShare]=useState(false)
      const [others,setOthers]=useState(false)
      const [isLoading,setLoader]=useState(false)
-
+     const [access,setAccess]=useState([])
+     const [checked,setChecked]=useState(false)
      const [requests,setRequests]=useState([])
+     const [eco,setEco]=useState([])
+     const [viewAll,setViewAll]=useState([])
 
     const [post,setPost]=useState({
                                   title:"",
@@ -95,16 +100,33 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
        };
 
 
+       useEffect(()=>{
+        const getAllEcosystems=async()=>{
+            const ecosystems=await shareApi.getAllEcosytems(group)
+            setEco(ecosystems)
+            console.log(ecosystems,"ecosystems")
+            ecosystems?.length===0 &&setPost("No Feeds")
+            ecosystems?.length >0 &&setPost("")
+        
+            
+            const access=[]
+            ecosystems?.map((eco)=>{
+                access.push(eco?.name)
+             
+              })
+              setViewAll(access) 
+
+        }
+        getAllEcosystems()
+
+      },[])
+
     console.log(others,"others")
     console.log(participants,"requestiii")
 
     const makePost=async(group)=>{
       setErrorMsg(null)
-      if (post?.title?.length< 3) {
-        setErrorMsg(' Post Title is required ');
-        setLoader(false);
-        return;
-      }
+
 
       if (post?.body?.length< 3) {
         setErrorMsg( 'Post body is required ');
@@ -125,7 +147,8 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
             requests,
             eventPost,
             contacts:[],
-            participant:participants
+            participant:participants,
+            access:access?.length ==0? viewAll:access
         }
 
 
@@ -150,33 +173,9 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
        { others?
        
           <>
-              {request&&<Request  
-                   setOthers={setOthers}
-                   requestPost={requestPost}
-                   setRequest={setRequest}
-                   setRequests={setRequests}
-                   requests={requests}
-                   setReq={setReq}
-
-              
-                />}
-              {event&&<Events  
-                       setOthers={setOthers}
-                       eventPost={eventPost}
-                       setEvt={setEvt}
-                       setEvent={setEvent}
-                       setParticipants={setParticipants}
-                      
-
-              />}
-              {file&&<Files 
-                setOthers={setOthers}
-                url={url}
-                setUrl={setUrl}
-                setPost={setPost}
-                post={post}
-                setFile={setFile}
-               />}
+         
+   
+    
                {img&&<Image
                 setOthers={setOthers}
                 url={url}
@@ -185,14 +184,16 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                 post={post}
                 setImg={setImg}
                />}
-               {
-
-               }
               {share&&<Share  
                    setOthers={setOthers}
                    group={group}
                    currentUser={currentUser}
                    setShare={setShare}
+                   access={access}
+                   setAccess={setAccess}
+                   eco={eco}
+                   checked={checked}
+                   setChecked={setChecked}
                />}
 
 
@@ -252,7 +253,26 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                
                     <div className='flex flex-col '>
                         <h5 className='font-semibold'>{group?.name}</h5>
-                        <h5 className='text-sm font-light'>{group?.type}</h5>
+                    
+                          {group?.type=="eco"?
+                                         <div className="flex items-center space-x-1">
+                                           <img 
+                                            src={eco}
+                                            className="w-3 h-3"
+                                           />
+                                           <h5 className='text-xs'>Ecosystem</h5>
+
+                                         </div>
+                                       :
+                                       <div className="flex items-center space-x-1">
+                                             <img 
+                                             src={org}
+                                             className="w-3 h-3"
+                                             />
+                                       <h5 className='text-xs'>Organization</h5>
+
+                                     </div>
+                         }
                         <div className='flex items-center space-x-1'>
                             <h5 className='text-sm font-semibold '>Share Options</h5>
                             <MdArrowDropDown 
@@ -286,7 +306,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                  }
          </div>
 
-         <div className='flex flex-col space-y-4'>
+         <div className='flex flex-col space-y-4 justify-between h-full'>
                     <>
                     { url?.src?.length > 0&&
                         <div className='w-1/2 py-4'>
@@ -305,7 +325,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
                      
 
-                <div className='flex flex-col w-full space-y-2'>
+                {/* <div className='flex flex-col w-full space-y-2'>
                         <label className='text-sm text-slate-700'>Post Title*</label>
                         <input 
                             placeholder='Give your post a title...'
@@ -316,13 +336,15 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
      
                         />
 
-                 </div>
+                 </div> */}
 
                  <div className='flex flex-col w-full space-y-2'>
-                        <label className='text-sm text-slate-700'>Post body*</label>
+                        {/* <label className='text-sm text-slate-700'>Post body*</label> */}
                         <textarea
-                            placeholder='Include a description of your opportunity, request, project, event, initiative, need.....'
-                            className=' py-2 px-4 w-full rounded-md text-sm outline-none border'
+                            placeholder='Share a need/request/opportunity with your ecosystem...'
+                            style={{background: "#f8f8f8"}}
+
+                            className=' py-2 px-4 w-full rounded-md text-lg outline-none bg-[rgba(242, 242, 242, 0.6)]'
                             name="body"
                             value={post?.body}
                             onChange={(e)=>setPost({...post,body:e.target.value})}
@@ -331,7 +353,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                         />
 
                  </div>
-                  <div className='flex flex-col'>
+                  {/* <div className='flex flex-col'>
                     {requests?.length>0&&requests?.map((req)=>{
                          return(
                             <RequestCard 
@@ -341,18 +363,18 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
                         })}
 
-                  </div>
+                  </div> */}
                  
 
 
-                <button className='text-blue-700 rounded-full px-8 py-1.5 w-1/2'
+                {/* <button className='text-blue-700 rounded-full px-8 py-1.5 w-1/2'
                         style={{background: "rgba(236, 235, 254, 1)"}}
                         onClick={()=>setReq(true) || setOthers(true)}
                         >
                  Add a Request
-                </button>
+                </button> */}
               
-                 <div className='flex flex-col w-full space-y-2'>
+                 {/* <div className='flex flex-col w-full space-y-2'>
                         <label className='text-sm text-slate-700'>Tags</label>
                         <ReactSelect 
                          placeholder='Add up to (5) descriptive tags that will help people discover your post....'
@@ -366,26 +388,19 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                     <EventCard 
                     eventPost={eventPost}
                   />
-                 }
+                 } */}
                 
 
-                 <div className='flex  flex-col space-y-4'>
-                    <h5 className='text-sm font-semibold'>Additional Details</h5>
+                 <div className='flex  flex-col space-y-4 py-4'>
+                    <h5 className='text-sm font-semibold'>Add a photo</h5>
 
                     <div className='flex items-center space-x-4'>
                         {[{
                             icon:<IoMdImage/>,
                             click:()=>setImg(true)
                            },
-                            {
-                                icon:<AiTwotoneCalendar />,
-                                click:()=>setEvent(true)
-                            },
-                            {
-                                icon:<ImFilesEmpty/>,
-                                click:()=>setFile(true)
-                         }
-                        ].map((action)=>{
+                            
+                         ].map((action)=>{
                             return(
                                 <h5 className='rounded-full p-3 items-center justify-center text-lg text-slate-700'
                                   style={{background: "rgba(242, 242, 242, 1)" }}
@@ -401,7 +416,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
                     </div>
 
-                    <div className='flex w-full items-center justify-center'>
+                    {/* <div className='flex w-full items-center justify-center'>
                         {[1,2].map(()=>{
                              return(
                                 <RiCheckboxBlankFill
@@ -413,16 +428,16 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                         }
                        
 
-                      </div>
+                      </div> */}
                  </div>
 
                  <div className='flex items-center justify-end'>
                     <div className='flex items-center space-x-4'>
                         <h5
-                             className='text-blue-700 rounded-full px-4 py-2'
-                           style={{background: "rgba(236, 235, 254, 1)"}}
+                          className='text-blue-700 text-sm font-semibold rounded-full px-4 py-2'
+                        
                         >
-                          <AiOutlineHistory />
+                          Close
                         </h5>
                         {isLoading?
                              

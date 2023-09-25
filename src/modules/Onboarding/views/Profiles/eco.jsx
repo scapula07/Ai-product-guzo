@@ -9,6 +9,8 @@ import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
 import ReactSelect from "react-select";
 import axios from "axios"
 import { BsFlag } from 'react-icons/bs'
+import { formatPhoneNumber } from '../../../Utils/formatPhoneNumber';
+
 
 export default function Eco({currentUser}) {
     console.log(currentUser,"indiv")
@@ -273,7 +275,7 @@ export default function Eco({currentUser}) {
                         style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                         name="phoneNum"
                         value={phoneNum}
-                        onChange={(e)=>setNum(e.target.value)}
+                        onChange={(e)=>setNum(formatPhoneNumber(e.target.value))}
                 
                 
                     />
@@ -337,12 +339,17 @@ export default function Eco({currentUser}) {
             <div className='flex flex-col w-full px-10'>  
 
                 <label className='text-sm text-slate-600 font-semibold'>Descriptive Tags</label>
-                       <ReactSelect 
+                       {/* <ReactSelect 
                          placeholder='Add tags separated by a comma...'
                          styles={style}
                          isMulti 
                          onChange={handleTagChange} 
-                         options={options} />
+                         options={options} /> */}
+                    <input 
+                        placeholder='Add tags separated by a comma...'
+                        className=' py-2 px-4 w-full rounded-md text-sm outline-none'
+                        style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
+                    />
 
                     <h5 className='font-light text-slate-500 text-sm '>Tags help Guzo curate relevant connections and opportunities.</h5>
 

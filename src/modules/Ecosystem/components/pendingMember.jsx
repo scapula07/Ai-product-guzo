@@ -117,7 +117,7 @@ export default function PendingMember({group,member,setMembers}) {
                        
                  </div>
 
-                <div className='flex items-center justify-end w-1/3 '>
+                <div className='flex items-center justify-end w-1/2 '>
                     <div className='w-1/3 flex items-center space-x-8 '>
                          {ignore?
                     
@@ -160,7 +160,7 @@ export default function PendingMember({group,member,setMembers}) {
             </div>
         </div>
         <div className='px-8 pb-5'>
-                <div className='bg-slate-200 py-2 px-4 h-20 rounded-lg flex flex-col space-y-6'>
+                {/* <div className='bg-slate-200 py-2 px-4 h-20 rounded-lg flex flex-col space-y-6'>
                     <h5 className='text-xs'>Qorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate consectetur adipiscing...
                       <span className='text-black text-sm font-semibold'>see more</span>
                     </h5>
@@ -183,7 +183,7 @@ export default function PendingMember({group,member,setMembers}) {
 
                         }
 
-                </div>
+                </div> */}
             </div>
 
           {errorMsg && (

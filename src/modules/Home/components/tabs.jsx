@@ -9,7 +9,7 @@ export default function Tabs() {
            onClick={()=>setActive("feeds")}
         >
             <Link to="">
-               <h5 className={`${active==="feeds" ?'text-sm font-semibold border-b-2 border-blue-600':'text-sm font-semibold'}`} >Feeds</h5>
+               <h5 className={`${active==="feeds" ?'text-sm font-semibold border-b-2 border-blue-600':'text-sm font-semibold'}`} >Feed</h5>
             </Link>
            
         </div>
