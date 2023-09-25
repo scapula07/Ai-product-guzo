@@ -45,8 +45,17 @@ export default function SidePanel() {
  
     
     //  group?.id?.length ==undefined&&!isGroup&&setGroup(team[0])
-     const isTeammate=team?.some((group)=>group?.teammates?.some(e=>e?.id ===currentUser?.id) )
-     currentUser?.id?.length>0&&!isGroup&&setGroup(currentUser)
+    const isTeammate=team?.some((group)=>group?.teammates?.some(e=>e?.id ===currentUser?.id) )
+    currentUser?.id?.length>0&&!isGroup&&setGroup(currentUser)
+    // if(!isGroup){
+      
+    //   // const isTeammate=team?.some((group)=>group?.teammates?.some(e=>e?.id ===currentUser?.id) )
+    //   currentUser?.id?.length>0&&setGroup(currentUser)
+    // }else{
+     
+    //   currentUser?.id?.length>0&&!isGroup&&setGroup(currentUser)
+    // }
+
 
      console.log(isTeammate,"iiiisssss")
           
