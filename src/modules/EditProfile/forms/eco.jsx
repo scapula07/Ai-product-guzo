@@ -128,7 +128,7 @@ export default function EcoForms({profile,setUpdate}) {
                   <div className="border-[1px] border-[rgba(242,242,242,0.6)] rounded-[8px] w-full">
                         <ReactSelect
                             styles={style}
-                            placeholder='Neighborhood, City, or Zip'
+                            placeholder={profile?.location}
                             options={
                             countries &&
                             countries?.map((item, index) => ({
@@ -152,7 +152,8 @@ export default function EcoForms({profile,setUpdate}) {
                             }}
                             onChange={(opt) => {
                             setSelectedCountry(opt);
-                            setSelectedCity({label:opt?.cities[0], value :opt?.cities[0]})
+                            // setSelectedCity({label:opt?.cities[0], value :opt?.cities[0]})
+                              setUpdate({...profile,location:opt?.label})
                             }}
                         />
                     </div>

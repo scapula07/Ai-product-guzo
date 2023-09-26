@@ -92,7 +92,7 @@ export default function IndividualForms({profile,setUpdate}) {
                   <div className="border-[1px] border-[rgba(242,242,242,0.6)] rounded-[8px] w-full">
                         <ReactSelect
                             styles={style}
-                            placeholder='Neighborhood, City, or Zip'
+                            placeholder={profile?.location}
                             options={
                             countries &&
                             countries?.map((item, index) => ({
@@ -115,8 +115,9 @@ export default function IndividualForms({profile,setUpdate}) {
                             IndicatorSeparator: () => null,
                             }}
                             onChange={(opt) => {
-                            setSelectedCountry(opt);
-                            setSelectedCity({label:opt?.cities[0], value :opt?.cities[0]})
+                                setUpdate({...profile,location:opt?.label})
+                                setSelectedCountry(opt);
+                            // setSelectedCity({label:opt?.cities[0], value :opt?.cities[0]})
                             }}
                         />
                     </div>

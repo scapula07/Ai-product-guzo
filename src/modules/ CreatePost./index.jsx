@@ -14,7 +14,7 @@ import { postApi } from './_api/post'
 import ClipLoader from "react-spinners/ClipLoader";
 import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
 import ReactSelect from "react-select";
-import eco from "../assets/img3.png"
+import ecoImg from "../assets/img3.png"
 import org from "../assets/img2.png"
 import { shareApi } from './_api/share'
 
@@ -256,7 +256,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                           {group?.type=="eco"?
                                          <div className="flex items-center space-x-1">
                                            <img 
-                                            src={eco}
+                                            src={ecoImg}
                                             className="w-3 h-3"
                                            />
                                            <h5 className='text-xs'>Ecosystem</h5>

@@ -16,26 +16,52 @@ import BeatLoader from "react-spinners/BeatLoader";
 import Join from '../../JoinPost'
 import { calculateTimeOfPost } from '../../Utils/calculateTime'
 import DeletePost from '../../DeletePost'
-
+import { db } from '../../Firebase'
+import { doc,getDoc,setDoc , updateDoc,collection,addDoc,getDocs,query,where,orderBy,onSnapshot}  from "firebase/firestore";
 
 export default function Posts({group}) {
    const [feeds,setFeed]=useState([])
    const [arePosts,setPost]=useState("")
 
     
-   useEffect(()=>{
+  //  useEffect(()=>{
 
-      const getProfileFeeds=async()=>{
-          const feeds=await feedApi.getProfileFeeds(group?.id)
+  //     const getProfileFeeds=async()=>{
+  //         const feeds=await feedApi.getProfileFeeds(group?.id)
+  //         feeds?.length===0 &&setPost("No Feeds")
+  //         feeds?.length >0 &&setPost("")
+
+  //         setFeed(feeds)
+
+  //        }
+  //        getProfileFeeds()
+
+  //  },[])
+
+  useEffect(()=>{
+
+    if(group?.id?.length >0){
+        const q = query(collection(db, "posts"), where("creator_id", "==",group?.id),orderBy("createdAt", "desc"));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          const feeds= [];
+          querySnapshot.forEach((doc) => {
+              feeds.push({...doc?.data(),id:doc?.id});
+              console.log(doc?.data(),"feeed")
+          });
           feeds?.length===0 &&setPost("No Feeds")
           feeds?.length >0 &&setPost("")
-
+        
           setFeed(feeds)
+        });
+        return () => {
+          unsubscribe()
 
-         }
-         getProfileFeeds()
+       };
 
-   },[])
+    }
+
+},[group])
+
   return (
     <div className='flex flex-col space-y-4'>
       {feeds?.map((feed)=>{
