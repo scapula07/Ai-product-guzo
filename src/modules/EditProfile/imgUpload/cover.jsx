@@ -68,7 +68,7 @@ export default function Cover({url,setUrl,group,file,setFile}) {
                             :
                             <>
                          
-                          {group?.cover?.length >undefined?
+                          {group?.cover?.length >undefined || group?.cover?.length > 0 ?
                                 <div className=' h-56 w-full flex flex-col justify-center items-center' style={{background: "rgba(242, 242, 242, 0.6)"}}
                                 >
                                         <img 

@@ -9,10 +9,10 @@ import { shareApi } from './_api/share'
 import ClipLoader from "react-spinners/ClipLoader";
 import {ImCheckboxChecked,ImCheckboxUnchecked} from "react-icons/im"
 
-export default function Share({setOthers,currentUser,group,setShare,access,setAccess,eco,checked,setChecked}) {
+export default function Share({setOthers,currentUser,group,setShare,access,setAccess,eco,checked,setChecked,arePosts}) {
 
 
-    const [arePosts,setPost]=useState("")
+  
 
 
     const close=()=>{

@@ -35,7 +35,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
      const [requests,setRequests]=useState([])
      const [eco,setEco]=useState([])
      const [viewAll,setViewAll]=useState([])
-
+     const [arePosts,setArePost]=useState("")
     const [post,setPost]=useState({
                                   title:"",
                                   body:"",
@@ -105,8 +105,8 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
             const ecosystems=await shareApi.getAllEcosytems(group)
             setEco(ecosystems)
             console.log(ecosystems,"ecosystems")
-            ecosystems?.length===0 &&setPost("No Feeds")
-            ecosystems?.length >0 &&setPost("")
+            ecosystems?.length===0 &&setArePost("No Feeds")
+            ecosystems?.length >0 &&setArePost("")
         
             
             const access=[]
@@ -193,6 +193,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                    eco={eco}
                    checked={checked}
                    setChecked={setChecked}
+                   arePosts={arePosts}
                />}
 
 
