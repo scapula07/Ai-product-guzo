@@ -74,9 +74,19 @@ export default function SidePanel() {
       const isGroup= organizations?.length >0 || ecosystems?.length >0
  
        isGroup&&setTeam([...organizations,...ecosystems])
+ 
    
+      if(currentUser?.display?.length != undefined && isGroup==true){
+        console.log(currentUser?.id,"if block 1111")
+        isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
+      }else if(currentUser?.display?.length != undefined && isGroup==false){
+         console.log(currentUser?.id,"if block 222")
+       setGroup([currentUser].find(group=>group?.id===id))
+      }else{
+        console.log(currentUser?.id,"if block 33")
+        isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
+      }
       
-       isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
        
     
       },[currentUser,isUpdate])

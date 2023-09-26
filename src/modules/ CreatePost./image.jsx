@@ -21,7 +21,11 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
             setPost({...post,img:dir})
     
         }
+   const handleDelete=()=>{
+       setUrl("")
+       setPost({...post,img:{}})
 
+   }
         const close=()=>{
           setOthers(false) 
           setImg(false)
@@ -90,6 +94,7 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
                                         
                               <BiSolidPencil
                                 className='text-blue-600 text-lg '
+                                onClick={handleClick}
                               />
                     
                                             
@@ -102,6 +107,7 @@ export default function Image({setOthers,setPost,post,setImg,url,setUrl}) {
 
                                 <MdDelete 
                                     className='text-white'
+                                    onClick={handleDelete}
                                     />
                               </h5>
 
