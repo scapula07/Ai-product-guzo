@@ -60,7 +60,7 @@ export default function Table({teams}) {
                 <td className='bg-white text-center w-1/5 py-2 px-8' >
                    <h5 className='py-1.5 px-2 text-xs font-semibold rounded-full ' style={{background: "rgba(252, 229, 67, 1)"}}>Pending</h5> 
                 </td>
-               <td className='bg-white text-center w-1/5 font-semibold text-2xl'>...</td>
+               <td className='bg-white text-center w-1/5 font-semibold text-2xl' onClick={""}>...</td>
                
             </tr>
            )
