@@ -1,4 +1,5 @@
 import React from 'react'
+import {BsThreeDots} from "react-icons/bs"
 
 export default function Table({teams}) {
   console.log(teams,"teammam")
@@ -30,7 +31,7 @@ export default function Table({teams}) {
                 {team?.type?.length>0?
                    <td className='bg-white text-center text-xs w-1/4'>{team?.name}</td>
                      :
-                   <td className='bg-white text-center text-xs w-1/4'>{team?.firstName + " " + team?.lastName }</td>
+                   <td className='bg-white text-center text-xs w-1/4'>{team?.firstName?.length != undefined? team?.firstName + " " + team?.lastName :team?.display }</td>
 
                  }
               
@@ -38,7 +39,7 @@ export default function Table({teams}) {
                 <td className='bg-white text-center w-1/5 py-2 px-8' >
                  <h5 className='py-1.5 px-2 text-xs font-semibold rounded-full ' style={{background: "rgba(169, 163, 249, 1)"}}>Admin</h5>
                  </td>
-               <td className='bg-white text-center w-1/5 font-semibold'>...</td>
+               <td className='bg-white text-center w-1/5 font-semibold text-2xl'>...</td>
                
             </tr>
            )
@@ -51,7 +52,7 @@ export default function Table({teams}) {
                 {team?.type?.length>0?
                    <td className='bg-white text-center text-xs w-1/4'>{team?.name}</td>
                      :
-                   <td className='bg-white text-center text-xs w-1/4'>{team?.firstName + " " + team?.lastName }</td>
+                   <td className='bg-white text-center text-xs w-1/4'>{team?.name }</td>
 
                  }
               
@@ -59,7 +60,7 @@ export default function Table({teams}) {
                 <td className='bg-white text-center w-1/5 py-2 px-8' >
                    <h5 className='py-1.5 px-2 text-xs font-semibold rounded-full ' style={{background: "rgba(252, 229, 67, 1)"}}>Pending</h5> 
                 </td>
-               <td className='bg-white text-center w-1/5'>...</td>
+               <td className='bg-white text-center w-1/5 font-semibold text-2xl'>...</td>
                
             </tr>
            )

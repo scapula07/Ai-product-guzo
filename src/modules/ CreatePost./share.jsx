@@ -98,13 +98,20 @@ export default function Share({setOthers,currentUser,group,setShare,access,setAc
                              {eco?.map((eco)=>{
                               
                                     return(
-                                       <Pick  
-                                       eco={eco}
-                                       access={access}
-                                       setAccess={setAccess}
-                                       checked={checked}
-                                       setChecked={setChecked}
-                                       />
+                                      <>
+                                          {eco?.type=="eco"&&
+                                              <Pick  
+                                              eco={eco}
+                                              access={access}
+                                              setAccess={setAccess}
+                                              checked={checked}
+                                              setChecked={setChecked}
+                                              />
+
+                                          }
+                                          
+                                      </>
+                          
                                 )
 
                                
@@ -176,13 +183,13 @@ const Pick=({eco,access,setAccess,checked,setChecked})=>{
 
       console.log(eco)
 
-      setAccess([...access,eco?.name])
+      setAccess([...access,eco?.id])
        setChecked(true)
     }
     const remove=()=>{
       setChecked(false)
-      access?.filter((id)=>id===eco?.name)
-      setAccess( access?.filter((id)=>id !=eco?.name))
+      access?.filter((id)=>id===eco?.id)
+      setAccess( access?.filter((id)=>id !=eco?.id))
    }
 
    console.log(access,"accesss")

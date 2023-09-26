@@ -12,7 +12,8 @@ export const shareApi= {
             collectionName= group?.type=="eco"?"ecosystems":"organizations"
             const docRef = doc(db, collectionName, group?.id);
             const docSnap = await getDoc(docRef);
-            const ecosystems=docSnap?.data()?.memberships
+            // const ecosystems=docSnap?.data()?.memberships
+            const ecosystems=docSnap?.data()?.active
        
            return ecosystems 
     

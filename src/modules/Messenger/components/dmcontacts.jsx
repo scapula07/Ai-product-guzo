@@ -4,7 +4,9 @@ import dm2 from "../../assets/orgcover.png"
 import {BsThreeDots} from "react-icons/bs"
 import { useEffect } from 'react'
 import ClipLoader from "react-spinners/ClipLoader";
-
+import ecoImg from "../../assets/img3.png"
+import org from "../../assets/img2.png"
+import indiv from "../../assets/indiv.png"
 
 export default function Dmcontacts({conversations,setCurrentChat,currentChat, currentUser,receiverInfo,setReceiver}) {
    useEffect(( )=>{
@@ -66,7 +68,42 @@ const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv
           {contact?.type?.length>0?
               <div className='flex flex-col'>
                 <h5 className='font-semibold text-sm'>{contact?.name}</h5>
-                <h5 className='text-sm'>{contact?.type}</h5>
+                {contact?.type=="eco"?
+             <div className="flex items-center space-x-1">
+             <img 
+             src={ecoImg}
+             className="w-3 h-3"
+             />
+             <h5 className='text-xs'>Ecosystem</h5>
+
+            </div>
+                  :
+                <>
+                  {contact?.type==="org"?
+                      <div className="flex items-center space-x-1">
+                          <img 
+                          src={org}
+                          className="w-3 h-3"
+                          />
+                        <h5 className='text-xs'>Organization</h5>
+                        </div>
+                        :
+                        <div className="flex items-center space-x-1">
+                          <img 
+                          src={indiv}
+                          className="w-3 h-3"
+                          />
+                        <h5 className='text-xs'>Individual</h5>
+                        </div>
+
+                        }
+                      
+                  </>
+            
+
+          
+                }
+               
               </div>
               :
               <div className='flex flex-col'>
@@ -78,7 +115,41 @@ const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv
 
                 }
                 
-                <h5 className='text-sm'>{contact?.type}</h5>
+                {contact?.type=="eco"?
+             <div className="flex items-center space-x-1">
+             <img 
+             src={ecoImg}
+             className="w-3 h-3"
+             />
+             <h5 className='text-xs'>Ecosystem</h5>
+
+         </div>
+        :
+       <>
+        {contact?.type==="org"?
+            <div className="flex items-center space-x-1">
+                 <img 
+                 src={org}
+                 className="w-3 h-3"
+                 />
+               <h5 className='text-xs'>Organization</h5>
+              </div>
+              :
+              <div className="flex items-center space-x-1">
+                 <img 
+                 src={indiv}
+                 className="w-3 h-3"
+                 />
+               <h5 className='text-xs'>Individual</h5>
+              </div>
+
+               }
+             
+         </>
+   
+
+ 
+       }
             </div>
 
         

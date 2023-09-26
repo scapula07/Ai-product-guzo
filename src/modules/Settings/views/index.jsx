@@ -1,11 +1,16 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Layout from "../../Layout"
 import { Link } from 'react-router-dom'
 import { groupState,userState } from '../../Recoil/globalstate'
 import { useRecoilValue } from 'recoil'
-
+import Modal from '../../Modal'
+import {AiOutlineClose } from "react-icons/ai"
+import DeleteAccount from '../../DeleteAccount'
 export default function Settings() {
   const group =useRecoilValue(groupState)
+  const currentUser =useRecoilValue(userState)
+
+  console.log(group,"grouppppp settingssss")
   return (
     <Layout>
          <div className='py-2 flex-col flex space-y-4'> 
@@ -16,16 +21,23 @@ export default function Settings() {
           <div className='flex flex-col w-full space-y-4  '>
               
               <Card 
-                    title="Options"
+                    title="settings"
+                    group={group}
                     body={[
                       {
-                        text: "Teammates",
+                        text: "Change password",
+                        link:"/register/reset"
+
+                      },
+                      {
+                        text: `${group?.type?.length>0? "Teammates" :""}`,
                         link:`/team/${group?.id}`
 
                       },
                       {
-                        text: "Delete account",
-                        link:""
+                        text: `${group?.creator==currentUser?.id? "Delete account" :""}`,
+                        link:"",
+                    
 
                       }
                       ]}
@@ -69,14 +81,19 @@ export default function Settings() {
 
           </div>
 
+  
+
     </Layout>
    
   )
 }
 
 
-const Card=({title,body})=>{
+const Card=({title,group,body})=>{
+  const [trigger,setTrigger]=useState(false)
      return(
+        <>
+     
         <div className='bg-white w-3/4 flex flex-col space-y-4 px-8 py-6'>
             <h5 className='text-sm font-semibold'>{title}</h5>
             {body?.map((option)=>{
@@ -89,7 +106,7 @@ const Card=({title,body})=>{
                     </Link>
                         }
                     {option?.text==="Delete account"&&
-                      <h5 className='text-sm font-light text-red-600' >{option?.text}</h5>
+                      <h5 className='text-sm font-light text-red-600'    onClick={()=>setTrigger(true)}>{option?.text}</h5>
 
                      }
                      </>
@@ -99,5 +116,22 @@ const Card=({title,body})=>{
             }
 
         </div>
+
+        <Modal trigger={trigger}  cname="w-1/4 py-2   px-4 rounded-lg ">
+             <div className='w-full flex justify-end px-6 py-4'>
+                <AiOutlineClose 
+                   onClick={()=>setTrigger(false)}
+                />
+              </div>
+
+
+              <DeleteAccount 
+               group={group}
+              />
+
+        </Modal>
+
+      
+        </>
      )
 }

@@ -8,6 +8,8 @@ import { groupState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
 import EcoFeed from './ecoFeed'
 import { profileApi } from '../../EditProfile/api'
+import { doc,getDoc,setDoc , updateDoc,collection,addDoc,getDocs,query,where,onSnapshot}  from "firebase/firestore";
+import { db } from '../../Firebase'
 
 export default function Profile() {
     const group =useRecoilValue(groupState)
@@ -19,15 +21,27 @@ export default function Profile() {
 
     
         useEffect(()=>{
-           const fetchProfile=async()=>{
-              const response =await profileApi.fetchProfile(group)
-              console.log(response,"res profile")
-              setUpdate(response,"response")
-            }
+      
+              // const response =await profileApi.fetchProfile(group)
+              // console.log(response,"res profile")
+              if(group?.id?.length >0){
+              let collectionName="users"
+              if(group?.type?.length >0){
+                collectionName= group?.type=="eco"?"ecosystems":"organizations"
+       
+              }
 
-           fetchProfile()
-
-         },[])
+              const unsub = onSnapshot(doc(db,collectionName,group?.id), (doc) => {
+                console.log("Current data: ", doc.data());
+                setUpdate(doc.data())
+               });
+              }
+            
+              // const profileRef =doc(db,collectionName,group?.id)
+              // const docSnap = await getDoc(profileRef);
+       
+              // return docSnap.data()
+             },[])
  
     
   return (

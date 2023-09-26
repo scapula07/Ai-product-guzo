@@ -111,7 +111,10 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
             
             const access=[]
             ecosystems?.map((eco)=>{
-                access.push(eco?.name)
+                if(eco?.type =="eco"){
+                  access.push(eco?.id)
+                }
+             
              
               })
               setViewAll(access) 
@@ -144,10 +147,6 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
         const payload={
             post,
-            requests,
-            eventPost,
-            contacts:[],
-            participant:participants,
             access:access?.length ==0? viewAll:access
         }
 

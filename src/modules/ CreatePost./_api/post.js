@@ -42,7 +42,7 @@ const createGroupChat=async(id,data,group)=>{
 
 export const postApi= {
     makePost:async function (group,payload,currentUser) {
-        console.log(payload,"ppp")
+        console.log(payload,group,"ppp")
         
         try{
              let postImg=""

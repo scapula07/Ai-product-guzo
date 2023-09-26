@@ -1,5 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import axios from "axios";
+import { onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Index from "./authentication/Index";
@@ -52,7 +53,7 @@ import { CreateAccount,
          EcoAccount,
          OrgAccount
          } from "./CreateAccount";
-
+import { groupState } from "./Recoil/globalstate";
 
 import PostManagemnet from "./Ecosystem/views/post";
 import ErrorBoundary from "./ErrorBoundary";
@@ -60,30 +61,31 @@ import ErrorBoundary from "./ErrorBoundary";
 
 const NewRoutes = () => {
   const [currentUser,setcurrentUser]=useRecoilState(userState)
+  const group=useRecoilState(groupState)
   console.log(currentUser,"user")
   let authListner=null
   const user = localStorage.getItem("user");
   useEffect( ()=>{
     
     console.log(JSON.parse(user),"user")
-    // setcurrentUser(JSON.parse(user))
-  // authListner=onAuthStateChanged(auth,(user)=>{
-  //     if (user !== null) {
-  //         const uid = user.uid;
-  //         const userRef =doc(db,"users", uid)
-  //         getDoc(userRef).then(res=> {
-  //         console.log(res.exists(),"exist")
-  //           setcurrentUser({...res.data(),id:uid})
-      
-  //         })
-  //       }
-  //       })
-  //     return(
-  //       authListner()
-  //     )
-
   
-    },[user])
+  },[user])
+
+  useEffect( ()=>{
+    if(group?.id?.length >0){
+      const unsub = onSnapshot(
+        doc(db, "ecosystems", "74hCT0Z4T5Tcft68HMJ2"), 
+        { includeMetadataChanges: true }, 
+        (doc) => {
+          // ...
+  
+          console.log(true,"ecosysysy listener")
+        });
+
+    }
+     
+  
+  },[group])
 
 
 

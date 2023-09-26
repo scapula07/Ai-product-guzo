@@ -41,7 +41,7 @@ export default function Feeds() {
 
             // const q = query(collection(db, "posts"),orderBy("createdAt", "desc"));
             if(group?.id?.length >0){
-                const q = query(collection(db, "posts"),where("access", "array-contains",""),orderBy("createdAt", "desc"));
+                const q = query(collection(db, "posts"),orderBy("createdAt", "desc"));
                 const unsubscribe = onSnapshot(q, (querySnapshot) => {
                   const feeds= [];
                   querySnapshot.forEach((doc) => {

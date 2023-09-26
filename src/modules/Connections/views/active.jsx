@@ -45,7 +45,7 @@ export default function Active() {
 
     </div>
 
-         {connects?.active?.length ===undefined &&
+         {connects?.active?.length ===undefined || connects?.active?.length ===0 &&
                <div className='w-full flex justify-center py-10'>
                   <h5 className="text-lg font-semibold">No active connections</h5>
                </div>

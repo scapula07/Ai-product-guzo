@@ -1,8 +1,9 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { calculateTimeOfPost } from '../../Utils/calculateTime'
 
 export default function Comment({feed}) {
    const time =calculateTimeOfPost(feed?.createdAt?.seconds)
+   const [trigger,setTrigger]=useState(false)
   return (
     <div className='flex flex-col w-full space-y-3 py-4'>
     <div className='flex items-center space-x-4'>
@@ -47,7 +48,7 @@ export default function Comment({feed}) {
     </div>
 
     <div className='flex flex-col pt-4 pb-2 w-full space-y-4'>
-       {feed?.comments?.map((comment)=>{
+       {feed?.comments?.slice(0,`${trigger?feed?.comments?.length :3}`)?.map((comment)=>{
           return(
               <div className='flex w-full space-x-1'>
                    <div className=''>
@@ -87,8 +88,19 @@ export default function Comment({feed}) {
        }
 
     </div>
+       {feed?.comments?.length >3&&
+          <>
+          {trigger?
+            <h5 className='text-sm font-semibold text-slate-700' onClick={()=>setTrigger(false)}>See less comments</h5>
+            :
+            <h5 className='text-sm font-semibold text-slate-700' onClick={()=>setTrigger(true)}>See more comments</h5>
 
-      <h5 className='text-sm font-semibold text-slate-700'>See more comments</h5>
+          }
+          </>
+          
+
+       }
+      
 
 
     </div>

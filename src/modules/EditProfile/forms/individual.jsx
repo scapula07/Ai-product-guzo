@@ -11,7 +11,7 @@ import axios from "axios"
 import { BsFlag } from 'react-icons/bs'
 
 
-export default function IndividualForms(profile,setUpdate) {
+export default function IndividualForms({profile,setUpdate}) {
 
         const [country, setSelectedCountry] = useState();
         const [city, setSelectedCity] = useState();

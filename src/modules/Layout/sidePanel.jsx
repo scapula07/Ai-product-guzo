@@ -29,6 +29,44 @@ export default function SidePanel() {
   const [team,setTeam]=useState([])
   const { id} = useParams();
    console.log(id,"iddd")
+    console.log(currentUser,"userr current")
+   useEffect(()=>{
+      if(currentUser?.id?.length >0){
+        const unsub = onSnapshot(doc(db, "users",currentUser?.id), (doc) => {
+          console.log("Current data: ", doc.data());
+          const concatenatedArray = [...doc.data()?.ecosystems, ...doc.data()?.organizations].concat(team);
+        
+          const uniqueMap = new Map();
+
+
+        for (const obj of concatenatedArray) {
+          if (obj?.id) {
+
+            const propertyValue = obj[obj?.id];
+            if (!uniqueMap.has(propertyValue)) {
+              uniqueMap.set(propertyValue, obj);
+            }
+          } else {
+          
+            const stringifiedObj = JSON.stringify(obj);
+            if (!uniqueMap.has(stringifiedObj)) {
+              uniqueMap.set(stringifiedObj, obj);
+            }
+          }
+        }
+
+
+         const uniqueArray = Array.from(uniqueMap.values());
+
+ 
+
+          setTeam(uniqueArray)
+         });
+
+      }
+
+  
+     },[currentUser])
 
    const isGroup= organizations?.length >0 || ecosystems?.length >0
 
@@ -46,7 +84,14 @@ export default function SidePanel() {
     
     //  group?.id?.length ==undefined&&!isGroup&&setGroup(team[0])
     const isTeammate=team?.some((group)=>group?.teammates?.some(e=>e?.id ===currentUser?.id) )
-    currentUser?.id?.length>0&&!isGroup&&setGroup(currentUser)
+    console.log(!isTeammate,"teammm ate")
+    // if(!isGroup){
+    //   currentUser?.id?.length>0&&setGroup(currentUser)
+    // }else if(isTeammate ===false){
+    //   currentUser?.id?.length>0&&setGroup(currentUser)
+
+    // }
+
     // if(!isGroup){
       
     //   // const isTeammate=team?.some((group)=>group?.teammates?.some(e=>e?.id ===currentUser?.id) )
@@ -57,7 +102,7 @@ export default function SidePanel() {
     // }
 
 
-     console.log(isTeammate,"iiiisssss")
+     console.log(team,"iiiisssss")
           
 
 
@@ -69,7 +114,7 @@ export default function SidePanel() {
   return (
     <div className='lg:px-4 py-8 '>
       <div className='flex flex-col space-y-4 items-center'>
-          {currentUser?.id?.length >0 &&!isTeammate&&
+          {currentUser?.display?.length >0&&
             <>
               {currentUser?.img?.length ===0?
                    <Link to={`/home/${group?.id}`}>
@@ -100,11 +145,12 @@ export default function SidePanel() {
           <>
             
                 {team?.map((group)=>{
-                  const isTeammate=group?.teammates?.some(e=>e?.id ===currentUser?.id)
-                  console.log(group,"side nav")
+                  const isTeammateGroup=group?.teammates?.some(e=>e?.id ===currentUser?.id)
+                  console.log(currentUser,"iddd")
+                  console.log(isTeammateGroup,"side nav")
                   return(
                     <>
-                    {isTeammate&&
+                    {isTeammateGroup==true&&
                         <Link to={`/home/${group?.id}`}>
                           {/* <div className='rounded-lg p-0.5 items-center justify-center flex border'>
                               <img 

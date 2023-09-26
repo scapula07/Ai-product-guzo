@@ -33,7 +33,7 @@ export default function Login() {
     const auths=[
         {
             icon:gmail,
-            name:"Sign up with Google",
+            name:"Sign in with Google",
             link:"",
             click:async()=>{ 
                 setErrorMsg(null)
@@ -55,7 +55,7 @@ export default function Login() {
         },
         {
             icon:linkdin,
-            name:"Sign up with LinkedIn",
+            name:"Sign in with LinkedIn",
             link:"",
             click:()=>{navigate("email-password")}
     

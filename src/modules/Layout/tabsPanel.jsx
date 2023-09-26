@@ -15,7 +15,7 @@ import CreatePosts from '../ CreatePost.'
 import Modal from '../Modal'
 import {AiOutlineClose } from "react-icons/ai"
 import {RiSettings3Fill} from "react-icons/ri"
-
+import indiv from "../assets/indiv.png"
 
 export default function TabsPanel() {
     const group =useRecoilValue(groupState)
@@ -66,7 +66,7 @@ const navs=[
             {group?.type?.length >0?
                   <div className='flex flex-col items-center'>
                       <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name}</h5>
-                     { group?.type=="eco"&&
+                     { group?.type=="eco"?
                         <div className='flex items-center space-x-1.5'>
                             <img 
                               src={eco}
@@ -74,6 +74,14 @@ const navs=[
                             />
                             <h5 className='text-xs'>Ecosystem</h5>
                         </div>
+                        :
+                       <div className='flex items-center space-x-1.5'>
+                        <img 
+                          src={indiv}
+                          className="w-3 h-3"
+                        />
+                        <h5 className='text-xs'>Organization</h5>
+                    </div>
                       }
                  </div>
                  :

@@ -36,6 +36,17 @@ export default function Photo({url,setUrl,group,setUpdate,file,setFile}) {
     }
 
 
+    const deletePhoto=()=>{
+        group["img"]=""
+      setFile({
+          ...file,
+          img:{}
+       })
+
+       
+    }
+
+
   return (
     <div className='flex flex-col w-full space-y-3'>
     <h5 className='text-sm font-semibold w-full '></h5>
@@ -97,6 +108,7 @@ export default function Photo({url,setUrl,group,setUpdate,file,setFile}) {
             </button>
             <button
               className='text-white bg-black rounded-full px-8 py-1.5'
+              onClick={deletePhoto}
               >
                Delete
            </button>

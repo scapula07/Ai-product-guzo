@@ -15,7 +15,7 @@ import Comment from '../components/comment'
 import BeatLoader from "react-spinners/BeatLoader";
 import Join from '../../JoinPost'
 import { calculateTimeOfPost } from '../../Utils/calculateTime'
-
+import DeletePost from '../../DeletePost'
 
 
 export default function Posts({group}) {
@@ -35,7 +35,7 @@ export default function Posts({group}) {
          }
          getProfileFeeds()
 
-   })
+   },[])
   return (
     <div className='flex flex-col space-y-4'>
       {feeds?.map((feed)=>{
@@ -68,7 +68,6 @@ export default function Posts({group}) {
     </div>
   )
 }
-
 
 const Post=({feed,group})=>{
   console.log(feed,"imgggg pppppp")
@@ -110,23 +109,27 @@ const Post=({feed,group})=>{
                  }
                  
               </>
-              <div className='flex items-center space-x-3'>
-                 <h5 className='text-lg font-semibold'>{feed?.shared_by?.name}</h5>
-                <span className='text-xs text-slate-700 '>{time}</span> 
+       
+                    <div className='flex items-center space-x-3'>
 
-              </div>
+                      <h5 className='text-lg font-semibold'>{feed?.shared_by?.name}</h5>
+                      <span className='text-xs text-slate-700 w-full'>{time}</span> 
+
+                      </div>
+                    
+
+     
+             
 
 
           </div>
-
-          {/* <div className='flex items-center space-x-4'>
-              <img 
-                src={share}
-                className="h-4 w-4"
-              />
-              <h5 className='text-sm font-semibold text-slate-600'>Share </h5>
-
-          </div> */}
+          <div className='flex w-1/2 justify-end'>
+             <DeletePost
+                feed={feed}
+                group={group}
+              /> 
+          </div>
+     
 
     </div>
 
@@ -142,6 +145,16 @@ const Post=({feed,group})=>{
                     
                 
               </div> 
+              {feed?.img_post?.length >0&&
+               <div className='w-full px-4 py-6'>
+                    <img 
+                      src={feed?.img_post}
+                      className="w-full h-56"
+                    />
+              </div>
+
+              }
+              
           <Comments 
              group ={ group }
              feed={feed}
@@ -262,6 +275,9 @@ const [text,setText]=useState("")
 const [isLoading,setLoader]=useState(false)
 
 const makeComment=async()=>{
+if (text?.length == 0) {
+  return;
+}
 setLoader(true)
  try{
     let payload;

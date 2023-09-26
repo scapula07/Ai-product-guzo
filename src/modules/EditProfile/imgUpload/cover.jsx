@@ -31,6 +31,19 @@ export default function Cover({url,setUrl,group,file,setFile}) {
 
     }
 
+    const deletCover=()=>{
+      setUrl({
+        ...url,
+        cover:""
+      })
+      group["cover"]=""
+       setFile({
+          ...file,
+          cover:{}
+        })
+       
+    }
+
   return (
      <div className='flex flex-col w-full space-y-3'>
                 <h5 className='text-sm font-semibold w-full '></h5>
@@ -64,7 +77,7 @@ export default function Cover({url,setUrl,group,file,setFile}) {
                                         />
                                  </div>
                                 :
-                                <div className='rounded-full h-56 w-56 flex flex-col justify-center items-center' style={{background: "rgba(242, 242, 242, 0.6)"}}
+                                <div className='w-full h-56  flex flex-col justify-center items-center' style={{background: "rgba(242, 242, 242, 0.6)"}}
                                 >
                                      <h5 className='text-sm font-light'>No cover image*</h5> 
                                 </div>

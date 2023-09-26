@@ -37,18 +37,25 @@ export const teamApi= {
             const inviteeList=groupSnap?.data()?.invitees ===undefined? [] :groupSnap?.data()?.invitees
             console.log(inviteeList,"invitessssss")
 
+            if(user===undefined) {
+                throw new Error("This user does not exist")
+            }
+
               await updateDoc(groupRef, {
                 invitees:[
                     ...inviteeList,
-                    invitee
+                    {
+                        id:user?.id,
+                        email:invitee?.email,
+                        name:user?.firstName?.length !=undefined ?user?.firstName + " "+ user?.lastName :user?.display
+
+                    }
                    ]
                })
        
            
 
-            if(user===undefined) {
-                throw new Error("This user does not exist")
-            }
+       
 
              const notificationSnap = await addDoc(collection(db, "notifications"),{
                 name:group?.name,

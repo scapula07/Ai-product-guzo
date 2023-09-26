@@ -10,6 +10,7 @@ import eco from "../../assets/img3.png"
 
 export default function CoverSection({group}) {
     console.log(group?.location,"groupp")
+    const [trigger,setTrigger]=useState(false)
 
     
   return (
@@ -131,11 +132,21 @@ export default function CoverSection({group}) {
 
                           
                               <p className=''>
-                                {group?.about?.slice(0,100)}
+                                {group?.about?.slice(0,`${trigger?group?.about?.length :100}`)}
 
                                 {
                                   group?.about?.length> 100&&
-                                  <span className='font-semibold text-xs'>....see more</span>
+                                   <>
+                                     {trigger?
+                                         <span className='font-semibold text-xs' onClick={()=>setTrigger(false)}>....see less</span>
+                                         :
+                                         <span className='font-semibold text-xs' onClick={()=>setTrigger(true)}>....see more</span>
+
+
+                                     }
+                                     
+                                   </>
+                                 
                                 }
                            
                           </p>

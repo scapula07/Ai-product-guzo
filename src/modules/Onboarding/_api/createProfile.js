@@ -74,6 +74,7 @@ export const createProfile= {
                                 {
                                     id:orgSnap?.id,
                                     name:payload?.name,
+                                    creator:docOrg?.creator,
                                     type:"org",
                                     img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                                     teammates:[
@@ -137,6 +138,7 @@ export const createProfile= {
                         {
                          id:ecoSnap?.id,
                          name:payload?.name,
+                         creator:docEco?.creator,
                          type:"eco",
                          img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                          teammates:[

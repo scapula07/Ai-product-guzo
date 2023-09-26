@@ -16,7 +16,7 @@ export const authApi= {
             const credential = await createUserWithEmailAndPassword(auth,email,password)
             const user=credential.user
             const ref =doc(db,"users",user?.uid)
-            await setDoc(ref,payload)
+            await setDoc(ref,{id:user?.uid,...payload})
             const docSnap = await getDoc(ref);
             if (docSnap.exists()) {
                 return {id:docSnap?.id,...docSnap?.data(),accessToken:user?.accessToken}
@@ -46,6 +46,7 @@ export const authApi= {
                 console.log(user,"user....")
                 const ref =doc(db,"users",user?.uid)
                 await setDoc(ref,{
+                    id:user?.uid,
                     email:user?.email,
                     organizations:[],
                     ecosystems:[],

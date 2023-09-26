@@ -25,7 +25,7 @@ export default function EcoMembers() {
            console.log("running again")
            }
            getAllMembers()
-          })
+          },[])
     console.log(members?.active,"mmmm pending")
 
   return (

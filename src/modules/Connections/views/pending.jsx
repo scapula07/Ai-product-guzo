@@ -121,7 +121,13 @@ export default function Pending() {
 
       </div>
 
-     {connects?.pending?.length ==undefined &&
+     {connects?.pending?.length == undefined &&
+          <div className='w-full flex justify-center py-10'>
+            <h5 className="text-lg font-semibold">No pending connections</h5>
+           </div>
+
+     } 
+       {connects?.pending?.length==0 &&
           <div className='w-full flex justify-center py-10'>
             <h5 className="text-lg font-semibold">No pending connections</h5>
            </div>
