@@ -44,7 +44,7 @@ export default function Teammates() {
             setTeam(teammates)
          }
         getAllTeammates()
-     })
+     },[])
 
      const addTeammates=async()=>{
         setLoader(true)
@@ -102,6 +102,8 @@ export default function Teammates() {
                 <div className='w-full overflow-y-auto h-full '>
                    <Table
                       teams={teams}
+                      group={group}
+                      currentUser={currentUser}
                     />
 
 
