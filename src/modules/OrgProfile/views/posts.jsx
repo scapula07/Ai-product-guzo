@@ -17,42 +17,38 @@ import Join from '../../JoinPost'
 import { calculateTimeOfPost } from '../../Utils/calculateTime'
 import DeletePost from '../../DeletePost'
 import { db } from '../../Firebase'
-import { doc,getDoc,setDoc , updateDoc,collection,addDoc,getDocs,query,where,orderBy,onSnapshot}  from "firebase/firestore";
+import { doc,getDoc,setDoc , updateDoc,collection,addDoc,getDocs,query,where,orderBy,onSnapshot,or}  from "firebase/firestore";
+
 
 export default function Posts({group}) {
    const [feeds,setFeed]=useState([])
    const [arePosts,setPost]=useState("")
 
-    
-  //  useEffect(()=>{
-
-  //     const getProfileFeeds=async()=>{
-  //         const feeds=await feedApi.getProfileFeeds(group?.id)
-  //         feeds?.length===0 &&setPost("No Feeds")
-  //         feeds?.length >0 &&setPost("")
-
-  //         setFeed(feeds)
-
-  //        }
-  //        getProfileFeeds()
-
-  //  },[])
-
   useEffect(()=>{
 
     if(group?.id?.length >0){
-        const q = query(collection(db, "posts"), where("creator_id", "==",group?.id),orderBy("createdAt", "desc"));
+          const q = query(
+            collection(db, 'posts'),
+              or(where('creator_id', '==', group?.id),
+                where('access', 'array-contains', group?.id)
+              ),orderBy('createdAt', 'desc')
+          );
+      
+        const feeds= [];
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
-          const feeds= [];
+          if (!querySnapshot.empty) {
           querySnapshot.forEach((doc) => {
               feeds.push({...doc?.data(),id:doc?.id});
               console.log(doc?.data(),"feeed")
           });
           feeds?.length===0 &&setPost("No Feeds")
           feeds?.length >0 &&setPost("")
-        
+
           setFeed(feeds)
+        }
+        
         });
+    
         return () => {
           unsubscribe()
 
@@ -61,6 +57,7 @@ export default function Posts({group}) {
     }
 
 },[group])
+
 
   return (
     <div className='flex flex-col space-y-4'>
@@ -104,7 +101,7 @@ const Post=({feed,group})=>{
  return(
     <div className='w-full py-4 bg-white h-full '>
     <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
-          <div className='flex items-center space-x-3'>
+          <div className='flex items-center space-x-3 w-full'>
               
                <>
                  {feed?.shared_by?.type?.length>0?
@@ -136,10 +133,10 @@ const Post=({feed,group})=>{
                  
               </>
        
-                    <div className='flex items-center space-x-3'>
+                    <div className='flex items-center space-x-3 w-full'>
 
-                      <h5 className='text-lg font-semibold'>{feed?.shared_by?.name}</h5>
-                      <span className='text-xs text-slate-700 w-full'>{time}</span> 
+                      <h5 className='text-lg font-semibold '>{feed?.shared_by?.name}</h5>
+                      <span className='text-xs text-slate-700 '>{time}</span> 
 
                       </div>
                     
@@ -149,7 +146,7 @@ const Post=({feed,group})=>{
 
 
           </div>
-          <div className='flex w-1/2 justify-end'>
+          <div className='flex w-1/6 justify-end'>
              <DeletePost
                 feed={feed}
                 group={group}

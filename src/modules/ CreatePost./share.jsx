@@ -9,17 +9,14 @@ import { shareApi } from './_api/share'
 import ClipLoader from "react-spinners/ClipLoader";
 import {ImCheckboxChecked,ImCheckboxUnchecked} from "react-icons/im"
 
-export default function Share({setOthers,currentUser,group,setShare,access,setAccess,eco,checked,setChecked,arePosts}) {
+export default function Share({setOthers,currentUser,group,setShare,access,setAccess,eco,arePosts,makePost,isLoading}) {
 
 
-  
+  console.log(arePosts?.length,"poststts")
 
 
     const close=()=>{
       setOthers(false) 
-  
-      setChecked(false)
-      
     }
   return (
     <div className='w-full flex justify-center no-scrollbar'>
@@ -104,8 +101,7 @@ export default function Share({setOthers,currentUser,group,setShare,access,setAc
                                               eco={eco}
                                               access={access}
                                               setAccess={setAccess}
-                                              checked={checked}
-                                              setChecked={setChecked}
+                                     
                                               />
 
                                           }
@@ -155,14 +151,21 @@ export default function Share({setOthers,currentUser,group,setShare,access,setAc
                         </button>
 
 
-
-                        <button
+                        {isLoading?
+                             
+                             <ClipLoader 
+                                 color={"rgba(62, 51, 221, 1)"}
+                                 loading={isLoading}
+                             />
+                             :
+                           <button
                              style={{background: "rgba(236, 235, 254, 1)"}}
-                             className='text-blue-700 rounded-full text-sm px-8 py-1.5'
-                             onClick={()=>setOthers(false)}
+                             className='text-blue-700 rounded-full  px-8 py-1.5'
+                             onClick={()=>makePost(group)}
                             >
-                            Save and continue
-                        </button>
+                             Post
+                          </button>
+                        }
 
 
                    </div>
@@ -177,8 +180,8 @@ export default function Share({setOthers,currentUser,group,setShare,access,setAc
 
 
 
-const Pick=({eco,access,setAccess,checked,setChecked})=>{
-
+const Pick=({eco,access,setAccess})=>{
+    const [checked,setChecked]=useState(false)
     const add=()=>{
 
       console.log(eco)

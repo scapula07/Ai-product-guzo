@@ -55,7 +55,7 @@ export const notificationApi = {
                  ecosystems:[
                     ...user?.ecosystems,
                     {
-                         id:snap.id,
+                          id:snap.id,
                         ...snap?.data()
 
 

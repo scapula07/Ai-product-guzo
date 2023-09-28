@@ -31,7 +31,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
      const [others,setOthers]=useState(false)
      const [isLoading,setLoader]=useState(false)
      const [access,setAccess]=useState([])
-     const [checked,setChecked]=useState(false)
+
      const [requests,setRequests]=useState([])
      const [eco,setEco]=useState([])
      const [viewAll,setViewAll]=useState([])
@@ -165,6 +165,19 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
        }
 
+
+       const save=()=>{
+        setErrorMsg(null)
+        if (post?.body?.length< 3) {
+          setErrorMsg( 'Post body is required ');
+          setLoader(false);
+          return;
+        }
+         setShare(true) 
+         setOthers(true)
+
+       }
+
     
 
   return (
@@ -191,9 +204,9 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                    access={access}
                    setAccess={setAccess}
                    eco={eco}
-                   checked={checked}
-                   setChecked={setChecked}
                    arePosts={arePosts}
+                   makePost={makePost}
+                   isLoading={isLoading}
                />}
 
 
@@ -439,21 +452,16 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                         >
                           Close
                         </h5>
-                        {isLoading?
-                             
-                             <ClipLoader 
-                                 color={"rgba(62, 51, 221, 1)"}
-                                 loading={isLoading}
-                             />
-                             :
+                 
                             <button
                                 style={{background: "rgba(236, 235, 254, 1)"}}
-                                className='text-blue-700 rounded-full px-12 py-1.5'
-                                onClick={()=>makePost(group)}
+                                className='text-blue-700 rounded-full px-8 text-sm py-1.5'
+                                // onClick={()=>makePost(group)}
+                                 onClick={save}
                             >
-                                Post
+                                Save and continue
                             </button>
-                           }
+                           
 
                     </div>
                  </div>
