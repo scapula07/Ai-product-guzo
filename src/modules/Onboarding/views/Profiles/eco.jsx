@@ -157,9 +157,11 @@ export default function Eco({currentUser}) {
             localStorage.clear();
             result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
             console.log(result,"result")
-            setLoader(false)
-            result?.id?.length>0&& navigate(`/home/${result?.id}`)
-          }catch(e){
+             setLoader(false)
+            console.log(result?.ecosystems[0]?.id) 
+            // result?.id?.length>0&& navigate(`/home/${result?.id}`)
+            result?.id?.length>0&& navigate(`/home/${result?.ecosystems[0]?.id}`)
+           }catch(e){
             console.log(e)
             setLoader(false)
             setErrorMsg(e.message)

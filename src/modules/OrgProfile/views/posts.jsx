@@ -41,11 +41,13 @@ export default function Posts({group}) {
               feeds.push({...doc?.data(),id:doc?.id});
               console.log(doc?.data(),"feeed")
           });
-          feeds?.length===0 &&setPost("No Feeds")
-          feeds?.length >0 &&setPost("")
+          console.log(feeds?.length,"feds lenth")
 
           setFeed(feeds)
         }
+        feeds?.length===0 &&setPost("No Feeds")
+        feeds?.length >0 &&setPost("")
+
         
         });
     
@@ -297,47 +299,47 @@ const [change,setChange]=useState(false)
 const [text,setText]=useState("")
 const [isLoading,setLoader]=useState(false)
 
-const makeComment=async()=>{
-if (text?.length == 0) {
-  return;
-}
-setLoader(true)
- try{
-    let payload;
-    if(group?.type?.length >0){
-       payload={
-         name:group?.name,
-         img:group?.img,
-         comment:text,
-         createdAt:new Date()
-       }
-    }else if(group?.img.length >0){
-       payload={
-        name:group?.firstName?.length !=undefined?group?.firstName + " " + group?.lastName :group?.display,
-        img:group?.img,
-        comment:text,
-        createdAt:new Date()
-      }
+        const makeComment=async()=>{
+        if (text?.length == 0) {
+          return;
+        }
+        setLoader(true)
+        try{
+            let payload;
+            if(group?.type?.length >0){
+              payload={
+                name:group?.name,
+                img:group?.img,
+                comment:text,
+                createdAt:new Date()
+              }
+            }else if(group?.img.length >0){
+              payload={
+                name:group?.firstName?.length !=undefined?group?.firstName + " " + group?.lastName :group?.display,
+                img:group?.img,
+                comment:text,
+                createdAt:new Date()
+              }
 
-    }else{
-        payload={
-        name:group?.firstName + " " + group?.lastName,
-        img:"",
-        comment:text,
-        createdAt:new Date()
-      }
+            }else{
+                payload={
+                name:group?.firstName + " " + group?.lastName,
+                img:"",
+                comment:text,
+                createdAt:new Date()
+              }
 
-    }
-     console.log(payload,"loaddd")
-      const response= await feedApi.makeComments(payload,feed)
-      response&&setLoader(false)
-      response&&setText("")
-   }catch(e){
-     console.log(e)
-     setLoader(false)
-   }
+            }
+            console.log(payload,"loaddd")
+              const response= await feedApi.makeComments(payload,feed)
+              response&&setLoader(false)
+              response&&setText("")
+          }catch(e){
+            console.log(e)
+            setLoader(false)
+          }
 
-}
+        }
 
 return(
   <div className='flex flex-col w-full px-4  '>
@@ -386,7 +388,7 @@ return(
                     />
                      :
                      <>
-                     {change?
+                      {change?
                          <h5 
                            className='text-xs font-semibold'
                            onClick={makeComment}

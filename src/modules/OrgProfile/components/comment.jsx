@@ -2,13 +2,18 @@ import React,{useState} from 'react'
 import { calculateTimeOfPost } from '../../Utils/calculateTime'
 
 export default function Comment({feed}) {
+
+   console.log(feed?.comments ,"comment proful")
    const time =calculateTimeOfPost(feed?.createdAt?.seconds)
    const [trigger,setTrigger]=useState(false)
+   const [comments ,setComments]=useState(feed?.comments)
   return (
     <div className='flex flex-col w-full space-y-3 py-4'>
     <div className='flex items-center space-x-4'>
         <div className='flex items-center  -space-x-4 '>
-            {feed?.comments?.slice(0,2)?.map((comment)=>{
+         
+            {comments?.slice(0,2)?.map((comment)=>{
+                     console.log(comment,"coment at profile")
                      return(
                       <div className='flex w-full space-x-1'>
                           <div className=''>
@@ -20,6 +25,7 @@ export default function Comment({feed}) {
                                 :
                                 <div className='rounded-full h-8 w-8 bg-black text-white items-center justify-center flex border'
                                 >
+                             =
                                     <h5 className='font-semibold text-sm'> { comment?.name?.slice(0,1) +comment?.name?.slice(1,2)}</h5>
                                 </div>
 

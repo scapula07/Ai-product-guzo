@@ -18,6 +18,7 @@ import { messageApi } from '../api/message'
 import { useNavigate } from 'react-router-dom'
 import remove from "../../assets/remove.png"
 import {MdArrowDropDown} from "react-icons/md"
+import { connectApi } from '../api'
 
 
 export default function Active() {
@@ -77,10 +78,25 @@ export default function Active() {
 
 const ActiveCard=({eco,group})=>{
   let navigate = useNavigate();
-  const [isLoading,setLoading]=useState(false)
-
+  const [isLoading,setLoading]=useState(false) 
+  const [isRemoving,setRemove]=useState(false)
   const [trigger,setTrigger]=useState(false)
+  const [errorMsg, setErrorMsg] = useState(null)
 
+
+  const removeMember=async()=>{
+       setRemove(true)
+       setErrorMsg(null)
+      try{
+          const response =await connectApi.removeActiveConnections(group,eco)
+          response&&setRemove(false)
+          response&&setTrigger(false)
+        }catch(e){
+          console.log(e)
+          setErrorMsg(e.message)
+          
+        }
+  }
 
    const startConversation=async()=>{
       setLoading(true)
@@ -243,7 +259,17 @@ const ActiveCard=({eco,group})=>{
                 {trigger&&
                     <div className='absolute top-0 -mt-1'>
                        <div className='bg-rose-100 h-12 w-32 rounded-b-2xl rounded-tr-2xl px-4 py-2 flex items-center justify-between'>
-                          <h5 className='text-rose-600 font-semibold '>Remove</h5>
+                         {isRemoving?
+                            
+                            <ClipLoader 
+                                color={"rgba(62, 51, 221, 1)"}
+                                loading={true}
+                            />
+                            :
+                            <h5 className='text-rose-600 font-semibold '
+                              onClick={removeMember}
+                            >Remove</h5>
+                          }
                           <MdArrowDropDown 
                             className='text-3xl font-semibold text-slate-700'
                             onClick={()=>setTrigger(false)}

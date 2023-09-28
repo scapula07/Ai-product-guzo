@@ -84,7 +84,15 @@ export default function Login() {
              setLoader(false)
              user?.id.length &&localStorage.clear();
              user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
-             user?.id.length >0&& navigate(`/home/${user?.id}`)
+             const accounts=[...user?.ecosystems,...user?.organizations]
+             console.log(accounts,"accc")
+               if(accounts[0]?.id?.length >0){
+                 user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
+               }else{
+                user?.id.length >0&& navigate(`/home/${user?.id}`)
+
+               }
+               
 
 
             }catch(e){

@@ -84,11 +84,12 @@ export const ecosystemApi= {
 
                 
                 
-                    const memberSnap = await getDoc(ecoRef);
-                    console.log(memberSnap,"ecosystem");
-                    console.log({active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending },"new memeber")
-                    return {active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending,status:true }
+                    // const memberSnap = await getDoc(ecoRef);
+                    // console.log(memberSnap,"ecosystem");
+                    // console.log({active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending },"new memeber")
+                    // return {active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending,status:true }
 
+                     return true
            
             }catch(e){
                 console.log(e)
@@ -139,10 +140,11 @@ export const ecosystemApi= {
 
                 }
 
-                const memberSnap = await getDoc(ecoRef);
-                console.log(memberSnap,"ecosystem");
-                console.log({active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending },"new memeber")
-                return {active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending,status:true }
+                // const memberSnap = await getDoc(ecoRef);
+                // console.log(memberSnap,"ecosystem");
+                // console.log({active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending },"new memeber")
+                // return {active:memberSnap?.data()?.active,pending:memberSnap?.data()?.pending,status:true }
+                  return true
 
 
            }catch(e){
@@ -150,6 +152,64 @@ export const ecosystemApi= {
              throw new Error(e);
            }
 
+        },
+        removeMember:async function (group,member) {
+             try{
+
+              const collectionName =member?.type=="eco"?"ecosystems":"organizations"
+              const ref =doc(db,"ecosystems",group?.id)
+              const docSnap = await getDoc(ref);
+              console.log(docSnap?.data(),"ecossye")
+
+              const activeMembers=docSnap?.data()?.active?.length ==undefined? []:docSnap?.data()?.active
+              const newActive= activeMembers?.filter((active)=>active?.id !=member?.id )
+
+              const teammates=docSnap?.data()?.teammates?.length ==undefined? []:docSnap?.data()?.teammates
+              const newTeammates= teammates?.filter((teammate)=>teammate?.id !=member?.id )
+        
+               await updateDoc(ref, {
+                 active:[
+                    ...newActive,
+                  ],
+                  teammates:[
+                    ...newTeammates,
+                  ]             
+               })
+               const snap = await getDoc(ref);
+
+            
+                   if(member?.type?.length >0){
+                        const memberSnap = await getDoc(doc(db,collectionName,member?.id));
+                        const newActive=memberSnap?.data()?.active?.filter((eco)=>eco?.id != group?.id)
+                        
+                        await updateDoc(doc(db,collectionName,member?.id), {
+                          active:[
+                            ...newActive,
+                            
+                           ]
+                        
+                      })
+     
+
+                     }else{
+                         const memberSnap = await getDoc(doc(db,"users",member?.id));
+                          const newEcosystems=memberSnap?.data()?.ecosystems?.filter((eco)=>eco?.id != group?.id)
+                         await updateDoc(doc(db,"users",member?.id), {
+                          ecosystems:[
+                            ...newEcosystems
+                          ]
+                
+                         })
+
+                   }
+               
+                  return true
+
+
+              }catch(e){
+               console.log(e)
+                 throw new Error(e)
+             }
         }
     
 

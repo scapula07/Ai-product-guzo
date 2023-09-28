@@ -53,7 +53,7 @@ export const createProfile= {
                     img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                     pending:[],
                     active:[
-                        currentUser
+                       
                      ],
                     teammates:[
                         currentUser
@@ -116,7 +116,7 @@ export const createProfile= {
                 img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                 pending:[],
                 active:[
-                    currentUser
+                 
                 ],
                 teammates:[
                     currentUser

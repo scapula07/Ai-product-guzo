@@ -6,22 +6,39 @@ import Tabs from '../components/tabs'
 import { userState,groupState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
 import { connectApi } from '../api'
+import { db } from '../../Firebase'
+
+import { doc, onSnapshot } from "firebase/firestore"
+
+
 
 export default function Connections() {
     const currentUser=useRecoilValue(userState)
     const group=useRecoilValue(groupState)
     const [connects,setConnect]=useState()
-    
+
+
+
     useEffect(()=>{
-      const getPending=async()=>{
-          const connects= await connectApi.getConnections(group)
-          console.log(connects,"pending")
-          setConnect(connects)
+        if(group?.id?.length >0){
+            let collection="users"
+            if(group?.type?.length >0){
+            collection=group?.type ==="eco"?"ecosystems" :"organizations"
+            }
+            
+            const ref = doc(db,collection, group?.id);
+            const unsub = onSnapshot(ref, (doc) => {
+                if(group?.type?.length >0){
+                setConnect({pending:doc.data()?.pendingMemberships,active:doc.data()?.active})
+                }else{
+                    setConnect({pending:doc.data()?.pending,active:doc.data()?.ecosystems}) 
 
-      }
-      getPending()
+                }
+            });
 
-  },[group])
+
+        }
+    },[group])
 
   return (
     <Layout>

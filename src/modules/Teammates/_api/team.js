@@ -93,8 +93,49 @@ export const teamApi= {
 
         },
 
-        deletTeammate:async function (group,currentUser) {
+        deletTeammate:async function (group,teammate) {
              try{
+                  const collectionName =group?.type=="eco"?"ecosystems":"organizations"
+                  const ref =doc(db,collectionName,group?.id)
+                  const docSnap = await getDoc(ref);
+                  console.log(docSnap?.data(),"ecossye")
+    
+                  const teammates=docSnap?.data()?.teammates?.length ==undefined? []:docSnap?.data()?.teammates
+                  const newTeammates= teammates?.filter((teammate)=>teammate?.id !=teammate?.id )
+            
+                   await updateDoc(ref, {
+                    teammates:[
+                        ...newTeammates,
+                      ]           
+                   })
+                   const snap = await getDoc(ref);
+
+                   const userSnap = await getDoc(doc(db,"users",teammate?.id));
+                     if(group?.type=="eco"){
+                            const newEcosystem=userSnap?.data()?.ecosystems?.filter((eco)=>eco?.id != group?.id)
+                            
+                            await updateDoc(doc(db,"users",teammate?.id), {
+                            ecosystems:[
+                                ...newEcosystem,
+                                
+                            ]
+                            
+                          })
+         
+
+                         }else{
+                           const newOrgs=userSnap?.data()?.organizations?.filter((eco)=>eco?.id != group?.id)
+                            await updateDoc(doc(db,"users",teammate?.id), {
+                            organizations:[
+                                ...newOrgs
+                              ]
+                    
+                             })
+
+                       }
+                   
+                      return true
+
 
               }catch(e){
                 console.log(e)
@@ -102,8 +143,10 @@ export const teamApi= {
               }
 
         },
-        removePendingTeammate:async function (group,currentUser) {
+         removePendingTeammate:async function (group,currentUser) {
             try{
+
+
 
              }catch(e){
               console.log(e)

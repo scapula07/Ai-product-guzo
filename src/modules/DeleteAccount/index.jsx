@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import { deleteProfile } from './api'
 
-export default function DeleteAccount({group}) {
+export default function DeleteAccount({group,currentUser}) {
 
      const [trigger,setTrigger]=useState(false)
      const [isLoading,setLoader]=useState(false)
@@ -28,12 +28,15 @@ export default function DeleteAccount({group}) {
 
 
      const deletePost=async()=>{
+        setErrorMsg(null)
          setLoader(true)
+
          try{
-            const response =await deleteProfile.deleteAccount(group)
+            const response =await deleteProfile.deleteAccount(group,currentUser)
             response&&setTrigger(false)
             response&&setLoader(false)
             response&&setOpen(true)
+            response&&navigate("/register/login")
 
           }catch(e){
             console.log(e)
@@ -62,7 +65,7 @@ export default function DeleteAccount({group}) {
 
 
               <div className='flex flex-col space-y-4 py-4 px-4 w-full items-center'>
-                  <h5>Are you sure you want to delete this account</h5>
+                  <h5 className="text-sm font-semibold text-center">Are you sure you want to delete this account</h5>
                      {errorMsg && (
                         // <FadeIn><Alert severity="error">{errorMsg}</Alert></FadeIn>
                         <Alert severity="error">{errorMsg}</Alert>

@@ -23,6 +23,7 @@ export default function Settings() {
               <Card 
                     title="settings"
                     group={group}
+                    currentUser={currentUser}
                     body={[
                       {
                         text: "Change password",
@@ -89,7 +90,7 @@ export default function Settings() {
 }
 
 
-const Card=({title,group,body})=>{
+const Card=({title,group,body,currentUser})=>{
   const [trigger,setTrigger]=useState(false)
      return(
         <>
@@ -127,6 +128,7 @@ const Card=({title,group,body})=>{
 
               <DeleteAccount 
                group={group}
+               currentUser={currentUser}
               />
 
         </Modal>

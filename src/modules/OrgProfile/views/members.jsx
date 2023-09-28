@@ -10,21 +10,30 @@ import eco from "../../assets/img3.png"
 import org from "../../assets/img2.png"
 import indiv from "../../assets/indiv.png"
 import {MdArrowDropDown } from "react-icons/md"
+import { db } from '../../Firebase'
+import { doc, onSnapshot } from "firebase/firestore"
 
 
 export default function Members({group}) {
    const [members,setMembers]=useState([])
    const [areMembers,setAre]=useState("")
+
+
    useEffect(()=>{
-      const getMembers=async()=>{
-          const response =await feedApi.getAllMembers(group?.id)
-          response?.length===0 &&setAre("No Members")
-          response?.length >0 &&setAre("")
-          setMembers(response)
-      }
-      getMembers()
-   },[])
+    if(group?.id?.length >0){
+        const ref =doc(db,"ecosystems",group?.id)
+        const unsub = onSnapshot(ref, (doc) => {
+          doc?.data()?.active?.length ===0&&setAre("No Members")
+          doc?.data()?.active?.length  >0 &&setAre("")
+        setMembers(doc?.data()?.active)
+        });
+
+
+     }
+ },[group])
   return (
+      <div className="w-full">
+  
     <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
         {members.map((member)=>{
             return(
@@ -36,23 +45,26 @@ export default function Members({group}) {
           })
 
         }
-
-          {areMembers?.length===0&&members?.length ===0&&
-            <div className='w-full flex justify-center py-10'>
-               <ClipLoader 
-                    color={"rgba(62, 51, 221, 1)"}
-                    loading={true}
-                />
-            </div>
-            }
-
-            {areMembers?.length >0&&
+     
+   </div>
+      <div className="w-full flex justify-center">
+           
+           {areMembers?.length===0&&members?.length ===0&&
+             <div className='w-full flex justify-center py-10'>
+                <ClipLoader 
+                     color={"rgba(62, 51, 221, 1)"}
+                     loading={true}
+                 />
+             </div>
+             }
+ 
+             {areMembers?.length >0&&
                <div className='w-full flex justify-center py-10'>
-                  <h5 className="text-lg font-semibold">No posts</h5>
+                   <h5 className="text-lg font-semibold">No members</h5>
                </div>
-
-            }
-
+ 
+                   }
+            </div>
       </div>
   )
 }
@@ -66,7 +78,25 @@ function ActiveMember({member,group}) {
   console.log(group,"member")
   let navigate = useNavigate();
   const [isLoading,setLoading]=useState(false)
+  const [isRemoving,setRemove]=useState(false)
   const [trigger,setTrigger]=useState(false)
+  const [errorMsg, setErrorMsg] = useState(null)
+
+
+
+  const removeMember=async()=>{
+       setRemove(true)
+       setErrorMsg(null)
+      try{
+          const response =await feedApi.removeMember(group,member)
+          response&&setRemove(false)
+          response&&setTrigger(false)
+        }catch(e){
+          console.log(e)
+          setErrorMsg(e.message)
+          
+        }
+  }
 
 
    const startConversation=async()=>{
@@ -133,7 +163,7 @@ function ActiveMember({member,group}) {
                               </div>
                             :
                             <>
-                       {member?.type==="org"?
+                        {member?.type==="org"?
                            <div className="flex items-center space-x-1">
                                 <img 
                                 src={org}
@@ -204,7 +234,17 @@ function ActiveMember({member,group}) {
                         {trigger&&
                             <div className='absolute top-0 -mt-1'>
                               <div className='bg-rose-100 h-12 w-32 rounded-b-2xl rounded-tr-2xl px-4 py-2 flex items-center justify-between'>
-                                  <h5 className='text-rose-600 font-semibold '>Remove</h5>
+                                  {isRemoving?
+                            
+                                      <ClipLoader 
+                                          color={"rgba(62, 51, 221, 1)"}
+                                          loading={true}
+                                      />
+                                      :
+                                      <h5 className='text-rose-600 font-semibold '
+                                        onClick={removeMember}
+                                      >Remove</h5>
+                                  }
                                   <MdArrowDropDown 
                                     className='text-3xl font-semibold text-slate-700'
                                     onClick={()=>setTrigger(false)}

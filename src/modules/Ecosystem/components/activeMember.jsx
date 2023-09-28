@@ -9,13 +9,28 @@ import eco from "../../assets/img3.png"
 import org from "../../assets/img2.png"
 import indiv from "../../assets/indiv.png"
 import {MdArrowDropDown } from "react-icons/md"
-
+import { ecosystemApi } from '../api'
 
 export default function ActiveMember({member,group}) {
    
     let navigate = useNavigate();
     const [isLoading,setLoading]=useState(false)
+    const [isRemoving,setRemove]=useState(false)
     const [trigger,setTrigger]=useState(false)
+    const [errorMsg, setErrorMsg] = useState(null)
+    const removeMember=async()=>{
+         setRemove(true)
+         setErrorMsg(null)
+        try{
+            const response =await ecosystemApi.removeMember(group,member)
+            response&&setRemove(false)
+            response&&setTrigger(false)
+          }catch(e){
+            console.log(e)
+            setErrorMsg(e.message)
+            
+          }
+    }
   
   
      const startConversation=async()=>{
@@ -160,7 +175,17 @@ export default function ActiveMember({member,group}) {
                         {trigger&&
                             <div className='absolute top-0 -mt-1'>
                               <div className='bg-rose-100 h-12 w-32 rounded-b-2xl rounded-tr-2xl px-4 py-2 flex items-center justify-between'>
-                                  <h5 className='text-rose-600 font-semibold '>Remove</h5>
+                               {isRemoving?
+                            
+                                  <ClipLoader 
+                                      color={"rgba(62, 51, 221, 1)"}
+                                      loading={true}
+                                  />
+                                  :
+                                  <h5 className='text-rose-600 font-semibold '
+                                    onClick={removeMember}
+                                  >Remove</h5>
+                               }
                                   <MdArrowDropDown 
                                     className='text-3xl font-semibold text-slate-700'
                                     onClick={()=>setTrigger(false)}

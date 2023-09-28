@@ -18,9 +18,9 @@ export default function PendingMember({group,member,setMembers}) {
          try{
             setAccept(true)
             const result =await ecosystemApi.acceptMember(id,member)
-            console.log(result?.status,"resss")
-            result?.status&&setMembers({active:result?.active,pending:result?.pending})
-            result?.status&&setAccept(false)
+         
+            
+            result&&setAccept(false)
            
 
          }catch(e){
@@ -97,7 +97,7 @@ export default function PendingMember({group,member,setMembers}) {
                          {member?.type?.length >0?
                             <div className='flex flex-col space-y-4'>
                                 <h5 className='text-xl font-semibold'>{member?.name}</h5>
-                                <h5 className='text-sm '>{"Qorem ipsum dolor sit amet, consectetur adipiscing elit. "}</h5>
+                                
                             </div>
                                 :
                                 <div className='flex flex-col space-y-4'>
@@ -108,7 +108,6 @@ export default function PendingMember({group,member,setMembers}) {
 
                                     }
                                    
-                                    <h5 className='text-sm '>{"Qorem ipsum dolor sit amet, consectetur adipiscing elit. "}</h5>
                                </div>
 
 

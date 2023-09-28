@@ -6,8 +6,8 @@ import { ecosystemApi } from '../api'
 import { useNavigate } from 'react-router-dom'
 import ActiveMember from '../components/activeMember'
 import PendingMember from '../components/pendingMember'
-
-
+import { doc, onSnapshot } from "firebase/firestore"
+import { db } from '../../Firebase'
 
 
 export default function EcoMembers() {
@@ -16,16 +16,18 @@ export default function EcoMembers() {
   
 
     const [members,setMembers]=useState([])
-     useEffect(()=>{
-        const getAllMembers=async()=>{
-            console.log("mmmm")
-           const members=await ecosystemApi.getAllMembers(group?.id,currentUser)
-           setMembers(members)
 
-           console.log("running again")
-           }
-           getAllMembers()
-          },[])
+
+          useEffect(()=>{
+            if(group?.id?.length >0){
+                const ref =doc(db,"ecosystems",group?.id)
+                const unsub = onSnapshot(ref, (doc) => {
+                setMembers(doc?.data())
+                });
+    
+    
+             }
+         },[group])
     console.log(members?.active,"mmmm pending")
 
   return (

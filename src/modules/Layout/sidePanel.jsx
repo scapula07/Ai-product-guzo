@@ -37,7 +37,7 @@ export default function SidePanel() {
         const unsub = onSnapshot(doc(db, "users",currentUser?.id), (doc) => {
           setTeam([])
           console.log("Current data: ", doc.data());
-          const group= [...doc.data()?.ecosystems, ...doc.data()?.organizations]
+          const group= [ ...doc.data()?.organizations,...doc.data()?.ecosystems]
           setTeam(group)
 
          
@@ -230,7 +230,7 @@ const TeamTile=({group,setGroup})=>{
   useEffect(()=>{
     const collectionName= group?.type=="eco"?"ecosystems":"organizations"
     const unsub = onSnapshot(doc(db,collectionName,group?.id), (doc) => {
-      console.log("Current data: ", doc.data()?.img);
+      console.log("Current data: ", doc.data()?.img)    
       setImg(doc.data()?.img)
     });
   
@@ -244,7 +244,7 @@ const TeamTile=({group,setGroup})=>{
         <img 
           src={img}
           className="h-8 w-8 rounded-full"
-          onClick={()=>setGroup(group)}
+          onClick={()=>setGroup({...group,img:img})}
         />
    </div>
 

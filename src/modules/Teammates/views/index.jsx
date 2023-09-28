@@ -9,6 +9,8 @@ import { teamApi } from '../_api/team'
 import { inviteEmail } from '../_api/email'
 import ClipLoader from "react-spinners/ClipLoader";
 import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
+import { db } from '../../Firebase'
+import { doc, onSnapshot } from "firebase/firestore"
 
 
 export default function Teammates() {
@@ -37,14 +39,17 @@ export default function Teammates() {
 
     
     useEffect(()=>{
-        const getAllTeammates=async()=>{
-            console.log("mmmm")
-            const teammates=await teamApi.getAllTeammates(group)
-            console.log(teammates,"teammm")
-            setTeam(teammates)
+        if(group?.id?.length >0){
+            const collection=group?.type=="eco"?"ecosystems":"organizations"
+            const ref =doc(db,collection,group?.id)
+            const unsub = onSnapshot(ref, (doc) => {
+              console.log("Current data: ", doc.data());
+              setTeam({teammates:doc?.data()?.teammates,invitees:doc?.data()?.invitees})
+            });
+
+
          }
-        getAllTeammates()
-     })
+     },[group])
 
      const addTeammates=async()=>{
         setLoader(true)

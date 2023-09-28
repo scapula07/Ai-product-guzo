@@ -51,18 +51,35 @@ export const notificationApi = {
                  ]
                })
                const snap = await getDoc(ref);
-                await updateDoc(doc(db,"users",user?.id), {
-                 ecosystems:[
-                    ...user?.ecosystems,
-                     {
-                          id:snap.id,
-                        ...snap?.data()
+               if(from?.type=="eco"){
+                  await updateDoc(doc(db,"users",user?.id), {
+                    ecosystems:[
+                      ...user?.ecosystems,
+                        {
+                            id:snap.id,
+                          ...snap?.data()
+  
+  
+                        }
+                    ]
+                  
+                  })
+                 }else{
+                  await updateDoc(doc(db,"users",user?.id), {
+                    organizations:[
+                      ...user?.organizations,
+                        {
+                            id:snap.id,
+                          ...snap?.data()
 
 
-                     }
-                  ]
-                
-               })
+                        }
+                    ]
+                  
+                  })
+
+               }
+
                const userSnap = await getDoc(doc(db,"users",user?.id));
                const userData=userSnap?.data()
                userSnap?.id?.length &&localStorage.clear();

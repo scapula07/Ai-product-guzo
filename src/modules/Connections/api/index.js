@@ -29,6 +29,132 @@ export const connectApi= {
        
         
 
+      },
+      removeActiveConnections:async function (group,connect) {
+           try{
+            let collectionName ="users"
+            
+            if(group?.type?.length >0){
+               collectionName =group?.type=="eco"?"ecosystems":"organizations"
+            }
+        
+            const ref =doc(db,collectionName,group?.id)
+            const docSnap = await getDoc(ref);
+            console.log(docSnap?.data(),"ecossye")
+
+            const activeConnections=docSnap?.data()?.active?.length ==undefined? []:docSnap?.data()?.active
+            const newActive= activeConnections?.filter((active)=>active?.id !=connect?.id )
+
+            // const teammates=docSnap?.data()?.teammates?.length ==undefined? []:docSnap?.data()?.teammates
+            // const newTeammates= teammates?.filter((teammate)=>teammate?.id !=member?.id )
+      
+               await updateDoc(ref, {
+                  active:[
+                     ...newActive,
+                  ]         
+               })
+                 const snap = await getDoc(ref);
+
+          
+                  if(connect?.type?.length >0){
+                     const collectionTag =connect?.type=="eco"?"ecosystems":"organizations"
+                      const connectSnap = await getDoc(doc(db,collectionTag,connect?.id));
+                      const newActive=connectSnap?.data()?.active?.filter((eco)=>eco?.id != group?.id)
+
+                     
+                      
+                      await updateDoc(doc(db,collectionTag,connect?.id), {
+                        active:[
+                          ...newActive,
+                          
+                         ]
+                      
+                    })
+   
+
+                   }else{
+                       const connectSnap = await getDoc(doc(db,"users",connect?.id));
+                        const newEcosystems=connectSnap?.data()?.ecosystems?.filter((eco)=>eco?.id != group?.id)
+                       await updateDoc(doc(db,"users",connect?.id), {
+                        ecosystems:[
+                          ...newEcosystems
+                        ]
+              
+                       })
+
+                 }
+             
+                return true
+
+            }catch(e){
+               console.log(e)
+               throw new Error(e)
+            }
+
+      },
+      removePendingConnections:async function (group,connect) {
+
+         try{
+           
+            
+         
+            const collectionName =group?.type=="eco"?"ecosystems":"organizations"
+            
+        
+            const ref =doc(db,collectionName,group?.id)
+            const docSnap = await getDoc(ref);
+            console.log(docSnap?.data(),"ecossye")
+
+            const pendingConnections=docSnap?.data()?.pending?.length ==undefined? []:docSnap?.data()?.pending
+            const newPending=pendingConnections?.filter((pending)=>pending?.id !=group?.id )
+
+            // const teammates=docSnap?.data()?.teammates?.length ==undefined? []:docSnap?.data()?.teammates
+            // const newTeammates= teammates?.filter((teammate)=>teammate?.id !=member?.id )
+      
+               await updateDoc(ref, {
+                  pending:[
+                     ...newPending,
+                  ]         
+               })
+              
+
+          
+                  if(group?.type?.length >0){
+                      const collectionTag =group?.type=="eco"?"ecosystems":"organizations"
+                      const connectSnap = await getDoc(doc(db,collectionTag,group?.id));
+                      const newPendingMemberships=connectSnap?.data()?.pendingMemberships?.filter((eco)=>eco?.id != connect?.id)
+
+                 
+                      
+                      await updateDoc(doc(db,collectionTag,group?.id), {
+                        pending:[
+                          ...newPendingMemberships,
+                          
+                         ]
+                      
+                    })
+   
+
+                   }else{
+                       const connectSnap = await getDoc(doc(db,"users",group?.id));
+                        const newConnects=connectSnap?.data()?.ecosystems?.filter((eco)=>eco?.id !=connect?.id)
+                       await updateDoc(doc(db,"users",group?.id), {
+                        pending:[
+                          ...newConnects
+                        ]
+              
+                       })
+
+                 }
+             
+                return true
+
+            }catch(e){
+               console.log(e)
+               throw new Error(e)
+            }
+
+
       }
 
 }
