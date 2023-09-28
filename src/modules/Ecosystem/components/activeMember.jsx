@@ -8,11 +8,14 @@ import ClipLoader from "react-spinners/ClipLoader";
 import eco from "../../assets/img3.png"
 import org from "../../assets/img2.png"
 import indiv from "../../assets/indiv.png"
+import {MdArrowDropDown } from "react-icons/md"
+
 
 export default function ActiveMember({member,group}) {
    
     let navigate = useNavigate();
     const [isLoading,setLoading]=useState(false)
+    const [trigger,setTrigger]=useState(false)
   
   
      const startConversation=async()=>{
@@ -146,12 +149,31 @@ export default function ActiveMember({member,group}) {
                     }
                     
                
-                <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
-                    <BsThreeDots 
-                        className='text-blue-600 text-2xl'
-                    />
-                </h5>
-            </div>
+                    <h5 className='rounded-full p-2 items-center justify-center relative ' style={{background: ` ${trigger?"white" :"rgba(236, 235, 254, 1)"}`}}>
+                        
+                        {!trigger&&
+                        <BsThreeDots 
+                            className='text-blue-600 text-2xl  '
+                            onClick={()=>setTrigger(true)}
+                        />
+                        }
+                        {trigger&&
+                            <div className='absolute top-0 -mt-1'>
+                              <div className='bg-rose-100 h-12 w-32 rounded-b-2xl rounded-tr-2xl px-4 py-2 flex items-center justify-between'>
+                                  <h5 className='text-rose-600 font-semibold '>Remove</h5>
+                                  <MdArrowDropDown 
+                                    className='text-3xl font-semibold text-slate-700'
+                                    onClick={()=>setTrigger(false)}
+                                  />
+
+                              </div>
+
+
+                            </div>
+
+                        }
+
+                    </h5>            </div>
         </div>
 
     </div>

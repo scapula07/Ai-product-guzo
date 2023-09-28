@@ -54,12 +54,12 @@ export const notificationApi = {
                 await updateDoc(doc(db,"users",user?.id), {
                  ecosystems:[
                     ...user?.ecosystems,
-                    {
+                     {
                           id:snap.id,
                         ...snap?.data()
 
 
-                    }
+                     }
                   ]
                 
                })

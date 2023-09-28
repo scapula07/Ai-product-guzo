@@ -109,7 +109,7 @@ export default function Table({teams,group,currentUser}) {
                          <h5 className='bg-white flex items-center justify-center  p-2 w-full'
                         
                             >
-                          <span  className='bg-red-600  flex items-center justify-center rounded-full p-2 w-10 h-10'>
+                          <span  className='bg-red-600  flex items-center justify-center rounded-full p-2 w-7 h-7'>
                                 <MdDelete 
                                 className='text-white text-sm'
                                 /> 

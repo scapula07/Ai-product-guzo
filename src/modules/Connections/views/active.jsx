@@ -16,7 +16,8 @@ import org from "../../assets/img2.png"
 import indiv from "../../assets/indiv.png"
 import { messageApi } from '../api/message'
 import { useNavigate } from 'react-router-dom'
-
+import remove from "../../assets/remove.png"
+import {MdArrowDropDown} from "react-icons/md"
 
 
 export default function Active() {
@@ -44,6 +45,7 @@ export default function Active() {
         }
 
     </div>
+    
 
          {connects?.active?.length ===undefined || connects?.active?.length ===0 &&
                <div className='w-full flex justify-center py-10'>
@@ -77,6 +79,8 @@ const ActiveCard=({eco,group})=>{
   let navigate = useNavigate();
   const [isLoading,setLoading]=useState(false)
 
+  const [trigger,setTrigger]=useState(false)
+
 
    const startConversation=async()=>{
       setLoading(true)
@@ -94,7 +98,7 @@ const ActiveCard=({eco,group})=>{
 
       }
    return(
-    <div className='flex flex-col bg-white py-4 px-4'>
+    <div className='flex flex-col bg-white py-4 px-4' >
     {eco?.type?.length >0?
        <div className='flex flex-col items-center space-y-3'>
   
@@ -228,11 +232,34 @@ const ActiveCard=({eco,group})=>{
          
              </h5>
           }
-            <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
-               <BsThreeDots 
-                    className='text-blue-600 text-2xl'
-               />
+            <h5 className='rounded-full p-2 items-center justify-center relative ' style={{background: ` ${trigger?"white" :"rgba(236, 235, 254, 1)"}`}}>
+          
+                {!trigger&&
+                 <BsThreeDots 
+                    className='text-blue-600 text-2xl  '
+                    onClick={()=>setTrigger(true)}
+                 />
+                }
+                {trigger&&
+                    <div className='absolute top-0 -mt-1'>
+                       <div className='bg-rose-100 h-12 w-32 rounded-b-2xl rounded-tr-2xl px-4 py-2 flex items-center justify-between'>
+                          <h5 className='text-rose-600 font-semibold '>Remove</h5>
+                          <MdArrowDropDown 
+                            className='text-3xl font-semibold text-slate-700'
+                            onClick={()=>setTrigger(false)}
+                          />
+  
+                       </div>
+
+  
+                     </div>
+
+                }
+
             </h5>
+
+           
+
          </div>
      </div>
 

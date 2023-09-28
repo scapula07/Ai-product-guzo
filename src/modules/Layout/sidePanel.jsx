@@ -30,43 +30,76 @@ export default function SidePanel() {
   const { id} = useParams();
    console.log(id,"iddd")
     console.log(currentUser,"userr current")
-   useEffect(()=>{
+
+    useEffect(()=>{
       if(currentUser?.id?.length >0){
+       
         const unsub = onSnapshot(doc(db, "users",currentUser?.id), (doc) => {
+          setTeam([])
           console.log("Current data: ", doc.data());
-          const concatenatedArray = [...doc.data()?.ecosystems, ...doc.data()?.organizations].concat(team);
-        
-          const uniqueMap = new Map();
+          const group= [...doc.data()?.ecosystems, ...doc.data()?.organizations]
+          setTeam(group)
 
-
-        for (const obj of concatenatedArray) {
-          if (obj?.id) {
-
-            const propertyValue = obj[obj?.id];
-            if (!uniqueMap.has(propertyValue)) {
-              uniqueMap.set(propertyValue, obj);
-            }
-          } else {
-          
-            const stringifiedObj = JSON.stringify(obj);
-            if (!uniqueMap.has(stringifiedObj)) {
-              uniqueMap.set(stringifiedObj, obj);
-            }
-          }
-        }
-
-
-         const uniqueArray = Array.from(uniqueMap.values());
-
- 
-
-          setTeam(uniqueArray)
+         
          });
 
       }
 
   
      },[currentUser])
+  //  useEffect(()=>{
+  //     if(currentUser?.id?.length >0){
+  //       const unsub = onSnapshot(doc(db, "users",currentUser?.id), (doc) => {
+  //         console.log("Current data: ", doc.data());
+  //         // const group = [...doc.data()?.ecosystems, ...doc.data()?.organizations]
+
+  //               if(doc.data()?.id>0){
+  //                   const isGroup= doc.data()?.organizations >0 || doc.data()?.ecosystems >0
+      
+  //                   isGroup&&setTeam([...doc.data()?.ecosystems, ...doc.data()?.organizations])
+              
+                    
+  //                   if(currentUser?.display?.length != undefined && isGroup==true){
+  //                     console.log(currentUser?.id,"if block 1111")
+  //                     isGroup&&setGroup([currentUser,...doc.data()?.ecosystems, ...doc.data()?.organizations].find(group=>group?.id===id))
+  //                   }else if(currentUser?.display?.length != undefined && isGroup==false){
+  //                     console.log(currentUser?.id,"if block 222")
+  //                   setGroup([currentUser].find(group=>group?.id===id))
+  //                   }else{
+  //                     console.log(currentUser?.id,"if block 33")
+  //                     isGroup&&setGroup([...doc.data()?.ecosystems, ...doc.data()?.organizations].find(group=>group?.id===id))
+  //                   }
+
+  //                 }else{
+  //                      const isGroup= organizations?.length >0 || ecosystems?.length >0
+ 
+  //                       isGroup&&setTeam([...organizations,...ecosystems])
+                
+                      
+  //                     if(currentUser?.display?.length != undefined && isGroup==true){
+  //                       console.log(currentUser?.id,"if block 1111")
+  //                       isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
+  //                     }else if(currentUser?.display?.length != undefined && isGroup==false){
+  //                       console.log(currentUser?.id,"if block 222")
+  //                     setGroup([currentUser].find(group=>group?.id===id))
+  //                     }else{
+  //                       console.log(currentUser?.id,"if block 33")
+  //                       isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
+  //                     }
+      
+
+
+  //             }
+              
+              
+  //          });
+
+  //        }
+
+  
+  //    },[currentUser])
+
+     
 
    const isGroup= organizations?.length >0 || ecosystems?.length >0
 
@@ -75,7 +108,7 @@ export default function SidePanel() {
  
        isGroup&&setTeam([...organizations,...ecosystems])
  
-   
+       
       if(currentUser?.display?.length != undefined && isGroup==true){
         console.log(currentUser?.id,"if block 1111")
         isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
@@ -91,29 +124,16 @@ export default function SidePanel() {
     
       },[currentUser,isUpdate])
  
-    
-    //  group?.id?.length ==undefined&&!isGroup&&setGroup(team[0])
-    const isTeammate=team?.some((group)=>group?.teammates?.some(e=>e?.id ===currentUser?.id) )
-    console.log(!isTeammate,"teammm ate")
-    // if(!isGroup){
-    //   currentUser?.id?.length>0&&setGroup(currentUser)
-    // }else if(isTeammate ===false){
-    //   currentUser?.id?.length>0&&setGroup(currentUser)
 
-    // }
+  
 
-    // if(!isGroup){
-      
-    //   // const isTeammate=team?.some((group)=>group?.teammates?.some(e=>e?.id ===currentUser?.id) )
-    //   currentUser?.id?.length>0&&setGroup(currentUser)
-    // }else{
-     
-    //   currentUser?.id?.length>0&&!isGroup&&setGroup(currentUser)
-    // }
+    // const isTeammate=team?.some((group)=>group?.teammates?.some(e=>e?.id ===currentUser?.id) )
+    // console.log(!isTeammate,"teammm ate")
 
 
-     console.log(team,"iiiisssss")
-          
+
+
+  
 
 
 
