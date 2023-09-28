@@ -165,6 +165,20 @@ export default function Table({teams,group,currentUser}) {
 
 
  const PendingTableRow=({team,group,currentUser})=>{
+        const [errorMsg, setErrorMsg] = useState(null)
+        const [isLoading,setLoader]=useState(false)
+        const removeInvitee= async (teammate)=>{
+          try{
+            setLoader(true)
+
+            const response =await teamApi.removePendingTeammate(group,teammate)
+            response&&setLoader(false)
+
+          }catch(e){
+            console.log(e)
+            setErrorMsg(e.message)
+          }
+      }
     return(
       <tr className='py-6 text-sm font-light '>
       {team?.type?.length>0?
@@ -187,17 +201,27 @@ export default function Table({teams,group,currentUser}) {
                <h5 className='bg-white flex items-center justify-center  p-2 w-full'
               
                   >
+                 {isLoading?
+                  
+                  <ClipLoader 
+                      color={"rgba(62, 51, 221, 1)"}
+                      loading={isLoading}
+                  />
+                  :
                 <span  className='bg-red-600  flex items-center justify-center rounded-full p-2 w-7 h-7'
-                       
-                >
-                      <MdDelete 
-                      className='text-white text-sm'
-                 
-                      /> 
+                  onClick={()=>removeInvitee(team)}
+                  >
 
-
-                </span>
+                  <MdDelete 
+                  className='text-white text-sm'
+              
                 
+                  /> 
+
+
+                 </span>
+              }
+
 
               </h5>
          </td>

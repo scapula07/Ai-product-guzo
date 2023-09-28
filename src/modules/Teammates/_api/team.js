@@ -143,11 +143,23 @@ export const teamApi= {
               }
 
         },
-         removePendingTeammate:async function (group,currentUser) {
+         removePendingTeammate:async function (group,teammate) {
             try{
+              const collectionName =group?.type=="eco"?"ecosystems":"organizations"
+              const ref =doc(db,collectionName,group?.id)
+              const docSnap = await getDoc(ref);
+              console.log(docSnap?.data(),"ecossye")
 
+              const invitees=docSnap?.data()?.invitees?.length ==undefined? []:docSnap?.data()?.invitees
+              const newInvitees=  invitees?.filter((invitee)=>invitee?.id !=teammate?.id )
+        
+               await updateDoc(ref, {
+                invitees:[
+                    ...newInvitees,
+                  ]           
+               })
 
-
+              return true
              }catch(e){
               console.log(e)
               throw new Error(e)
