@@ -8,7 +8,7 @@ import ecoImg from "../../assets/img3.png"
 import org from "../../assets/img2.png"
 import indiv from "../../assets/indiv.png"
 
-export default function Dmcontacts({conversations,setCurrentChat,currentChat, currentUser,receiverInfo,setReceiver}) {
+export default function Dmcontacts({conversations,setCurrentChat,currentChat, currentUser,receiverInfo,setReceiver,areContacts}) {
    useEffect(( )=>{
       conversations?.length >0 && setReceiver(conversations[0]?.info?.find(info => info?.id != currentUser?.id))
       conversations?.length >0 && setCurrentChat(conversations[0])
@@ -38,7 +38,7 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
 
         }
 
-          {conversations?.length ===0&&
+          {conversations?.length ===0&&areContacts?.length ==0&&
             <div className='w-full flex justify-center py-10'>
                <ClipLoader 
                     color={"rgba(62, 51, 221, 1)"}
@@ -46,7 +46,12 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
                 />
             </div>
             }
-
+          
+          {conversations?.length ===0&&areContacts?.length >0&&
+            <div className='w-full flex justify-center py-10'>
+              <h5 className="text-sm">No contacts</h5>
+            </div>
+            }
 
     </div>
   )

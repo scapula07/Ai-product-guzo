@@ -28,6 +28,7 @@ export default function Messenger() {
 
    const [isLoading,setLoader]=useState(false)
    const [newMessage, setNewMessage] = useState("");
+   const [areContacts,setContacts]=useState("")
 
     useEffect(()=>{
       const getConversations = async () => {
@@ -37,6 +38,8 @@ export default function Messenger() {
        
             const convSnapshot =await getDocs(q)
             const conversations= convSnapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
+            conversations?.length===0 &&setContacts("No contact")
+            conversations?.length >0 &&setContacts("")
             setConversations(conversations)
       
          
@@ -113,6 +116,7 @@ export default function Messenger() {
                 groups={groups}
                 active={active}
                 setActive={setActive}
+                areContacts={areContacts}
                
                />
           </div>
