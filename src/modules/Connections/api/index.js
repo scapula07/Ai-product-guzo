@@ -98,10 +98,10 @@ export const connectApi= {
            
             
          
-            const collectionName =group?.type=="eco"?"ecosystems":"organizations"
+            const collectionName =connect?.type=="eco"?"ecosystems":"organizations"
             
         
-            const ref =doc(db,collectionName,group?.id)
+            const ref =doc(db,collectionName,connect?.id)
             const docSnap = await getDoc(ref);
             console.log(docSnap?.data(),"ecossye")
 
@@ -114,20 +114,20 @@ export const connectApi= {
                await updateDoc(ref, {
                   pending:[
                      ...newPending,
-                  ]         
-               })
+                   ]         
+                })
               
 
           
-                  if(group?.type?.length >0){
+                  if(group?.type ==="eco"){
                       const collectionTag =group?.type=="eco"?"ecosystems":"organizations"
                       const connectSnap = await getDoc(doc(db,collectionTag,group?.id));
-                      const newPendingMemberships=connectSnap?.data()?.pendingMemberships?.filter((eco)=>eco?.id != connect?.id)
+                      const newPendingMemberships=connectSnap?.data()?.pending?.filter((eco)=>eco?.id != connect?.id)
 
                  
                       
                       await updateDoc(doc(db,collectionTag,group?.id), {
-                        pending:[
+                        pendingMemberships:[
                           ...newPendingMemberships,
                           
                          ]
@@ -135,9 +135,24 @@ export const connectApi= {
                     })
    
 
-                   }else{
-                       const connectSnap = await getDoc(doc(db,"users",group?.id));
-                        const newConnects=connectSnap?.data()?.ecosystems?.filter((eco)=>eco?.id !=connect?.id)
+                   }else if(group?.type ==="org"){
+                     const collectionTag =group?.type=="eco"?"ecosystems":"organizations"
+                     const connectSnap = await getDoc(doc(db,collectionTag,group?.id));
+                     const newPendingMemberships=connectSnap?.data()?.pending?.filter((eco)=>eco?.id != connect?.id)
+
+                
+                     
+                     await updateDoc(doc(db,collectionTag,group?.id), {
+                       pendingMemberships:[
+                         ...newPendingMemberships,
+                         
+                        ]
+                     
+                   })
+
+                     }else{
+                         const connectSnap = await getDoc(doc(db,"users",group?.id));
+                         const newConnects=connectSnap?.data()?.ecosystems?.filter((eco)=>eco?.id !=connect?.id)
                        await updateDoc(doc(db,"users",group?.id), {
                         pending:[
                           ...newConnects
