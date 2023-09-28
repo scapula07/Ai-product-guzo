@@ -44,7 +44,7 @@ export default function Teammates() {
             setTeam(teammates)
          }
         getAllTeammates()
-     },[])
+     })
 
      const addTeammates=async()=>{
         setLoader(true)

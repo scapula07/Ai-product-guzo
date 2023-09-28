@@ -40,7 +40,7 @@ export default function Table({teams,group,currentUser}) {
        {teams?.teammates?.map((team)=>{
          count++
            return(
-             <tr className='py-6 text-sm font-light '>
+             <tr className='py-2 text-sm font-light '>
                 {team?.type?.length>0?
                    <td className='bg-white text-center text-xs w-1/4 font-semibold' >{team?.name}</td>
                      :
@@ -59,7 +59,11 @@ export default function Table({teams,group,currentUser}) {
                   </h5>
                  </td>
                  {group?.creator==currentUser?.id&&
-                   <td className='bg-white  w-1/5 font-semibold text-2xl px-8 '>
+                   <td className='bg-white text-center  w-1/5 font-semibold text-2xl px-8 '>
+                        {group?.creator==team?.id?
+                          <span >...</span>
+
+                          :
                         <h5 className='bg-white flex items-center justify-center  p-2 w-full'
                     
                           >
@@ -73,6 +77,7 @@ export default function Table({teams,group,currentUser}) {
                             
  
                            </h5>
+                    }
                    </td>
                  }
                
@@ -99,10 +104,11 @@ export default function Table({teams,group,currentUser}) {
                    </h5>
                 </td>
                  {group?.creator==currentUser?.id&&
-                   <td className='bg-white text-center w-1/5 font-semibold text-2xl'>
+                    <td className='bg-white text-center w-1/5 font-semibold text-2xl'>
+                        
                          <h5 className='bg-white flex items-center justify-center  p-2 w-full'
                         
-                        >
+                            >
                           <span  className='bg-red-600  flex items-center justify-center rounded-full p-2 w-10 h-10'>
                                 <MdDelete 
                                 className='text-white text-sm'

@@ -93,4 +93,24 @@ export const teamApi= {
 
         },
 
+        deletTeammate:async function (group,currentUser) {
+             try{
+
+              }catch(e){
+                console.log(e)
+                throw new Error(e)
+              }
+
+        },
+        removePendingTeammate:async function (group,currentUser) {
+            try{
+
+             }catch(e){
+              console.log(e)
+              throw new Error(e)
+            }
+            
+        }
+
+
 }
