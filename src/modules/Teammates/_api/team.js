@@ -94,6 +94,7 @@ export const teamApi= {
         },
 
         deletTeammate:async function (group,teammate) {
+             console.log(teammate,"deletedd")
              try{
                   const collectionName =group?.type=="eco"?"ecosystems":"organizations"
                   const ref =doc(db,collectionName,group?.id)
@@ -102,39 +103,41 @@ export const teamApi= {
     
                   const teammates=docSnap?.data()?.teammates?.length ==undefined? []:docSnap?.data()?.teammates
                   const newTeammates= teammates?.filter((teammate)=>teammate?.id !=teammate?.id )
-            
-                   await updateDoc(ref, {
-                    teammates:[
-                        ...newTeammates,
-                      ]           
-                   })
-                   const snap = await getDoc(ref);
 
-                   const userSnap = await getDoc(doc(db,"users",teammate?.id));
-                     if(group?.type=="eco"){
-                            const newEcosystem=userSnap?.data()?.ecosystems?.filter((eco)=>eco?.id != group?.id)
+                  console.log(newTeammates,"teamms")
+            
+                  //  await updateDoc(ref, {
+                  //   teammates:[
+                  //       ...newTeammates,
+                  //     ]           
+                  //  })
+                  //  const snap = await getDoc(ref);
+
+                  //  const userSnap = await getDoc(doc(db,"users",teammate?.id));
+                  //    if(group?.type=="eco"){
+                  //           const newEcosystem=userSnap?.data()?.ecosystems?.filter((eco)=>eco?.id != group?.id)
                             
-                            await updateDoc(doc(db,"users",teammate?.id), {
-                            ecosystems:[
-                                ...newEcosystem,
+                  //           await updateDoc(doc(db,"users",teammate?.id), {
+                  //           ecosystems:[
+                  //               ...newEcosystem,
                                 
-                            ]
+                  //           ]
                             
-                          })
+                  //         })
          
 
-                         }else{
-                           const newOrgs=userSnap?.data()?.organizations?.filter((eco)=>eco?.id != group?.id)
-                            await updateDoc(doc(db,"users",teammate?.id), {
-                            organizations:[
-                                ...newOrgs
-                              ]
+                  //        }else{
+                  //          const newOrgs=userSnap?.data()?.organizations?.filter((eco)=>eco?.id != group?.id)
+                  //           await updateDoc(doc(db,"users",teammate?.id), {
+                  //           organizations:[
+                  //               ...newOrgs
+                  //             ]
                     
-                             })
+                  //            })
 
-                       }
+                  //      }
                    
-                      return true
+                  //     return true
 
 
               }catch(e){

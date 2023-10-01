@@ -50,7 +50,7 @@ export default function Table({teams,group,currentUser}) {
      <tbody className='bg-white w-full'>
           {teams?.teammates?.map((team)=>{
                count++
-           return(
+             return(
                     <AdminTableRow
                       team={team}
                       currentUser={currentUser}
@@ -88,17 +88,19 @@ export default function Table({teams,group,currentUser}) {
         const [errorMsg, setErrorMsg] = useState(null)
         const [isLoading,setLoader]=useState(false)
         const removeTeammmate= async (teammate)=>{
-          try{
-            setLoader(true)
+          console.log(teammate,"teammatedhheh")
+          // try{
 
-            const response =await teamApi.deletTeammate(group,teammate)
-            response&&setLoader(false)
+          //   setLoader(true)
 
-          }catch(e){
-            console.log(e)
-            setErrorMsg(e.message)
+          //   const response =await teamApi.deletTeammate(group,teammate)
+          //   response&&setLoader(false)
+
+          // }catch(e){
+          //   console.log(e)
+          //   setErrorMsg(e.message)
+          // }
           }
-      }
     return(
               <tr className='py-2 text-sm font-light '>
               {team?.type?.length>0?

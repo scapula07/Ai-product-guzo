@@ -23,7 +23,7 @@ export const notificationApi = {
 
    },
 
-   acceptTeamInvite:async function (id,from,user) {
+   acceptTeamInvite:async function (id,from,user,name,img) {
        try{  
               const collectionName =from?.type=="eco"?"ecosystems":"organizations"
             //   console.log(collection,"ccolll")
@@ -85,15 +85,26 @@ export const notificationApi = {
                userSnap?.id?.length &&localStorage.clear();
                userSnap?.id.length >0&&localStorage.setItem('user',JSON.stringify(userData));
                await deleteDoc(doc(db, "notifications", id));
-               const q = query(collection(db, "notifications"), where("to","==",user?.id));
-        
-               const snapshot =await getDocs(q)
-               const notifications= snapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
 
-               return {notifications: notifications,status:true}
+               const notificationSnap = await addDoc(collection(db, "notifications"),{
+                name:name,
+                img:img,
+                message:`You have accepted ${name} invitation`,
+                type:"action",
+                to:user?.id
+    
+              })
+
+
+              //  const q = query(collection(db, "notifications"), where("to","==",user?.id));
+        
+              //  const snapshot =await getDocs(q)
+              //  const notifications= snapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
+
+              //  return {notifications: notifications,status:true}
               
 
-          
+            return true
        }catch(e){
         console.log(e)
         throw new Error(e)

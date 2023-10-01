@@ -8,7 +8,12 @@ import { groupState ,updateUserState,userState} from '../../Recoil/globalstate'
 import { notificationApi } from '../api'
 import ClipLoader from "react-spinners/ClipLoader";
 import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
-
+import { db } from '../../Firebase'
+import { collection,  onSnapshot,
+  doc, getDocs,
+  query, orderBy, 
+  limit,getDoc,setDoc ,
+ updateDoc,addDoc ,deleteDoc, where} from 'firebase/firestore'
 
 export default function Notifications() {
     const [currentUser,setCurrentUser] =useRecoilState(userState)
@@ -17,20 +22,38 @@ export default function Notifications() {
     const [isLoading,setLoading]=useState(false)
     const [areNotification,setAre]=useState("")
 
+          useEffect(()=>{
 
+      
 
-    useEffect(()=>{
-         const getNotifications=async()=>{ 
-            console.log(currentUser?.id,"iddd")
-            const response =await  notificationApi.getNotifications(currentUser?.id)
-            response?.length===0 &&setAre("No notifications")
-            response?.length>0 &&setAre("")
-            setNotifications(response)
-            console.log(response,"notifications")
-         }
-         getNotifications()
-
-      },[currentUser])
+          if(currentUser?.id?.length >0){
+              const q = query(collection(db, "notifications"), where("to","==",currentUser?.id));
+              
+                const notifications= [];
+                const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                  if (!querySnapshot.empty) {
+                  querySnapshot.forEach((doc) => {
+                       notifications.push({...doc?.data(),id:doc?.id});
+                      console.log(doc?.data(),"feeed")
+                  });
+                  setNotifications(notifications)
+                
+                }
+                notifications?.length===0 &&setAre("No notfications")
+                notifications?.length >0 &&setAre("")
+        
+                
+                });
+            
+                return () => {
+                  unsubscribe()
+        
+              };
+        
+            }
+        
+        })
+  
   return (
     <Layout>
         <div className='py-2 flex-col flex space-y-4'> 
@@ -98,15 +121,8 @@ const Notification=({notification,currentUser,setNotifications,setCurrentUser,is
         setErrorMsg(null)
         setAccept(true)
           try{
-            const response =await notificationApi.acceptTeamInvite(notification?.id,notification?.from,currentUser)
-            response?.status&&setNotifications(response?.notifications)
-            // const user = localStorage.getItem("user");
-            // console.log(JSON.parse(user),"user")
-            // console.log(user,"user notification")
-            // response?.status&&setCurrentUser(JSON.parse(user))
-            // response?.status&&setUpdatedState(!isUpdate)
-         
-            response?.status&&setAccept(false)
+              const response =await notificationApi.acceptTeamInvite(notification?.id,notification?.from,currentUser,notification?.name,notification?.img)
+              response&&setAccept(false)
            }catch(e){
             console.log(e)
             setAccept(false)
@@ -172,6 +188,7 @@ const Notification=({notification,currentUser,setNotifications,setCurrentUser,is
                         </div>
                      
                     }
+
                      {notification?.type=="post request"&&
                       <div className='flex items-center space-x-8'>
                            <h5 className='text-slate-500 font-semibold text-sm'>Decline</h5>
