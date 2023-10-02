@@ -36,7 +36,13 @@ export default function DeleteAccount({group,currentUser}) {
             response&&setTrigger(false)
             response&&setLoader(false)
             response&&setOpen(true)
-            response&&navigate("/register/login")
+            const accounts=[...currentUser?.ecosystems,...currentUser?.organizations]
+            if(accounts?.length ===1){
+              response&&navigate("/create-account")
+            }else{
+              response&&navigate("/register/login")
+            }
+            
 
           }catch(e){
             console.log(e)

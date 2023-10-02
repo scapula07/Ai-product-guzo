@@ -9,14 +9,16 @@ import { db } from '../../Firebase';
 export const deleteProfile = {
     deleteAccount: async function (group,currentUser) {
         console.log(currentUser,"user")
+
+       
         let collectionName="users"
         if(group?.type?.length >0){
               collectionName= group?.type=="eco"?"ecosystems":"organizations"
   
          }
         try{
-        //    await deleteDoc(doc(db,collectionName,group?.id));
-        //    return true
+           await deleteDoc(doc(db,collectionName,group?.id));
+           
 
         const ref =doc(db,"users",currentUser?.id)
         const docSnap = await getDoc(ref);

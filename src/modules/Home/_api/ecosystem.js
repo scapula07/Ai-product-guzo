@@ -47,6 +47,7 @@ export const ecosystemApi = {
       },
 
         joinRequest: async function (ecoId,currentUser,group) {
+            
             try{
                 
                  const ecoRef =doc(db,"ecosystems",ecoId)

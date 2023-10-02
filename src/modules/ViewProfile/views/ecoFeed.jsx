@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 import ViewPosts from './posts'
 import ViewMembers from './members'
 
-export default function EcoFeed({group}) {
+export default function EcoFeed({group, account}) {
   const [active,setActive]=useState("feed")
   return (
     <div className='py-6'>
@@ -17,7 +17,7 @@ export default function EcoFeed({group}) {
 
         <div className='py-6'>
           {active==="feed"&&<ViewPosts group={group}/>}
-          {active==="members"&&<ViewMembers group={group} />}
+          {active==="members"&&<ViewMembers group={group}    account={account}/>}
            
         </div>
 

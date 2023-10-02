@@ -116,7 +116,8 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
         <div className='flex flex-col items-center space-y-3'>
             <Link  to={`/eco-profile/${eco?.id}`}
                     state={{
-                     eco
+                     eco,
+                     account:group
                   }}
                   >
                 <img 

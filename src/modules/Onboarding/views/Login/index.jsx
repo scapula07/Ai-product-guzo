@@ -80,6 +80,7 @@ export default function Login() {
           }
           try{
              const user=await authApi.login(email,password)
+             console.log(user,"userrr")
             
              setLoader(false)
              user?.id.length &&localStorage.clear();

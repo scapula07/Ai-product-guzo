@@ -89,17 +89,17 @@ export default function Table({teams,group,currentUser}) {
         const [isLoading,setLoader]=useState(false)
         const removeTeammmate= async (teammate)=>{
           console.log(teammate,"teammatedhheh")
-          // try{
+          try{
 
-          //   setLoader(true)
+            setLoader(true)
 
-          //   const response =await teamApi.deletTeammate(group,teammate)
-          //   response&&setLoader(false)
+            const response =await teamApi.deletTeammate(group,teammate)
+            response&&setLoader(false)
 
-          // }catch(e){
-          //   console.log(e)
-          //   setErrorMsg(e.message)
-          // }
+          }catch(e){
+            console.log(e)
+            setErrorMsg(e.message)
+          }
           }
     return(
               <tr className='py-2 text-sm font-light '>

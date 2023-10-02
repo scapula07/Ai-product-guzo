@@ -5,16 +5,16 @@ import {BsThreeDots} from "react-icons/bs"
 import {IoMdNotifications} from "react-icons/io"
 import { groupState,userState } from '../../Recoil/globalstate'
 import {useRecoilValue} from "recoil"
-import { ecosystemApi } from '../../Home/_api/ecosystem'
+import { ecosystemApi } from '../_api'
 import { useNavigate } from 'react-router-dom'
 import eco from "../../assets/img3.png"
 
 
 
-export default function CoverSection({group}) {
+export default function CoverSection({group,account}) {
     console.log(group,"group")
     const currentUser =useRecoilValue(userState)
-    const account=useRecoilValue(groupState)
+    const [trigger,setTrigger]=useState(false)
 
  
       const active=group?.active?.some(member => member?.id===account?.id) || group?.creator ===currentUser?.id
@@ -27,21 +27,22 @@ export default function CoverSection({group}) {
 
 
 
-      console.log(active)
-      console.log(pending)
+
        
     
       const [errorMsg, setErrorMsg] = useState(null)
       let navigate = useNavigate();
       const [isLoading,setLoading]=useState(false)
   
-       const join=async(id)=>{
+       const join=async()=>{
           setLoading(true)
+          console.log(account,"accco")
           try{
-            const result =await ecosystemApi.joinRequest(id,currentUser,group)
-            setLoading(false)
+        
+            const result =await ecosystemApi.joinRequest(group?.id,currentUser,account)
+             result&&setLoading(false)
        
-            result&&navigate(`/connections/${group?.id}/pending`)
+            // result&&navigate(`/connections/${group?.id}/pending`)
   
           //  const response =await notificationApi.sendNotification(currentUser?.accessToken,currentUser?.notificationToken)
             
@@ -58,11 +59,20 @@ export default function CoverSection({group}) {
     <div className='w-full flex flex-col space-y-4'>
       
         <div className='w-full flex flex-col  bg-white  rounded-lg'>
-                <img 
-                src={cover }
-                className="w-full h-33"
+              { group?.cover?.length>0?
+                  
+                  <img 
+                   src={group?.cover}
+                   className="w-full h-28"
 
-                />
+                   />
+                        :
+                   <div className="w-full h-28 rounded-t-lg" style={{background:"#5A5A5A"}}>
+                   </div>
+
+
+
+                  }
 
                 <div className='flex lg:flex-row flex-col py-6 space-x-4 px-4'>
                     <img 
@@ -123,19 +133,39 @@ export default function CoverSection({group}) {
               
 
                 <div className='px-4 py-2 flex flex-col space-y-6'>
-                    {group?.about?.length !=undefined&&
-                            <div className='flex flex-col space-y-2 px-4 py-2 rounded-lg'  style={{background: "linear-gradient(0deg, #ECEBFE, #ECEBFE)"}} >
-                            <h5 className='text-lg font-semibold'>About {group?.name}</h5>
-                            <p className='text-xs '>
-                            {group?.about}....
-                            <span className='font-semibold'>see more</span>.
-                            </p>
+                {group?.about?.length !=undefined&&
+                      <div className='flex flex-col space-y-2 px-4 py-2 rounded-lg '  style={{background: "linear-gradient(0deg, #ECEBFE, #ECEBFE)"}} >
+                          <h5 className='text-lg font-semibold'>About {group?.type?.length>0? group?.name :group?.firstName}</h5>
+                          {group?.about?.length >0&&
 
-                        </div>
-                     }
+                          
+                              <p className=''>
+                                {group?.about?.slice(0,`${trigger?group?.about?.length :100}`)}
+
+                                {
+                                  group?.about?.length> 100&&
+                                   <>
+                                     {trigger?
+                                         <span className='font-semibold text-xs' onClick={()=>setTrigger(false)}>....see less</span>
+                                         :
+                                         <span className='font-semibold text-xs' onClick={()=>setTrigger(true)}>....see more</span>
 
 
-                    <div className='flex justify-center w-full items-center'>
+                                     }
+                                     
+                                   </>
+                                 
+                                }
+                           
+                          </p>
+                          }
+
+                     </div>
+
+                   }
+
+
+                    <div className='flex justify-center w-full items-center py-4'>
                        
                         {active?
                            ""
@@ -144,10 +174,20 @@ export default function CoverSection({group}) {
                               {pending?
                                  <button className=' rounded-full py-2 text-white px-20'
                                    style={{background:"rgba(142, 142, 142, 1) "}}
-                                 >Pending...</button>
-                                 :
-                                 <button className='bg-blue-600 rounded-full py-2 text-white px-20'>Join</button>
-             }
+                                   >Pending...</button>
+                                   :
+                                 <button className='bg-blue-600 rounded-full py-2 text-white px-20'
+                                  onClick={()=>join()}
+                                    >
+                                    {isLoading?
+                                      "Please wait...."
+                                      :
+                                      "Join"
+
+                                     }
+                                   
+                                </button>
+                               }
 
 
                            </>

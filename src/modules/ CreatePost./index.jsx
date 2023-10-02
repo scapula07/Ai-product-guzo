@@ -286,13 +286,13 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
                                      </div>
                          }
-                        <div className='flex items-center space-x-1'>
+                        {/* <div className='flex items-center space-x-1'>
                             <h5 className='text-sm font-semibold '>Share Options</h5>
                             <MdArrowDropDown 
                             className='text-lg'
                             onClick={()=>setShare(true) || setOthers(true)}
                             />
-                        </div>
+                        </div> */}
                     
 
                     </div>
@@ -305,13 +305,13 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
                         }
                      
-                        <div className='flex items-center space-x-1'>
+                        {/* <div className='flex items-center space-x-1'>
                             <h5 className='text-sm font-semibold '>Share Options</h5>
                             <MdArrowDropDown 
                             className='text-lg'
                             onClick={()=>setShare(true) || setOthers(true)}
                             />
-                        </div>
+                        </div> */}
                     
 
                     </div>

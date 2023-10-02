@@ -46,7 +46,22 @@ export default function Layout({children}) {
                    <SidePanel />
                 </div>
                 <div className=' border-r h-full w-4/5 '>
-                   <TabsPanel />
+                  {window.location.pathname.includes("/eco-profile")?
+                     <div className='w-full flex px-6 py-10'>
+                              <button
+                                style={{background: "rgba(236, 235, 254, 1)"}}
+                                className='text-blue-700 rounded-full  px-8 py-1.5'
+                                onClick={()=>window.history.go(-1)}
+                              >
+                                Back
+                            </button>
+                    </div>
+            
+                    :
+                    <TabsPanel />
+
+                  }
+                   
 
                 </div>
                

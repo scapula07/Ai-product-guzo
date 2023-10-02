@@ -9,6 +9,12 @@ import {useRecoilValue} from "recoil"
 import EcoFeed from './ecoFeed'
 import { useLocation,useParams} from "react-router-dom";
 import { ecosystemApi } from '../_api'
+import { db } from '../../Firebase'
+import { collection,  onSnapshot,
+  doc, getDocs,
+  query, orderBy, 
+  limit,getDoc,setDoc ,
+ updateDoc,addDoc } from 'firebase/firestore'
 
 
 export default function ViewProfile() {
@@ -18,31 +24,36 @@ export default function ViewProfile() {
 
     const location =useLocation()
     const eco=location?.state?.eco
+    const account=location?.state?.account
+
      useEffect(()=>{
-        const getEcosystem=async()=>{
+      
           
-            const response =await ecosystemApi.getEcosystem(eco?.id)
-            console.log(response,"response")
-            setEcosystem(response)
+       if(eco?.id?.length >0){
+            const unsub = onSnapshot(doc(db,"ecosystems",eco?.id), (doc) => {
+              console.log("Current data: ", doc.data());
+              setEcosystem({ ...doc.data(), id: doc.id })
+              console.log({ ...doc.data(), id: doc.id },"ecosystem")
+          });
+      
 
-         }
-        getEcosystem()
+       }
+      },[])
 
-     },[])
 
-     console.log(ecosystem,"system")
     
   return (
         <Layout>
-              <div className='py-2'> 
-                 <h5 className='text-slate-700 font-semibold lg:text-xl text-lg'>Profile</h5>
-              </div>
+        <>
           
 
-            <div className='flex w-full h-full space-x-10'>
+            <div className='flex w-full h-full space-x-10 py-4'>
              
                 <div className='lg:w-3/5 w-full overflow-y-auto h-full no-scrollbar'>
-                  <CoverSection group={ecosystem}/>
+                  <CoverSection
+                   group={ecosystem}
+                   account={account}
+                   />
                   {eco?.type==="eco"?
                      ""
                         :
@@ -53,7 +64,10 @@ export default function ViewProfile() {
 
                     {eco?.type==="eco"?
                         <div className=''>
-                            <EcoFeed group={{...ecosystem,id:eco?.id}}/>
+                            <EcoFeed
+                             group={{...ecosystem,id:eco?.id}}
+                             account={account}
+                             />
                         </div>
                       
                       :
@@ -73,6 +87,7 @@ export default function ViewProfile() {
                
 
             </div>
+            </>
             
         </Layout>
   )
