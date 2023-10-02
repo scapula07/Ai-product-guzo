@@ -142,6 +142,20 @@ export const teamApi= {
                              })
 
                        }
+
+
+                    const notificationSnap = await addDoc(collection(db, "notifications"),{
+                      name:group?.name,
+                      img:group?.img,
+                      message:`You have been removed as admin from ${group?.name}`,
+                      type:"action",
+                      from:{
+                          id:group?.id,
+                          type:group?.type
+                      },
+                      to:team?.id
+          
+                    })
                    
                       return true
 

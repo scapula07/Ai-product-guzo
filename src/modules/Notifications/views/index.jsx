@@ -101,6 +101,7 @@ export default function Notifications() {
 
 const Notification=({notification,currentUser,setNotifications,setCurrentUser,isUpdate,setUpdatedState})=>{
     const [accepted,setAccept]=useState(false)
+    const [ignore,setIgnore]=useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
 
     const [open, setOpen] = useState(false);
@@ -126,6 +127,18 @@ const Notification=({notification,currentUser,setNotifications,setCurrentUser,is
            }catch(e){
             console.log(e)
             setAccept(false)
+            setErrorMsg(e.message)
+          }
+       }
+       const handleignore=async()=>{
+        setErrorMsg(null)
+        setIgnore(true)
+          try{
+              const response =await notificationApi.declineTeamInvite(notification?.id,notification?.from,currentUser,notification?.name,notification?.img)
+              response&&setIgnore(false)
+           }catch(e){
+            console.log(e)
+            setIgnore(false)
             setErrorMsg(e.message)
           }
        }
@@ -167,7 +180,19 @@ const Notification=({notification,currentUser,setNotifications,setCurrentUser,is
                     }
                     {notification?.type=="join request"&&
                       <div className='flex items-center space-x-8'>
-                           <h5 className='text-slate-500 font-semibold text-sm'>Ignore</h5>
+                          {ignore?
+                
+                                <ClipLoader 
+                                    color={"rgba(62, 51, 221, 1)"}
+                                
+
+                                />
+                            
+                                :
+                           <h5 className='text-slate-500 font-semibold text-sm'
+                           onClick={()=>handleignore()}
+                           >Ignore</h5>
+                          }
                          {accepted?
                 
                                 <ClipLoader 

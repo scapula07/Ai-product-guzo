@@ -10,6 +10,7 @@ import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
 import ReactSelect from "react-select";
 import axios from "axios"
 import { formatPhoneNumber } from '../../../Utils/formatPhoneNumber';
+import { countryCode } from '../../../Utils/countrydialingcodes';
 
 export default function Org({currentUser}) {
     console.log(currentUser,"indiv")
@@ -259,12 +260,18 @@ export default function Org({currentUser}) {
                   <div className='flex flex-col w-full px-10'>  
 
                       <label className='text-sm text-slate-600 font-semibold'>Contact Phone Number*</label>
-                            <div className='flex items-center space-x-4 px-4 rounded-md'
+                            <div className='flex items-center space-x-3 px-4 rounded-md'
                             style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                             >
-                            <BsFlag
-                                className="text-slate-500 font-semibold text-lg "
-                            />
+                              {country?.label?.length != undefined?
+                                  <h5 className='text-sm'>+{countryCode(country?.iso)}</h5>
+                                   :
+                                   <BsFlag
+                                   className="text-slate-500 font-semibold text-lg "
+                                 />
+
+                              }
+                         
                             <input 
                                 placeholder='(201) 555-0123'
                                 className=' py-2  w-full rounded-md text-sm outline-none'
@@ -308,6 +315,7 @@ export default function Org({currentUser}) {
                                                 label: item?.country + "," + item?.iso3,
                                                 value: item?.country,
                                                 cities: item?.cities,
+                                                iso:item?.iso3
                                             }))
                                             }
                                             value={country}

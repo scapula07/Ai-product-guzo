@@ -32,6 +32,7 @@ export const deleteProfile = {
             })
         }else{
             const newOrganizations= docSnap.data()?.organizations?.filter((org)=>org?.id != group?.id)
+            console.log(newOrganizations,"new org")
             const result = await updateDoc(ref, {
                 organizations:[
                     ...newOrganizations

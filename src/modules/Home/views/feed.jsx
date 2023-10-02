@@ -46,7 +46,7 @@ export default function Feeds() {
                   const feeds= [];
                   querySnapshot.forEach((doc) => {
                       feeds.push({...doc?.data(),id:doc?.id});
-                      console.log(doc?.data(),"feeed")
+                   
                   });
                   feeds?.length===0 &&setPost("No Feeds")
                   feeds?.length >0 &&setPost("")
@@ -101,11 +101,10 @@ export default function Feeds() {
 
 
 const Feed=({feed,group})=>{
-      console.log(feed,"imgggg pppppp")
+
 
       const time =calculateTimeOfPost(feed?.createdAt?.seconds)
-      console.log(feed?.createdAt,"created at")
-      console.log(time,"timeeee")
+ 
      return(
         <div className='w-full py-4 bg-white h-full '>
         <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
@@ -198,7 +197,7 @@ const Feed=({feed,group})=>{
 
 
 const EventCard=({event,participants})=>{
-    console.log(participants,"evevveve")
+    
    return(
      <div className='w-full flex flex-col space-y-4'>
          <div className='flex w-full justify-between'>

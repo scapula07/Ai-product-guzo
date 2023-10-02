@@ -66,7 +66,7 @@ export default function ViewMembers({group,account}) {
                  <h5>   Join the ecosystem to see the members...</h5>
               </div>
 
-               <div className='grid grid-flow-row grid-cols-3 bg-black opacity-70 gap-4 gap-y-8 h-full w-full relative -z-50'>
+               <div className='grid grid-flow-row grid-cols-3 opacity-70 gap-4 gap-y-8 h-full w-full relative -z-50'>
                   {group?.active?.map((member)=>{
                   return(
                     <Member 

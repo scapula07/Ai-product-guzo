@@ -39,10 +39,10 @@ export default function Ecosystems() {
             const ecosystems = []
             querySnapshot.forEach((doc) => {
                   ecosystems.push({ ...doc.data(), id: doc.id })
-                  console.log({ ...doc.data(), id: doc.id },"ecosystem")
+    
             });
 
-            console.log(ecosystems?.filter((e)=>e?.creator != "89KrYw1jUimaAgpyjx2s"),"filterrrrr eco")
+
             setEco(ecosystems)
     
 
@@ -50,16 +50,16 @@ export default function Ecosystems() {
           });
        },[])
         
-       console.log(ecosystems,"ecosystem home")
+
       
   return (
     <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
         {ecosystems?.length >0 &&ecosystems?.filter((e)=>e?.id !== group?.id)?.map((eco,)=>{
 
             const isPending= eco?.pending?.some(e=>e?.id ===group?.id)
-            console.log(isPending,eco?.name)
+            
             const isMember= eco?.active?.some(e=>e?.id ===group?.id) || eco?.creator ===group?.id;
-            console.log(isMember,)
+
             return(
                
                   <EcosystemCard 

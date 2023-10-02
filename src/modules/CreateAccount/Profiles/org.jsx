@@ -10,7 +10,7 @@ import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
 import ReactSelect from "react-select";
 import axios from "axios"
 import { formatPhoneNumber } from '../../Utils/formatPhoneNumber';
-
+import { countryCode } from '../../Utils/countrydialingcodes';
 export default function OrgAccount({currentUser}) {
     console.log(currentUser,"indiv")
     let navigate = useNavigate();
@@ -133,13 +133,22 @@ export default function OrgAccount({currentUser}) {
                 invitees:[]
 
             }
+            // const result =await createProfile.createOrgProfile(payload,file,user)
+            // setLoader(false)
+            // localStorage.clear();
+            // result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
+            // console.log(result,"result")
+            // setLoader(false)
+            // result?.id?.length>0&& navigate(`/home/${result?.id}`)
+
             const result =await createProfile.createOrgProfile(payload,file,user)
             setLoader(false)
             localStorage.clear();
             result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
             console.log(result,"result")
             setLoader(false)
-            result?.id?.length>0&& navigate(`/home/${result?.id}`)
+            // result?.id?.length>0&& navigate(`/home/${result?.id}`)
+            result?.id?.length>0&& navigate(`/home/${result?.organizations[0]?.id}`)
           }catch(e){
             console.log(e)
             setLoader(false)
@@ -247,9 +256,14 @@ export default function OrgAccount({currentUser}) {
                             <div className='flex items-center space-x-4 px-4 rounded-md'
                             style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                             >
-                            <BsFlag
-                                className="text-slate-500 font-semibold text-lg "
-                            />
+                                 {country?.label?.length != undefined?
+                                  <h5 className='text-sm'>+{countryCode(country?.iso)}</h5>
+                                   :
+                                   <BsFlag
+                                   className="text-slate-500 font-semibold text-lg "
+                                 />
+
+                              }
                             <input 
                                 placeholder='(201) 555-0123'
                                 className=' py-2  w-full rounded-md text-sm outline-none'
@@ -293,6 +307,7 @@ export default function OrgAccount({currentUser}) {
                                                 label: item?.country + "," + item?.iso3,
                                                 value: item?.country,
                                                 cities: item?.cities,
+                                                iso:item?.iso3
                                             }))
                                             }
                                             value={country}
