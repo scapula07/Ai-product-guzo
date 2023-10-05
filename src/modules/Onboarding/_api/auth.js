@@ -38,6 +38,7 @@ export const authApi= {
        
           try{ 
                 const provider = new GoogleAuthProvider();
+                provider.addScope("https://www.googleapis.com/auth/userinfo.profile")
                 const res =  await signInWithPopup(auth,provider)
                 const credential = GoogleAuthProvider.credentialFromResult(res);
                 const token = credential.accessToken;
