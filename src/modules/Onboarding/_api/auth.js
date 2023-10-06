@@ -139,11 +139,11 @@ export const authApi= {
 
                                   console.log(newOrg,"new ecooss")
 
-                                  // const result = await updateDoc(ref, {
-                                  //     organizations:[...newOrg],
-                                  //     connections:[...newConnections],
-                                  //     active:[...newActiveMembers]
-                                  //       })
+                                  const result = await updateDoc(ref, {
+                                      organizations:[...newOrg],
+                                      connections:[...newConnections],
+                                      active:[...newActiveMembers]
+                                        })
                                    }
                                 }))
                               }

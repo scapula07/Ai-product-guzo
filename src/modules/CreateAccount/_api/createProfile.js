@@ -95,9 +95,70 @@ export const createProfile= {
                             console.log(result,"result")
                         const docSnap = await getDoc(userRef);
                         console.log(docSnap,"ecosystem")
+
+                        if(docSnap?.data()?.ecosystems?.length >0){
+                    
+                            console.log(docSnap.data()?.ecosystems,"new connections")
+                            await Promise.all(docSnap.data()?.ecosystems?.map(async(eco,index)=>{
+                                    const refEco =doc(db,"ecosystems",eco?.id)
+                                    const docEco = await getDoc(refEco);
         
-                        return {id:docSnap?.id,...docSnap?.data()}
-                    }
+                                    console.log(docEco?.exists(),index,"Exixt")
+                                    console.log(index,"index")
+                                    if(docEco?.exists()==false){
+                                    console.log( docSnap.data()?.connections,"new ecooss")
+                                    const newEco=  docSnap.data()?.ecosystems?.filter((ecosystem)=>ecosystem?.id !=eco?.id)
+                                    const newConnections= docSnap.data()?.connections?.length ===undefined ?[]:docSnap.data()?.connections?.filter((ecosystem)=>ecosystem?.id !=eco?.id)
+                                    const newActiveMembers= docSnap.data()?.active?.length ===undefined ?[]:  docSnap.data()?.active?.filter((member)=>member?.id !=eco?.id)
+
+
+                                    console.log(newConnections,"new connections")
+                                    console.log(newActiveMembers,"new Active")
+
+                                    const result = await updateDoc(userRef, {
+                                          ecosystems:[...newEco],
+                                          connections:[...newConnections],
+                                          active:[...newActiveMembers]
+                                          })
+
+
+                                    
+                                   }
+                            
+                                    
+                                })
+                              )
+                                }
+
+        
+                                if(docSnap?.data()?.organizations?.length >0){
+                        
+                                
+                                    await Promise.all(docSnap?.data()?.organizations?.map(async(org)=>{
+                                        const refOrg =doc(db,"organizations",org?.id)
+                                        const docOrg = await getDoc(refOrg);
+                                        if(docOrg?.exists()==false){
+                                            console.log( docSnap.data()?.organizations,"new ecooss")
+                                            const newOrg=  docSnap.data()?.organizations?.filter((organization)=>organization?.id !=org?.id)
+                                            const newConnections=  docSnap.data()?.connections?.filter((ecosystem)=>ecosystem?.id !=org?.id)
+                                            const newActiveMembers=  docSnap.data()?.active?.filter((member)=>member?.id !=org?.id)
+        
+                                            console.log(newOrg,"new ecooss")
+        
+                                            const result = await updateDoc(userRef, {
+                                                organizations:[...newOrg],
+                                                connections:[...newConnections],
+                                                active:[...newActiveMembers]
+                                                  })
+                                         }
+                                        }))
+                                        }
+        
+                                    const docUser = await getDoc(userRef);
+    
+                  
+                              return {id:docUser?.id,...docUser?.data()}
+                            }
 
                 }catch(e){
                     console.log(e)
@@ -160,9 +221,70 @@ export const createProfile= {
                 
                      })
                 const docSnap = await getDoc(userRef);
-                console.log(docSnap,"ecosystem")
+              
+                    console.log(docSnap,"ecosystem")
+                       if(docSnap?.data()?.ecosystems?.length >0){
+                    
+                                console.log(docSnap.data()?.ecosystems,"new connections")
+                                await Promise.all(docSnap.data()?.ecosystems?.map(async(eco,index)=>{
+                                        const refEco =doc(db,"ecosystems",eco?.id)
+                                        const docEco = await getDoc(refEco);
+            
+                                        console.log(docEco?.exists(),index,"Exixt")
+                                        console.log(index,"index")
+                                        if(docEco?.exists()==false){
+                                        console.log( docSnap.data()?.connections,"new ecooss")
+                                        const newEco=  docSnap.data()?.ecosystems?.filter((ecosystem)=>ecosystem?.id !=eco?.id)
+                                        const newConnections= docSnap.data()?.connections?.length ===undefined ?[]:docSnap.data()?.connections?.filter((ecosystem)=>ecosystem?.id !=eco?.id)
+                                        const newActiveMembers= docSnap.data()?.active?.length ===undefined ?[]:  docSnap.data()?.active?.filter((member)=>member?.id !=eco?.id)
 
-                return {id:docSnap?.id,...docSnap?.data()}
+
+                                        console.log(newConnections,"new connections")
+                                        console.log(newActiveMembers,"new Active")
+
+                                        const result = await updateDoc(userRef, {
+                                              ecosystems:[...newEco],
+                                              connections:[...newConnections],
+                                              active:[...newActiveMembers]
+                                              })
+
+
+                                        
+                                       }
+                                
+                                        
+                                    })
+                                  )
+                                    }
+
+                            if(docSnap?.data()?.organizations?.length >0){
+                        
+                                
+                                await Promise.all(docSnap?.data()?.organizations?.map(async(org)=>{
+                                    const refOrg =doc(db,"organizations",org?.id)
+                                    const docOrg = await getDoc(refOrg);
+                                    if(docOrg?.exists()==false){
+                                        console.log( docSnap.data()?.organizations,"new ecooss")
+                                        const newOrg=  docSnap.data()?.organizations?.filter((organization)=>organization?.id !=org?.id)
+                                        const newConnections=  docSnap.data()?.connections?.filter((ecosystem)=>ecosystem?.id !=org?.id)
+                                        const newActiveMembers=  docSnap.data()?.active?.filter((member)=>member?.id !=org?.id)
+    
+                                        console.log(newOrg,"new ecooss")
+    
+                                        const result = await updateDoc(userRef, {
+                                            organizations:[...newOrg],
+                                            connections:[...newConnections],
+                                            active:[...newActiveMembers]
+                                              })
+                                     }
+                                    }))
+                                    }
+    
+                                const docUser = await getDoc(userRef);
+
+              
+                   return {id:docUser?.id,...docUser?.data()}
+                // return {id:docSnap?.id,...docSnap?.data()}
             
             
                     console.log(result,"result")
