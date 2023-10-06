@@ -40,6 +40,7 @@ export const deleteProfile = {
             })
 
           }
+          localStorage.clear();
          return true
 
          }catch(e){

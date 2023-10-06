@@ -57,18 +57,21 @@ import { groupState } from "./Recoil/globalstate";
 
 import PostManagemnet from "./Ecosystem/views/post";
 import ErrorBoundary from "./ErrorBoundary";
-
+import AuthGuard from "./AuthGuard";
+import { useNavigate } from 'react-router-dom'
 
 const NewRoutes = () => {
+  const navigate =useNavigate()
+
+
   const [currentUser,setcurrentUser]=useRecoilState(userState)
   const group=useRecoilState(groupState)
   console.log(currentUser,"user")
   let authListner=null
   const user = localStorage.getItem("user");
-  useEffect( ()=>{
-    
+  useEffect( ()=>{ 
     console.log(JSON.parse(user),"user")
-  
+ 
   },[user])
 
   useEffect( ()=>{
@@ -86,6 +89,8 @@ const NewRoutes = () => {
      
   
   },[group])
+
+
 
 
 
@@ -120,7 +125,7 @@ const NewRoutes = () => {
                      
                      
                   </Route>
-                <Route path="/home/:id/*" element={<Home/>} >
+                <Route path="/home/:id/*" element={<AuthGuard><Home/></AuthGuard>} >
                     <Route path="" element={<Feeds/>} />
                     <Route path="ecosystems" element={<Ecosystems/>} />
                 </Route>
@@ -143,7 +148,7 @@ const NewRoutes = () => {
                 
                 </Route>
                 <Route path="/notifications/:id/*" element={<Notifications/>} />
-                <Route path="/settings/:id/*" element={<Settings/>} />
+                <Route path="/settings/:id/*" element={<AuthGuard><Settings/></AuthGuard>} />
                 <Route path="/setting-edit-profile/:id/*" element={<EditProfile/>} />
                 <Route path="/ecosystem/:id/*" element={< Ecosystem />} >
                     <Route path="" element={<EcoMembers/>} />

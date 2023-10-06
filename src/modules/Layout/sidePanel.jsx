@@ -18,9 +18,11 @@ import { collection,  onSnapshot,
   limit,getDoc,setDoc ,
  updateDoc,addDoc,where } from 'firebase/firestore'
 import { db } from '../Firebase'
+import { useNavigate } from 'react-router-dom'
 
 export default function SidePanel() {
 
+   const navigate =useNavigate()
   const isUpdate=useRecoilValue(updateUserState)
   const [group,setGroup]=useRecoilState(groupState)
   const currentUser =useRecoilValue(userState)
@@ -47,57 +49,6 @@ export default function SidePanel() {
 
   
      },[currentUser])
-  //  useEffect(()=>{
-  //     if(currentUser?.id?.length >0){
-  //       const unsub = onSnapshot(doc(db, "users",currentUser?.id), (doc) => {
-  //         console.log("Current data: ", doc.data());
-  //         // const group = [...doc.data()?.ecosystems, ...doc.data()?.organizations]
-
-  //               if(doc.data()?.id>0){
-  //                   const isGroup= doc.data()?.organizations >0 || doc.data()?.ecosystems >0
-      
-  //                   isGroup&&setTeam([...doc.data()?.ecosystems, ...doc.data()?.organizations])
-              
-                    
-  //                   if(currentUser?.display?.length != undefined && isGroup==true){
-  //                     console.log(currentUser?.id,"if block 1111")
-  //                     isGroup&&setGroup([currentUser,...doc.data()?.ecosystems, ...doc.data()?.organizations].find(group=>group?.id===id))
-  //                   }else if(currentUser?.display?.length != undefined && isGroup==false){
-  //                     console.log(currentUser?.id,"if block 222")
-  //                   setGroup([currentUser].find(group=>group?.id===id))
-  //                   }else{
-  //                     console.log(currentUser?.id,"if block 33")
-  //                     isGroup&&setGroup([...doc.data()?.ecosystems, ...doc.data()?.organizations].find(group=>group?.id===id))
-  //                   }
-
-  //                 }else{
-  //                      const isGroup= organizations?.length >0 || ecosystems?.length >0
- 
-  //                       isGroup&&setTeam([...organizations,...ecosystems])
-                
-                      
-  //                     if(currentUser?.display?.length != undefined && isGroup==true){
-  //                       console.log(currentUser?.id,"if block 1111")
-  //                       isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
-  //                     }else if(currentUser?.display?.length != undefined && isGroup==false){
-  //                       console.log(currentUser?.id,"if block 222")
-  //                     setGroup([currentUser].find(group=>group?.id===id))
-  //                     }else{
-  //                       console.log(currentUser?.id,"if block 33")
-  //                       isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
-  //                     }
-      
-
-
-  //             }
-              
-              
-  //          });
-
-  //        }
-
-  
-  //    },[currentUser])
 
      
 
@@ -114,32 +65,22 @@ export default function SidePanel() {
         isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
       }else if(currentUser?.display?.length != undefined && isGroup==false){
          console.log(currentUser?.id,"if block 222")
-       setGroup([currentUser].find(group=>group?.id===id))
+         setGroup([currentUser].find(group=>group?.id===id))
       }else{
         console.log(currentUser?.id,"if block 33")
         isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
       }
-      
-       
     
       },[currentUser,isUpdate])
  
 
-  
 
-    // const isTeammate=team?.some((group)=>group?.teammates?.some(e=>e?.id ===currentUser?.id) )
-    // console.log(!isTeammate,"teammm ate")
-
-
-
-
-  
-
+       
 
 
       const currentPath = window.location.pathname;
       
-    console.log(group,"team ppppp")
+    console.log(team,"team ppppp")
   console.log(currentUser,"user current lllll")
   return (
     <div className='lg:px-4 py-8 '>
@@ -232,7 +173,7 @@ const TeamTile=({group,setGroup})=>{
     const unsub = onSnapshot(doc(db,collectionName,group?.id), (doc) => {
       console.log("Current data: ", doc.data()?.img)    
       setImg(doc.data()?.img)
-    });
+     });
   
   
     
