@@ -56,11 +56,11 @@ export const createProfile= {
                     teammates:[
                         {
                             id:currentUser?.id,
-                            img:currentUser?.img,
+                            img:currentUser?.img?.length != undefined ?currentUser?.img :"",
                             firstName:currentUser?.firstName?.length != undefined? currentUser?.firstName :"",
                             lastName:currentUser?.lastName?.length != undefined? currentUser?.lastName :"",
                             display:currentUser?.display?.length != undefined? currentUser?.display :"",
-                            email:currentUser?.lastName,
+                            email:currentUser?.email,
     
                         }
 
@@ -125,11 +125,11 @@ export const createProfile= {
                 teammates:[
                     {     
                         id:currentUser?.id,
-                        img:currentUser?.img,
+                        img:currentUser?.img?.length != undefined ?currentUser?.img :"",
                         firstName:currentUser?.firstName?.length != undefined? currentUser?.firstName :"",
                         lastName:currentUser?.lastName?.length != undefined? currentUser?.lastName :"",
                         display:currentUser?.display?.length != undefined? currentUser?.display :"",
-                        email:currentUser?.lastName,
+                        email:currentUser?.email,
                     }
                 ],
                 type:"eco",
