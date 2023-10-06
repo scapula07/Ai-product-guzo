@@ -19,7 +19,8 @@ export const createProfile= {
               const result = await updateDoc(userRef, {
                 username:"john",
                 img: `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
-                display:displayName
+                display:displayName,
+                connections:[]
               })
     
              console.log(result,"result")

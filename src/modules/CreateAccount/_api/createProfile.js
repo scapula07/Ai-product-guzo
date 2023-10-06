@@ -121,7 +121,7 @@ export const createProfile= {
                 ...payload,
                 img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                 pending:[],
-                active:[],
+                active:[ ],
                 teammates:[
                     {     
                         id:currentUser?.id,
@@ -147,15 +147,15 @@ export const createProfile= {
                     ecosystems:[
                         ...currentUser?.ecosystems,
                         {
-                         id:ecoSnap?.id,
-                         name:payload?.name,
-                         creator:docEco?.creator,
-                         type:"eco",
-                         img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
-                         teammates:[
-                            ...docEco?.teammates
-                          ]
-                        }
+                                id:ecoSnap?.id,
+                                name:payload?.name,
+                                creator:docEco?.creator,
+                                type:"eco",
+                                img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+                                teammates:[
+                                    ...docEco?.teammates
+                                ]
+                          }
                         ]
                 
                      })

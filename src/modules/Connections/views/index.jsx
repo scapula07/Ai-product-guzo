@@ -31,7 +31,7 @@ export default function Connections() {
                 if(group?.type?.length >0){
                 setConnect({pending:doc.data()?.pendingMemberships,active:doc.data()?.connections})
                 }else{
-                    setConnect({pending:doc.data()?.pending,active:doc.data()?.ecosystems}) 
+                    setConnect({pending:doc.data()?.pending,active:doc.data()?.connections}) 
 
                 }
             });
