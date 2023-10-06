@@ -42,7 +42,7 @@ export default function Header({hover,setHover}) {
           
 
                 <div className='relatiive ' onClick={()=>setHover(true)} >
-                    {currentUser?.img?.length >0 ?
+                    {/* {currentUser?.img?.length >0 ?
                         <img 
                             src={currentUser?.img}
                             className='lg:w-8 lg:h-6 w-6 h-6 rounded-full'
@@ -56,7 +56,13 @@ export default function Header({hover,setHover}) {
 
                     </h5>
 
-                    }
+                    } */}
+
+                  <h5 className='rounded-full bg-blue-600 text-white font-semibold text-sm p-1 border-2 border-white lg:w-8 lg:h-8 w-6 h-6 flex items-center justify-center'
+                     >
+                    {currentUser?.firstName?.slice(0,1) +currentUser?.lastName?.slice(0,1)}
+   
+                </h5>
 
                   
                     

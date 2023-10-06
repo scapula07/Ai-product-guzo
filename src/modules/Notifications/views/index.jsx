@@ -13,10 +13,11 @@ import { collection,  onSnapshot,
   doc, getDocs,
   query, orderBy, 
   limit,getDoc,setDoc ,
- updateDoc,addDoc ,deleteDoc, where} from 'firebase/firestore'
+ updateDoc,addDoc ,deleteDoc, where,or} from 'firebase/firestore'
 
 export default function Notifications() {
     const [currentUser,setCurrentUser] =useRecoilState(userState)
+    const group =useRecoilValue(groupState)
     const [isUpdate,setUpdatedState]=useRecoilState(updateUserState)
     const [notifications,setNotifications]=useState([])
     const [isLoading,setLoading]=useState(false)
@@ -27,7 +28,13 @@ export default function Notifications() {
       
 
           if(currentUser?.id?.length >0){
-              const q = query(collection(db, "notifications"), where("to","==",currentUser?.id));
+              // const q = query(collection(db, "notifications"), where("to","==",currentUser?.id));
+              const q = query(
+                collection(db,"notifications"),
+                   or(where('to', '==', currentUser?.id),
+                    where('to', '==', group?.id)
+                   )
+                );
               
                 const notifications= [];
                 const unsubscribe = onSnapshot(q, (querySnapshot) => {

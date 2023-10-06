@@ -36,7 +36,7 @@ export default function Settings() {
 
                       },
                       {
-                        text: `${group?.creator==currentUser?.id? "Delete account" :""}`,
+                        text: `${group?.creator==currentUser?.id || group?.id==currentUser?.id?"Delete account" :"" }`,
                         link:"",
                     
 
