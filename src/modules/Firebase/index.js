@@ -30,7 +30,7 @@ const firebaseConfig = {
   export const db=getFirestore()
   export const messaging = getMessaging(app);
  console.log("runin")
-//  messaging.onMessage((payload) => {
+//  messaging.onMessage((p]ayload) => {
 //   console.log('Message received. ', payload);
 //   // ...
 // });

@@ -52,22 +52,14 @@ export const createProfile= {
                     ...payload,
                     img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                     pending:[],
-                    active:[
-                        {
-                            id:currentUser?.id,
-                            img:currentUser?.img,
-                            firstName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
-                            lastName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
-                            email:currentUser?.lastName,
-    
-                        }
-                    ],
+                    active:[],
                     teammates:[
                         {
                             id:currentUser?.id,
                             img:currentUser?.img,
-                            firstName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
-                            lastName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
+                            firstName:currentUser?.firstName?.length != undefined? currentUser?.firstName :"",
+                            lastName:currentUser?.lastName?.length != undefined? currentUser?.lastName :"",
+                            display:currentUser?.display?.length != undefined? currentUser?.display :"",
                             email:currentUser?.lastName,
     
                         }
@@ -129,22 +121,14 @@ export const createProfile= {
                 ...payload,
                 img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
                 pending:[],
-                active:[
-                    {
-                        id:currentUser?.id,
-                        img:currentUser?.img,
-                        firstName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
-                        lastName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
-                        email:currentUser?.lastName,
-
-                    }
-                ],
+                active:[],
                 teammates:[
-                    {
+                    {     
                         id:currentUser?.id,
                         img:currentUser?.img,
-                        firstName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
-                        lastName:currentUser?.firstName?.length>0? currentUser?.firstName :"",
+                        firstName:currentUser?.firstName?.length != undefined? currentUser?.firstName :"",
+                        lastName:currentUser?.lastName?.length != undefined? currentUser?.lastName :"",
+                        display:currentUser?.display?.length != undefined? currentUser?.display :"",
                         email:currentUser?.lastName,
                     }
                 ],

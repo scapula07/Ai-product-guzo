@@ -28,8 +28,8 @@ export const ecosystemApi= {
                     pending:[...newPending],
                     active:[
                         ...activeMembers,
-                        member
-                     ]
+                           member
+                        ]
                    })
 
 
@@ -38,25 +38,25 @@ export const ecosystemApi= {
                         const memberRef=doc(db,collection,member?.id)
                         const memberSnap = await getDoc(memberRef);
                         console.log(memberSnap?.data(),"members")
-                        const active=memberSnap?.data()?.active.length ===undefined? []:memberSnap?.data()?.active
+                        const connections=memberSnap?.data()?.connections.length ===undefined? []:memberSnap?.data()?.connections
                         const newNetworkPending = memberSnap?.data()?.pendingMemberships?.filter(eco=>eco?.id !== docSnap?.id);
                           const result = await updateDoc(memberRef, {
-                                active:[
-                                    ...active,
+                                connections:[
+                                    ...connections,
                                     {
                                       id:docSnap.id,
-                                    ...docSnap?.data()
+                                      ...docSnap?.data()
                                     }
                                   ],
-                                pendingMemberships:[
+                                  pendingMemberships:[
                                     ...newNetworkPending
                                   ]
-                               })
+                                 })
                     
 
                       }else{
-                          const memberRef =doc(db,"users",member?.id)
-                          const memberSnap = await getDoc(memberRef);
+                           const memberRef =doc(db,"users",member?.id)
+                           const memberSnap = await getDoc(memberRef);
                            console.log(memberSnap?.data()?.pending) 
                            const newUserPending = memberSnap?.data()?.pending?.filter(eco=>eco?.id !== docSnap?.id);
                            const result2 = await updateDoc(memberRef, {

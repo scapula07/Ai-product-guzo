@@ -144,8 +144,9 @@ export default function Org({currentUser}) {
                 name:orgName,
                 email:orgEmail,
                 location:country?.label,
-                memberships:[],
-                invitees:[]
+                 memberships:[],
+                invitees:[],
+                connections:[]
 
             }
             const result =await createProfile.createOrgProfile(payload,file,user)

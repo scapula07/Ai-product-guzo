@@ -4,10 +4,10 @@ import {
         GoogleAuthProvider,
         signInWithPopup,
         sendPasswordResetEmail,
-        signOut} from "firebase/auth";
+        signOut,} from "firebase/auth";
        
 import { auth ,db} from "../../Firebase";
-import { doc,getDoc,setDoc }  from "firebase/firestore";
+import { doc,getDoc,setDoc,updateDoc }  from "firebase/firestore";
 import axios from "axios";
 
 export const authApi= {
@@ -44,10 +44,16 @@ export const authApi= {
                 const token = credential.accessToken;
                 const user = res.user;
 
+                const firstName = user.displayName.split(' ')[0];
+                const lastName = user.displayName.split(' ')[1];
+
+
                 console.log(user,"user....")
                 const ref =doc(db,"users",user?.uid)
                 await setDoc(ref,{
                     id:user?.uid,
+                    firstName:firstName?.length != undefined?firstName:"",
+                    lastName:lastName?.length != undefined?lastName :"",
                     email:user?.email,
                     organizations:[],
                     ecosystems:[],
@@ -82,12 +88,65 @@ export const authApi= {
                 const ref =doc(db,"users",response?.user?.uid)
                 const docSnap = await getDoc(ref);
                 if (docSnap.exists()) {
-                    return {id:docSnap?.id,...docSnap?.data(),accessToken:response?.user?.accessToken}
-                } else {
-                  throw new Error("You are not signed up")
-                    console.log("No such document!");
-                    
-                }
+
+                      
+
+                    if(docSnap?.data()?.ecosystems?.length >0){
+                
+                      
+                        await Promise.all(docSnap.data()?.ecosystems?.map(async(eco,index)=>{
+                              const refEco =doc(db,"ecosystems",eco?.id)
+                              const docEco = await getDoc(refEco);
+    
+                              console.log(docEco?.exists(),"Exixt")
+                              console.log(index,"index")
+                              if(docEco?.exists()==false){
+                                console.log( docSnap.data()?.ecosystems,"new ecooss")
+                                const newEco=  docSnap.data()?.ecosystems?.filter((ecosystem)=>ecosystem?.id !=eco?.id)
+
+                                console.log(newEco,"new ecooss")
+
+                                const result = await updateDoc(ref, {
+                                      ecosystems:[...newEco]
+                                      })
+
+
+                                
+                                }
+                        
+                              
+                            })
+                        )
+                          }
+
+                          if(docSnap?.data()?.organizations?.length >0){
+                            
+                                  
+                            await Promise.all(docSnap?.data()?.organizations?.map(async(org)=>{
+                                const refOrg =doc(db,"organizations",org?.id)
+                                const docOrg = await getDoc(refOrg);
+                                if(docOrg?.exists()==false){
+                                  console.log( docSnap.data()?.organizations,"new ecooss")
+                                  const newOrg=  docSnap.data()?.organizations?.filter((organization)=>organization?.id !=org?.id)
+
+                                  console.log(newOrg,"new ecooss")
+
+                                  const result = await updateDoc(ref, {
+                                      organizations:[...newOrg]
+                                        })
+                                   }
+                                }))
+                              }
+
+                           const docUser = await getDoc(ref);
+                          return {id:docUser?.id,...docUser?.data(),accessToken:response?.user?.accessToken}
+                        // return {id:docSnap?.id,...docSnap?.data(),accessToken:response?.user?.accessToken}
+
+                    } else {
+                      throw new Error("You are not signed up")
+                        console.log("No such document!");
+                        
+                    }
          
 
                 
@@ -120,16 +179,77 @@ export const authApi= {
                 const user = res.user;
                 const ref =doc(db,"users",user?.uid)
 
-                const docSnap = await getDoc(ref);
-                console.log(docSnap.data(),"user data")
-                 if (docSnap.exists()) {
-                    return {id:docSnap?.id,...docSnap?.data(),accessToken:user?.accessToken}
-             
+                  const docSnap = await getDoc(ref);
+                  console.log(docSnap.data(),"user data")
+                    if (docSnap.exists()) {
 
-                  } else {
-                    throw new Error("You are not signed up")
-                    console.log("No such document!");
-                  }
+                      
+
+                              if(docSnap?.data()?.ecosystems?.length >0){
+                          
+                                
+                                  await Promise.all(docSnap.data()?.ecosystems?.map(async(eco,index)=>{
+                                        const refEco =doc(db,"ecosystems",eco?.id)
+                                        const docEco = await getDoc(refEco);
+              
+                                        console.log(docEco?.exists(),"Exixt")
+                                        console.log(index,"index")
+                                        if(docEco?.exists()==false){
+                                          console.log( docSnap.data()?.ecosystems,"new ecooss")
+                                          const newEco=  docSnap.data()?.ecosystems?.filter((ecosystem)=>ecosystem?.id !=eco?.id)
+
+                                          console.log(newEco,"new ecooss")
+
+                                          const result = await updateDoc(ref, {
+                                                ecosystems:[...newEco]
+                                                })
+
+
+                                          
+                                          }
+                                  
+                                        
+                                      })
+                                  )
+                                    }
+  
+                            if(docSnap?.data()?.organizations?.length >0){
+                            
+                                  
+                              await Promise.all(docSnap?.data()?.organizations?.map(async(org)=>{
+                                  const refOrg =doc(db,"organizations",org?.id)
+                                  const docOrg = await getDoc(refOrg);
+                                  if(docOrg?.exists()==false){
+                                    console.log( docSnap.data()?.organizations,"new ecooss")
+                                    const newOrg=  docSnap.data()?.organizations?.filter((organization)=>organization?.id !=org?.id)
+
+                                    console.log(newOrg,"new ecooss")
+
+                                    const result = await updateDoc(ref, {
+                                        organizations:[...newOrg]
+                                          })
+
+
+                                  
+                                    }
+                                  
+                                })
+                                  )
+                                }
+
+                  
+
+
+
+                      
+                      const docUser = await getDoc(ref);
+                      return {id:docUser?.id,...docUser?.data(),accessToken:user?.accessToken}
+              
+
+                      } else {
+                      throw new Error("You are not signed up")
+                      console.log("No such document!");
+                    }
 
              }catch(e){
             console.log(e)

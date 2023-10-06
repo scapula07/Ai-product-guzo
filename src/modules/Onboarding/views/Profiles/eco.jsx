@@ -149,7 +149,8 @@ export default function Eco({currentUser}) {
                 location:country?.label,
                 phone:phoneNum,
                 memberships:[],
-                invitees:[]
+                invitees:[],
+                connections:[]
 
 
             }

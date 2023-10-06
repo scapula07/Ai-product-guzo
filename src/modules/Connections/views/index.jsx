@@ -29,7 +29,7 @@ export default function Connections() {
             const ref = doc(db,collection, group?.id);
             const unsub = onSnapshot(ref, (doc) => {
                 if(group?.type?.length >0){
-                setConnect({pending:doc.data()?.pendingMemberships,active:doc.data()?.active})
+                setConnect({pending:doc.data()?.pendingMemberships,active:doc.data()?.connections})
                 }else{
                     setConnect({pending:doc.data()?.pending,active:doc.data()?.ecosystems}) 
 
