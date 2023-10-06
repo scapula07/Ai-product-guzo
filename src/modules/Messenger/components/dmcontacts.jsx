@@ -162,7 +162,7 @@ const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv
           }
        
            
-            <BsThreeDots />
+            {/* <BsThreeDots /> */}
         </div>
     
     </div>

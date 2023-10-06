@@ -144,6 +144,7 @@ export default function IndividualAccount({currentUser}) {
              </div>
         
           <div className='flex  items-center w-full justify-between'>
+      
               <h5 style={{color: "rgba(37, 31, 134, 1)"}}
                 onClick={()=>window.history.go(-1)}
                 >Back

@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Comment({feed}) {
+   const comments=  feed?.comments.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
   return (
     <div className='flex flex-col w-full space-y-3 py-4'>
     <div className='flex items-center space-x-4'>
@@ -45,7 +46,7 @@ export default function Comment({feed}) {
     </div>
 
     <div className='flex flex-col pt-4 pb-2 w-full space-y-4'>
-       {feed?.comments?.map((comment)=>{
+       {comments?.map((comment)=>{
           return(
               <div className='flex w-full space-x-1'>
                    <div className=''>

@@ -132,7 +132,8 @@ export default function EcoAccount({currentUser}) {
                 email:ecoEmail,
                 location:country?.label?.length != undefined ?country?.label :"" ,
                 memberships:[],
-                invitees:[]
+                invitees:[],
+                connections:[]
 
 
             }
@@ -356,9 +357,10 @@ export default function EcoAccount({currentUser}) {
     </div>
     
     <div className='flex  items-center w-full justify-between'>
+   
           <h5 style={{color: "rgba(37, 31, 134, 1)"}}
-            onClick={()=>window.history.go(-1)}
-        >Back</h5>
+           onClick={()=>window.history.go(-1)}
+            >Back</h5>
                      {isLoading?
                              
                              <ClipLoader 

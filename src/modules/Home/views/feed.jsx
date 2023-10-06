@@ -104,7 +104,7 @@ const Feed=({feed,group})=>{
 
 
       const time =calculateTimeOfPost(feed?.createdAt?.seconds)
- 
+    
      return(
         <div className='w-full py-4 bg-white h-full '>
         <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
@@ -310,7 +310,7 @@ const Comments=({ group, feed })=>{
         if(group?.type?.length >0){
            payload={
              name:group?.name,
-             img:group?.img,
+             img:group?.img, 
              comment:text,
              createdAt:new Date()
            }

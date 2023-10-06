@@ -4,8 +4,8 @@ import { calculateTimeOfPost } from "../../Utils/calculateTime"
 
 
  const Chat=({msg,group})=>{
-    console.log(msg,"msg chat")
-    const time=calculateTimeOfPost(msg?.time)
+    console.log(msg.time,"msg chat")
+    const time=calculateTimeOfPost(msg?.time?.seconds)
     
     return(
        <div className='flex flex-col w-full space-y-1'>

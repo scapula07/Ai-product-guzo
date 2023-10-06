@@ -50,11 +50,12 @@ import { Link } from 'react-router-dom'
 
                       </div>
                         <div className='flex  items-center w-full justify-between'>
-                            <h5 style={{color: "rgba(37, 31, 134, 1)"}}
+                          <h5></h5>
+                            {/* <h5 style={{color: "rgba(37, 31, 134, 1)"}}
                               onClick={()=>window.history.go(-1)}
                               >
                               Back
-                            </h5>
+                            </h5> */}
                          
                                <Link to={`/create-account/profile/${active}`}>
                                <button className='px-6 py-2 text-blue-600 rounded-full' style={{background: "rgba(237, 237, 237, 1)"}}> Continue</button>

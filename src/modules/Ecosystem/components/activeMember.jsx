@@ -59,14 +59,14 @@ export default function ActiveMember({member,group}) {
                     className="rounded-full w-32 h-32"
                 />
                 <h5 className=' text-center font-semibold '>{member?.name}</h5>
-                <h5 className='text-sm font-semibold text-slate-600'>
+                {/* <h5 className='text-sm font-semibold text-slate-600'>
                     {member?.type==="eco"?
                      "Ecosystem"
                       :
                       "Organization"
 
                     }
-                </h5>
+                </h5> */}
          </div>
            :
             <>

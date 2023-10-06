@@ -72,7 +72,7 @@ export default function Messenger() {
           text: newMessage,
           conversationid:currentChat.id,
           date:Number(Date.now()),
-          time:Date.now()
+          time:new Date()
         };
         const receiverId = currentChat?.members.find(
           (member) => member !== currentUser.id

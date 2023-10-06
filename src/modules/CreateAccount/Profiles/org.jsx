@@ -130,7 +130,8 @@ export default function OrgAccount({currentUser}) {
                 email:orgEmail,
                 location:country?.label?.length != undefined ?country?.label :"" ,
                 memberships:[],
-                invitees:[]
+                invitees:[],
+                connections:[]
 
             }
             // const result =await createProfile.createOrgProfile(payload,file,user)
@@ -354,6 +355,7 @@ export default function OrgAccount({currentUser}) {
             </div>
             
             <div className='flex  items-center w-full justify-between'>
+            
                 <h5 style={{color: "rgba(37, 31, 134, 1)"}}
                     onClick={()=>window.history.go(-1)}
                 >Back
