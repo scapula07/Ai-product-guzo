@@ -47,12 +47,22 @@ export default function Login() {
                     // user?.id.length >0&& navigate(`/home/${user?.id}`)
                     const accounts=[...user?.ecosystems,...user?.organizations]
                     console.log(accounts,"accc")
-                      if(accounts[0]?.id?.length >0){
+
+                    console.log(user?.display?.length,user?.display,"oo")
+                    if(accounts[0]?.id?.length >0){
                         user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
                       }else{
-                       user?.id.length >0&& navigate(`/home/${user?.id}`)
-       
-                      }
+                       if(user?.display?.length ===0){
+
+                          console.log("in here 1")
+                           
+                           user?.id?.length >0&&setcurrentUser(user)
+                           user?.id.length >0&& navigate(`/create-account`)
+                       }else{
+                        user?.id.length >0&& navigate(`/home/${user?.id}`)
+                        console.log("in here 22")
+                       }
+                    }
                    }catch(e){
                      console.log(e)
                      setErrorMsg(e.message)
@@ -96,18 +106,17 @@ export default function Login() {
              user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
              const accounts=[...user?.ecosystems,...user?.organizations]
              console.log(accounts,"accc")
-               if(accounts[0]?.id?.length >0){
-                 user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
+             if(accounts[0]?.id?.length >0){
+                user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
+              }else{
+               if(user?.display?.length ==0){
+                   
+                   user?.id?.length >0&&setcurrentUser(user)
+                   user?.id.length >0&& navigate(`/create-account`)
                }else{
-                if(user?.display?.length >0){
-                    user?.id.length >0&& navigate(`/home/${user?.id}`)
-                }else{
-                    user?.id?.length >0&&setcurrentUser(user)
-                    user?.id.length >0&& navigate(`/create-account`)
-                }
-                
-
+                user?.id.length >0&& navigate(`/home/${user?.id}`)
                }
+            }
                
 
 

@@ -50,6 +50,11 @@ export const authApi= {
 
                 console.log(user,"user....")
                 const ref =doc(db,"users",user?.uid)
+                const docSnap1 = await getDoc(ref);
+                if(docSnap1.exists()){
+                   throw new Error("Email already used")
+                }
+
                 await setDoc(ref,{
                     id:user?.uid,
                     firstName:firstName?.length != undefined?firstName:"",
