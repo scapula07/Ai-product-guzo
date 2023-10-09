@@ -69,15 +69,15 @@ export const ecosystemApi= {
 
                                     }
                                  ],
-                                 ecosystems:[
-                                  ...member?.ecosystems,
-                                  {
-                                      id:docSnap.id,
-                                      ...docSnap?.data()
+                              //    ecosystems:[
+                              //     ...member?.ecosystems,
+                              //     {
+                              //         id:docSnap.id,
+                              //         ...docSnap?.data()
 
 
-                                  }
-                               ],
+                              //     }
+                              //  ],
                                  pending:[
                                   ...newUserPending
                                  ]
