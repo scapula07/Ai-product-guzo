@@ -111,20 +111,23 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
             
             const access=[]
             ecosystems?.map((eco)=>{
+              console.log(eco,"ecooo")
                 if(eco?.type =="eco"){
                   access.push(eco?.id)
                 }
              
              
               })
+
+              console.log(access,"accc")
               setViewAll(access) 
 
-        }
+         }
         getAllEcosystems()
 
       },[])
 
-    console.log(others,"others")
+    console.log(viewAll,"others")
     console.log(participants,"requestiii")
 
     const makePost=async(group)=>{

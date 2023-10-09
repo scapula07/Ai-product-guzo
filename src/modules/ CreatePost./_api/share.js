@@ -13,8 +13,8 @@ export const shareApi= {
               const docRef = doc(db, collectionName, group?.id);
               const docSnap = await getDoc(docRef);
             // const ecosystems=docSnap?.data()?.memberships
-              const ecosystems=docSnap?.data()?.active
-       
+              const ecosystems=docSnap?.data()?.connections
+             console.log(ecosystems,"ecosyssss")
               return ecosystems 
     
             }else{

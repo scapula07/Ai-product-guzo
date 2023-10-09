@@ -58,7 +58,8 @@ export default function Ecosystems() {
 
             const isPending= eco?.pending?.some(e=>e?.id ===group?.id)
             
-            const isMember= eco?.active?.some(e=>e?.id ===group?.id) || eco?.creator ===group?.id;
+            const isMember= eco?.active?.some(e=>e?.id ===group?.id) 
+            // const isMember= eco?.active?.some(e=>e?.id ===group?.id) || eco?.creator ===group?.id;
 
             return(
                
