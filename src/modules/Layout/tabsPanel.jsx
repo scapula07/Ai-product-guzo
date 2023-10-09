@@ -88,7 +88,7 @@ const navs=[
                  <>
                    {
                      group?.id?.length>0&&
-                    <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.display}</h5>
+                    <h5 className='font-semibold text-lg ' onClick={()=>setHover(true)}>{group?.display}</h5>
                   }
                     
                  </>

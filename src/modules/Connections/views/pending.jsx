@@ -159,8 +159,8 @@ const PendingCard=({eco,group})=>{
                   />
                   }
                   {trigger&&
-                      <div className='absolute top-0 -mt-1'>
-                        <div className='bg-rose-100 h-12 w-32 rounded-b-2xl rounded-tr-2xl px-4 py-2 flex items-center justify-between'>
+                      <div className='absolute top-0 -mt-1 '>
+                        <div className='bg-rose-100 h-12 w-32 rounded-b-2xl rounded-tr-2xl px-4 py-2 flex items-center justify-between relative z-50'>
                           {isRemoving?
                               
                               <ClipLoader 

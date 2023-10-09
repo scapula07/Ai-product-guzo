@@ -12,12 +12,15 @@ export const deleteProfile = {
 
        
         let collectionName="users"
-        if(group?.type?.length >0){
+         if(group?.type?.length >0){
               collectionName= group?.type=="eco"?"ecosystems":"organizations"
   
-         }
-        try{
-           await deleteDoc(doc(db,collectionName,group?.id));
+          }
+         try{
+            if(group?.type?.length >0){
+                await deleteDoc(doc(db,collectionName,group?.id));
+            }
+
            
 
         const ref =doc(db,"users",currentUser?.id)
@@ -30,7 +33,7 @@ export const deleteProfile = {
                     ...newEcosystems
                 ]
             })
-        }else{
+         }else if(group?.type=="org"){
             const newOrganizations= docSnap.data()?.organizations?.filter((org)=>org?.id != group?.id)
             console.log(newOrganizations,"new org")
             const result = await updateDoc(ref, {
@@ -39,9 +42,15 @@ export const deleteProfile = {
                 ]
             })
 
+          }else{
+            const result = await updateDoc(ref, {
+                display:"",
+                img:""
+            })
+
           }
-          localStorage.clear();
-         return true
+           localStorage.clear();
+           return true
 
          }catch(e){
            console.log(e)

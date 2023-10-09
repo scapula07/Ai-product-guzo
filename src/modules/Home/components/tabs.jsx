@@ -9,7 +9,7 @@ export default function Tabs() {
            onClick={()=>setActive("feeds")}
         >
             <Link to="">
-               <h5 className={`${active==="feeds" ?'text-sm font-semibold  border-blue-600 border-b-2':'text-sm font-semibold'}`} >Feed</h5>
+               <h5 className={`${active==="feeds" ?'text-sm font-semibold  border-blue-600 ':'text-sm font-semibold'}`} >Feed</h5>
             </Link>
            
         </div>
@@ -17,7 +17,7 @@ export default function Tabs() {
            onClick={()=>setActive("ecos")}
         >
             <Link to="ecosystems">
-              <h5 className={`${active==="ecos" ?'text-sm font-semibold  border-blue-600 border-b-2':'text-sm font-semibold'}`}>Ecosystem</h5>
+              <h5 className={`${active==="ecos" ?'text-sm font-semibold  border-blue-600 ':'text-sm font-semibold'}`}>Ecosystem</h5>
            </Link>
         </div>
       

@@ -10,9 +10,10 @@ import mail from "../../../assets/icons/email.png"
 import gmail from "../../../assets/icons/google.png"
 import linkdin from "../../../assets/icons/linkdin.png"
 import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
-
-
+import { userState } from '../../../Recoil/globalstate';
+import { useRecoilState } from 'recoil';
 export default function Login() {
+    const [currentUser,setcurrentUser]=useRecoilState(userState)
     let navigate = useNavigate();
     useEffect(()=>{
         localStorage.clear();
@@ -98,7 +99,13 @@ export default function Login() {
                if(accounts[0]?.id?.length >0){
                  user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
                }else{
-                user?.id.length >0&& navigate(`/home/${user?.id}`)
+                if(user?.display?.length >0){
+                    user?.id.length >0&& navigate(`/home/${user?.id}`)
+                }else{
+                    user?.id?.length >0&&setcurrentUser(user)
+                    user?.id.length >0&& navigate(`/create-account`)
+                }
+                
 
                }
                

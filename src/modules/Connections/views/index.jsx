@@ -55,13 +55,13 @@ export default function Connections() {
                   
                 
                 </div>
-                  <div className=''>
+                  <div className='relative z-50'>
                       <Outlet context={[connects]}/>
                    
                   </div>
       
                  </div>
-                <div className='w-2/5 lg:block hidden'>
+                <div className='w-1/5 lg:block hidden'>
                     {/* <Suggestions /> */}
 
                 </div>

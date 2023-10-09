@@ -61,7 +61,7 @@ export const ecosystemApi= {
                            const newUserPending = memberSnap?.data()?.pending?.filter(eco=>eco?.id !== docSnap?.id);
                            const result2 = await updateDoc(memberRef, {
                                 connections:[
-                                    ...member?.ecosystems,
+                                    ...member?.connections,
                                     {
                                         id:docSnap.id,
                                         ...docSnap?.data()
@@ -69,6 +69,15 @@ export const ecosystemApi= {
 
                                     }
                                  ],
+                                 ecosystems:[
+                                  ...member?.ecosystems,
+                                  {
+                                      id:docSnap.id,
+                                      ...docSnap?.data()
+
+
+                                  }
+                               ],
                                  pending:[
                                   ...newUserPending
                                  ]

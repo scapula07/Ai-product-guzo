@@ -1,6 +1,6 @@
 import { doc,getDoc,setDoc , updateDoc,collection,addDoc,getDocs}  from "firebase/firestore";
 import {getStorage, ref, uploadBytes } from "firebase/storage"
-import { db } from "../../Firebase";
+import { db } from "../../Firebase"
 
 export const connectApi= {
      getConnections:async function (group) {
@@ -73,12 +73,12 @@ export const connectApi= {
    
 
                    }else{
-                       const connectSnap = await getDoc(doc(db,"users",connect?.id));
-                        const newEcosystems=connectSnap?.data()?.ecosystems?.filter((eco)=>eco?.id != group?.id)
-                       await updateDoc(doc(db,"users",connect?.id), {
-                        ecosystems:[
+                        const connectSnap = await getDoc(doc(db,"users",connect?.id));
+                        const newEcosystems=connectSnap?.data()?.connections?.filter((eco)=>eco?.id != group?.id)
+                        await updateDoc(doc(db,"users",connect?.id), {
+                         connections:[
                           ...newEcosystems
-                        ]
+                         ]
               
                        })
 
@@ -108,8 +108,8 @@ export const connectApi= {
             const pendingConnections=docSnap?.data()?.pending?.length ==undefined? []:docSnap?.data()?.pending
             const newPending=pendingConnections?.filter((pending)=>pending?.id !=group?.id )
 
-            // const teammates=docSnap?.data()?.teammates?.length ==undefined? []:docSnap?.data()?.teammates
-            // const newTeammates= teammates?.filter((teammate)=>teammate?.id !=member?.id )
+            const teammates=docSnap?.data()?.teammates?.length ==undefined? []:docSnap?.data()?.teammates
+            const newTeammates= teammates?.filter((teammate)=>teammate?.id !=group?.id )
       
                await updateDoc(ref, {
                   pending:[
@@ -123,7 +123,9 @@ export const connectApi= {
                       const collectionTag =group?.type=="eco"?"ecosystems":"organizations"
                       const connectSnap = await getDoc(doc(db,collectionTag,group?.id));
                       const newPendingMemberships=connectSnap?.data()?.pending?.filter((eco)=>eco?.id != connect?.id)
+                      
 
+                      console.log(newPendingMemberships,"pending mem 1")
                  
                       
                       await updateDoc(doc(db,collectionTag,group?.id), {
@@ -139,7 +141,8 @@ export const connectApi= {
                      const collectionTag =group?.type=="eco"?"ecosystems":"organizations"
                      const connectSnap = await getDoc(doc(db,collectionTag,group?.id));
                      const newPendingMemberships=connectSnap?.data()?.pending?.filter((eco)=>eco?.id != connect?.id)
-
+         
+                     console.log(newPendingMemberships,"pending mem 2")
                 
                      
                      await updateDoc(doc(db,collectionTag,group?.id), {
@@ -152,16 +155,17 @@ export const connectApi= {
 
                      }else{
                          const connectSnap = await getDoc(doc(db,"users",group?.id));
-                         const newConnects=connectSnap?.data()?.ecosystems?.filter((eco)=>eco?.id !=connect?.id)
+                         const newConnects=connectSnap?.data()?.pending?.filter((eco)=>eco?.id !=connect?.id)
                        await updateDoc(doc(db,"users",group?.id), {
                         pending:[
                           ...newConnects
                         ]
               
-                       })
+                         })
+                    
 
-                 }
-             
+                   }
+              
                 return true
 
             }catch(e){

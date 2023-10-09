@@ -37,10 +37,11 @@ export default function DeleteAccount({group,currentUser}) {
             response&&setLoader(false)
             response&&setOpen(true)
             const accounts=[...currentUser?.ecosystems,...currentUser?.organizations]
-            if(accounts?.length ===1){
-              response&&navigate("/create-account")
-            }else{
+            if(accounts?.length > 1){
+            
               response&&navigate("/register/login")
+            }else{
+              response&&navigate("/create-account")
             }
             
 

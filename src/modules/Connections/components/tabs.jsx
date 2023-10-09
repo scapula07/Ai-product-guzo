@@ -9,14 +9,14 @@ export default function Tabs() {
            onClick={()=>setActive("activee")}
         >
            <Link to="">
-            <h5 className={`${active==="activee" ?'text-sm font-semibold  border-blue-600 border-b-2':'text-sm font-semibold'}`}>Active</h5>
+            <h5 className={`${active==="activee" ?'text-sm font-semibold  border-blue-600 ':'text-sm font-semibold'}`}>Active</h5>
             </Link>
         </div>
           <div className='w-1/2 flex justify-center'
               onClick={()=>setActive("pending")}
           >
           <Link to="pending">
-            <h5  className={`${active==="pending" ?'text-sm font-semibold  border-blue-600 border-b-2':'text-sm font-semibold'}`}>Pending</h5>
+            <h5  className={`${active==="pending" ?'text-sm font-semibold  border-blue-600 ':'text-sm font-semibold'}`}>Pending</h5>
             </Link>
           </div>
       
