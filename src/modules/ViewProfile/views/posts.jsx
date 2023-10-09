@@ -333,6 +333,9 @@ const [text,setText]=useState("")
 const [isLoading,setLoader]=useState(false)
 
 const makeComment=async()=>{
+  if (text?.length == 0) {
+    return;
+  }
 setLoader(true)
  try{
     let payload;
