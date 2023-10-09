@@ -29,11 +29,16 @@ export default function Notifications() {
 
           if(currentUser?.id?.length >0){
               // const q = query(collection(db, "notifications"), where("to","==",currentUser?.id));
-              const q = query(
-                collection(db,"notifications"),
+                  //       const q = query(
+                  //   collection(db, 'posts'),
+                  //     or(where('creator_id', '==', group?.id),
+                  //       where('access', 'array-contains', group?.id)
+                  //     ),orderBy('createdAt', 'desc')
+                  // );
+               const q = query(collection(db,"notifications"),
                    or(where('to', '==', currentUser?.id),
                     where('to', '==', group?.id)
-                   )
+                     ),orderBy('date', 'desc')
                 );
               
                 const notifications= [];
@@ -59,7 +64,7 @@ export default function Notifications() {
         
             }
         
-        })
+        },[])
   
   return (
     <Layout>
@@ -67,23 +72,81 @@ export default function Notifications() {
             <h5 className='text-slate-700 font-semibold text-xl'>Notifications</h5>
            
         </div>
-        <div className='flex flex-col w-full h-full space-y-7 overflow-y-scroll py-6 no-scrollbar'>
-            {notifications?.map((notification)=>{
-                return(
-                <Notification 
-                    notification={notification}
-                    currentUser={currentUser}
-                    setNotifications={setNotifications}
-                    setCurrentUser={setCurrentUser}
-                    isUpdate={isUpdate}
-                    setUpdatedState={setUpdatedState}
-                />
-                )
-            })
+         <div className='flex flex-col w-full h-full space-y-7 overflow-y-scroll py-6 no-scrollbar space-y-10'>
 
-            }
+              <div className='flex flex-col space-y-4'>
+                    <h5 className="text-lg font-semibold" style={{color:"#212121"}}>Global</h5>
 
-        {areNotification?.length===0&&notifications?.length ===0&&
+                    <div className='flex flex-col '>
+                       { 
+                          notifications?.filter((notification)=>notification?.to===currentUser?.id)?.map((notification)=>{
+                          console.log(notification,"notification global")
+                          return(
+                            <>
+                            {notification?.type==="join request"&&
+                              <Notification 
+                                notification={notification}
+                                currentUser={currentUser}
+                                setNotifications={setNotifications}
+                                setCurrentUser={setCurrentUser}
+                                isUpdate={isUpdate}
+                                setUpdatedState={setUpdatedState}
+                              />
+
+                             }
+                            </>
+                          )
+                        })
+
+                        }
+
+                    </div>
+                   
+
+                </div>
+
+
+                <div className='flex flex-col space-y-4'>
+                     {group?.type?.length >0?
+                         <h5 className="text-lg font-semibold" style={{color:"#212121"}}>{group?.name}</h5>
+                         :
+                         <h5 className="text-lg font-semibold" style={{color:"#212121"}}>{group?.display}</h5>
+
+                      }
+                     
+
+                      <div className='flex flex-col '>
+                    {
+                      notifications?.filter((notification)=>notification?.to===group?.id)?.map((notification)=>{
+                            console.log(notification,"notification account")
+                       return(
+                          <>
+                          {notification?.type!="join request"&&
+
+                          
+                              <Notification 
+                                  notification={notification}
+                                  currentUser={currentUser}
+                                  setNotifications={setNotifications}
+                                  setCurrentUser={setCurrentUser}
+                                  isUpdate={isUpdate}
+                                  setUpdatedState={setUpdatedState}
+                                />
+                          }
+
+                         </>
+                          )
+                        })
+
+                      }
+
+
+                      </div>
+            
+                 </div>
+            
+
+             {areNotification?.length===0&&notifications?.length ===0&&
                     <div className='w-full flex justify-center py-10'>
                       <ClipLoader 
                             color={"rgba(62, 51, 221, 1)"}

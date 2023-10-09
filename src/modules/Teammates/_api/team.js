@@ -66,7 +66,9 @@ export const teamApi= {
                     id:group?.id,
                     type:group?.type
                 },
-                to:user?.id
+                to:user?.id,
+                date:new Date()
+
     
               })
           
@@ -153,7 +155,8 @@ export const teamApi= {
                           id:group?.id,
                           type:group?.type
                       },
-                      to:team?.id
+                      to:team?.id,
+                      date:new Date()
           
                     })
                    
