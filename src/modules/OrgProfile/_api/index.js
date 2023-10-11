@@ -140,10 +140,10 @@ export const feedApi= {
 
 
                 }else{
-                    const memberSnap = await getDoc(doc(db,"users",member?.id));
-                    const newEcosystems=memberSnap?.data()?.ecosystems?.filter((eco)=>eco?.id != group?.id)
-                    await updateDoc(doc(db,"users",member?.id), {
-                    ecosystems:[
+                    const memberSnap = await getDoc(doc(db,"individuals",member?.id));
+                    const newEcosystems=memberSnap?.data()?.connections?.filter((eco)=>eco?.id != group?.id)
+                    await updateDoc(doc(db,"individuals",member?.id), {
+                    connections:[
                       ...newEcosystems
                     ]
           

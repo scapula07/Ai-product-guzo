@@ -149,7 +149,7 @@ export default function OrgAccount({currentUser}) {
             console.log(result,"result")
             setLoader(false)
             // result?.id?.length>0&& navigate(`/home/${result?.id}`)
-            result?.id?.length>0&& navigate(`/home/${result?.organizations[0]?.id}`)
+            // result?.id?.length>0&& navigate(`/home/${result?.organizations[0]?.id}`)
           }catch(e){
             console.log(e)
             if(e.message==="TypeError: Cannot read properties of undefined (reading 'indexOf')"){

@@ -11,15 +11,16 @@ export const deleteProfile = {
         console.log(currentUser,"user")
 
        
-        let collectionName="users"
+        let collectionName="individuals"
          if(group?.type?.length >0){
               collectionName= group?.type=="eco"?"ecosystems":"organizations"
   
           }
          try{
-            if(group?.type?.length >0){
-                await deleteDoc(doc(db,collectionName,group?.id));
-            }
+            // if(group?.type?.length >0){
+            //     await deleteDoc(doc(db,collectionName,group?.id));
+            // }
+                  await deleteDoc(doc(db,collectionName,group?.id));
 
            
 
@@ -43,13 +44,13 @@ export const deleteProfile = {
             })
 
           }else{
-            const result = await updateDoc(ref, {
-                display:"",
-                img:""
-            })
+             const { individual, ...rest } = currentUser
+
+            console.log(rest,"new user")
+            const result = await setDoc(ref,rest)
 
           }
-           localStorage.clear();
+             localStorage.clear();
            return true
 
          }catch(e){

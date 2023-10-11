@@ -8,25 +8,65 @@ export const createProfile= {
     createUserProfile:async function (uid,displayName,file) {
         console.log(displayName,"name")
         try{
-            console.log(uid,"uid")
-            const storage = getStorage();
-            const fileId=Math.random().toString(36).substring(2,8+2);
-            const storageRef = ref(storage, `/${fileId}`);
-            const userRef =doc(db,"users",uid)
-            const snapshot=await uploadBytes(storageRef, file)
-             console.log(snapshot,"shote")
+            // console.log(uid,"uid")
+            // const storage = getStorage();
+            // const fileId=Math.random().toString(36).substring(2,8+2);
+            // const storageRef = ref(storage, `/${fileId}`);
+            // const userRef =doc(db,"users",uid)
+            // const snapshot=await uploadBytes(storageRef, file)
+            //  console.log(snapshot,"shote")
            
-              const result = await updateDoc(userRef, {
-                username:"john",
-                img: `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
-                display:displayName
-              })
+            //   const result = await updateDoc(userRef, {
+            //     username:"john",
+            //     img: `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+            //     display:displayName
+            //   })
     
-             console.log(result,"result")
-             const docSnap = await getDoc(userRef);
-             console.log(docSnap,"ecosystem")
+            //  console.log(result,"result")
+            //  const docSnap = await getDoc(userRef);
+            //  console.log(docSnap,"ecosystem")
 
-             return {id:docSnap?.id,...docSnap?.data()}
+            //  return {id:docSnap?.id,...docSnap?.data()}
+
+                    const storage = getStorage();
+                    const fileId=Math.random().toString(36).substring(2,8+2);
+                    const storageRef = ref(storage, `/${fileId}`);
+                    const userRef =doc(db,"users",uid)
+
+                     const docSnap = await getDoc(userRef);
+                     const snapshot=await uploadBytes(storageRef, file)
+                     console.log(snapshot,"shote")
+
+                    const individualSnap = await addDoc(collection(db, "individuals"),{
+                        username:"john",
+                        img: `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+                        display:displayName,
+                        connections:[],
+                        pending:[]
+                    })
+
+                    const individualRef=doc(db,"individuals",individualSnap?.id)
+                    const docIndividualSnap = await getDoc(individualRef);
+                    const docIndividual=docIndividualSnap?.data()
+
+            
+
+                    if(docIndividualSnap.exists()) {
+                            const result = await updateDoc(userRef, {
+                                individual:{
+                                    id:docIndividualSnap?.id,
+                                    ...docIndividual
+                                }
+                            
+                            })
+                      }
+                    
+            
+                    
+                    const docIndiv = await getDoc(userRef);
+                    console.log(docSnap,"ecosystem")
+
+                    return {id:docIndiv?.id,...docIndiv?.data()}
 
             }catch(e){
                 console.log(e)
@@ -150,11 +190,33 @@ export const createProfile= {
                                                 connections:[...newConnections],
                                                 active:[...newActiveMembers]
                                                   })
-                                         }
+                                          }
                                         }))
-                                        }
-        
+                                 }
+
+                                console.log(docSnap?.data()?.individual?.id >0,"lengthhhhh")
+                                 if(docSnap?.data()?.individual?.id >0){
+                
+                                     console.log("heer>>>>>>>>>>>>>>>>.")
+                                    await new Promise(async(resolve,reject)=>{
+                                        const refIndiv =doc(db,"indivdiuals",docSnap?.data()?.individual?.id)
+                                        const docIndividual = await getDoc(refIndiv);
+
+                                        console.log(docIndividual?.exists(),"exitss")
+                                         if(docIndividual?.exists()==false){
+                                              const { individual, ...rest } = docSnap?.data()
+                                               await updateDoc(userRef,rest)
+
+                                         }
+                                        resolve(true)
+
+                                        })
+
+                                      }
+                             
                                     const docUser = await getDoc(userRef);
+
+
     
                   
                               return {id:docUser?.id,...docUser?.data()}

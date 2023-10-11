@@ -20,7 +20,8 @@ const uploadFile=async(file)=>{
 export const profileApi= {
    editProfile:async function (group,file,profile) {
       console.log(profile,"ppp")
-      let collectionName="users"
+      // let collectionName="users"
+      let collectionName="individuals"
       if(group?.type?.length >0){
         collectionName= group?.type=="eco"?"ecosystems":"organizations"
 
@@ -62,7 +63,7 @@ export const profileApi= {
    },
      fetchProfile:async function (group) {
         try{
-         let collectionName="users"
+         let collectionName="individuals"
          if(group?.type?.length >0){
            collectionName= group?.type=="eco"?"ecosystems":"organizations"
 

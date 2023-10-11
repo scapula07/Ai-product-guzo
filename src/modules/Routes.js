@@ -59,6 +59,10 @@ import PostManagemnet from "./Ecosystem/views/post";
 import ErrorBoundary from "./ErrorBoundary";
 import AuthGuard from "./AuthGuard";
 import { useNavigate } from 'react-router-dom'
+import Local from "./Notifications/views/local";
+import Global from "./Notifications/views/global";
+
+
 
 const NewRoutes = () => {
   const navigate =useNavigate()
@@ -147,7 +151,11 @@ const NewRoutes = () => {
                      <Route path="group" element={<GroupChat/>} />
                 
                 </Route>
-                <Route path="/notifications/:id/*" element={<Notifications/>} />
+                <Route path="/notifications/:id/*" element={<Notifications/>} >
+                    <Route path="" element={<Local/>} />
+                    <Route path="global" element={<Global/>} />
+
+                </Route>
                 <Route path="/settings/:id/*" element={<AuthGuard><Settings/></AuthGuard>} />
                 <Route path="/setting-edit-profile/:id/*" element={<EditProfile/>} />
                 <Route path="/ecosystem/:id/*" element={< Ecosystem />} >

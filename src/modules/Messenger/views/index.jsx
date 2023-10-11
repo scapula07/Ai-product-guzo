@@ -66,8 +66,8 @@ export default function Messenger() {
           sender: {
                img: currentUser?.img?.length >0?currentUser?.img :"",
                type:currentUser?.type?.length>0&&currentUser?.type ,
-               firstName:currentUser?.type?.length==undefined&&currentUser?.firstName,
-               lastName:currentUser?.type?.length==undefined&&currentUser?.lastName
+               name:currentUser?.type?.length==undefined?currentUser?.display :currentUser?.name,
+             
           },
           text: newMessage,
           conversationid:currentChat.id,

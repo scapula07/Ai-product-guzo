@@ -45,24 +45,25 @@ export default function Login() {
                     localStorage.clear();
                     user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
                     // user?.id.length >0&& navigate(`/home/${user?.id}`)
-                    const accounts=[...user?.ecosystems,...user?.organizations]
+                    const accounts=[...user?.ecosystems,...user?.organizations,user?.individual]
                     console.log(accounts,"accc")
+                    user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
 
-                    console.log(user?.display?.length,user?.display,"oo")
-                    if(accounts[0]?.id?.length >0){
-                        user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
-                      }else{
-                       if(user?.display?.length ===0){
+                    // console.log(user?.display?.length,user?.display,"oo")
+                    // if(accounts[0]?.id?.length >0){
+                    //     user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
+                    //   }else{
+                    //    if(user?.display?.length ===0){
 
-                          console.log("in here 1")
+                    //       console.log("in here 1")
                            
-                           user?.id?.length >0&&setcurrentUser(user)
-                           user?.id.length >0&& navigate(`/create-account`)
-                       }else{
-                        user?.id.length >0&& navigate(`/home/${user?.id}`)
-                        console.log("in here 22")
-                       }
-                    }
+                    //        user?.id?.length >0&&setcurrentUser(user)
+                    //        user?.id.length >0&& navigate(`/create-account`)
+                    //    }else{
+                    //     user?.id.length >0&& navigate(`/home/${user?.id}`)
+                    //     console.log("in here 22")
+                    //    }
+                    // }
                    }catch(e){
                      console.log(e)
                      setErrorMsg(e.message)
@@ -104,19 +105,27 @@ export default function Login() {
              setLoader(false)
              user?.id.length &&localStorage.clear();
              user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
-             const accounts=[...user?.ecosystems,...user?.organizations]
+             const accounts=[...user?.ecosystems,...user?.organizations,user?.individual]
              console.log(accounts,"accc")
-             if(accounts[0]?.id?.length >0){
+             if(accounts?.length >0){
                 user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
-              }else{
-               if(user?.display?.length ==0){
+             }else{
+                user?.id?.length >0&&setcurrentUser(user)
+                user?.id.length >0&& navigate(`/create-account`)
+             }
+    
+            //  console.log(accounts,"accc")
+            //  if(accounts[0]?.id?.length >0){
+            //     user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
+            //   }else{
+            //    if(user?.display?.length ==0){
                    
-                   user?.id?.length >0&&setcurrentUser(user)
-                   user?.id.length >0&& navigate(`/create-account`)
-               }else{
-                user?.id.length >0&& navigate(`/home/${user?.id}`)
-               }
-            }
+            //        user?.id?.length >0&&setcurrentUser(user)
+            //        user?.id.length >0&& navigate(`/create-account`)
+            //    }else{
+            //     user?.id.length >0&& navigate(`/home/${user?.id}`)
+            //    }
+            // }
                
 
 

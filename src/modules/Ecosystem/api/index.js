@@ -15,7 +15,7 @@ export const ecosystemApi= {
        
        },
        acceptMember:async function (id,member) {
-  
+              
             try{
                 const ecoRef =doc(db,"ecosystems",id)
                 const docSnap = await getDoc(ecoRef);
@@ -55,16 +55,23 @@ export const ecosystemApi= {
                     
 
                       }else{
-                           const memberRef =doc(db,"users",member?.id)
+                           const memberRef =doc(db,"individuals",member?.id)
                            const memberSnap = await getDoc(memberRef);
                            console.log(memberSnap?.data()?.pending) 
                            const newUserPending = memberSnap?.data()?.pending?.filter(eco=>eco?.id !== docSnap?.id);
+                           const connections = memberSnap?.data()?.connections?.length ===undefined? []:memberSnap?.data()?.connections
                            const result2 = await updateDoc(memberRef, {
                                 connections:[
-                                    ...member?.connections,
+                                    ...connections,
                                     {
-                                        id:docSnap.id,
-                                        ...docSnap?.data()
+                                        // id:docSnap.id,
+                                        // ...docSnap?.data()
+                                        id:docSnap?.id,
+                                        name:docSnap?.data()?.name,
+                                        teammates:docSnap?.data()?.teammates,
+                                        img:docSnap?.data()?.img,
+                                        type:docSnap?.data()?.type
+        
 
 
                                     }
@@ -134,14 +141,14 @@ export const ecosystemApi= {
             
 
               }else{
-                  const memberRef =doc(db,"users",member?.id)
+                  const memberRef =doc(db,"individuals",member?.id)
                   const memberSnap = await getDoc(memberRef);
                   const pending=memberSnap?.data()?.pending?.length ===undefined? []:memberSnap?.data()?.pending
                   const newPendingRequest= pending?.filter(request=> request?.id !== docSnap?.id);
                   const result2 = await updateDoc(memberRef, {
-                        pending:[
-                            ...newPendingRequest
-                         ]
+                      pending:[
+                          ...newPendingRequest
+                        ]
                         
                       })
                     
@@ -189,10 +196,10 @@ export const ecosystemApi= {
             
                    if(member?.type?.length >0){
                         const memberSnap = await getDoc(doc(db,collectionName,member?.id));
-                        const newActive=memberSnap?.data()?.active?.filter((eco)=>eco?.id != group?.id)
+                        const newActive=memberSnap?.data()?.connections?.filter((eco)=>eco?.id != group?.id)
                         
                         await updateDoc(doc(db,collectionName,member?.id), {
-                          active:[
+                          connections:[
                             ...newActive,
                             
                            ]
@@ -201,10 +208,13 @@ export const ecosystemApi= {
      
 
                      }else{
-                         const memberSnap = await getDoc(doc(db,"users",member?.id));
-                          const newEcosystems=memberSnap?.data()?.ecosystems?.filter((eco)=>eco?.id != group?.id)
-                         await updateDoc(doc(db,"users",member?.id), {
-                          ecosystems:[
+                          const memberSnap = await getDoc(doc(db,"individuals",member?.id));
+                          const newEcosystems=memberSnap?.data()?.connections?.filter((eco)=>eco?.id != group?.id)
+                          console.log(memberSnap?.data()?.connections,"old")
+                          console.log(newEcosystems,"new")
+                        
+                          await updateDoc(doc(db,"individuals",member?.id), {
+                          connections:[
                             ...newEcosystems
                           ]
                 

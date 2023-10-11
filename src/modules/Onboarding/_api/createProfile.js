@@ -15,15 +15,31 @@ export const createProfile= {
             const userRef =doc(db,"users",uid)
             const snapshot=await uploadBytes(storageRef, file)
              console.log(snapshot,"shote")
-           
-              const result = await updateDoc(userRef, {
-                username:"john",
-                img: `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
-                display:displayName,
-                connections:[]
-              })
+
+             const individualSnap = await addDoc(collection(db, "individuals"),{
+                 username:"john",
+                 img: `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+                 display:displayName,
+                 connections:[],
+                 pending:[]
+             })
+
+              const individualRef=doc(db,"individuals",individualSnap?.id)
+              const docIndividualSnap = await getDoc(individualRef);
+              const docIndividual=docIndividualSnap?.data()
+
+              if(docIndividualSnap.exists()) {
+                    const result = await updateDoc(userRef, {
+                        individual:{
+                            id:docIndividualSnap?.id,
+                            ...docIndividual
+                         }
+                    
+                    })
+               }
+              
     
-             console.log(result,"result")
+            
              const docSnap = await getDoc(userRef);
              console.log(docSnap,"ecosystem")
 

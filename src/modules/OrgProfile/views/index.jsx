@@ -25,7 +25,8 @@ export default function Profile() {
               // const response =await profileApi.fetchProfile(group)
               // console.log(response,"res profile")
               if(group?.id?.length >0){
-              let collectionName="users"
+              // let collectionName="users"
+              let collectionName="individuals"
               if(group?.type?.length >0){
                 collectionName= group?.type=="eco"?"ecosystems":"organizations"
        

@@ -61,11 +61,13 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
                 :
 
              <>
-         {receiverInfo?.firstName?.length>0 &&
+           {receiverInfo?.display?.length>0 &&
                     <div className='flex items-center justify-center space-x-4 '>
 
                         <h5 className='text-lg font-semibold'>
-                            {receiverInfo?.firstName + " " + receiverInfo?.lastName }
+                            {/* {receiverInfo?.firstName + " " + receiverInfo?.lastName } */}
+                            {receiverInfo?.display }
+
                         </h5>
                         <img 
                         src={receiverInfo?.img}

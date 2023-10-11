@@ -52,7 +52,7 @@ import { calculateTimeOfPost } from "../../Utils/calculateTime"
                                 />
 
                               <div className='flex flex-col '>
-                                <h5 className='font-semibold'>{msg?.sender?.firstName + " " + msg?.sender?.lastName }</h5>
+                                <h5 className='font-semibold'>{msg?.sender?.name }</h5>
                                 <h5 className='text-sm font-light'>{msg?.type}</h5>
 
                               </div>

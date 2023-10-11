@@ -146,10 +146,10 @@ export default function ActiveMember({member,group}) {
               
                 {isLoading?
                             
-                            <ClipLoader 
+                      <ClipLoader 
                                 color={"rgba(62, 51, 221, 1)"}
                                 loading={isLoading}
-                            />
+                      />
                             :
                          <h5 className='rounded-full p-2 items-center justify-center' style={{background: "rgba(236, 235, 254, 1)"}}>
 

@@ -36,11 +36,11 @@ export default function DeleteAccount({group,currentUser}) {
             response&&setTrigger(false)
             response&&setLoader(false)
             response&&setOpen(true)
-            const accounts=[...currentUser?.ecosystems,...currentUser?.organizations]
+            const accounts=[...currentUser?.ecosystems,...currentUser?.organizations,currentUser?.individual]
            
-            console.log(accounts?.length,"acco")
+            console.log(accounts?.length,accounts,"acco")
             
-            if(accounts?.length >= 1){
+            if(accounts?.length > 1){
             
               response&&navigate("/register/login")
             }else{

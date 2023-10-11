@@ -106,7 +106,7 @@ export const ecosystemApi = {
           
 
             }else{
-                    const userRef =doc(db,"users",group?.id)
+                    const userRef =doc(db,"individuals",group?.id)
                     const userSnap = await getDoc(userRef);
                     console.log(userSnap?.data(),"usersss")
                     const pending=userSnap?.data()?.pending?.length ===undefined? []:userSnap?.data()?.pending

@@ -28,6 +28,7 @@ export default function SidePanel() {
   const currentUser =useRecoilValue(userState)
   const organizations=currentUser?.organizations
   const ecosystems=currentUser?.ecosystems
+  const individual=currentUser?.individual
   const [team,setTeam]=useState([])
   const { id} = useParams();
    console.log(id,"iddd")
@@ -39,7 +40,8 @@ export default function SidePanel() {
         const unsub = onSnapshot(doc(db, "users",currentUser?.id), (doc) => {
           setTeam([])
           console.log("Current data: ", doc.data());
-          const group= [ ...doc.data()?.organizations,...doc.data()?.ecosystems]
+          // const group= [ ...doc.data()?.organizations,...doc.data()?.ecosystems]
+          const group= [doc.data()?.individual,...doc.data()?.organizations,...doc.data()?.ecosystems]
           setTeam(group)
 
          
@@ -52,24 +54,25 @@ export default function SidePanel() {
 
      
 
-   const isGroup= organizations?.length >0 || ecosystems?.length >0
+   const isGroup= organizations?.length >0 || ecosystems?.length >0 || individual?.id?.length >0
+   console.log(isGroup,"isGroupp new")
 
      useEffect(()=>{
-      const isGroup= organizations?.length >0 || ecosystems?.length >0
+      const isGroup= organizations?.length >0 || ecosystems?.length >0 || individual?.id?.length >0
  
-       isGroup&&setTeam([...organizations,...ecosystems])
- 
+       isGroup&&setTeam([individual,...organizations,...ecosystems])
+       isGroup&&setGroup([individual,...organizations,...ecosystems].find(group=>group?.id===id))
        
-      if(currentUser?.display?.length != undefined && isGroup==true){
-        console.log(currentUser?.id,"if block 1111")
-        isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
-      }else if(currentUser?.display?.length != undefined && isGroup==false){
-         console.log(currentUser?.id,"if block 222")
-         setGroup([currentUser].find(group=>group?.id===id))
-      }else{
-        console.log(currentUser?.id,"if block 33")
-        isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
-      }
+      // if(currentUser?.display?.length != undefined && isGroup==true){
+      //   console.log(currentUser?.id,"if block 1111")
+      //   isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
+      // }else if(currentUser?.display?.length != undefined && isGroup==false){
+      //    console.log(currentUser?.id,"if block 222")
+      //    setGroup([currentUser].find(group=>group?.id===id))
+      // }else{
+      //   console.log(currentUser?.id,"if block 33")
+      //   isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
+      // }
     
       },[currentUser,isUpdate])
  
@@ -116,7 +119,7 @@ export default function SidePanel() {
           <>
             
                 {team?.map((group)=>{
-                  const isTeammateGroup=group?.teammates?.some(e=>e?.id ===currentUser?.id)
+                  const isTeammateGroup=group?.teammates?.some(e=>e?.id ===currentUser?.id) || group?.display?.length > 0
                   console.log(currentUser,"iddd")
                   console.log(isTeammateGroup,"side nav")
                   return(
@@ -169,11 +172,18 @@ export default function SidePanel() {
 const TeamTile=({group,setGroup})=>{
   const [img,setImg]=useState("")
   useEffect(()=>{
-    const collectionName= group?.type=="eco"?"ecosystems":"organizations"
-    const unsub = onSnapshot(doc(db,collectionName,group?.id), (doc) => {
-      console.log("Current data: ", doc.data()?.img)    
-      setImg(doc.data()?.img)
-     });
+
+        let collectionName="individuals"
+
+        if(group?.type?.length >0){
+          collectionName= group?.type=="eco"?"ecosystems":"organizations"
+
+        }
+
+        const unsub = onSnapshot(doc(db,collectionName,group?.id), (doc) => {
+          console.log("Current data: ", doc.data()?.img)    
+          setImg(doc.data()?.img)
+          });
   
   
     

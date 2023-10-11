@@ -146,11 +146,13 @@ const PendingCard=({eco,group})=>{
           <div className='flex flex-col items-center space-y-3 py-4'>
         
 
-              <div className='flex items-center space-x-3 py-2'> 
-                <h5 className='rounded-full p-2 items-center justify-center text-blue-600 text-xs font-semibold' style={{background: "rgba(242, 242, 242, 1)"}}>
+              <div className="flex items-center justify-center space-x-3 py-2 relative"> 
+                 {!trigger&&
+                   <h5 className='rounded-full p-2 items-center justify-center text-blue-600 text-xs font-semibold' style={{background: "rgba(242, 242, 242, 1)"}}>
                     Pending...
-                </h5>
-                <h5 className='rounded-full p-2 items-center justify-center relative ' style={{background: ` ${trigger?"white" :"rgba(236, 235, 254, 1)"}`}}>
+                   </h5>
+                  }
+                   <h5 className='rounded-full p-2 items-center justify-center relative ' style={{background: ` ${trigger?"white" :"rgba(236, 235, 254, 1)"}`}}>
           
                   {!trigger&&
                   <BsThreeDots 
@@ -158,24 +160,32 @@ const PendingCard=({eco,group})=>{
                       onClick={()=>setTrigger(true)}
                   />
                   }
-                  {trigger&&
-                      <div className='absolute top-0 -mt-1 '>
-                        <div className='bg-rose-100 h-12 w-32 rounded-b-2xl rounded-tr-2xl px-4 py-2 flex items-center justify-between relative z-50'>
-                          {isRemoving?
-                              
-                              <ClipLoader 
-                                  color={"rgba(62, 51, 221, 1)"}
-                                  loading={true}
+                  
+
+              </h5>
+
+              {trigger&&
+                   <div className='absolute top-0  w-full '>
+                        <div className=' w-full flex justify-center'>
+                         
+                          <div className='bg-rose-100 h-12 w-32 rounded-b-2xl rounded-tr-2xl px-4 py-2 flex items-center justify-between relative z-50'>
+                            {isRemoving?
+                                
+                                <ClipLoader 
+                                    color={"rgba(62, 51, 221, 1)"}
+                                    loading={true}
+                                />
+                                :
+                                <h5 className='text-rose-600 font-semibold '
+                                  onClick={removeMember}
+                                >Remove</h5>
+                              }
+                              <MdArrowDropDown 
+                                className='text-3xl font-semibold text-slate-700'
+                                onClick={()=>setTrigger(false)}
                               />
-                              :
-                              <h5 className='text-rose-600 font-semibold '
-                                onClick={removeMember}
-                              >Remove</h5>
-                            }
-                            <MdArrowDropDown 
-                              className='text-3xl font-semibold text-slate-700'
-                              onClick={()=>setTrigger(false)}
-                            />
+
+                          </div>
 
                         </div>
 
@@ -183,8 +193,6 @@ const PendingCard=({eco,group})=>{
                       </div>
 
                   }
-
-              </h5>
               </div>
           </div>
 

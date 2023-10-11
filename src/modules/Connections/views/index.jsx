@@ -21,7 +21,7 @@ export default function Connections() {
 
     useEffect(()=>{
         if(group?.id?.length >0){
-            let collection="users"
+            let collection="individuals"
             if(group?.type?.length >0){
             collection=group?.type ==="eco"?"ecosystems" :"organizations"
             }
