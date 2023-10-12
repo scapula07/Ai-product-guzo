@@ -32,18 +32,18 @@ export const connectApi= {
       },
       removeActiveConnections:async function (group,connect) {
            try{
-            let collectionName ="users"
+            let collectionName ="ecosystems"
             
             if(group?.type?.length >0){
                collectionName =group?.type=="eco"?"ecosystems":"organizations"
             }
         
-            const ref =doc(db,collectionName,group?.id)
+            const ref =doc(db,collectionName,connect?.id)
             const docSnap = await getDoc(ref);
             console.log(docSnap?.data(),"ecossye")
 
             const activeConnections=docSnap?.data()?.active?.length ==undefined? []:docSnap?.data()?.active
-            const newActive= activeConnections?.filter((active)=>active?.id !=connect?.id )
+            const newActive= activeConnections?.filter((active)=>active?.id !=group?.id )
 
             // const teammates=docSnap?.data()?.teammates?.length ==undefined? []:docSnap?.data()?.teammates
             // const newTeammates= teammates?.filter((teammate)=>teammate?.id !=member?.id )
@@ -56,14 +56,14 @@ export const connectApi= {
                  const snap = await getDoc(ref);
 
           
-                  if(connect?.type?.length >0){
-                     const collectionTag =connect?.type=="eco"?"ecosystems":"organizations"
-                      const connectSnap = await getDoc(doc(db,collectionTag,connect?.id));
+                  if(group?.type?.length >0){
+                     const collectionTag =group?.type=="eco"?"ecosystems":"organizations"
+                      const connectSnap = await getDoc(doc(db,collectionTag,group?.id));
                       const newActive=connectSnap?.data()?.active?.filter((eco)=>eco?.id != group?.id)
 
                      
                       
-                      await updateDoc(doc(db,collectionTag,connect?.id), {
+                      await updateDoc(doc(db,collectionTag,group?.id), {
                         active:[
                           ...newActive,
                           
@@ -73,9 +73,9 @@ export const connectApi= {
    
 
                    }else{
-                        const connectSnap = await getDoc(doc(db,"users",connect?.id));
+                        const connectSnap = await getDoc(doc(db,"individuals",group?.id));
                         const newEcosystems=connectSnap?.data()?.connections?.filter((eco)=>eco?.id != group?.id)
-                        await updateDoc(doc(db,"users",connect?.id), {
+                        await updateDoc(doc(db,"individuals",group?.id), {
                          connections:[
                           ...newEcosystems
                          ]
@@ -154,9 +154,9 @@ export const connectApi= {
                    })
 
                      }else{
-                         const connectSnap = await getDoc(doc(db,"users",group?.id));
+                         const connectSnap = await getDoc(doc(db,"individuals",group?.id));
                          const newConnects=connectSnap?.data()?.pending?.filter((eco)=>eco?.id !=connect?.id)
-                       await updateDoc(doc(db,"users",group?.id), {
+                       await updateDoc(doc(db,"individuals",group?.id), {
                         pending:[
                           ...newConnects
                         ]
