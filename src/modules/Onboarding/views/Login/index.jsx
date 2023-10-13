@@ -106,8 +106,8 @@ export default function Login() {
              user?.id.length &&localStorage.clear();
              user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
              const accounts=[...user?.ecosystems,...user?.organizations,user?.individual]
-             console.log(accounts,"accc")
-             if(accounts?.length >0){
+             console.log(accounts,accounts?.length,"accc")
+             if(accounts?.length >0&& user?.individual?.length != undefined){
                 user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
              }else{
                 user?.id?.length >0&&setcurrentUser(user)

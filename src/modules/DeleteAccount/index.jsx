@@ -40,7 +40,7 @@ export default function DeleteAccount({group,currentUser}) {
            
             console.log(accounts?.length,accounts,"acco")
             
-            if(accounts?.length > 1){
+            if(accounts?.length >= 1){
             
               response&&navigate("/register/login")
             }else{
