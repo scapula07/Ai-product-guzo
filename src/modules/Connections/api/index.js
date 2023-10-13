@@ -34,8 +34,8 @@ export const connectApi= {
            try{
             let collectionName ="ecosystems"
             
-            if(group?.type?.length >0){
-               collectionName =group?.type=="eco"?"ecosystems":"organizations"
+            if(connect?.type?.length >0){
+               collectionName =connect?.type=="eco"?"ecosystems":"organizations"
             }
         
             const ref =doc(db,collectionName,connect?.id)
@@ -51,30 +51,35 @@ export const connectApi= {
                await updateDoc(ref, {
                   active:[
                      ...newActive,
-                  ]         
+                    ]         
                })
+               console.log("Done 1")
                  const snap = await getDoc(ref);
 
           
                   if(group?.type?.length >0){
                      const collectionTag =group?.type=="eco"?"ecosystems":"organizations"
                       const connectSnap = await getDoc(doc(db,collectionTag,group?.id));
-                      const newActive=connectSnap?.data()?.active?.filter((eco)=>eco?.id != group?.id)
+
+                      const newActive=connectSnap?.data()?.connections?.filter((eco)=>eco?.id != connect?.id)
+                      console.log(connectSnap?.data()?.connections,"old connections")
+                      console.log(newActive,"new connections")
 
                      
                       
                       await updateDoc(doc(db,collectionTag,group?.id), {
-                        active:[
+                        connections:[
                           ...newActive,
                           
                          ]
                       
-                    })
+                       })
+                       console.log("done 2")
    
 
                    }else{
                         const connectSnap = await getDoc(doc(db,"individuals",group?.id));
-                        const newEcosystems=connectSnap?.data()?.connections?.filter((eco)=>eco?.id != group?.id)
+                        const newEcosystems=connectSnap?.data()?.connections?.filter((eco)=>eco?.id != connect?.id)
                         await updateDoc(doc(db,"individuals",group?.id), {
                          connections:[
                           ...newEcosystems
