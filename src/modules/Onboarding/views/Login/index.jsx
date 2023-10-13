@@ -44,10 +44,22 @@ export default function Login() {
                     setLoader(false)
                     localStorage.clear();
                     user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
-                    // user?.id.length >0&& navigate(`/home/${user?.id}`)
-                    const accounts=[...user?.ecosystems,...user?.organizations,user?.individual]
+
                     console.log(accounts,"accc")
-                    user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
+                    const accounts=[...user?.ecosystems,...user?.organizations]
+                    console.log(accounts,accounts?.length,"accc")
+                    if(accounts?.length >0){
+                        user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
+                    }else{
+                        if(user?.individual != undefined){
+                            user?.id.length >0&& navigate(`/home/${user?.individual?.id}`)
+                        }else{
+                            user?.id?.length >0&&setcurrentUser(user)
+                            user?.id.length >0&& navigate(`/create-account`)
+
+                  }
+                
+                    }
 
                     // console.log(user?.display?.length,user?.display,"oo")
                     // if(accounts[0]?.id?.length >0){
@@ -105,13 +117,19 @@ export default function Login() {
              setLoader(false)
              user?.id.length &&localStorage.clear();
              user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
-             const accounts=[...user?.ecosystems,...user?.organizations,user?.individual]
+             const accounts=[...user?.ecosystems,...user?.organizations]
              console.log(accounts,accounts?.length,"accc")
-             if(accounts?.length >0&& user?.individual?.length != undefined){
+              if(accounts?.length >0){
                 user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
-             }else{
-                user?.id?.length >0&&setcurrentUser(user)
-                user?.id.length >0&& navigate(`/create-account`)
+              }else{
+                 if(user?.individual != undefined){
+                    user?.id.length >0&& navigate(`/home/${user?.individual?.id}`)
+                 }else{
+                    user?.id?.length >0&&setcurrentUser(user)
+                    user?.id.length >0&& navigate(`/create-account`)
+
+                 }
+           
              }
     
             //  console.log(accounts,"accc")
