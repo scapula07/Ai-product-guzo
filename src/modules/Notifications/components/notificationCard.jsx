@@ -35,7 +35,8 @@ export default function NotificationCard({notification,currentUser,setNotificati
         setAccept(true)
           try{
               const response =await notificationApi.acceptTeamInvite(notification?.id,notification?.from,currentUser,notification?.name,notification?.img)
-              response&&setAccept(false)
+              response?.status&&setAccept(false)
+              response?.notifications&&setNotifications(response?.notifications)
            }catch(e){
             console.log(e)
             setAccept(false)

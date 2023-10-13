@@ -91,17 +91,18 @@ export const notificationApi = {
                 img:img,
                 message:`You have accepted ${name} invitation`,
                 type:"action",
-                to:user?.id
+                to:user?.id,
+                date:new Date()
     
               })
 
 
-              //  const q = query(collection(db, "notifications"), where("to","==",user?.id));
+               const q = query(collection(db, "notifications"), where("to","==",user?.id));
         
-              //  const snapshot =await getDocs(q)
-              //  const notifications= snapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
+               const snapshot =await getDocs(q)
+               const notifications= snapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
 
-              //  return {notifications: notifications,status:true}
+               return {notifications: notifications,status:true}
               
 
             return true

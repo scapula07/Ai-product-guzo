@@ -20,6 +20,8 @@ export default function Global() {
     const [notifications,setNotifications]=useState([])
     const [isLoading,setLoading]=useState(false)
     const [areNotification,setAre]=useState("")
+  
+  
     useEffect(()=>{
 
       
@@ -43,14 +45,15 @@ export default function Global() {
               
               });
           
-              return () => {
-                unsubscribe()
+            //   return () => {
+            //     unsubscribe()
       
-            };
+            // };
       
           }
       
       })
+      
  
   return (
     <div className='flex flex-col w-full h-full space-y-7 overflow-y-scroll py-6 no-scrollbar px-4 '>
@@ -76,7 +79,7 @@ export default function Global() {
 
                         }
 
-                {areNotification?.length===0&&notifications?.length ===0&&
+                {areNotification?.length===0&&notifications?.filter((notification)=>notification?.to===currentUser?.id)?.length ===0&&
                     <div className='w-full flex justify-center py-10'>
                       <ClipLoader 
                             color={"rgba(62, 51, 221, 1)"}
