@@ -107,19 +107,19 @@ export const authApi= {
                               console.log(index,"index")
                               if(docEco?.exists()==false){
                                 console.log( docSnap.data()?.connections,"new ecooss")
-                                const newEco=  docSnap.data()?.ecosystems?.filter((ecosystem)=>ecosystem?.id !=eco?.id)
-                                const newConnections=  docSnap.data()?.connections?.filter((ecosystem)=>ecosystem?.id !=eco?.id)
-                                const newActiveMembers=  docSnap.data()?.active?.filter((member)=>member?.id !=eco?.id)
+                                const newEco=  docSnap.data()?.ecosystems?.length ===undefined?[]:docSnap.data()?.ecosystems?.filter((ecosystem)=>ecosystem?.id !=eco?.id)
+                                const newConnections= docSnap.data()?.connections?.length ===undefined?[]: docSnap.data()?.connections?.filter((ecosystem)=>ecosystem?.id !=eco?.id)
+                                const newActiveMembers=docSnap.data()?.active?.length ===undefined?[]:  docSnap.data()?.active?.filter((member)=>member?.id !=eco?.id)
 
 
                                 console.log(newConnections,"new connections")
                                 console.log(newActiveMembers,"new Active")
 
-                                // const result = await updateDoc(ref, {
-                                //       ecosystems:[...newEco],
-                                //       connections:[...newConnections],
-                                //       active:[...newActiveMembers]
-                                //       })
+                                const result = await updateDoc(ref, {
+                                      ecosystems:[...newEco],
+                                      connections:[...newConnections],
+                                      active:[...newActiveMembers]
+                                      })
 
 
                                 
@@ -138,9 +138,9 @@ export const authApi= {
                                 const docOrg = await getDoc(refOrg);
                                 if(docOrg?.exists()==false){
                                   console.log( docSnap.data()?.organizations,"new ecooss")
-                                  const newOrg=  docSnap.data()?.organizations?.filter((organization)=>organization?.id !=org?.id)
-                                  const newConnections=  docSnap.data()?.connections?.filter((ecosystem)=>ecosystem?.id !=org?.id)
-                                  const newActiveMembers=  docSnap.data()?.active?.filter((member)=>member?.id !=org?.id)
+                                  const newOrg=docSnap.data()?.organizations?.lenght ==undefined?[] : docSnap.data()?.organizations?.filter((organization)=>organization?.id !=org?.id)
+                                  const newConnections= docSnap.data()?.connections?.length ==undefined?[] :docSnap.data()?.connections?.filter((ecosystem)=>ecosystem?.id !=org?.id)
+                                  const newActiveMembers=docSnap.data()?.active?.length ==undefined?[] :  docSnap.data()?.active?.filter((member)=>member?.id !=org?.id)
 
                                   console.log(newOrg,"new ecooss")
 
