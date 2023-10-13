@@ -45,7 +45,7 @@ export default function Login() {
                     localStorage.clear();
                     user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
 
-                    console.log(accounts,"accc")
+                   
                     const accounts=[...user?.ecosystems,...user?.organizations]
                     console.log(accounts,accounts?.length,"accc")
                     if(accounts?.length >0){
