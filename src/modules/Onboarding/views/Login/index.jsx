@@ -45,21 +45,27 @@ export default function Login() {
                     localStorage.clear();
                     user?.id.length >0&&localStorage.setItem('user',JSON.stringify(user));
 
-                   
+                     console.log(user,"user")
                     const accounts=[...user?.ecosystems,...user?.organizations]
+
                     console.log(accounts,accounts?.length,"accc")
+                    console.log(user?.individual)
                     if(accounts?.length >0){
                         user?.id.length >0&& navigate(`/home/${accounts[0]?.id}`)
-                    }else{
+                        console.log("top")
+                     }else{
                         if(user?.individual != undefined){
+                            console.log("mid")
+
                             user?.id.length >0&& navigate(`/home/${user?.individual?.id}`)
                         }else{
+                            console.log("last")
                             user?.id?.length >0&&setcurrentUser(user)
                             user?.id.length >0&& navigate(`/create-account`)
 
-                  }
-                
                     }
+                
+                   }
 
                     // console.log(user?.display?.length,user?.display,"oo")
                     // if(accounts[0]?.id?.length >0){
