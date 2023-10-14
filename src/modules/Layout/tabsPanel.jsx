@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {AiFillHome} from "react-icons/ai"
 import home from "../assets/icons/home.png"
 import user from "../assets/icons/user.png"
@@ -16,14 +16,27 @@ import Modal from '../Modal'
 import {AiOutlineClose } from "react-icons/ai"
 import {RiSettings3Fill} from "react-icons/ri"
 import indiv from "../assets/indiv.png"
+import { doc, onSnapshot } from "firebase/firestore"
+import { db } from '../Firebase'
 
 export default function TabsPanel() {
     const group =useRecoilValue(groupState)
     const [trigger,setTrigger]=useState(false)
     const [hover,setHover]=useState(false)
+    const [unseen,setUnseen]=useState()
     const currentUser=useRecoilValue(userState)
+   
+    useEffect(()=>{
+       if(group?.id?.length >0){
+          const ref =doc(db,"unseen",group?.id)
+          const unsub = onSnapshot(ref, (doc) => {
+          console.log(doc?.data(),"unseee nn")
+          setUnseen(doc?.data())
+          });
 
 
+       }
+     },[group])
 
 const navs=[
   {
@@ -127,7 +140,13 @@ const navs=[
                                 className="h-5 w-5"
                               />
                               <Link to={nav?.link}>
-                              <h5 className='font-semibold'>{nav?.name}</h5>
+                                  <h5 className='font-semibold flex items-center space-x-0.5'>
+                                          <span>{nav?.name}</span>
+                                          {unseen?.ecosystem&&
+                                             <span className='bg-red-500 lg:h-1.5 lg:w-1.5 h-1 w-1 rounded-full'></span>
+                                          }
+                                         
+                                   </h5>
                               </Link>
                             
                             </div>
@@ -141,7 +160,32 @@ const navs=[
                                   className="h-5 w-5"
                                 />
                                 <Link to={nav?.link}>
-                                <h5 className='font-semibold'>{nav?.name}</h5>
+                                    {["Connections","Messages"].includes(nav?.name)?
+                                        <h5 className='font-semibold flex items-center space-x-0.5'>
+                                          <span>{nav?.name}</span>
+                                          {nav?.name==="Messages"?
+                                               <>
+                                                 {unseen?.messages&&
+                                                    <span className='bg-red-500 lg:h-1.5 lg:w-1.5 h-1 w-1 rounded-full'></span>
+                                                 }
+                                                  
+                                               </>
+                                             
+                                               :
+                                               <>
+                                                {unseen?.connections&&
+                                                   <span className='bg-red-500 lg:h-1.5 lg:w-1.5 h-1 w-1 rounded-full'></span>
+                                                }
+                                               </>
+                                              
+                                          }
+                                        
+                                        </h5>
+                                        :
+                                        <h5 className='font-semibold'>{nav?.name}</h5>
+
+                                    }
+                                
                                 </Link>
                               
                              </div>

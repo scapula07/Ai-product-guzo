@@ -8,7 +8,7 @@ import { io } from "socket.io-client";
 import {doc,setDoc,
        addDoc,collection,
        getDoc,getDocs,
-       query, where} from "firebase/firestore"
+       query, where,updateDoc} from "firebase/firestore"
 import { db } from '../../Firebase'
 import { useLocation} from "react-router-dom";
 import GroupChat from './groupchat'
@@ -47,9 +47,20 @@ export default function Messenger() {
             console.log(error)
           }
         };
-      getConversations();
+        getConversations();
    
-     },[currentUser?.id,active])  
+       },[currentUser?.id,active])  
+
+       useEffect(()=>{
+           const seen=async()=>{
+              const result = await updateDoc(doc(db,"unseen",currentUser?.id), {
+                messages:false
+              })
+           }
+
+           currentUser?.id?.length >0&& seen()
+           
+         },[currentUser?.id])
 
      console.log(groups,"grou chatatt")
 
@@ -64,6 +75,7 @@ export default function Messenger() {
         
         const message = {
           sender: {
+               id:currentUser?.id,
                img: currentUser?.img?.length >0?currentUser?.img :"",
                type:currentUser?.type?.length>0&&currentUser?.type ,
                name:currentUser?.type?.length==undefined?currentUser?.display :currentUser?.name,
@@ -83,11 +95,17 @@ export default function Messenger() {
           
             const docRef = await addDoc(collection(db, "messages"),message);
         
-            const docSnap = await getDoc(docRef);
+             const docSnap = await getDoc(docRef);
              console.log(docSnap?.data(),"came")
-            // setMessages([...messages,{...docSnap.data(),id:docSnap.id}]);
-            docSnap?.exists()&& setNewMessage("")
-            docSnap?.exists()&& setLoader(false)
+             docSnap?.exists()&& setNewMessage("")
+             docSnap?.exists()&& setLoader(false)
+             const receiver= currentChat?.members?.find((member)=>member !=currentUser?.id )
+             console.log(receiver,"reci")
+             const result = await updateDoc(doc(db,"unseen",receiver), {
+                 messages:true
+               })
+
+       
       
             }catch (err) {
               console.log(err)

@@ -107,6 +107,12 @@ export const createProfile= {
                       ],
                     type:"org"
                 })
+               
+               await setDoc(doc(db, "unseen",orgSnap?.id), {
+                    messagaes:false,
+                    connections:false
+                  });
+
 
                const orgRef=doc(db,"organizations",orgSnap?.id)
                const docSnap = await getDoc(orgRef);
@@ -126,7 +132,7 @@ export const createProfile= {
                                     teammates:[
                                        ...docOrg?.teammates
                                      ]
-                                }
+                                 }
                                 ]
                         
                             })
@@ -254,10 +260,15 @@ export const createProfile= {
                         display:currentUser?.display?.length != undefined? currentUser?.display :"",
                         email:currentUser?.email,
                     }
-                ],
+                  ],
                 type:"eco",
-            })
+               })
      
+            await setDoc(doc(db, "unseen",ecoSnap?.id), {
+                messagaes:false,
+                ecosystems:false,
+                connections:false
+              });
             console.log(ecoSnap,"ecosnap")
             const ecoRef=doc(db,"ecosystems",ecoSnap?.id)
             const docSnap = await getDoc(ecoRef);

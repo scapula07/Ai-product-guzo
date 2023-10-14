@@ -101,9 +101,13 @@ export const createProfile= {
                                 ]
                         
                             })
+                        
+                         await setDoc(doc(db, "unseen",orgSnap?.id), {
+                            messgaes:false,
+                            connections:false
+                          });
                     
-                    
-                            console.log(result,"result")
+                        console.log(result,"result")
                         const docSnap = await getDoc(userRef);
                         console.log(docSnap,"ecosystem")
         
@@ -165,6 +169,12 @@ export const createProfile= {
                         ]
                 
                      })
+
+                 await setDoc(doc(db, "unseen",ecoSnap?.id), {
+                      messgaes:false,
+                      ecosystems:false,
+                      connections:false
+                   });
                 const docSnap = await getDoc(userRef);
                 console.log(docSnap,"ecosystem")
 
