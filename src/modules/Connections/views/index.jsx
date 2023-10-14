@@ -8,7 +8,7 @@ import {useRecoilValue} from "recoil"
 import { connectApi } from '../api'
 import { db } from '../../Firebase'
 
-import { doc, onSnapshot } from "firebase/firestore"
+import { doc, onSnapshot ,updateDoc} from "firebase/firestore"
 
 
 
@@ -39,6 +39,18 @@ export default function Connections() {
 
         }
     },[group])
+
+
+     useEffect(()=>{
+        const seen=async()=>{
+          const result = await updateDoc(doc(db,"unseen",group?.id), {
+            connections:false
+           })
+        }
+  
+      group?.id?.length >0&& seen()
+      
+    },[group?.id])
 
   return (
     <Layout>

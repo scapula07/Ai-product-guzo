@@ -59,6 +59,11 @@ export const createProfile= {
                                 }
                             
                             })
+                            
+                            await setDoc(doc(db, "unseen",individualSnap?.id), {
+                                messgaes:false,
+                                connections:false
+                              });
                       }
                     
             

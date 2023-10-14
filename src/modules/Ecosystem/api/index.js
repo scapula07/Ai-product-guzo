@@ -98,6 +98,9 @@ export const ecosystemApi= {
                   
               
 
+                         await updateDoc(doc(db,"unseen",member?.id), {
+                            connections:true
+                          })
                 
                 
                     // const memberSnap = await getDoc(ecoRef);
