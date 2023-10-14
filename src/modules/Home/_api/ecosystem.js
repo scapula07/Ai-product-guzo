@@ -132,9 +132,13 @@ export const ecosystemApi = {
                       
                         
 
-              }
+                   }
+
+                 await updateDoc(doc(db,"unseen",ecoId), {
+                     ecosystems:true
+                     })
             
-               return true     
+                 return true     
 
              }catch(e){
                  console.log(e)

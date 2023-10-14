@@ -142,7 +142,7 @@ const navs=[
                               <Link to={nav?.link}>
                                   <h5 className='font-semibold flex items-center space-x-0.5'>
                                           <span>{nav?.name}</span>
-                                          {unseen?.ecosystem&&
+                                          {unseen?.ecosystems&&
                                              <span className='bg-red-500 lg:h-1.5 lg:w-1.5 h-1 w-1 rounded-full'></span>
                                           }
                                          

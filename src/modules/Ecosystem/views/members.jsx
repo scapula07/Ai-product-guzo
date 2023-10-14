@@ -6,7 +6,7 @@ import { ecosystemApi } from '../api'
 import { useNavigate } from 'react-router-dom'
 import ActiveMember from '../components/activeMember'
 import PendingMember from '../components/pendingMember'
-import { doc, onSnapshot } from "firebase/firestore"
+import { doc, onSnapshot,updateDoc} from "firebase/firestore"
 import { db } from '../../Firebase'
 
 
@@ -28,6 +28,17 @@ export default function EcoMembers() {
     
              }
            },[group])
+
+           useEffect(()=>{
+              const seen=async()=>{
+                const result = await updateDoc(doc(db,"unseen",group?.id), {
+                  ecosystems:false
+                 })
+              }
+ 
+            group?.id?.length >0&& seen()
+            
+          },[group?.id])
     console.log(members?.active,"mmmm pending")
 
   return (
