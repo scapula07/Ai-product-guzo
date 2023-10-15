@@ -127,7 +127,7 @@ export const connectApi= {
                   if(group?.type ==="eco"){
                       const collectionTag =group?.type=="eco"?"ecosystems":"organizations"
                       const connectSnap = await getDoc(doc(db,collectionTag,group?.id));
-                      const newPendingMemberships=connectSnap?.data()?.pending?.filter((eco)=>eco?.id != connect?.id)
+                      const newPendingMemberships=connectSnap?.data()?.pendingMemberships?.filter((eco)=>eco?.id != connect?.id)
                       
 
                       console.log(newPendingMemberships,"pending mem 1")
