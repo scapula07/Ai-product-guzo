@@ -147,7 +147,14 @@ export const notificationApi = {
           
                     })
 
-                    return true
+                    const q = query(collection(db, "notifications"), where("to","==",user?.id));
+        
+                    const snapshot =await getDocs(q)
+                    const notifications= snapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
+     
+                    return {notifications: notifications,status:true}
+
+                    // return true
       
 
        }catch(e){

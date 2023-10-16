@@ -67,7 +67,8 @@ export const teamApi= {
                     type:group?.type
                 },
                 to:user?.id,
-                date:new Date()
+                date:new Date(),
+                targetId:`${group?.id}-${user?.id}`
 
     
               })
@@ -186,27 +187,22 @@ export const teamApi= {
                })
 
                const userRef = collection(db, "notifications");
-               const q = query(userRef, where("to", "==", teammate?.id));
+               const q = query(userRef, where("targetId", "==", `${group?.id}-${teammate?.id}`));
                const querySnapshot = await getDocs(q);
                console.log(querySnapshot,"emailll")
                let notificationId
                  querySnapshot.forEach(async(doc) => {
                    // doc.data() is never undefined for query doc snapshots
                    console.log(doc.id, " => ", doc.data())
-
-                   console.log( doc.data())
-                    if(doc.data()?.from?.id===group?.id){
                       notificationId=doc.id
-                      //   console.log("true here")
-                      //   notificationId=
-                      //  console.log("true")
-                         }
                      });
                     console.log("hass")
 
-                  console.log(notificationId,"notiff")
+                     console.log(notificationId,"notiff")
 
-                  await deleteDoc(doc(db,"notifications",notificationId));
+                     await deleteDoc(doc(db,"notifications",notificationId));
+
+                  console.log("done")
 
               return true
              }catch(e){

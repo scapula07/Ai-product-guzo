@@ -48,7 +48,8 @@ export default function NotificationCard({notification,currentUser,setNotificati
         setIgnore(true)
           try{
               const response =await notificationApi.declineTeamInvite(notification?.id,notification?.from,currentUser,notification?.name,notification?.img)
-              response&&setIgnore(false)
+              response?.status&&setIgnore(false)
+              response?.notifications&&setNotifications(response?.notifications)
            }catch(e){
             console.log(e)
             setIgnore(false)
