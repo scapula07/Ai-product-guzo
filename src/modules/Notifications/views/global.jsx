@@ -52,7 +52,7 @@ export default function Global() {
       
           }
       
-      })
+      },[currentUser?.id])
       console.log(notifications,global)
  
   return (

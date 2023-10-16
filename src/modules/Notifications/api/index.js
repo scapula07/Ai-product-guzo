@@ -41,7 +41,7 @@ export const notificationApi = {
                     ...teammates,
                     user
     
-                ],
+                 ],
                 active:[
                     ...active,
                     user
@@ -51,13 +51,24 @@ export const notificationApi = {
                  ]
                })
                const snap = await getDoc(ref);
+              //  const ref =doc(db,collectionName,from?.id)
+              //  const docSnap = await getDoc(ref);
                if(from?.type=="eco"){
+                   const ecosystems=user?.ecosystems?.filter((e)=>e?.id !=snap?.id)
+                   
+                   console.log(ecosystems,snap?.name,snap?.creator,snap?.img,snap?.location,"Ecosts")
                   await updateDoc(doc(db,"users",user?.id), {
                     ecosystems:[
-                      ...user?.ecosystems,
+                      ...ecosystems,
                         {
                             id:snap.id,
-                          ...snap?.data()
+                            name:snap?.data()?.name,
+                            creator:snap?.data()?.creator,
+                            type:"eco",
+                            img:snap?.data()?.img,
+                            location:snap?.data()?.location,
+                            // teammates:snap?.data()?.teammates
+                            // ...snap?.data()
   
   
                         }
@@ -65,12 +76,18 @@ export const notificationApi = {
                   
                   })
                  }else{
+                  const orgs=user?.organizations?.filter((e)=>e?.id !=snap?.id)
                   await updateDoc(doc(db,"users",user?.id), {
                     organizations:[
-                      ...user?.organizations,
+                      ...orgs,
                         {
-                            id:snap.id,
-                          ...snap?.data()
+                          id:snap.id,
+                          name:snap?.data()?.name,
+                          creator:snap?.data()?.creator,
+                          type:"org",
+                          img:snap?.data()?.img,
+                          location:snap?.data()?.location,
+                          // ...snap?.data()
 
 
                         }

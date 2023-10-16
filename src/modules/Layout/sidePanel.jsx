@@ -41,8 +41,22 @@ export default function SidePanel() {
           setTeam([])
           console.log("Current data: ", doc.data());
           // const group= [ ...doc.data()?.organizations,...doc.data()?.ecosystems]
-          const group= [doc.data()?.individual,...doc.data()?.organizations,...doc.data()?.ecosystems]
-          setTeam(group)
+          // const group= [doc.data()?.individual,...doc.data()?.organizations,...doc.data()?.ecosystems]
+          // setTeam(group)
+          if(doc.data()?.individual?.id?.length >0){
+            console.log("top")
+             const group= [doc.data()?.individual,...doc.data()?.organizations,...doc.data()?.ecosystems]
+            setTeam(group)
+           
+    
+           }else{
+            console.log("bottom")
+            const group= [...doc.data()?.organizations,...doc.data()?.ecosystems]
+            setTeam(group)
+           
+    
+    
+           }
 
          
          });
@@ -60,8 +74,22 @@ export default function SidePanel() {
      useEffect(()=>{
       const isGroup= organizations?.length >0 || ecosystems?.length >0 || individual?.id?.length >0
  
-       isGroup&&setTeam([individual,...organizations,...ecosystems])
-       isGroup&&setGroup([individual,...organizations,...ecosystems].find(group=>group?.id===id))
+      //  isGroup&&setTeam([individual,...organizations,...ecosystems])
+       if(individual?.id?.length >0){
+        console.log("top")
+        isGroup&&setTeam([individual,...organizations,...ecosystems])
+        isGroup&&setGroup([individual,...organizations,...ecosystems].find(group=>group?.id===id))
+       
+
+       }else{
+        console.log("bottom")
+        isGroup&&setTeam([...organizations,...ecosystems])
+        isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
+       
+
+
+       }
+    
        
       // if(currentUser?.display?.length != undefined && isGroup==true){
       //   console.log(currentUser?.id,"if block 1111")
@@ -123,24 +151,38 @@ export default function SidePanel() {
                   console.log(currentUser,"iddd")
                   console.log(isTeammateGroup,"side nav")
                   return(
-                    <>
-                    {isTeammateGroup==true&&
-                        <Link to={`/home/${group?.id}`}>
-                          {/* <div className='rounded-lg p-0.5 items-center justify-center flex border'>
-                              <img 
-                                src={group?.img}
-                                className="h-8 w-8 rounded-full"
-                                onClick={()=>setGroup(group)}
-                              />
-                          </div> */}
-                          <TeamTile 
-                            group={group}
-                            setGroup={setGroup}
-                          />
-                       </Link>
-                    }
+                  //   <>
+                  //   {isTeammateGroup==true&&
+                  //       <Link to={`/home/${group?.id}`}>
+                  //         {/* <div className='rounded-lg p-0.5 items-center justify-center flex border'>
+                  //             <img 
+                  //               src={group?.img}
+                  //               className="h-8 w-8 rounded-full"
+                  //               onClick={()=>setGroup(group)}
+                  //             />
+                  //         </div> */}
+                  //         <TeamTile 
+                  //           group={group}
+                  //           setGroup={setGroup}
+                  //         />
+                  //      </Link>
+                  //   }
+
                     
-                  </>
+                  // </>
+                    <Link to={`/home/${group?.id}`}>
+                        {/* <div className='rounded-lg p-0.5 items-center justify-center flex border'>
+                            <img 
+                              src={group?.img}
+                              className="h-8 w-8 rounded-full"
+                              onClick={()=>setGroup(group)}
+                            />
+                        </div> */}
+                        <TeamTile 
+                          group={group}
+                          setGroup={setGroup}
+                        />
+                    </Link>
                   )
               })}
             </>
@@ -172,24 +214,28 @@ export default function SidePanel() {
 const TeamTile=({group,setGroup})=>{
   const [img,setImg]=useState("")
   useEffect(()=>{
+ 
+   
+       
+      let collectionName="individuals"
 
-        let collectionName="individuals"
+      if(group?.type?.length >0){
+        collectionName= group?.type=="eco"?"ecosystems":"organizations"
 
-        if(group?.type?.length >0){
-          collectionName= group?.type=="eco"?"ecosystems":"organizations"
+      }
+      console.log(group?.id,collectionName,"iddddddddddddddd")
+      const unsub = onSnapshot(doc(db,collectionName,group?.id), (doc) => {
+        console.log("Current data: ",doc.data(), doc.data()?.img)    
+        setImg(doc.data()?.img)
+        });
 
-        }
-
-        const unsub = onSnapshot(doc(db,collectionName,group?.id), (doc) => {
-          console.log("Current data: ", doc.data()?.img)    
-          setImg(doc.data()?.img)
-          });
+     
   
   
     
   },[])
      
-
+    console.log(img,"imgggggggg")
    return(
     <div className='rounded-lg p-0.5 items-center justify-center flex border'>
         <img 

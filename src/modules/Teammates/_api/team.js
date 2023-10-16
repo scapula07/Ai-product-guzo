@@ -117,7 +117,7 @@ export const teamApi= {
                    })
                    const snap = await getDoc(ref);
 
-                 const userSnap = await getDoc(doc(db,"users",team?.id));
+                      const userSnap = await getDoc(doc(db,"users",team?.id));
                      if(group?.type=="eco"){
                           console.log(userSnap?.data()?.ecosystems,"old eco")
                             const newEcosystem=userSnap?.data()?.ecosystems?.filter((eco)=>eco?.id != group?.id)
