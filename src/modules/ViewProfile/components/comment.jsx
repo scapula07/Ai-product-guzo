@@ -1,12 +1,16 @@
-import React from 'react'
+import React,{useState} from 'react'
+import { calculateTimeOfPost } from '../../Utils/calculateTime'
 
 export default function Comment({feed}) {
+
+   const [trigger,setTrigger]=useState(false)
    const comments=  feed?.comments.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
   return (
     <div className='flex flex-col w-full space-y-3 py-4'>
     <div className='flex items-center space-x-4'>
         <div className='flex items-center  -space-x-4 '>
             {feed?.comments?.slice(0,2)?.map((comment)=>{
+                    
                      return(
                       <div className='flex w-full space-x-1'>
                           <div className=''>
@@ -46,7 +50,8 @@ export default function Comment({feed}) {
     </div>
 
     <div className='flex flex-col pt-4 pb-2 w-full space-y-4'>
-       {comments?.map((comment)=>{
+       {comments?.slice(0,`${trigger?feed?.comments?.length :3}`)?.map((comment)=>{
+            const timeAt =calculateTimeOfPost(comment?.createdAt?.seconds)
           return(
               <div className='flex w-full space-x-1'>
                    <div className=''>
@@ -70,7 +75,7 @@ export default function Comment({feed}) {
                     <div className='flex flex-col bg-slate-100 w-full px-4 py-2 space-y-2 rounded-md'>
                        <div className='flex justify-between items-center'>
                            <h5 className='text-xs font-semibold text-slate-700'>{comment?.name}</h5>
-                           <h5  className='text-xs font-semibold text-slate-700'>30mins</h5>
+                           <h5  className='text-xs font-semibold text-slate-700'>{timeAt}</h5>
                         </div>
                      
                         <p className='text-xs text-slate-700'>
@@ -86,8 +91,19 @@ export default function Comment({feed}) {
        }
 
     </div>
+       {feed?.comments?.length >3&&
+          <>
+          {trigger?
+            <h5 className='text-sm font-semibold text-slate-700' onClick={()=>setTrigger(false)}>See less comments</h5>
+            :
+            <h5 className='text-sm font-semibold text-slate-700' onClick={()=>setTrigger(true)}>See more comments</h5>
 
-      <h5 className='text-sm font-semibold text-slate-700'>See more comments</h5>
+          }
+          </>
+          
+
+       }
+      
 
 
     </div>

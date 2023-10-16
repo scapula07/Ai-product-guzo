@@ -37,7 +37,7 @@ export default function ViewPosts({group}) {
          }
          getProfileFeeds()
 
-   },[group?.id])
+   })
 
    console.log(feeds,"view ww")
   return (
@@ -86,8 +86,8 @@ const Post=({feed,group})=>{
                <>
                  {feed?.shared_by?.type?.length>0?
                      <img
-                     src={feed?.shared_by?.img}
-                     className="rounded-full h-8 w-8"
+                        src={feed?.shared_by?.img}
+                        className="rounded-full h-8 w-8"
                    />
                     :
                     <>
