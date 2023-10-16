@@ -58,7 +58,7 @@ export default function Posts({group}) {
 
     }
 
-},[group])
+})
 
 
   return (
