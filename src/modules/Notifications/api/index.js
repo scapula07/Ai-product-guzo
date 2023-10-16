@@ -41,14 +41,10 @@ export const notificationApi = {
                     ...teammates,
                     user
     
-                 ],
-                active:[
-                    ...active,
-                    user
-                 ],
-                 invitees:[
+                    ],
+                  invitees:[
                     ...invitees
-                 ]
+                     ]
                })
                const snap = await getDoc(ref);
               //  const ref =doc(db,collectionName,from?.id)
