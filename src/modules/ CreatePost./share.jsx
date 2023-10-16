@@ -66,13 +66,13 @@ export default function Share({setOthers,currentUser,group,setShare,access,setAc
                     </div>
                     :
                     <div className='flex flex-col '>
-                        <h5 className='font-semibold'>{group?.firstName + " " + group?.lastName}</h5>
+                        <h5 className='font-semibold'>{group?.display}</h5>
                         <div className='flex items-center space-x-1'>
-                            <h5 className='text-sm font-semibold '>Share Options</h5>
+                            {/* <h5 className='text-sm font-semibold '>Share Options</h5>
                             <MdArrowDropUp
                             className='text-lg'
                             onClick={()=>setShare(false) || setOthers(false)}
-                            />
+                            /> */}
                         </div>
                     
 

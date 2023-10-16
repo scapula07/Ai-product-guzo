@@ -33,6 +33,7 @@ export default function DeletePost({feed,group}) {
             response&&setTrigger(false)
             response&&setLoader(false)
             response&&setOpen(true)
+          
 
           }catch(e){
             console.log(e)

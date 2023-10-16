@@ -45,7 +45,7 @@ export default function PendingMember({group,member,setMembers}) {
             result?.status&&setMembers({active:result?.active,pending:result?.pending})
             result?.status&&setIgnore(false)
            
-
+            setIgnore(false)
          }catch(e){
             console.log(e)
             setLoader(false)

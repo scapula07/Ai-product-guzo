@@ -18,9 +18,9 @@ export const shareApi= {
               return ecosystems 
     
             }else{
-                const docRef = doc(db, "users", group?.id);
+                const docRef = doc(db, "individuals", group?.id);
                 const docSnap = await getDoc(docRef);
-                const ecosystems=docSnap?.data()?.ecosystems
+                const ecosystems=docSnap?.data()?.connections
 
 
                 //  const q = query(collection(db, collectionName));
