@@ -3,7 +3,8 @@ import {AiFillHome} from "react-icons/ai"
 import home from "../assets/icons/home.png"
 import user from "../assets/icons/user.png"
 import icon from "../assets/icon.png"
-import eco from "../assets/img3.png"
+import eco from "../assets/ecoIcon.jpeg"
+import ind from "../assets/indivIcon.jpeg"
 import connections from "../assets/icons/connections.png"
 import message from "../assets/icons/message.png"
 import opportunity from "../assets/icons/opportunity.png"
@@ -15,7 +16,7 @@ import CreatePosts from '../ CreatePost.'
 import Modal from '../Modal'
 import {AiOutlineClose } from "react-icons/ai"
 import {RiSettings3Fill} from "react-icons/ri"
-import indiv from "../assets/indiv.png"
+import indiv from "../assets/orgIcon.jpeg"
 import { doc, onSnapshot } from "firebase/firestore"
 import { db } from '../Firebase'
 
@@ -77,32 +78,56 @@ const navs=[
     <div className='py-6  w-full relative h-full'>
         <div className='flex flex-col items-center space-y-4 w-full'>
             {group?.type?.length >0?
-                  <div className='flex flex-col items-center'>
-                      <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name}</h5>
-                     { group?.type=="eco"?
-                        <div className='flex items-center space-x-1.5'>
-                            <img 
-                              src={eco}
-                              className="w-3 h-3"
-                            />
-                            <h5 className='text-xs'>Ecosystem</h5>
-                        </div>
-                        :
-                       <div className='flex items-center space-x-1.5'>
-                        <img 
-                          src={indiv}
-                          className="w-3 h-3"
-                        />
-                        <h5 className='text-xs'>Organization</h5>
-                    </div>
-                      }
-                 </div>
-                 :
-                 <>
+                    <div className='flex items-center space-x-5'>
+                          <img
+                             src={group?.img}
+                             className="rounded-full w-8 h-8"
+                           />
+                          <div className='flex flex-col items-center'>
+                              <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name}</h5>
+                                { group?.type=="eco"?
+                                <div className='flex items-center space-x-1.5'>
+                                    <img 
+                                      src={eco}
+                                      className="w-2.5 h-3"
+                                      />
+                                    <h5 className='text-xs'>Ecosystem</h5>
+                                </div>
+                                  :
+                            <div className='flex items-center space-x-1.5'>
+                              <img 
+                                src={indiv}
+                                className="w-2.5 h-3"
+                              />
+                              <h5 className='text-xs'>Organization</h5>
+                            </div>
+                            }
+                          </div>
+                     </div>
+                     :
+                     <>
                    {
                      group?.id?.length>0&&
-                    <h5 className='font-semibold text-lg ' onClick={()=>setHover(true)}>{group?.display}</h5>
-                  }
+                        <div className='flex items-center space-x-5'>
+                             <img
+                                src={group?.img}
+                                 className="rounded-full w-8 h-8"
+                             />
+                                <div className='flex flex-col items-center'>
+                                        <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.display}</h5>
+                            
+                                        <div className='flex items-center space-x-1.5'>
+                                          <img 
+                                            src={ind}
+                                            className="w-2.5 h-3"
+                                            />
+                                          <h5 className='text-xs'>Individual</h5>
+                                          </div>
+
+                                  </div>
+                         </div>
+                        
+                      }
                     
                  </>
                 
