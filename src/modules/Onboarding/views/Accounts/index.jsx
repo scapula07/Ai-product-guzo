@@ -1,8 +1,9 @@
 import React from 'react'
 import guzo from "../../../assets/guzoLogo.png"
-import guzo1 from "../../../assets/img1.png"
-import guzo2 from "../../../assets/img2.png"
-import guzo3 from "../../../assets/img3.png"
+
+import guzo1 from "../../../assets/indivIcon.jpeg"
+import guzo2 from "../../../assets/orgIcon.jpeg"
+import guzo3 from "../../../assets/ecoIcon.jpeg"
 import { accountTypeState } from '../../../Recoil/globalstate'
 import { useRecoilValue,useRecoilState} from 'recoil';
 import { Link } from 'react-router-dom'
@@ -22,7 +23,7 @@ import { Link } from 'react-router-dom'
 
                 <div className='w-3/5 flex flex-col space-y-6'>
                       <div className='bg-white w-full flex flex-col space-y-10 items-center py-6 rounded-lg'>
-                              <h5 className='text-lg font-semibold'>Join Guzo as an.... </h5>
+                              <h5 className='text-lg font-semibold'>Join Guzo as </h5>
                               
                               <div className='flex flex-col w-full items-center space-y-6'>
                                 {accounts?.map((acct)=>{
@@ -33,10 +34,12 @@ import { Link } from 'react-router-dom'
                                             <div className='flex flex-col space-y-4 items-center'>
                                                 <img 
                                                    src={acct?.img}
+                                                   className="w-6 h-8"
+                                                   
                                                 />
                                                 <h5 className='text-sm font-semibold'>{acct?.name}</h5>
                                             </div>
-                                            <div className='w-3/4'>
+                                            <div className='w-3/4 flex justify-center'>
                                               <p className='text-xs font-semibold '> {acct?.desc}</p>
                                             </div>
                                        </div>
@@ -80,22 +83,23 @@ import { Link } from 'react-router-dom'
 
 
 
+
   const accounts=[
     {
       img:guzo1,
       name:"Individual",
-      desc:"I am an individual joining ecosystems to post and participate in opportunities"
+      desc:"an individual contributor"
 
     },
     {
       img:guzo2,
       name:"Organization",
-      desc:"I am an organization joining ecosystems to post and participate in opportunities"
+      desc:"an organization contributor"
     },
     {
       img:guzo3,
       name:"Ecosystem",
-      desc:"I host an ecosystem of organizations and individuals and their opportunities"
+      desc:"a community of organizations and individuals"
     },
 
   ]

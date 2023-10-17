@@ -116,13 +116,13 @@ export default function EditProfile() {
                                      {group?.type?.length>0?
                                             <>
                                               {group?.type=="eco"?
-                                            <h5 className='text-xl font-semibold'>Edit ecosystem profile...</h5>
+                                            <h5 className='text-xl font-semibold'>Edit ecosystem profile</h5>
                                                 :
-                                                <h5 className='text-xl font-semibold'>Edit organization profile...</h5>
+                                                <h5 className='text-xl font-semibold'>Edit organization profile</h5>
                                             }
                                             </>
                                             :
-                                            <h5 className='text-xl font-semibold'>Edit individual profile...</h5>
+                                            <h5 className='text-xl font-semibold'>Edit individual profile</h5>
                                          }
                                   
                                       <div className='flex flex-col w-full space-y-4'>

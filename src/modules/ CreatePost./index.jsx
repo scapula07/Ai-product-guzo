@@ -357,7 +357,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                  <div className='flex flex-col w-full space-y-2'>
                         {/* <label className='text-sm text-slate-700'>Post body*</label> */}
                         <textarea
-                            placeholder='Share a need/request/opportunity with your ecosystem...'
+                            placeholder='Make a post'
                             style={{background: "#f8f8f8"}}
 
                             className=' py-2 px-4 w-full rounded-md text-lg outline-none bg-[rgba(242, 242, 242, 0.6)]'

@@ -171,7 +171,7 @@ export default function EcoForms({profile,setUpdate}) {
                     <label className='text-sm text-slate-600 font-semibold'>About*</label>
                     
                         <textarea
-                            placeholder='About section....'
+                            placeholder='About section'
                             className=' pb-6 pt-2 px-4  w-full rounded-md text-sm outline-none'
                             style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                             name="phoneNum"
@@ -183,7 +183,7 @@ export default function EcoForms({profile,setUpdate}) {
                         />
                 
 
-                   <h5 className='font-light text-slate-500 text-sm '>Share something about you.....</h5>
+                   <h5 className='font-light text-slate-500 text-sm '>Share something about you</h5>
 
                 </div>
 
@@ -192,7 +192,7 @@ export default function EcoForms({profile,setUpdate}) {
 
                     <label className='text-sm text-slate-600 font-semibold'>Descriptive Tags</label>
                         <input 
-                            placeholder='Add tags separated by a comma...'
+                            placeholder='Add tags separated by a comma'
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none'
                             style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                         />
