@@ -172,7 +172,7 @@ const navs=[
              }
 
              {hover&&
-               <Link to={`/settings/${group?.id}`}>
+               <Link to={`/settings-/${group?.id}`}>
                   <div className=''>
                       <div className='flex items-center space-x-3 bg-white rounded-lg px-4 py-2 '>
                         <RiSettings3Fill  className='text-slate-600'/>

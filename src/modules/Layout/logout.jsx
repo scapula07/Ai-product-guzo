@@ -61,12 +61,12 @@ export default function LogOut({currentUser}) {
             
 
         </div>
-        <div className='flex flex-col text-sm'>
+        <div className='flex flex-col text-sm space-y-2.5 py-4'>
             <Link to={`/settings/${group?.id}`}>
-              <h5>Settings</h5>
+              <h5 className='font-semibold'>Settings</h5>
             </Link>
            
-            <h5 onClick={logout}>Logout</h5>
+            <h5 className='font-semibold' onClick={logout}>Logout</h5>
 
         </div>
 

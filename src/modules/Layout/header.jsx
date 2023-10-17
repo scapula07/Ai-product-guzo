@@ -119,7 +119,7 @@ export default function Header({hover,setHover}) {
 
        
          <div className='absolute w-full flex justify-end h-96 px-28 z-30' >
-            <div className='w-44 h-60 rounded-lg' 
+            <div className='w-72 h-60 rounded-lg' 
                 style={{ background: "rgba(236, 235, 254, 1)"}}
                 onMouseOver={()=>setHover(true)}>
                     <LogOut 

@@ -6,7 +6,9 @@ import { useRecoilValue } from 'recoil'
 import Modal from '../../Modal'
 import {AiOutlineClose } from "react-icons/ai"
 import DeleteAccount from '../../DeleteAccount'
-export default function Settings() {
+
+
+export default function SpaceSettings() {
   const group =useRecoilValue(groupState)
   const currentUser =useRecoilValue(userState)
 
@@ -14,33 +16,33 @@ export default function Settings() {
   return (
     <Layout>
          <div className='py-2 flex-col flex space-y-4'> 
-            <h5 className='text-slate-700 font-semibold text-xl'>User Settings</h5>
+            <h5 className='text-slate-700 font-semibold text-xl'> Settings</h5>
            
           </div>
 
           <div className='flex flex-col w-full space-y-4  '>
               
               <Card 
-                    title="User Settings"
+                    title=" Settings"
                     group={group}
                     currentUser={currentUser}
                     body={[
-                      {
-                        text: "Change Password",
-                        link:"/register/reset"
-
-                      },
                       // {
-                      //   text: `${group?.type?.length>0? "Teammates" :""}`,
-                      //   link:`/team/${group?.id}`
+                      //   text: "Change Password",
+                      //   link:"/register/reset"
 
                       // },
-                      // {
-                      //   text: `${group?.creator==currentUser?.id || group?.display?.length >0 ?"Delete Account" :"" }`,
-                      //   link:"",
+                      {
+                        text: `${group?.type?.length>0? "Teammates" :""}`,
+                        link:`/team/${group?.id}`
+
+                      },
+                      {
+                        text: `${group?.creator==currentUser?.id || group?.display?.length >0 ?"Delete Account" :"" }`,
+                        link:"",
                     
 
-                      // }
+                      }
                       ]}
               
                 />

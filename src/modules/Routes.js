@@ -61,7 +61,7 @@ import AuthGuard from "./AuthGuard";
 import { useNavigate } from 'react-router-dom'
 import Local from "./Notifications/views/local";
 import Global from "./Notifications/views/global";
-
+import SpaceSettings from "./spaceSettings/views";
 
 
 const NewRoutes = () => {
@@ -157,6 +157,7 @@ const NewRoutes = () => {
 
                 </Route>
                 <Route path="/settings/:id/*" element={<AuthGuard><Settings/></AuthGuard>} />
+                <Route path="/settings-/:id/*" element={<AuthGuard><SpaceSettings/></AuthGuard>} />
                 <Route path="/setting-edit-profile/:id/*" element={<EditProfile/>} />
                 <Route path="/ecosystem/:id/*" element={< Ecosystem />} >
                     <Route path="" element={<EcoMembers/>} />
