@@ -12,11 +12,13 @@ import indiv from "../../assets/indiv.png"
 import {MdArrowDropDown } from "react-icons/md"
 import { db } from '../../Firebase'
 import { doc, onSnapshot } from "firebase/firestore"
-
+import SearchBar from '../components/searchbar'
+import Fuse from "fuse.js"
 
 export default function Members({group}) {
    const [members,setMembers]=useState([])
    const [areMembers,setAre]=useState("")
+   const [searchQuery,setQuery]=useState("")
 
 
    useEffect(()=>{
@@ -31,22 +33,52 @@ export default function Members({group}) {
 
      }
  },[group])
-  return (
-      <div className="w-full">
-  
-    <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
-        {members.map((member)=>{
-            return(
-              <ActiveMember 
-                 member={member}
-                 group={group}
-              />
-            )
-          })
 
-        }
-     
-   </div>
+  const fuse =new Fuse([...members],{
+    keys:["name","display","firstName","lastName"]
+  })
+
+  const result=fuse.search(searchQuery)
+
+  console.log(result,"members")
+
+  return (
+   <div className="w-full flex flex-col space-y-6">
+          <SearchBar 
+            setQuery={setQuery} 
+            searchQuery={searchQuery} 
+          />
+       {result?.length ===0?
+                      <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
+                      {members.map((member)=>{
+                          return(
+                            <ActiveMember 
+                              member={member}
+                              group={group}
+                            />
+                          )
+                        })
+          
+                      }
+                  
+                </div>
+
+                :
+          <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
+                {result.map((member)=>{
+                    return(
+                      <ActiveMember 
+                        member={member?.item}
+                        group={group}
+                      />
+                    )
+                  })
+    
+                }
+            
+          </div>
+       }
+
       <div className="w-full flex justify-center">
            
            {areMembers?.length===0&&members?.length ===0&&

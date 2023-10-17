@@ -2,41 +2,93 @@ import React from 'react'
 import dm1 from "../../assets/feedorg.png"
 import dm2 from "../../assets/orgcover.png"
 import {BsThreeDots} from "react-icons/bs"
-import { useEffect } from 'react'
+import { useEffect ,useState} from 'react'
 import ClipLoader from "react-spinners/ClipLoader";
 import ecoImg from "../../assets/img3.png"
 import org from "../../assets/img2.png"
 import indiv from "../../assets/indiv.png"
+import SearchBar from './saarch'
+import Fuse from "fuse.js"
+
 
 export default function Dmcontacts({conversations,setCurrentChat,currentChat, currentUser,receiverInfo,setReceiver,areContacts}) {
+  const [searchQuery,setQuery]=useState("")
+
+  const fuse =new Fuse([...conversations],{
+      keys:["name","display"]
+    })
+
+  const result=fuse.search(searchQuery)
+
    useEffect(( )=>{
       conversations?.length >0 && setReceiver(conversations[0]?.info?.find(info => info?.id != currentUser?.id))
       conversations?.length >0 && setCurrentChat(conversations[0])
     },[conversations?.length])
     
-   console.log(conversations,currentChat,"dmmmm")
+   console.log(conversations,"dmmmm")
+   console.log(result,"resultttt")
    return (
     <div className='w-full flex flex-col space-y-6 overflow-y-scroll no-scrollbar h-full'>
-        {conversations?.map((conv)=>{
-            
-           
-            const contact =conv?.info?.find(info => info?.id != currentUser?.id);
-            console.log(contact,"contact dmmm")
-             return(
-              <Contact 
-                  conv={conv}
-                  contact={contact}
-                  setCurrentChat={setCurrentChat}
-                  currentChat={currentChat}
-                  receiverInfo={receiverInfo}
-                  setReceiver={setReceiver}
+         <SearchBar 
+            setQuery={setQuery} 
+             searchQuery={searchQuery} 
+        />
 
-              />
-              
-             )
-        })
+        {result?.length ==0?
 
-        }
+
+                <div className='w-full flex flex-col space-y-6 overflow-y-scroll no-scrollbar h-full'>
+
+                        {conversations?.map((conv)=>{
+                            
+                          
+                            const contact =conv?.info?.find(info => info?.id != currentUser?.id);
+                            console.log(contact,"contact dmmm")
+                            return(
+                              <Contact 
+                                  conv={conv}
+                                  contact={contact}
+                                  setCurrentChat={setCurrentChat}
+                                  currentChat={currentChat}
+                                  receiverInfo={receiverInfo}
+                                  setReceiver={setReceiver}
+
+                              />
+                              
+                            )
+                        })
+
+                        }
+
+                  </div>
+                  :
+
+                <div className='w-full flex flex-col space-y-6 overflow-y-scroll no-scrollbar h-full'>
+
+                {result?.map((conv)=>{
+                    
+                  
+                    const contact =conv?.item?.info?.find(info => info?.id != currentUser?.id);
+                    console.log(contact,"contact dmmm")
+                    return(
+                      <Contact 
+                          conv={conv?.item}
+                          contact={contact}
+                          setCurrentChat={setCurrentChat}
+                          currentChat={currentChat}
+                          receiverInfo={receiverInfo}
+                          setReceiver={setReceiver}
+
+                      />
+                      
+                    )
+                })
+
+                }
+
+            </div>
+
+           }
 
           {conversations?.length ===0&&areContacts?.length ==0&&
             <div className='w-full flex justify-center py-10'>
