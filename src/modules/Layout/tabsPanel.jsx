@@ -19,6 +19,7 @@ import {RiSettings3Fill} from "react-icons/ri"
 import indiv from "../assets/orgIcon.jpeg"
 import { doc, onSnapshot } from "firebase/firestore"
 import { db } from '../Firebase'
+import {MdArrowDropDown} from "react-icons/md"
 
 export default function TabsPanel() {
     const group =useRecoilValue(groupState)
@@ -85,9 +86,30 @@ const navs=[
                            />
                           <div className='flex flex-col '>
                                {group?.name?.length >20?
-                                   <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name?.slice(0,16)}...</h5>
+                                   <h5 className='font-semibold text-lg flex items-center' >
+                                    
+                                    <span onClick={()=>setHover(true)}>{group?.name?.slice(0,14)}...</span>
+                                     {hover&&
+                                        <MdArrowDropDown 
+                                           onClick={()=>setHover(false)}
+                                        className='text-3xl font-semibold'
+                                      />
+
+                                     }
+
+                                    </h5>
                                    :
-                                   <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name}</h5>
+                                   <h5 className='font-semibold text-lg flex items-center' >
+                                    <span onClick={()=>setHover(true)}>{group?.name}</span>
+                                    {hover&&
+                                        <MdArrowDropDown 
+                                           onClick={()=>setHover(false)}
+                                        className='text-3xl font-semibold'
+                                      />
+
+                                     }
+                                     
+                                   </h5>
                                  }
                                
                                 { group?.type=="eco"?
@@ -119,7 +141,16 @@ const navs=[
                                  className="rounded-full w-8 h-8"
                              />
                                 <div className='flex flex-col '>
-                                        <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.display}</h5>
+                                        <h5 className='font-semibold text-lg flex items-center' >
+                                             <span onClick={()=>setHover(true)}>{group?.display}</span>
+                                             {hover&&
+                                              <MdArrowDropDown 
+                                                 onClick={()=>setHover(false)}
+                                                 className='text-3xl font-semibold'
+                                                />
+
+                                                }
+                                        </h5>
                             
                                         <div className='flex items-center space-x-1.5'>
                                           <img 
