@@ -1,4 +1,4 @@
-import React ,{useState} from 'react'
+import React ,{useState,useEffect} from 'react'
 import SearchBar from './searchBar'
 import {IoMdNotificationsOutline} from "react-icons/io"
 import {BiMenu} from "react-icons/bi"
@@ -9,12 +9,28 @@ import {useRecoilState,useRecoilValue} from "recoil"
 import { userState,groupState } from '../Recoil/globalstate'
 import LogOut from './logout';
 import { Link } from 'react-router-dom';
+import { doc, onSnapshot } from "firebase/firestore"
+import { db } from '../Firebase'
 
 export default function Header({hover,setHover}) {
     const [trigger,setTrigger]=useState(false)
     const currentUser =useRecoilValue(userState)
     const group =useRecoilValue(groupState)
+    const [unseen,setUnseen]=useState()
     console.log(currentUser)
+
+    useEffect(()=>{
+        if(group?.id?.length >0){
+           const ref =doc(db,"unseen",currentUser?.id)
+           const unsub = onSnapshot(ref, (doc) => {
+           console.log(doc?.data(),"unseee nn")
+           setUnseen(doc?.data())
+           });
+ 
+ 
+        }
+      },[group])
+   console.log(unseen,"seen niti")
   return (
     <>
     <div className='w-full flex lg:justify-end items-center z-20 relative ' style={{background: "rgba(242, 242, 242, 0.6)"}}>
@@ -36,7 +52,9 @@ export default function Header({hover,setHover}) {
                     <IoMdNotificationsOutline 
                         className='lg:text-3xl text-xl '
                     />
-                    <span className='bg-red-500 lg:h-1.5 lg:w-1.5 h-1 w-1 rounded-full -ml-3 mt-1'></span>
+                        {unseen?.notifications&&
+                          <span className='bg-red-500 lg:h-3 lg:w-3 h-1 w-1 rounded-full -ml-3 mt-0.5'></span>
+                        }
                     </h5>
                 </Link>
           

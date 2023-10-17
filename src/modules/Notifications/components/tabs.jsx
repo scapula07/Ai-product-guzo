@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 export default function Tabs({group}) {
     const [active,setActive]=useState("feeds")
   return (
-    <div className='bg-white w-full rounded-lg flex items-center    px-8 py-2'>
-        <div className='w-1/2 flex justify-center'
+    <div className='bg-white w-full rounded-lg flex items-center  justify-center   px-8 py-2'>
+        {/* <div className='w-1/2 flex justify-center'
            onClick={()=>setActive("feeds")}
         >
             <Link to="">
@@ -26,7 +26,8 @@ export default function Tabs({group}) {
             <Link to="global">
               <h5 className={`${active==="ecos" ?'text-base font-semibold  border-blue-600 ':'text-base font-semibold'}`}>Global</h5>
            </Link>
-        </div>
+        </div> */}
+              <h5 className={`${active==="ecos" ?'text-base font-semibold  border-blue-600 ':'text-base font-semibold'}`}>Global</h5>
       
      </div>
   )

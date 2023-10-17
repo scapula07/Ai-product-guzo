@@ -54,6 +54,17 @@ export default function Global() {
       
       },[currentUser?.id])
       console.log(notifications,global)
+
+      useEffect(()=>{
+        const seen=async()=>{
+           const result = await updateDoc(doc(db,"unseen",currentUser?.id), {
+             notifications:false
+           })
+        }
+
+        currentUser?.id?.length >0&& seen()
+        
+      },[currentUser?.id])
  
   return (
     <div className='flex flex-col w-full h-full space-y-7 overflow-y-scroll py-6 no-scrollbar px-4 '>

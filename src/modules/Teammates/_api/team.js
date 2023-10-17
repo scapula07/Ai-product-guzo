@@ -72,6 +72,9 @@ export const teamApi= {
 
     
               })
+              const result = await updateDoc(doc(db,"unseen",user?.id), {
+                  notifications:true
+              })
           
             const docSnap = await getDoc(groupRef);
 
@@ -160,6 +163,10 @@ export const teamApi= {
                       date:new Date()
           
                     })
+                    const result = await updateDoc(doc(db,"unseen",team?.id), {
+                      notifications:true
+                     })
+    
                    
                       return true
 

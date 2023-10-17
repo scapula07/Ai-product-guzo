@@ -19,6 +19,9 @@ export const authApi= {
             await setDoc(ref,{id:user?.uid,...payload})
             const docSnap = await getDoc(ref);
             if (docSnap.exists()) {
+               await setDoc(doc(db, "unseen",user?.uid), {
+                   notifications:false
+                 });
                 return {id:docSnap?.id,...docSnap?.data(),accessToken:user?.accessToken}
               } else {
                 
@@ -69,6 +72,9 @@ export const authApi= {
                  const docSnap = await getDoc(ref);
                  console.log(docSnap.data(),"user data")
                   if (docSnap.exists()) {
+                    await setDoc(doc(db, "unseen",user?.uid), {
+                      notifications:false
+                    });
                      return {id:docSnap?.id,...docSnap?.data(),accessToken:user?.accessToken}
               
 

@@ -152,8 +152,8 @@ const NewRoutes = () => {
                 
                 </Route>
                 <Route path="/notifications/:id/*" element={<Notifications/>} >
-                    <Route path="" element={<Local/>} />
-                    <Route path="global" element={<Global/>} />
+                    <Route path="global" element={<Local/>} />
+                    <Route path="" element={<Global/>} />
 
                 </Route>
                 <Route path="/settings/:id/*" element={<AuthGuard><Settings/></AuthGuard>} />
