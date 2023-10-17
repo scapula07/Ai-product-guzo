@@ -35,6 +35,19 @@ export default function Members({group}) {
  },[group])
 
   const fuse =new Fuse([...members],{
+    isCaseSensitive: false,
+    includeScore: true,
+    shouldSort: true,
+    includeMatches: false,
+    findAllMatches: false,
+    minMatchCharLength: 2,
+    location: 0,
+    threshold: 0.2,
+    distance: 100,
+    useExtendedSearch: true,
+    ignoreLocation: false,
+    ignoreFieldNorm: false,
+    fieldNormWeight: 1,
     keys:["name","display","firstName","lastName"]
   })
 

@@ -54,10 +54,25 @@ export default function Ecosystems() {
        
           });
        },[])
+
+       
         
        const fuse =new Fuse([...ecosystems],{
-        keys:["name"]
-      })
+          	isCaseSensitive: false,
+            includeScore: true,
+            shouldSort: true,
+            includeMatches: false,
+            findAllMatches: false,
+            minMatchCharLength: 2,
+            location: 0,
+            threshold: 0.2,
+            distance: 100,
+            useExtendedSearch: true,
+            ignoreLocation: false,
+            ignoreFieldNorm: false,
+            fieldNormWeight: 1,
+         keys:["name","type"]
+       })
 
       const result=fuse.search(searchQuery)
 
