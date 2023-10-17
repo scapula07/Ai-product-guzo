@@ -83,8 +83,13 @@ const navs=[
                              src={group?.img}
                              className="rounded-full w-8 h-8"
                            />
-                          <div className='flex flex-col items-center'>
-                              <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name}</h5>
+                          <div className='flex flex-col '>
+                               {group?.name?.length >20?
+                                   <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name?.slice(0,16)}...</h5>
+                                   :
+                                   <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.name}</h5>
+                                 }
+                               
                                 { group?.type=="eco"?
                                 <div className='flex items-center space-x-1.5'>
                                     <img 
@@ -113,7 +118,7 @@ const navs=[
                                 src={group?.img}
                                  className="rounded-full w-8 h-8"
                              />
-                                <div className='flex flex-col items-center'>
+                                <div className='flex flex-col '>
                                         <h5 className='font-semibold text-lg' onClick={()=>setHover(true)}>{group?.display}</h5>
                             
                                         <div className='flex items-center space-x-1.5'>
