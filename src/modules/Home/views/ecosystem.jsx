@@ -19,12 +19,17 @@ import { collection,  onSnapshot,
     limit,getDoc,setDoc ,
    updateDoc,addDoc } from 'firebase/firestore'
 import ecoImg from "../../assets/img3.png"
+import SearchBar from '../components/searchbar'
+import Fuse from "fuse.js"
+
+
 export default function Ecosystems() {
   
     const [ecosystems,setEco] =useState([])
     const currentUser =useRecoilValue(userState)
     const group =useRecoilValue(groupState)
-  
+    const [searchQuery,setQuery]=useState("")
+
    
 
     useEffect(()=>{
@@ -50,34 +55,94 @@ export default function Ecosystems() {
           });
        },[])
         
+       const fuse =new Fuse([...ecosystems],{
+        keys:["name"]
+      })
 
+      const result=fuse.search(searchQuery)
+
+      console.log(result,"result rerrr")
       
   return (
-    <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
-        {ecosystems?.length >0 &&ecosystems?.filter((e)=>e?.id !== group?.id)?.map((eco,)=>{
 
-            const isPending= eco?.pending?.some(e=>e?.id ===group?.id)
-            
-            const isMember= eco?.active?.some(e=>e?.id ===group?.id) 
-            // const isMember= eco?.active?.some(e=>e?.id ===group?.id) || eco?.creator ===group?.id;
+    <div className='flex flex-col w-full space-y-6'>
+          <div className='py-4'>
+              <SearchBar 
+                setQuery={setQuery} 
+                searchQuery={searchQuery} 
+              />
+          </div>
+         
 
-            return(
-               
-                  <EcosystemCard 
-                     eco={eco}
-                     isPending={isPending}
-                     currentUser={currentUser}
-                     group={group}
-                     isMember={isMember}
+      <>
+           {result?.length ===0?
 
-                  />
+           
+                <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
 
-              
-            )
-        })
+                    
+                    {ecosystems?.length >0 &&ecosystems?.filter((e)=>e?.id !== group?.id)?.map((eco,)=>{
 
-        }
-        {ecosystems?.length ===0&&
+                        const isPending= eco?.pending?.some(e=>e?.id ===group?.id)
+                        
+                        const isMember= eco?.active?.some(e=>e?.id ===group?.id) 
+                        // const isMember= eco?.active?.some(e=>e?.id ===group?.id) || eco?.creator ===group?.id;
+
+                        return(
+                        
+                            <EcosystemCard 
+                                eco={eco}
+                                isPending={isPending}
+                                currentUser={currentUser}
+                                group={group}
+                                isMember={isMember}
+
+                            />
+
+                        
+                        )
+                        })
+
+                         }
+
+
+                </div>
+
+                   :
+
+                   <div className='grid grid-flow-row grid-cols-3  gap-4 gap-y-8 h-full w-full'>
+
+                            {result?.length >0 &&result?.filter((e)=>e?.id !== group?.id)?.map((eco,)=>{
+
+                            const isPending= eco?.item?.pending?.some(e=>e?.id ===group?.id)
+
+                            const isMember= eco?.item?.active?.some(e=>e?.id ===group?.id) 
+                            // const isMember= eco?.active?.some(e=>e?.id ===group?.id) || eco?.creator ===group?.id;
+
+                            return(
+
+                                <EcosystemCard 
+                                    eco={eco?.item}
+                                    isPending={isPending}
+                                    currentUser={currentUser}
+                                    group={group}
+                                    isMember={isMember}
+
+                                />
+
+
+                            )
+                            })
+
+                            }
+
+
+                   </div>
+
+              }
+         </>
+
+         {ecosystems?.length ===0&&
             <div className='w-full flex justify-center py-10'>
                <ClipLoader 
                     color={"rgba(62, 51, 221, 1)"}

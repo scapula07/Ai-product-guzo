@@ -23,10 +23,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 import BeatLoader from "react-spinners/BeatLoader";
 import Join from "../../JoinPost"
 import { calculateTimeOfPost } from '../../Utils/calculateTime'
-
+import CreatePost from './createPost'
 
 export default function Feeds() {
     const group =useRecoilValue(groupState)
+    const currentUser =useRecoilValue(userState)
     const [feeds,setFeeds]=useState([])
     const [isLoading,setLoading]=useState(false)
     const [arePosts,setPost]=useState("")
@@ -69,14 +70,20 @@ export default function Feeds() {
   
   return (
     <div className='flex flex-col space-y-4'>
+          <div className='py-3'>
+              <CreatePost
+                  group={group}
+                  currentUser={currentUser}
+                  />
+          </div>
         {feeds?.length>0&&feeds.map((feed)=>{
         return(
             <Feed
              feed={feed}
              group={group}
              />
-        )
-        })
+          )
+           })
 
         }
          {arePosts?.length===0&&feeds?.length ===0&&

@@ -7,6 +7,9 @@ import { Outlet } from 'react-router-dom'
 
 import {useRecoilValue,useRecoilState} from "recoil"
 import { groupState,userState } from '../../Recoil/globalstate'
+import SearchBar from '../components/searchbar'
+import Fuse from "fuse.js"
+
 
 export default function Home() {
     const group =useRecoilValue(groupState)
@@ -28,13 +31,17 @@ export default function Home() {
                  <Tabs />
                 
 
-                <div className='py-6'>
-                    <CreatePost
+              
+                  
+
+                
+                    {/* <CreatePost
                       group={group}
                       currentUser={currentUser}
-                     />
+                     /> */}
                 
-                </div>
+                
+                
                   <div className=''>
                       <Outlet />
                    
