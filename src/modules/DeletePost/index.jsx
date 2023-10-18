@@ -7,7 +7,7 @@ import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/materia
 import { useNavigate } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 
-export default function DeletePost({feed,group}) {
+export default function DeletePost({feed,group,setFeed}) {
 
      const [trigger,setTrigger]=useState(false)
      const [isLoading,setLoader]=useState(false)
@@ -29,11 +29,12 @@ export default function DeletePost({feed,group}) {
      const deletePost=async()=>{
          setLoader(true)
          try{
-            const response =await postApi.deletePost(feed)
-            response&&setTrigger(false)
-            response&&setLoader(false)
-            response&&setOpen(true)
+            const response =await postApi.deletePost(feed,group)
+            response?.status&&setTrigger(false)
+            response?.status&&setLoader(false)
+            response?.status&&setOpen(true)
           
+            response?.status&&setFeed(response?.post)
 
           }catch(e){
             console.log(e)

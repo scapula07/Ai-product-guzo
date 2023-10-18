@@ -32,7 +32,7 @@ export default function Posts({group}) {
               or(where('creator_id', '==', group?.id),
                 where('access', 'array-contains', group?.id)
               ),orderBy('createdAt', 'desc')
-          );
+             );
       
         const feeds= [];
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -68,6 +68,7 @@ export default function Posts({group}) {
           <Post 
             feed={feed}
             group={group}
+            setFeed={setFeed}
           />
          )
        })
@@ -94,7 +95,7 @@ export default function Posts({group}) {
   )
 }
 
-const Post=({feed,group})=>{
+const Post=({feed,group,setFeed})=>{
   console.log(feed,"imgggg pppppp")
 
   const time =calculateTimeOfPost(feed?.createdAt?.seconds)
@@ -152,6 +153,7 @@ const Post=({feed,group})=>{
              <DeletePost
                 feed={feed}
                 group={group}
+                setFeed={setFeed}
               /> 
           </div>
      
