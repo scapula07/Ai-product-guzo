@@ -114,8 +114,8 @@ export default function SidePanel() {
     console.log(team,"team ppppp")
   console.log(currentUser,"user current lllll")
   return (
-    <div className='lg:px-4 py-8 '>
-      <div className='flex flex-col space-y-4 items-center'>
+    <div className='lg:px-4 py-8  h-full overflow-y-scroll no-scrollbar'>
+      <div className='flex flex-col space-y-4 items-center overflow-y-scroll no-scrollbar'>
           {currentUser?.display?.length >0&&
             <>
               {currentUser?.img?.length ===0?
