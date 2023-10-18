@@ -44,8 +44,13 @@ export const ecosystemApi= {
                                 connections:[
                                     ...connections,
                                     {
-                                      id:docSnap.id,
-                                      ...docSnap?.data()
+                                      // id:docSnap.id,
+                                      // ...docSnap?.data()
+                                      id:docSnap?.id,
+                                      name:docSnap?.data()?.name,
+                                      // teammates:docSnap?.data()?.teammates,
+                                      img:docSnap?.data()?.img,
+                                      type:docSnap?.data()?.type
                                     }
                                   ],
                                   pendingMemberships:[
@@ -68,7 +73,7 @@ export const ecosystemApi= {
                                         // ...docSnap?.data()
                                         id:docSnap?.id,
                                         name:docSnap?.data()?.name,
-                                        teammates:docSnap?.data()?.teammates,
+                                        // teammates:docSnap?.data()?.teammates,
                                         img:docSnap?.data()?.img,
                                         type:docSnap?.data()?.type
         

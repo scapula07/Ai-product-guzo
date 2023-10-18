@@ -94,7 +94,7 @@ export const ecosystemApi = {
                           {
                             id:docSnap?.id,
                             name:docSnap?.data()?.name,
-                            teammates:docSnap?.data()?.teammates,
+                            // teammates:docSnap?.data()?.teammates,
                             img:docSnap?.data()?.img,
                             type:docSnap?.data()?.type
                           }
@@ -117,7 +117,7 @@ export const ecosystemApi = {
                               {
                                  id:docSnap?.id,
                                 name:docSnap?.data()?.name,
-                                teammates:docSnap?.data()?.teammates,
+                                // teammates:docSnap?.data()?.teammates,
                                 img:docSnap?.data()?.img,
                                 type:docSnap?.data()?.type
 
