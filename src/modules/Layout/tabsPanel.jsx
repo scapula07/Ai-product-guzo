@@ -85,10 +85,10 @@ const navs=[
                              className="rounded-full w-8 h-8"
                            />
                           <div className='flex flex-col '>
-                               {group?.name?.length >20?
+                               {group?.name?.length >16?
                                    <h5 className='font-semibold text-lg flex items-center' >
                                     
-                                    <span onClick={()=>setHover(true)}>{group?.name?.slice(0,14)}...</span>
+                                    <span onClick={()=>setHover(true)}>{group?.name?.slice(0,16)}...</span>
                                      {hover&&
                                         <MdArrowDropDown 
                                            onClick={()=>setHover(false)}
