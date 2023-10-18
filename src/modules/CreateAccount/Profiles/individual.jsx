@@ -55,6 +55,12 @@ export default function IndividualAccount({currentUser}) {
           return;
         }
 
+        if(user?.individual?.id?.length >0){
+           setErrorMsg("You already have an individual account. One individual account per email")
+           setLoader(false);
+           return;
+        }
+
         try{
             const result =await createProfile.createUserProfile(user?.id,displayName,file)
             setLoader(true)

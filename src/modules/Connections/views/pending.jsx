@@ -12,9 +12,9 @@ import {useRecoilValue} from "recoil"
 import { Link } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import { useOutletContext } from 'react-router-dom';
-import ecoImg from "../../assets/img3.png"
-import org from "../../assets/img2.png"
-import indiv from "../../assets/indiv.png"
+import ecoImg from "../../assets/ecoIcon.jpeg"
+import org from "../../assets/orgIcon.jpeg"
+import indiv from "../../assets/indivIcon.jpeg"
 import {MdArrowDropDown} from "react-icons/md"
 
 
@@ -110,7 +110,7 @@ const PendingCard=({eco,group})=>{
                   <div className="flex items-center space-x-1">
                   <img 
                   src={ecoImg}
-                  className="w-3 h-3"
+                  className="w-2.5 h-3"
                   />
                   <h5 className='text-xs'>Ecosystem</h5>
 
@@ -121,7 +121,7 @@ const PendingCard=({eco,group})=>{
                 <div className="flex items-center space-x-1">
                       <img 
                       src={org}
-                      className="w-3 h-3"
+                      className="w-2.5 h-3"
                       />
                     <h5 className='text-xs'>Organization</h5>
                   </div>
@@ -129,7 +129,7 @@ const PendingCard=({eco,group})=>{
                   <div className="flex items-center space-x-1">
                       <img 
                       src={indiv}
-                      className="w-3 h-3"
+                      className="w-2.5 h-3"
                       />
                     <h5 className='text-xs'>Individual</h5>
                   </div>

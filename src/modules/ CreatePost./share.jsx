@@ -8,6 +8,10 @@ import {MdArrowDropUp} from "react-icons/md"
 import { shareApi } from './_api/share'
 import ClipLoader from "react-spinners/ClipLoader";
 import {ImCheckboxChecked,ImCheckboxUnchecked} from "react-icons/im"
+import ecoImg from "../assets/ecoIcon.jpeg"
+import org from "../assets/orgIcon.jpeg"
+import indiv from "../assets/indivIcon.jpeg"
+
 
 export default function Share({setOthers,currentUser,group,setShare,access,setAccess,eco,arePosts,makePost,isLoading}) {
 
@@ -53,13 +57,26 @@ export default function Share({setOthers,currentUser,group,setShare,access,setAc
                
                     <div className='flex flex-col '>
                         <h5 className='font-semibold'>{group?.name}</h5>
-                        <h5 className='text-sm font-light'>{group?.type}</h5>
                         <div className='flex items-center space-x-1'>
-                            <h5 className='text-sm font-semibold '>Share Options</h5>
-                            <MdArrowDropUp
-                            className='text-lg'
-                            onClick={()=>setShare(true) || setOthers(true)}
-                            />
+                             {group?.type=="eco"?
+                                         <div className="flex items-center space-x-1">
+                                           <img 
+                                            src={ecoImg}
+                                            className="w-2.5 h-3"
+                                           />
+                                           <h5 className='text-xs'>Ecosystem</h5>
+
+                                         </div>
+                                       :
+                                       <div className="flex items-center space-x-1">
+                                             <img 
+                                             src={org}
+                                             className="w-2.5 h-3"
+                                             />
+                                       <h5 className='text-xs'>Organization</h5>
+
+                                     </div>
+                             }
                         </div>
                     
 
@@ -67,13 +84,14 @@ export default function Share({setOthers,currentUser,group,setShare,access,setAc
                     :
                     <div className='flex flex-col '>
                         <h5 className='font-semibold'>{group?.display}</h5>
-                        <div className='flex items-center space-x-1'>
-                            {/* <h5 className='text-sm font-semibold '>Share Options</h5>
-                            <MdArrowDropUp
-                            className='text-lg'
-                            onClick={()=>setShare(false) || setOthers(false)}
-                            /> */}
-                        </div>
+                        <div className="flex items-center space-x-1">
+                         <img 
+                            src={indiv}
+                            className="w-2.5 h-3"
+                            />
+                       <h5 className='text-xs'>Individual</h5>
+
+                  </div>
                     
 
                     </div>

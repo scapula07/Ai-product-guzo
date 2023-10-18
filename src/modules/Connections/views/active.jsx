@@ -11,9 +11,9 @@ import {useRecoilValue} from "recoil"
 import {Link} from "react-router-dom"
 import { useOutletContext } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
-import ecoImg from "../../assets/img3.png"
-import org from "../../assets/img2.png"
-import indiv from "../../assets/indiv.png"
+import ecoImg from "../../assets/ecoIcon.jpeg"
+import org from "../../assets/orgIcon.jpeg"
+import indiv from "../../assets/indivIcon.jpeg"
 import { messageApi } from '../api/message'
 import { useNavigate } from 'react-router-dom'
 import remove from "../../assets/remove.png"
@@ -131,7 +131,7 @@ const ActiveCard=({eco,group})=>{
              <div className="flex items-center space-x-1">
              <img 
              src={ecoImg}
-             className="w-3 h-3"
+             className="w-2.5 h-3"
              />
              <h5 className='text-xs'>Ecosystem</h5>
 
@@ -142,7 +142,7 @@ const ActiveCard=({eco,group})=>{
             <div className="flex items-center space-x-1">
                  <img 
                  src={org}
-                 className="w-3 h-3"
+                 className="w-2.5 h-3"
                  />
                <h5 className='text-xs'>Organization</h5>
               </div>
@@ -150,7 +150,7 @@ const ActiveCard=({eco,group})=>{
               <div className="flex items-center space-x-1">
                  <img 
                  src={indiv}
-                 className="w-3 h-3"
+                 className="w-2.5 h-3"
                  />
                <h5 className='text-xs'>Individual</h5>
               </div>
@@ -193,7 +193,7 @@ const ActiveCard=({eco,group})=>{
              <div className="flex items-center space-x-1">
              <img 
              src={eco}
-             className="w-3 h-3"
+             className="w-2.5 h-3"
              />
              <h5 className='text-xs'>Ecosystem</h5>
 
@@ -204,7 +204,7 @@ const ActiveCard=({eco,group})=>{
             <div className="flex items-center space-x-1">
                  <img 
                  src={org}
-                 className="w-3 h-3"
+                 className="w-2.5 h-3"
                  />
                <h5 className='text-xs'>Organization</h5>
               </div>
@@ -212,7 +212,7 @@ const ActiveCard=({eco,group})=>{
               <div className="flex items-center space-x-1">
                  <img 
                  src={indiv}
-                 className="w-3 h-3"
+                 className="w-2.5 h-3"
                  />
                <h5 className='text-xs'>Individual</h5>
               </div>

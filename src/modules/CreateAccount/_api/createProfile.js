@@ -134,9 +134,9 @@ export const createProfile= {
                                     type:"org",
                                     creator:docOrg?.creator,
                                     img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
-                                    teammates:[
-                                       ...docOrg?.teammates
-                                     ]
+                                    // teammates:[
+                                    //    ...docOrg?.teammates
+                                    //  ]
                                  }
                                 ]
                         
@@ -291,9 +291,9 @@ export const createProfile= {
                                 creator:docEco?.creator,
                                 type:"eco",
                                 img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
-                                teammates:[
-                                    ...docEco?.teammates
-                                ]
+                                // teammates:[
+                                //     ...docEco?.teammates
+                                // ]
                           }
                         ]
                 

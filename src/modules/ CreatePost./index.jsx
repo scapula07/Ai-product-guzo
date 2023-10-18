@@ -14,8 +14,9 @@ import { postApi } from './_api/post'
 import ClipLoader from "react-spinners/ClipLoader";
 import { Alert, Avatar, Button, Divider, InputBase,Snackbar } from "@mui/material";
 import ReactSelect from "react-select";
-import ecoImg from "../assets/img3.png"
-import org from "../assets/img2.png"
+import ecoImg from "../assets/ecoIcon.jpeg"
+import org from "../assets/orgIcon.jpeg"
+import indiv from "../assets/indivIcon.jpeg"
 import { shareApi } from './_api/share'
 
 export default function CreatePosts ({group,currentUser,setTrigger}) {
@@ -274,7 +275,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                                          <div className="flex items-center space-x-1">
                                            <img 
                                             src={ecoImg}
-                                            className="w-3 h-3"
+                                            className="w-2.5 h-3"
                                            />
                                            <h5 className='text-xs'>Ecosystem</h5>
 
@@ -283,7 +284,7 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                                        <div className="flex items-center space-x-1">
                                              <img 
                                              src={org}
-                                             className="w-3 h-3"
+                                             className="w-2.5 h-3"
                                              />
                                        <h5 className='text-xs'>Organization</h5>
 
@@ -308,13 +309,14 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
 
                         }
                      
-                        {/* <div className='flex items-center space-x-1'>
-                            <h5 className='text-sm font-semibold '>Share Options</h5>
-                            <MdArrowDropDown 
-                            className='text-lg'
-                            onClick={()=>setShare(true) || setOthers(true)}
+                    <div className="flex items-center space-x-1">
+                         <img 
+                            src={indiv}
+                            className="w-2.5 h-3"
                             />
-                        </div> */}
+                      <h5 className='text-xs'>Individual</h5>
+
+                  </div>
                     
 
                     </div>
