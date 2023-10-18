@@ -91,13 +91,13 @@ export default function Login() {
             
     
         },
-        {
-            icon:linkdin,
-            name:"Sign in with LinkedIn",
-            link:"",
-            click:()=>{navigate("email-password")}
+        // {
+        //     icon:linkdin,
+        //     name:"Sign in with LinkedIn",
+        //     link:"",
+        //     click:()=>{navigate("email-password")}
     
-        }
+        // }
      ]
 
     const login=async()=>{

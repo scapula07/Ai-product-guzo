@@ -77,32 +77,32 @@ export default function AuthTypes() {
             
     
         },
-        {
-            icon:linkdin,
-            name:"Sign up with LinkedIn",
-            link:"",
-            click:async()=>{
-              setErrorMsg(null)
-              // const user=await authApi.linkedinAuth()
-              // let route=""
-              //  if(account==="Organization"){
-              //      route="org"
-              //    }else if(account==="Ecosystem"){
-              //      route="ecosystem"
-              //  }
+        // {
+        //     icon:linkdin,
+        //     name:"Sign up with LinkedIn",
+        //     link:"",
+        //     click:async()=>{
+        //       setErrorMsg(null)
+        //       // const user=await authApi.linkedinAuth()
+        //       // let route=""
+        //       //  if(account==="Organization"){
+        //       //      route="org"
+        //       //    }else if(account==="Ecosystem"){
+        //       //      route="ecosystem"
+        //       //  }
  
-              //   localStorage.clear();
-              //   localStorage.setItem('user',JSON.stringify(user));
+        //       //   localStorage.clear();
+        //       //   localStorage.setItem('user',JSON.stringify(user));
  
-              //   user?.id.length >0&& navigate(`/create-profile/${route}`)
+        //       //   user?.id.length >0&& navigate(`/create-profile/${route}`)
  
-              //   console.log(route,"rrrr")
-              // window.location.href=`https://www.linkedin.com/uas/login?session_redirect=%2Foauth%2Fv2%2Flogin-success%3Fapp_id%3D213727482%26auth_type%3DAC%26flow%3D%257B%2522scope%2522%253A%2522profile%2522%252C%2522authorizationType%2522%253A%2522OAUTH2_AUTHORIZATION_CODE%2522%252C%2522redirectUri%2522%253A%2522http%253A%252F%252Flocalhost%253A3001%252Fregister%2522%252C%2522currentStage%2522%253A%2522LOGIN_SUCCESS%2522%252C%2522state%2522%253A%2522987654321%2522%252C%2522appId%2522%253A213727482%252C%2522currentSubStage%2522%253A0%252C%2522authFlowName%2522%253A%2522generic-permission-list%2522%252C%2522creationTime%2522%253A1694904355312%257D&fromSignIn=1&trk=oauth&cancel_redirect=%2Foauth%2Fv2%2Flogin-cancel%3Fapp_id%3D213727482%26auth_type%3DAC%26flow%3D%257B%2522scope%2522%253A%2522profile%2522%252C%2522authorizationType%2522%253A%2522OAUTH2_AUTHORIZATION_CODE%2522%252C%2522redirectUri%2522%253A%2522http%253A%252F%252Flocalhost%253A3001%252Fregister%2522%252C%2522currentStage%2522%253A%2522LOGIN_SUCCESS%2522%252C%2522state%2522%253A%2522987654321%2522%252C%2522appId%2522%253A213727482%252C%2522currentSubStage%2522%253A0%252C%2522authFlowName%2522%253A%2522generic-permission-list%2522%252C%2522creationTime%2522%253A1694904355312%257D`
-                    window.location.href=` https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77qrf2uomwidm7&redirect_uri=https://guzo.vercel.app/register&state=995545&scope=openid`
+        //       //   console.log(route,"rrrr")
+        //       // window.location.href=`https://www.linkedin.com/uas/login?session_redirect=%2Foauth%2Fv2%2Flogin-success%3Fapp_id%3D213727482%26auth_type%3DAC%26flow%3D%257B%2522scope%2522%253A%2522profile%2522%252C%2522authorizationType%2522%253A%2522OAUTH2_AUTHORIZATION_CODE%2522%252C%2522redirectUri%2522%253A%2522http%253A%252F%252Flocalhost%253A3001%252Fregister%2522%252C%2522currentStage%2522%253A%2522LOGIN_SUCCESS%2522%252C%2522state%2522%253A%2522987654321%2522%252C%2522appId%2522%253A213727482%252C%2522currentSubStage%2522%253A0%252C%2522authFlowName%2522%253A%2522generic-permission-list%2522%252C%2522creationTime%2522%253A1694904355312%257D&fromSignIn=1&trk=oauth&cancel_redirect=%2Foauth%2Fv2%2Flogin-cancel%3Fapp_id%3D213727482%26auth_type%3DAC%26flow%3D%257B%2522scope%2522%253A%2522profile%2522%252C%2522authorizationType%2522%253A%2522OAUTH2_AUTHORIZATION_CODE%2522%252C%2522redirectUri%2522%253A%2522http%253A%252F%252Flocalhost%253A3001%252Fregister%2522%252C%2522currentStage%2522%253A%2522LOGIN_SUCCESS%2522%252C%2522state%2522%253A%2522987654321%2522%252C%2522appId%2522%253A213727482%252C%2522currentSubStage%2522%253A0%252C%2522authFlowName%2522%253A%2522generic-permission-list%2522%252C%2522creationTime%2522%253A1694904355312%257D`
+        //             window.location.href=` https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77qrf2uomwidm7&redirect_uri=https://guzo.vercel.app/register&state=995545&scope=openid`
    
-             }
+        //      }
     
-        },
+        // },
         {
             icon:mail,
             name:"Sign up with Email",
