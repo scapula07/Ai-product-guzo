@@ -60,7 +60,7 @@ export const teamApi= {
              const notificationSnap = await addDoc(collection(db, "notifications"),{
                 name:group?.name,
                 img:group?.img,
-                message:"Requested to join your network.",
+                message:`${group?.name} has requested you join as a teammate.`,
                 type:"join request",
                 from:{
                     id:group?.id,

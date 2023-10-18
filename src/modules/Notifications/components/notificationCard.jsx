@@ -120,7 +120,7 @@ export default function NotificationCard({notification,currentUser,setNotificati
                                 style={{background:"rgba(236, 235, 254, 1)"}}
                                 onClick={()=>accept()}
                                 >
-                                Accepted
+                                Accept
                             </button>
                            }
 
