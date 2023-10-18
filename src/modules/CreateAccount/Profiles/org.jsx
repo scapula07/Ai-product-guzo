@@ -304,7 +304,7 @@ export default function OrgAccount({currentUser}) {
                                                                    <div className="border-[1px] border-[rgba(242,242,242,0.6)] rounded-[8px] w-full">
                                         <ReactSelect
                                             styles={style}
-                                            placeholder='Neighborhood, City, or Zip'
+                                            placeholder='Country'
                                             options={
                                             countries &&
                                             countries?.map((item, index) => ({

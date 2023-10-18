@@ -42,10 +42,15 @@ export default function CreatePost({group,currentUser}) {
               }
             
 
-               <input 
-                 placeholder='Create a post...'
-                 className='w-full  rounded-full border outline-hidden py-1 px-4 text-sm'
-               />
+               <div 
+             
+                  className='w-full  rounded-full border outline-hidden py-1 px-4 text-sm'
+                   onClick={()=>setTrigger(true)}
+
+               >
+                Create a post...
+
+            </div>
 
         </div>
         <button className='bg-blue-600 py-2 rounded-full w-full text-white font-semibold text-sm'
