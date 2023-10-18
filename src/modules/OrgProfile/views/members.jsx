@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import { messageApi } from '../_api/message'
 import { useNavigate } from 'react-router-dom'
-import eco from "../../assets/img3.png"
-import org from "../../assets/img2.png"
-import indiv from "../../assets/indiv.png"
+import eco from "../../assets/ecoIcon.jpeg"
+import org from "../../assets/orgIcon.jpeg"
+import indiv from "../../assets/indivIcon.jpeg"
 import {MdArrowDropDown } from "react-icons/md"
 import { db } from '../../Firebase'
 import { doc, onSnapshot } from "firebase/firestore"
@@ -120,7 +120,7 @@ export default function Members({group}) {
 
 
 function ActiveMember({member,group}) {
-  console.log(group,"member")
+  console.log(member?.type,"member typee")
   let navigate = useNavigate();
   const [isLoading,setLoading]=useState(false)
   const [isRemoving,setRemove]=useState(false)
@@ -169,6 +169,27 @@ function ActiveMember({member,group}) {
                     className="rounded-full w-32 h-32"
                 />
                 <h5 className=' text-center font-semibold '>{member?.name}</h5>
+                {member?.type==="eco"?
+                             <div className="flex items-center space-x-1">
+                                  <img 
+                                  src={eco}
+                                  className="w-2.5 h-3"
+                                  />
+                                 <h5 className='text-xs'>Ecosystem</h5>
+
+                              </div>
+                            :
+                          
+                     
+                           <div className="flex items-center space-x-1">
+                                <img 
+                                src={org}
+                                className="w-2.5 h-3"
+                                />
+                              <h5 className='text-xs'>Organization</h5>
+                             </div>
+                        }
+                 
         
             </div>
            :
@@ -197,13 +218,13 @@ function ActiveMember({member,group}) {
 
                }
                         <h5 className='text-sm font-semibold text-slate-600'>
-                      {member?.type=="eco"?
-                                  <div className="flex items-center space-x-1">
+                  {member?.type==="eco"?
+                             <div className="flex items-center space-x-1">
                                   <img 
                                   src={eco}
-                                  className="w-3 h-3"
+                                  className="w-2.5 h-3"
                                   />
-                                  <h5 className='text-xs'>Ecosystem</h5>
+                                 <h5 className='text-xs'>Ecosystem</h5>
 
                               </div>
                             :
@@ -212,7 +233,7 @@ function ActiveMember({member,group}) {
                            <div className="flex items-center space-x-1">
                                 <img 
                                 src={org}
-                                className="w-3 h-3"
+                                className="w-2.5 h-3"
                                 />
                               <h5 className='text-xs'>Organization</h5>
                              </div>
@@ -220,7 +241,7 @@ function ActiveMember({member,group}) {
                              <div className="flex items-center space-x-1">
                                 <img 
                                 src={indiv}
-                                className="w-3 h-3"
+                                className="w-2.5 h-3"
                                 />
                               <h5 className='text-xs'>Individual</h5>
                              </div>

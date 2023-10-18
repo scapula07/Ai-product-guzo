@@ -22,13 +22,18 @@ export const ecosystemApi= {
                 const pending = docSnap?.data()?.pending
                 const activeMembers = docSnap?.data()?.active
 
+                const { teammates, ...rest } = member
+
+                console.log(rest,"restttttttt")
+
                 const newPending = pending?.filter(pendingmember=> pendingmember?.id !== member?.id);
 
                   const result = await updateDoc(ecoRef, {
                     pending:[...newPending],
                     active:[
                         ...activeMembers,
-                           member
+                          rest
+
                         ]
                    })
 

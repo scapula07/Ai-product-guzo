@@ -18,7 +18,7 @@ import { collection,  onSnapshot,
     query, orderBy, 
     limit,getDoc,setDoc ,
    updateDoc,addDoc } from 'firebase/firestore'
-import ecoImg from "../../assets/img3.png"
+import ecoImg from "../../assets/ecoIcon.jpeg"
 import SearchBar from '../components/searchbar'
 import Fuse from "fuse.js"
 
@@ -210,7 +210,7 @@ const EcosystemCard=({eco,isPending,currentUser,isMember,group})=>{
              <div className="flex items-center space-x-1">
                     <img 
                     src={ecoImg}
-                    className="w-3 h-3"
+                    className="w-2.5 h-3"
                     />
                     <h5 className='text-xs'>Ecosystem</h5>
 
