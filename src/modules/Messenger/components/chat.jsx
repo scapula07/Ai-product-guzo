@@ -1,5 +1,5 @@
-import eco from "../../assets/img3.png"
-import org from "../../assets/img2.png"
+import eco from "../../assets/ecoIcon.jpeg"
+import org from "../../assets/orgIcon.jpeg"
 import { calculateTimeOfPost } from "../../Utils/calculateTime"
 
 
@@ -25,7 +25,7 @@ import { calculateTimeOfPost } from "../../Utils/calculateTime"
                                          <div className="flex items-center space-x-1">
                                            <img 
                                             src={eco}
-                                            className="w-3 h-3"
+                                            className="w-2.5 h-3"
                                            />
                                            <h5>Ecosystem</h5>
 
@@ -34,7 +34,7 @@ import { calculateTimeOfPost } from "../../Utils/calculateTime"
                                        <div className="flex items-center space-x-1">
                                              <img 
                                              src={org}
-                                             className="w-3 h-3"
+                                             className="w-2.5 h-3"
                                              />
                                        <h5>Organization</h5>
 

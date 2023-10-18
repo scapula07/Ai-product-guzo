@@ -4,9 +4,9 @@ import dm2 from "../../assets/orgcover.png"
 import {BsThreeDots} from "react-icons/bs"
 import { useEffect ,useState} from 'react'
 import ClipLoader from "react-spinners/ClipLoader";
-import ecoImg from "../../assets/img3.png"
-import org from "../../assets/img2.png"
-import indiv from "../../assets/indiv.png"
+import ecoImg from "../../assets/ecoIcon.jpeg"
+import org from "../../assets/orgIcon.jpeg"
+import indiv from "../../assets/indivIcon.jpeg"
 import SearchBar from './saarch'
 import Fuse from "fuse.js"
 
@@ -28,16 +28,16 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
    console.log(conversations,"dmmmm")
    console.log(result,"resultttt")
    return (
-    <div className='w-full flex flex-col space-y-6 overflow-y-scroll no-scrollbar h-full'>
-         <SearchBar 
+    <div className='w-full flex flex-col bg-white space-y-6 overflow-y-scroll no-scrollbar h-full relative'>
+         {/* <SearchBar 
             setQuery={setQuery} 
              searchQuery={searchQuery} 
-        />
+        /> */}
 
         {result?.length ==0?
 
 
-                <div className='w-full flex flex-col space-y-6 overflow-y-scroll no-scrollbar h-full'>
+                <div className='w-full flex flex-col space-y-6 overflow-y-scroll bg-white no-scrollbar h-full'>
 
                         {conversations?.map((conv)=>{
                             
@@ -91,7 +91,7 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
            }
 
           {conversations?.length ===0&&areContacts?.length ==0&&
-            <div className='w-full flex justify-center py-10'>
+            <div className='w-full flex justify-center items-start py-10 absolute top-0'>
                <ClipLoader 
                     color={"rgba(62, 51, 221, 1)"}
                     loading={true}
@@ -100,7 +100,7 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
             }
           
           {conversations?.length ===0&&areContacts?.length >0&&
-            <div className='w-full flex justify-center py-10'>
+            <div className='w-full flex justify-center items-start py-10 absolute top-0'>
               <h5 className="text-sm">No contacts</h5>
             </div>
             }
@@ -129,7 +129,7 @@ const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv
              <div className="flex items-center space-x-1">
              <img 
              src={ecoImg}
-             className="w-3 h-3"
+             className="w-2.5 h-3"
              />
              <h5 className='text-xs'>Ecosystem</h5>
 
@@ -140,7 +140,7 @@ const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv
                       <div className="flex items-center space-x-1">
                           <img 
                           src={org}
-                          className="w-3 h-3"
+                          className="w-2.5 h-3"
                           />
                         <h5 className='text-xs'>Organization</h5>
                         </div>
@@ -148,7 +148,7 @@ const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv
                         <div className="flex items-center space-x-1">
                           <img 
                           src={indiv}
-                          className="w-3 h-3"
+                          className="w-2.5 h-3"
                           />
                         <h5 className='text-xs'>Individual</h5>
                         </div>
@@ -176,7 +176,7 @@ const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv
              <div className="flex items-center space-x-1">
              <img 
              src={ecoImg}
-             className="w-3 h-3"
+             className="w-2.5 h-3"
              />
              <h5 className='text-xs'>Ecosystem</h5>
 
@@ -187,7 +187,7 @@ const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv
             <div className="flex items-center space-x-1">
                  <img 
                  src={org}
-                 className="w-3 h-3"
+                 className="w-2.5 h-3"
                  />
                <h5 className='text-xs'>Organization</h5>
               </div>
@@ -195,7 +195,7 @@ const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv
               <div className="flex items-center space-x-1">
                  <img 
                  src={indiv}
-                 className="w-3 h-3"
+                 className="w-2.5 h-3"
                  />
                <h5 className='text-xs'>Individual</h5>
               </div>
