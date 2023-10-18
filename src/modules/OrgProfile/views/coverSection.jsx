@@ -4,8 +4,8 @@ import orgPic from "../../assets/orgcover.png"
 import EditProfile from '../../EditProfile'
 import {RiShareBoxFill} from "react-icons/ri"
 import { profileApi } from '../../EditProfile/api'
-import icon from "../../assets/icon.png"
-import eco from "../../assets/img3.png"
+import icon from "../../assets/orgIcon.jpeg"
+import eco from "../../assets/ecoIcon.jpeg"
 
 
 export default function CoverSection({group}) {
@@ -69,7 +69,7 @@ export default function CoverSection({group}) {
                                           <div className='flex items-center space-x-1.5'>
                                           <img 
                                             src={eco}
-                                            className="w-2.5 h-2.5"
+                                            className="w-2.5 h-3"
                                           />
                                           <h5 className='text-xs'>Ecosystem</h5>
                                       </div>
@@ -77,7 +77,7 @@ export default function CoverSection({group}) {
                                       <div className='flex items-center space-x-1.5'>
                                       <img 
                                         src={icon}
-                                        className="w-2 h-2"
+                                        className="w-2.5 h-3"
                                       />
                                       <h5 className='text-xs'>Organization</h5>
                                     </div>

@@ -102,7 +102,7 @@ const Post=({feed,group,setFeed})=>{
   console.log(feed?.createdAt,"created at")
   console.log(time,"timeeee")
  return(
-    <div className='w-full py-4 bg-white h-full '>
+    <div className='w-full py-4 bg-white h-full rounded-lg'>
     <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
           <div className='flex items-center space-x-3 w-full'>
               

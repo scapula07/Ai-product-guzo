@@ -113,7 +113,7 @@ const Feed=({feed,group})=>{
       const time =calculateTimeOfPost(feed?.createdAt?.seconds)
     
      return(
-        <div className='w-full py-4 bg-white h-full '>
+        <div className='w-full py-4 bg-white h-full rounded-lg'>
         <div className='flex items-center border-b py-2  lg:px-4 px-1 justify-between w-full'>
               <div className='flex items-center space-x-3'>
                   
