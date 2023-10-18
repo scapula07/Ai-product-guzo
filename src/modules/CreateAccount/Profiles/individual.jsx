@@ -71,7 +71,7 @@ export default function IndividualAccount({currentUser}) {
 
           }catch(e){
             console.log(e)
-            if(e.message==="TypeError: Cannot read properties of undefined (reading 'indexOf')"){
+            if(e.message==="TypeError: Cannot read properties of undefined (reading 'indexOf')" || user?.id ===undefined){
               navigate(`/register/login`)
             }
             setLoader(false)
