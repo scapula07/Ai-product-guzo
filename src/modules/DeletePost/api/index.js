@@ -9,7 +9,21 @@ import { db } from '../../Firebase';
 export const postApi = {
     deletePost: async function (collab,group) {
         try{
-           await deleteDoc(doc(db, "posts", collab?.id));
+          if(collab?.creator_id ===group?.id){
+            await deleteDoc(doc(db, "posts", collab?.id));
+          }else{
+             console.log(collab?.access,"coll")
+             const access=collab?.access?.length ==undefined? []:collab?.access
+              console.log(access,"access")
+             const newAccess =access?.filter((id)=>id !=group?.id)
+             await updateDoc(doc(db,"posts",collab?.id), {
+               access:[...newAccess]
+             })
+
+
+
+          }
+         
 
            const q = query(
               collection(db, 'posts'),
