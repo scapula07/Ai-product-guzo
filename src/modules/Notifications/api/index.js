@@ -37,7 +37,7 @@ export const notificationApi = {
 
               console.log(docSnap?.data()?.invitees,invitees,"invitees")
                await updateDoc(ref, {
-                teammates:[
+                 teammates:[
                     ...teammates,
                     user
     

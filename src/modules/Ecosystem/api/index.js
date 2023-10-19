@@ -19,14 +19,14 @@ export const ecosystemApi= {
             try{
                 const ecoRef =doc(db,"ecosystems",id)
                 const docSnap = await getDoc(ecoRef);
-                const pending = docSnap?.data()?.pending
+                const pendings = docSnap?.data()?.pending
                 const activeMembers = docSnap?.data()?.active
 
-                const { teammates, ...rest } = member
+                const { teammates,pendingMemberships,active,connections,pending, ...rest } = member
 
                 console.log(rest,"restttttttt")
 
-                const newPending = pending?.filter(pendingmember=> pendingmember?.id !== member?.id);
+                const newPending = pendings?.filter(pendingmember=> pendingmember?.id !== member?.id);
 
                   const result = await updateDoc(ecoRef, {
                     pending:[...newPending],

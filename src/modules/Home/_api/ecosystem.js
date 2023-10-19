@@ -56,11 +56,13 @@ export const ecosystemApi = {
                  const ecosystem =docSnap?.data()
                  const pendingMembers =ecosystem?.pending
                  console.log()
+
+                const { teammates,pendingMemberships,active,connections,pending, ...rest } =group
                  const result = await updateDoc(ecoRef, {
                     pending:[
                         ...pendingMembers,
                         {
-                           ...group
+                           ...rest
                         }
                        ]
                      })
