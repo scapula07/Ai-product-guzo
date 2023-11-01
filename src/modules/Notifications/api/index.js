@@ -36,10 +36,12 @@ export const notificationApi = {
               const invitees=docSnap?.data()?.invitees?.filter(invitee=> invitee?.email !== user?.email);
 
               console.log(docSnap?.data()?.invitees,invitees,"invitees")
+
+              const { ecosystems,organizations,individual, ...rest } = user
                await updateDoc(ref, {
                  teammates:[
                     ...teammates,
-                    user
+                     rest
     
                     ],
                   invitees:[
@@ -50,16 +52,17 @@ export const notificationApi = {
               //  const ref =doc(db,collectionName,from?.id)
               //  const docSnap = await getDoc(ref);
                if(from?.type=="eco"){
-                   const ecosystems=user?.ecosystems?.filter((e)=>e?.id !=snap?.id)
+                     const ecosystems=user?.ecosystems?.filter((e)=>e?.id !=snap?.id)
                    
                    console.log(ecosystems,snap?.name,snap?.creator,snap?.img,snap?.location,"Ecosts")
-                  await updateDoc(doc(db,"users",user?.id), {
+                   await updateDoc(doc(db,"users",user?.id), {
                     ecosystems:[
                       ...ecosystems,
                         {
                             id:snap.id,
                             name:snap?.data()?.name,
                             creator:snap?.data()?.creator,
+                            owners:snap?.data()?.owners,
                             type:"eco",
                             img:snap?.data()?.img,
                             location:snap?.data()?.location,
@@ -80,6 +83,7 @@ export const notificationApi = {
                           id:snap.id,
                           name:snap?.data()?.name,
                           creator:snap?.data()?.creator,
+                          owners:snap?.data()?.owners,
                           type:"org",
                           img:snap?.data()?.img,
                           location:snap?.data()?.location,

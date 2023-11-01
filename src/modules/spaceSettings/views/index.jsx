@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Layout from "../../Layout"
 import { Link } from 'react-router-dom'
 import { groupState,userState } from '../../Recoil/globalstate'
@@ -6,13 +6,29 @@ import { useRecoilValue } from 'recoil'
 import Modal from '../../Modal'
 import {AiOutlineClose } from "react-icons/ai"
 import DeleteAccount from '../../DeleteAccount'
-
+import { db } from '../../Firebase'
+import { doc, onSnapshot } from "firebase/firestore"
 
 export default function SpaceSettings() {
   const group =useRecoilValue(groupState)
   const currentUser =useRecoilValue(userState)
+  const [groupSpace,setNewgroup]=useState({})
 
   console.log(group,"grouppppp settingssss")
+
+  useEffect(()=>{
+    if(group?.id?.length >0){
+        const collection=group?.type=="eco"?"ecosystems":"organizations"
+        const ref =doc(db,collection,group?.id)
+        const unsub = onSnapshot(ref, (doc) => {
+          console.log("Current data: ", doc.data());
+          setNewgroup({id:doc?.id , ...doc.data()})
+       
+        });
+
+
+     }
+ },[group])
   return (
     <Layout>
          <div className='py-2 flex-col flex space-y-4'> 
@@ -38,7 +54,7 @@ export default function SpaceSettings() {
 
                       },
                       {
-                        text: `${group?.creator==currentUser?.id || group?.display?.length >0 ?"Delete Account" :"" }`,
+                        text: `${groupSpace?.owners?.includes(currentUser?.id) || group?.display?.length >0 ?"Delete Account" :"" }`,
                         link:"",
                     
 

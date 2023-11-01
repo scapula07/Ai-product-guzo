@@ -21,7 +21,7 @@ export default function Teammates() {
     const [isLoading,setLoader]=useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
     const [invitee,setInvitee]=useState({})
-  
+    const [groupSpace,setNewgroup]=useState({})
     
     const [open, setOpen] = useState(false);
     const currentDomain = window.location.hostname;
@@ -44,12 +44,15 @@ export default function Teammates() {
             const ref =doc(db,collection,group?.id)
             const unsub = onSnapshot(ref, (doc) => {
               console.log("Current data: ", doc.data());
+              setNewgroup({id:doc?.id , ...doc.data()})
               setTeam({teammates:doc?.data()?.teammates,invitees:doc?.data()?.invitees})
             });
 
 
          }
      },[group])
+
+
 
      const addTeammates=async()=>{
         setLoader(true)
@@ -107,7 +110,7 @@ export default function Teammates() {
                 <div className='w-full overflow-y-auto h-full '>
                    <Table
                       teams={teams}
-                      group={group}
+                      group={groupSpace}
                       currentUser={currentUser}
                     />
 

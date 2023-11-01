@@ -81,6 +81,7 @@ export const createProfile= {
                         currentUser
 
                       ],
+                      owners:[currentUser?.id],
                     type:"org"
                 })
 
@@ -99,9 +100,10 @@ export const createProfile= {
                                     creator:docOrg?.creator,
                                     type:"org",
                                     img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
-                                    teammates:[
-                                       ...docOrg?.teammates
-                                     ]
+                                    owners:[currentUser?.id],
+                                    // teammates:[
+                                    //    ...docOrg?.teammates
+                                    //  ]
                                 }
                                 ]
                         
@@ -148,6 +150,7 @@ export const createProfile= {
                 teammates:[
                     currentUser
                 ],
+                 owners:[currentUser?.id],
                 type:"eco",
             })
      
@@ -168,9 +171,10 @@ export const createProfile= {
                          creator:docEco?.creator,
                          type:"eco",
                          img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
-                         teammates:[
-                            ...docEco?.teammates
-                          ]
+                         owners:[currentUser?.id],
+                        //  teammates:[
+                        //     ...docEco?.teammates
+                        //   ]
                         }
                         ]
                 

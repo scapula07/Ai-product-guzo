@@ -217,6 +217,42 @@ export const teamApi= {
               throw new Error(e)
             }
             
+        },
+
+        changeRole:async function (group,teammate,role) {
+          
+              const collectionName=group?.type ==="eco"?"ecosystems" :"organizations"
+              const groupRef=doc(db,collectionName,group?.id)
+              const groupSnap = await getDoc(groupRef);
+              try{
+                  if(role ==="owner"){
+                     await updateDoc(groupRef, {
+                      owners:[
+                          ...groupSnap?.data()?.owners,
+                            teammate
+                  
+                         ]
+                        })
+
+                      }else{
+                        const owners= groupSnap?.data()?.owners?.filter((owner)=>owner !=teammate)
+                      await updateDoc(groupRef, {
+                      owners:[
+                          ...owners
+                            
+                  
+                         ]
+                        })
+
+                  }
+
+                    return true
+
+                 
+                }catch(e){
+                 console.log(e)
+                 throw new Error(e)
+              }
         }
 
 

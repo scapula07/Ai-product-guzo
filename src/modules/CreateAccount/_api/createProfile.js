@@ -110,6 +110,7 @@ export const createProfile= {
                         }
 
                       ],
+                      owners:[currentUser?.id],
                     type:"org"
                 })
                
@@ -134,6 +135,7 @@ export const createProfile= {
                                     type:"org",
                                     creator:docOrg?.creator,
                                     img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+                                    owners:[currentUser?.id],
                                     // teammates:[
                                     //    ...docOrg?.teammates
                                     //  ]
@@ -266,7 +268,8 @@ export const createProfile= {
                         email:currentUser?.email,
                     }
                   ],
-                type:"eco",
+                   owners:[currentUser?.id],
+                   type:"eco",
                })
      
             await setDoc(doc(db, "unseen",ecoSnap?.id), {
@@ -291,6 +294,7 @@ export const createProfile= {
                                 creator:docEco?.creator,
                                 type:"eco",
                                 img:`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+                                owners:[currentUser?.id],
                                 // teammates:[
                                 //     ...docEco?.teammates
                                 // ]
