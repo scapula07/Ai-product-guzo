@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import guzo from "../../../assets/guzoLogo.png"
 
 import guzo1 from "../../../assets/indivIcon.jpeg"
@@ -6,9 +6,22 @@ import guzo2 from "../../../assets/orgIcon.jpeg"
 import guzo3 from "../../../assets/ecoIcon.jpeg"
 import { accountTypeState } from '../../../Recoil/globalstate'
 import { useRecoilValue,useRecoilState} from 'recoil';
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
   export default function Accounts() {
+    let navigate = useNavigate();
     const [active,setActive]=useRecoilState(accountTypeState)
+
+    const [user,setUser]=useState()
+      useEffect(()=>{
+       const user = localStorage.getItem("user");
+       console.log(JSON.parse(user),"user")
+     setUser(JSON.parse(user))
+      },[])
+
+      const skip=()=>{
+        user?.id?.length>0&& navigate(`/home/${user?.individual?.id}`)
+
+      }
 
     return (
       <div className='w-full h-screen' >
@@ -23,7 +36,7 @@ import { Link } from 'react-router-dom'
 
                 <div className='w-3/5 flex flex-col space-y-6'>
                       <div className='bg-white w-full flex flex-col space-y-10 items-center py-6 rounded-lg'>
-                              <h5 className='text-lg font-semibold'>Join Guzo as </h5>
+                              <h5 className='text-lg font-semibold'>Create an additional persona.</h5>
                               
                               <div className='flex flex-col w-full items-center space-y-6'>
                                 {accounts?.map((acct)=>{
@@ -54,12 +67,12 @@ import { Link } from 'react-router-dom'
                       </div>
                         <div className='flex  items-center w-full justify-between'>
                             <h5 style={{color: "rgba(37, 31, 134, 1)"}}
-                              onClick={()=>window.history.go(-1)}
+                              onClick={skip}
                               >
-                              Back
+                              Skip for Now
                             </h5>
                          
-                               <Link to="register">
+                               <Link to={`${active==="Organization"?"/create-profile/org":"/create-profile/ecosystem"}`}>
                                <button className='px-6 py-2 text-blue-600 rounded-full' style={{background: "rgba(237, 237, 237, 1)"}}> Continue</button>
                          
                              </Link>
@@ -85,12 +98,12 @@ import { Link } from 'react-router-dom'
 
 
   const accounts=[
-    {
-      img:guzo1,
-      name:"Individual",
-      desc:"an individual contributor"
+    // {
+    //   img:guzo1,
+    //   name:"Individual",
+    //   desc:"an individual contributor"
 
-    },
+    // },
     {
       img:guzo2,
       name:"Organization",

@@ -211,7 +211,7 @@ export default function Login() {
                             
 
                             <div className='py-2 flex justify-start w-full'>
-                                <Link to="/register/reset">
+                                <Link to="/reset">
                                 <h5 className='text-purple-600 text-sm underline'>Forgot password?</h5>
 
                                 </Link>

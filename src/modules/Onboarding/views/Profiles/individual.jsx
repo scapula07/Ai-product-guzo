@@ -61,7 +61,8 @@ export default function Individual({currentUser}) {
             result?.id?.length>0&&localStorage.setItem('user',JSON.stringify(result));
             console.log(result,"result")
             setLoader(false)
-            result?.id?.length>0&& navigate(`/home/${result?.individual?.id}`)
+            // result?.id?.length>0&& navigate(`/home/${result?.individual?.id}`)
+            result?.id?.length>0&& navigate(`/accounts`)
 
           }catch(e){
             console.log(e)
@@ -76,7 +77,7 @@ export default function Individual({currentUser}) {
     <div className='w-full flex flex-col  space-y-6 ' style={{background: "rgba(242, 242, 242, 0.6)"}}>
         <div className='w-full flex bg-white rounded-lg  border flex-col  space-y-8 py-28' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
                <div className='flex flex-col items-center w-full space-y-10'>
-                  <h5 className='text-xl font-semibold'>Create your profile...</h5>
+                  <h5 className='text-xl font-semibold'>Create a personal persona.</h5>
 
                   {url?.length ==0&&
                     <div className='rounded-full h-44 w-44 flex flex-col justify-center items-center' style={{background: "rgba(242, 242, 242, 0.6)"}}
@@ -119,7 +120,7 @@ export default function Individual({currentUser}) {
 
                <div className='flex flex-col w-full px-10'>  
 
-                      <label className='text-sm text-slate-600 font-semibold'>Individual Account Display Name*</label>
+                      <label className='text-sm text-slate-600 font-semibold'>Display Name*</label>
                         <input 
                             placeholder='Display Name'
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none'
@@ -134,7 +135,7 @@ export default function Individual({currentUser}) {
                               <span className='text-red-600'>{errorMsg}</span>
                                  :
 
-                              "This will be the name that displays for your individual account."
+                              "This will be the name that displays for your personal persona."
                              }
                           
                         </h5>

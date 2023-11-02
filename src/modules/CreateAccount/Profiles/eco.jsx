@@ -154,7 +154,7 @@ export default function EcoAccount({currentUser}) {
           }catch(e){
             console.log(e)
             if(e.message==="TypeError: Cannot read properties of undefined (reading 'indexOf')"  || user?.id ===undefined){
-              navigate(`/register/login`)
+              navigate(`/login`)
             }
             setLoader(false)
             setErrorMsg(e.message)

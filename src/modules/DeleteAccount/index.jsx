@@ -42,7 +42,7 @@ export default function DeleteAccount({group,currentUser}) {
             
             if(accounts?.length >= 1){
             
-              response&&navigate("/register/login")
+              response&&navigate("/login")
             }else{
               response&&navigate("/create-account")
             }

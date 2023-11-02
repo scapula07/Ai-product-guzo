@@ -15,7 +15,7 @@ export default function LogOut({currentUser}) {
             const response =await userApi.logout()
             console.log(response,"response")
            
-            navigate(`/register/login`)
+            navigate(`/login`)
 
         }catch(e){
             console.log(e)

@@ -105,8 +105,8 @@ const NewRoutes = () => {
        
                 <Route path="/auth/*" element={<Index/>} />
                 <Route path="/" element={<Onboarding/>} >
-                     <Route path="" element={<Accounts/>} />
-                      <Route path="register" element={<Register/>} >
+                     <Route path="accounts" element={<Accounts/>} />
+                      <Route path="" element={<Register/>} >
                           <Route path="" element={<AuthTypes/>} />
                           <Route path="email-password" element={<EmailAuth/>} />
                           <Route path="login" element={<Login/>} />

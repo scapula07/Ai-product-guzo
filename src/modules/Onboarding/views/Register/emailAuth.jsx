@@ -129,7 +129,7 @@ export default function EmailAuth() {
                localStorage.clear();
                localStorage.setItem('user',JSON.stringify(user));
 
-             user?.id.length >0&& navigate(`/create-profile/${route}`)
+             user?.id.length >0&& navigate(`/create-profile/`)
 
             }catch(e){
                 console.log(e.message.FirebaseError,"emaillll")
