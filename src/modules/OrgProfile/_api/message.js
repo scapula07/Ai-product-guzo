@@ -37,7 +37,8 @@ export const messageApi = {
                 info:[
                     currentUser,
                     member
-                ]
+                ],  
+                 lastMessage:Number(new Date())
               }
               try{
                 const docRef = await addDoc(collection(db, "conversations"),payload);

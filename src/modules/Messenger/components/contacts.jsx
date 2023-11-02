@@ -14,6 +14,8 @@ export default function Contacts({conversations,setCurrentChat,currentChat, curr
 
       const result=fuse.search(searchQuery)
 
+      const convs=  conversations.sort((a, b) => b.lastMessage - a.lastMessage);
+
   return (
     <div className='h-full flex flex-col w-full bg-white rounded-lg py-8 px-6 space-y-6 relative' style={{height:"100%"}}>
         <div className=''>
@@ -36,7 +38,7 @@ export default function Contacts({conversations,setCurrentChat,currentChat, curr
             {result?.length ===0?
             
                <Dmcontacts 
-                  conversations={conversations}
+                  conversations={convs}
                   setCurrentChat={setCurrentChat}
                   currentChat={currentChat}
                   currentUser={ currentUser}

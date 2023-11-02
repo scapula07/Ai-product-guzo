@@ -34,13 +34,6 @@ export default function Feeds() {
     // console.log(group)
 
     useEffect(()=>{
-
-            // const feeds=await feedApi.getEcosystemFeeds(group?.id)
-            // feeds?.length===0 &&setPost("No Feeds")
-            // feeds?.length >0 &&setPost("")
-            // setFeeds(feeds)
-
-            // const q = query(collection(db, "posts"),orderBy("createdAt", "desc"));
             if(group?.id?.length >0){
                 const q = query(collection(db, "posts"),orderBy("createdAt", "desc"));
                 const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -60,13 +53,7 @@ export default function Feeds() {
                };
 
             }
-           
-
-             
-
-  
-
-    },[group])
+  },[group])
   
   return (
     <div className='flex flex-col space-y-4'>

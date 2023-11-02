@@ -8,7 +8,7 @@ import { io } from "socket.io-client";
 import {doc,setDoc,
        addDoc,collection,
        getDoc,getDocs,
-       query, where,updateDoc} from "firebase/firestore"
+       query, where,updateDoc,orderBy,onSnapshot} from "firebase/firestore"
 import { db } from '../../Firebase'
 import { useLocation} from "react-router-dom";
 import GroupChat from './groupchat'
@@ -30,24 +30,42 @@ export default function Messenger() {
    const [newMessage, setNewMessage] = useState("");
    const [areContacts,setContacts]=useState("")
 
+
+
     useEffect(()=>{
       const getConversations = async () => {
           try{
+          
             console.log(currentUser?.id,"cur conv")
-            const q = query(collection(db, "conversations"), where("members", "array-contains",currentUser?.id));
-       
-            const convSnapshot =await getDocs(q)
-            const conversations= convSnapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
-            conversations?.length===0 &&setContacts("No contact")
-            conversations?.length >0 &&setContacts("")
-            setConversations(conversations)
+            const q = query(collection(db, "conversations"), where("members", "array-contains",currentUser?.id),orderBy("lastMessage", "desc"));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+              const convs= [];
+              querySnapshot.forEach((doc) => {
+                  convs.push({...doc?.data(),id:doc?.id});
+               
+              });
+                 convs?.length===0 &&setContacts("No contact")
+                 convs?.length >0 &&setContacts("")
+              setConversations(convs)
+            })
+            
+
+        
+            // const convSnapshot =await getDocs(q)
+            // const conversations= convSnapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
+            // conversations?.length===0 &&setContacts("No contact")
+            // conversations?.length >0 &&setContacts("")
+            // setConversations(conversations)
       
          
-          }catch(error){
+           }catch(error){
             console.log(error)
           }
         };
-        getConversations();
+        if(currentUser?.id?.length >0){
+          getConversations();
+        }
+        
    
        },[currentUser?.id,active])  
 
@@ -104,6 +122,9 @@ export default function Messenger() {
              const result = await updateDoc(doc(db,"unseen",receiver), {
                  messages:true
                })
+            await updateDoc(doc(db,"conversations",currentChat?.id), {
+              lastMessage:Number(new Date())
+              })
 
        
       
@@ -113,7 +134,7 @@ export default function Messenger() {
           }
       }
   
-    console.log(newMessage,"conversations")
+    console.log(conversations,"conversations")
 
 
   return (
