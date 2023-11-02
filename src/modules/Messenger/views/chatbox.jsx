@@ -4,7 +4,7 @@ import feedorg from "../../assets/feedorg.png"
 import {doc,setDoc,
     addDoc,collection,
     getDoc,getDocs,
-    query, where,onSnapshot,orderBy} from "firebase/firestore"
+    query, where,onSnapshot,orderBy,updateDoc} from "firebase/firestore"
 import { db } from '../../Firebase'
 import Chat from '../components/chat'
 import { userState,groupState } from '../../Recoil/globalstate'
@@ -16,7 +16,7 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
     const chatRef= useRef(null);
      const [msgs,setMsg]=useState([])
        useEffect(()=>{
-              if(conversations?.length>0){
+              if(conversations?.length>0&&currentChat?.id?.length >0){
                 console.log(currentChat?.id,"chat id")
                  const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id),orderBy("date", "asc"));
                 // const q = query(collection(db, "messages"), where("conversationid", "==", currentChat?.id));
@@ -45,6 +45,17 @@ export default function Chatbox({currentChat,messages,send,setNewMessage,receive
             chatRef.current.scrollTop = chatRef.current.scrollHeight;
           }
         },[msgs])
+
+        useEffect(()=>{
+          const seen=async()=>{
+             const result = await updateDoc(doc(db,"conversations",currentChat?.id), {
+                unseen:false
+             })
+          }
+
+          currentChat?.id?.length >0&& seen()
+          
+        },[currentChat?.id])
       
 
   return (

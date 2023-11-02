@@ -9,7 +9,8 @@ import org from "../../assets/orgIcon.jpeg"
 import indiv from "../../assets/indivIcon.jpeg"
 import SearchBar from './saarch'
 import Fuse from "fuse.js"
-
+import { userState,groupState } from '../../Recoil/globalstate'
+import { useRecoilValue } from 'recoil'
 
 export default function Dmcontacts({conversations,setCurrentChat,currentChat, currentUser,receiverInfo,setReceiver,areContacts}) {
   const [searchQuery,setQuery]=useState("")
@@ -112,14 +113,22 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
 
 const Contact=({contact,setCurrentChat,currentChat,receiverInfo,setReceiver,conv})=>{
   console.log(contact,"ccc")
+  const currentUser=useRecoilValue(groupState)
   return(
         <div className='flex hover:bg-slate-100  space-x-4 px-4 border-b py-2 rounded-md ' 
              onClick={()=>setCurrentChat(conv) || setReceiver(contact) }
           >
-           <img 
-             className="rounded-full h-10 w-10"
-              src={contact?.img}
-           />
+           <div className='flex items-center space-x-2'>
+                {conv?.unseen&&conv?.lastSender !=currentUser?.id&&
+                  <span className='bg-red-500 lg:h-2 lg:w-8 h-1 w-1 rounded-full'></span>
+                }
+                  <img 
+                    className="rounded-full h-10 w-10"
+                      src={contact?.img}
+                  />
+
+          </div>
+     
 
         <div className='flex justify-between items-center w-full'>
           {contact?.type?.length>0?

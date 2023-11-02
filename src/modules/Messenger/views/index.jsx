@@ -49,13 +49,6 @@ export default function Messenger() {
               setConversations(convs)
             })
             
-
-        
-            // const convSnapshot =await getDocs(q)
-            // const conversations= convSnapshot?.docs?.map((doc)=> ({...doc?.data(),id:doc?.id}) )
-            // conversations?.length===0 &&setContacts("No contact")
-            // conversations?.length >0 &&setContacts("")
-            // setConversations(conversations)
       
          
            }catch(error){
@@ -123,7 +116,9 @@ export default function Messenger() {
                  messages:true
                })
             await updateDoc(doc(db,"conversations",currentChat?.id), {
-              lastMessage:Number(new Date())
+               lastMessage:Number(new Date()),
+               unseen:true,
+               lastSender:currentUser?.id
               })
 
        
@@ -134,7 +129,7 @@ export default function Messenger() {
           }
       }
   
-    console.log(conversations,"conversations")
+    console.log(currentChat,"conversations chat")
 
 
   return (
