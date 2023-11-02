@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom'
 
                 <div className='w-3/5 flex flex-col space-y-6'>
                       <div className='bg-white w-full flex flex-col space-y-10 items-center py-6 rounded-lg'>
-                              <h5 className='text-lg font-semibold'>Join Guzo as </h5>
+                              <h5 className='text-lg font-semibold'>Create additional persona.</h5>
                               
                               <div className='flex flex-col w-full items-center space-y-6'>
                                 {accounts?.map((acct)=>{
@@ -51,12 +51,12 @@ import { Link } from 'react-router-dom'
 
                       </div>
                         <div className='flex  items-center w-full justify-between'>
-                          <h5></h5>
-                            {/* <h5 style={{color: "rgba(37, 31, 134, 1)"}}
+                        
+                            <h5 style={{color: "rgba(37, 31, 134, 1)"}}
                               onClick={()=>window.history.go(-1)}
                               >
                               Back
-                            </h5> */}
+                            </h5>
                          
                                <Link to={`/create-account/profile/${active}`}>
                                <button className='px-6 py-2 text-blue-600 rounded-full' style={{background: "rgba(237, 237, 237, 1)"}}> Continue</button>
@@ -83,12 +83,12 @@ import { Link } from 'react-router-dom'
 
 
   const accounts=[
-    {
-      img:guzo1,
-      name:"Individual",
-      desc:"an individual contributor"
+    // {
+    //   img:guzo1,
+    //   name:"Individual",
+    //   desc:"an individual contributor"
 
-    },
+    // },
     {
       img:guzo2,
       name:"Organization",

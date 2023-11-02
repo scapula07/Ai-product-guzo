@@ -54,7 +54,7 @@ export default function SpaceSettings() {
 
                       },
                       {
-                        text: `${groupSpace?.owners?.includes(currentUser?.id) || group?.display?.length >0 ?"Delete Account" :"" }`,
+                        text: `${groupSpace?.owners?.includes(currentUser?.id)?"Delete Account" :"" }`,
                         link:"",
                     
 

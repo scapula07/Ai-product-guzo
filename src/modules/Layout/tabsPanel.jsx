@@ -143,7 +143,7 @@ const navs=[
                                 <div className='flex flex-col '>
                                         <h5 className='font-semibold text-lg flex items-center' >
                                              <span onClick={()=>setHover(true)}>{group?.display}</span>
-                                             {hover&&
+                                             {hover&&group?.type?.length >0&&
                                               <MdArrowDropDown 
                                                  onClick={()=>setHover(false)}
                                                  className='text-3xl font-semibold'
@@ -171,7 +171,7 @@ const navs=[
 
              }
 
-             {hover&&
+             {hover&&group?.type?.length >0&&
                <Link to={`/settings-/${group?.id}`}>
                   <div className=''>
                       <div className='flex items-center space-x-3 bg-white rounded-lg px-4 py-2 '>
