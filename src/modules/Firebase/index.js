@@ -4,6 +4,14 @@ import {getFirestore} from "firebase/firestore"
 import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut} from "firebase/auth";
 import { getMessaging , getToken,onMessage } from "firebase/messaging";
 
+
+var currentURL = window.location.href;
+var url = new URL(currentURL);
+var domainName = url.hostname;
+
+
+console.log(currentURL,url,domainName,"addressss")
+
 const firebaseConfig = {
   apiKey: "AIzaSyBCCrk78nJ-ipfhxDlodPoUlSgJSUP_jTo",
   authDomain: "guzo-v2.firebaseapp.com",
@@ -14,15 +22,18 @@ const firebaseConfig = {
   measurementId: "G-9TFLFQMJCH"
 };
 
+
 // const firebaseConfig = {
-//   apiKey: "AIzaSyDmzcJzoD9vgZMrqI1Ih957gHJg6AZiPKk",
-//   authDomain: "homeaid-dd63c.firebaseapp.com",
-//   projectId: "homeaid-dd63c",
-//   storageBucket: "homeaid-dd63c.appspot.com",
-//   messagingSenderId: "962028442523",
-//   appId: "1:962028442523:web:6d6bf6a9f3987294f2873e",
-//   measurementId: "G-LHDBMPP5J9"
+//   apiKey: "AIzaSyCoMTJsWVIdi5TsqXwDI620Y6Y89a-Hg4M",
+//   authDomain: "guzo-sandbox.firebaseapp.com",
+//   projectId: "guzo-sandbox",
+//   storageBucket: "guzo-sandbox.appspot.com",
+//   messagingSenderId: "1025453001887",
+//   appId: "1:1025453001887:web:0a5096f66c6022221566aa",
+//   measurementId: "G-5HZG9YS53K"
 // };
+
+
   
 
   const app = initializeApp(firebaseConfig);
