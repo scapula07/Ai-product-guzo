@@ -18,12 +18,12 @@ export default function Contacts({conversations,setCurrentChat,currentChat, curr
 
   return (
     <div className='h-full flex flex-col w-full bg-white rounded-lg py-8 px-6 space-y-6 relative' style={{height:"100%"}}>
-        <div className=''>
+        {/* <div className=''>
                 <SearchBar 
                     setQuery={setQuery} 
                     searchQuery={searchQuery} 
                 />
-        </div>
+        </div> */}
   
         {/* <div className='flex items-center w-full border  rounded-lg py-3'>
             <div className='flex w-1/2 justify-center border-r-2 border-slate-700' >
@@ -48,7 +48,7 @@ export default function Contacts({conversations,setCurrentChat,currentChat, curr
                
                />  
                :
-               <Dmcontacts 
+            <Dmcontacts 
                conversations={conversations}
                setCurrentChat={setCurrentChat}
                currentChat={currentChat}

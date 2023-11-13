@@ -134,7 +134,16 @@ const Feed=({feed,group})=>{
                      
                   </>
                   <div className='flex items-center space-x-3'>
-                     <h5 className='text-lg font-semibold'>{feed?.shared_by?.name}</h5>
+                   <Link 
+                       to={`/posterprofile/${group?.id}`}
+                       state={{
+                          group:feed?.shared_by
+                       
+                        }}
+                      >
+                          <h5 className='text-lg font-semibold'>{feed?.shared_by?.name}</h5>
+                    </Link>
+            
                     <span className='text-xs text-slate-700 '>{time}</span> 
 
                   </div>

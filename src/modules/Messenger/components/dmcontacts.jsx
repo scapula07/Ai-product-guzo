@@ -14,26 +14,36 @@ import { useRecoilValue } from 'recoil'
 
 export default function Dmcontacts({conversations,setCurrentChat,currentChat, currentUser,receiverInfo,setReceiver,areContacts}) {
   const [searchQuery,setQuery]=useState("")
+  const [allContacts,setContacts]=useState([])
 
-  const fuse =new Fuse([...conversations],{
+  const fuse =allContacts?.length >0?new Fuse([...allContacts],{
       keys:["name","display"]
-    })
+    }) :new Fuse([],{
+      keys:["name","display"]
+    }) 
 
   const result=fuse.search(searchQuery)
 
    useEffect(( )=>{
+      const contacts=[]
+      conversations?.length >0 && conversations?.map(conv => contacts?.push(conv?.info))
       conversations?.length >0 && setReceiver(conversations[0]?.info?.find(info => info?.id != currentUser?.id))
-      conversations?.length >0 && setCurrentChat(conversations[0])
+      conversations?.length >0 && setCurrentChat(conversations[0]);
+
+       setContacts(contacts[0])
+
+      console.log(contacts,"contcvcv")
     },[conversations?.length])
     
-   console.log(conversations,"dmmmm")
+   console.log(allContacts,"dmmmm")
+   console.log(conversations,"dmmmm cpnvvv")
    console.log(result,"resultttt")
    return (
     <div className='w-full flex flex-col bg-white space-y-6 overflow-y-scroll no-scrollbar h-full relative'>
-         {/* <SearchBar 
+         <SearchBar 
             setQuery={setQuery} 
              searchQuery={searchQuery} 
-        /> */}
+        />
 
         {result?.length ==0?
 
@@ -66,15 +76,16 @@ export default function Dmcontacts({conversations,setCurrentChat,currentChat, cu
 
                 <div className='w-full flex flex-col space-y-6 overflow-y-scroll no-scrollbar h-full'>
 
-                {result?.map((conv)=>{
+                { result?.map((conv)=>{
                     
-                  
+                    
+                    
                     const contact =conv?.item?.info?.find(info => info?.id != currentUser?.id);
                     console.log(contact,"contact dmmm")
                     return(
                       <Contact 
                           conv={conv?.item}
-                          contact={contact}
+                          contact={conv?.item}
                           setCurrentChat={setCurrentChat}
                           currentChat={currentChat}
                           receiverInfo={receiverInfo}

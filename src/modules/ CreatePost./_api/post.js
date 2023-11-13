@@ -67,8 +67,11 @@ export const postApi= {
                 img_post:postImg ,
                 creator_id:group?.id,
                 shared_by:{
+                    id:group?.id,
                     img:group?.img?.length>0?group?.img :"",
-                    name:group?.type?.length>0? group?.name : name
+                    name:group?.type?.length>0? group?.name : name,
+                    type:group?.type?.length >0?group?.type :""
+                    
                  },
                 file:file,
                 createdAt:new Date()

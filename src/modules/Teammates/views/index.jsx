@@ -58,6 +58,14 @@ export default function Teammates() {
         setLoader(true)
         setErrorMsg(null)
 
+          if(teams?.teammates?.some((team)=>team?.email===invitee?.email) || teams?.invitees?.some((team)=>team?.email===invitee?.email)){
+               console.log("yes in here")
+              setLoader(false)
+              setTrigger(false)
+              return 
+             
+            }
+
          try{
    
             const res =await inviteEmail.sendInvite(invitee)

@@ -62,7 +62,7 @@ import { useNavigate } from 'react-router-dom'
 import Local from "./Notifications/views/local";
 import Global from "./Notifications/views/global";
 import SpaceSettings from "./spaceSettings/views";
-
+import PosterProfile from "./Profile ";
 
 const NewRoutes = () => {
   const navigate =useNavigate()
@@ -73,10 +73,10 @@ const NewRoutes = () => {
   console.log(currentUser,"user")
   let authListner=null
   const user = localStorage.getItem("user");
-  useEffect( ()=>{ 
-    console.log(JSON.parse(user),"user")
+  // useEffect( ()=>{ 
+  //   console.log(JSON.parse(user),"user")
  
-  },[user])
+  // },[user])
 
   useEffect( ()=>{
     if(group?.id?.length >0){
@@ -126,6 +126,7 @@ const NewRoutes = () => {
                  <Route path="/profile/:id/*" element={<Profile/>}  />
                   
                  <Route path="/eco-profile/:id/*" element={<ViewProfile/>}>
+            
                      
                      
                   </Route>
@@ -173,6 +174,9 @@ const NewRoutes = () => {
                        <Route path="organization" element={<OrgAccount/>} />
                     </Route>
 
+                </Route>
+
+                <Route path="/posterprofile/:id/*" element={<PosterProfile/>}>
                 </Route>
               
             </Routes>
