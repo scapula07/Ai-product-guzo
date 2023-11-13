@@ -46,44 +46,61 @@ export const authApi= {
                 const credential = GoogleAuthProvider.credentialFromResult(res);
                 const token = credential.accessToken;
                 const user = res.user;
+                
+                const url=`https://www.googleapis.com/oauth2/v1/userinfo?alt=json`
+    
 
-                console.log(user,"userrrr")
+                 const config = {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${credential.accessToken}`,
+                        },
+                        };
+                      
+                        const response= await axios.get(
+                          url,config
+                     )
+       
 
-                // const firstName = user.displayName.split(' ')[0];
-                // const lastName = user.displayName.split(' ')[1];
 
 
-                // console.log(user,"user....")
-                // const ref =doc(db,"users",user?.uid)
-                // const docSnap1 = await getDoc(ref);
-                // if(docSnap1.exists()){
-                //    throw new Error("Email already used")
-                // }
+                console.log(response.data,"userrrr")
 
-                // await setDoc(ref,{
-                //     id:user?.uid,
-                //     firstName:firstName?.length != undefined?firstName:"",
-                //     lastName:lastName?.length != undefined?lastName :"",
-                //     email:user?.email,
-                //     organizations:[],
-                //     ecosystems:[],
-                //     pending:[]
-                //  })
+                const firstName = user.displayName.split(' ')[0];
+                const lastName = user.displayName.split(' ')[1];
+
+
+                console.log(user,"user....")
+                const ref =doc(db,"users",user?.uid)
+                const docSnap1 = await getDoc(ref);
+                if(docSnap1.exists()){
+                   throw new Error("Email already used")
+                }
+
+                await setDoc(ref,{
+                    id:user?.uid,
+                    firstName:firstName?.length != undefined?firstName:"",
+                    lastName:lastName?.length != undefined?lastName :"",
+                    email:response.data?.email,
+                    organizations:[],
+                    ecosystems:[],
+                    pending:[]
+                 })
 
              
-                //  const docSnap = await getDoc(ref);
-                //  console.log(docSnap.data(),"user data")
-                //   if (docSnap.exists()) {
-                //     await setDoc(doc(db, "unseen",user?.uid), {
-                //       notifications:false
-                //     });
-                //      return {id:docSnap?.id,...docSnap?.data(),accessToken:user?.accessToken}
+                 const docSnap = await getDoc(ref);
+                 console.log(docSnap.data(),"user data")
+                  if (docSnap.exists()) {
+                    await setDoc(doc(db, "unseen",user?.uid), {
+                      notifications:false
+                    });
+                     return {id:docSnap?.id,...docSnap?.data(),accessToken:user?.accessToken}
               
 
-                //    } else {
+                   } else {
                      
-                //      console.log("No such document!");
-                //    }
+                     console.log("No such document!");
+                   }
                
 
           
