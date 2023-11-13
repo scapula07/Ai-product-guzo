@@ -1,7 +1,8 @@
 import React,{useState} from 'react'
 import { calculateTimeOfPost } from '../../Utils/calculateTime'
+import { Link } from 'react-router-dom';
 
-export default function Comment({feed}) {
+export default function Comment({feed,group}) {
 
    const [trigger,setTrigger]=useState(false)
    const comments=  feed?.comments.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
@@ -15,6 +16,7 @@ export default function Comment({feed}) {
                       <div className='flex w-full space-x-1'>
                           <div className=''>
                             {comment?.img.length>0?
+
                                 <img 
                                   src={comment?.img}
                                   className="rounded-full h-10 w-10"
@@ -50,16 +52,24 @@ export default function Comment({feed}) {
     </div>
 
     <div className='flex flex-col pt-4 pb-2 w-full space-y-4'>
-       {comments?.slice(0,`${trigger?feed?.comments?.length :3}`)?.map((comment)=>{
+        {comments?.slice(0,`${trigger?feed?.comments?.length :3}`)?.map((comment)=>{
             const timeAt =calculateTimeOfPost(comment?.createdAt?.seconds)
           return(
               <div className='flex w-full space-x-1'>
                    <div className=''>
                       {comment?.img.length>0?
-                          <img 
-                            src={comment?.img}
-                            className="rounded-full h-10 w-10"
-                          />
+                        <Link 
+                            to={`/posterprofile/${group?.id}`}
+                             state={{
+                               group:comment
+                           
+                              }}
+                           >
+                                 <img 
+                                    src={comment?.img}
+                                    className="rounded-full h-10 w-10"
+                                 />
+                          </Link>
                           :
                           <div className='rounded-full p-2 items-center justify-center flex border'
                           >

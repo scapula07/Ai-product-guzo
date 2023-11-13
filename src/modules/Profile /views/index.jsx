@@ -45,7 +45,7 @@ export default function PosterProfile() {
               // const docSnap = await getDoc(profileRef);
        
               // return docSnap.data()
-             },[])
+             })
  
     
   return (

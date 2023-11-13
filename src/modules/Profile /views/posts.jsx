@@ -150,11 +150,11 @@ const Post=({feed,group,setFeed})=>{
 
           </div>
           <div className='flex w-1/6 justify-end'>
-             <DeletePost
+             {/* <DeletePost
                 feed={feed}
                 group={group}
                 setFeed={setFeed}
-              /> 
+              />  */}
           </div>
      
 

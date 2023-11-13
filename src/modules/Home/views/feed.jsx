@@ -328,6 +328,8 @@ const Comments=({ group, feed })=>{
         let payload;
         if(group?.type?.length >0){
            payload={
+             id:group?.id,
+             type:group?.type?.length >0?group?.type :"",
              name:group?.name,
              img:group?.img, 
              comment:text,
@@ -335,6 +337,8 @@ const Comments=({ group, feed })=>{
            }
         }else if(group?.img.length >0){
            payload={
+            id:group?.id,
+            type:group?.type?.length >0?group?.type :"",
             name:group?.firstName?.length !=undefined?group?.firstName + " " + group?.lastName :group?.display,
             img:group?.img,
             comment:text,
@@ -343,6 +347,8 @@ const Comments=({ group, feed })=>{
 
         }else{
             payload={
+            id:group?.id,
+            type:group?.type?.length >0?group?.type :"",
             name:group?.firstName + " " + group?.lastName,
             img:"",
             comment:text,
@@ -366,10 +372,12 @@ const Comments=({ group, feed })=>{
           <div className='flex items-center w-full space-x-2 px-2'>
               <div>
               { group?.type?.length>0?
-                         <img
-                         src={group ?.img}
-                         className="rounded-full h-8 w-8"
-                       />
+         
+                          <img
+                          src={group ?.img}
+                          className="rounded-full h-8 w-8"
+                        />
+      
                         :
                         <>
                           { group?.img?.length>0?
@@ -431,6 +439,7 @@ const Comments=({ group, feed })=>{
                   {feed?.comments?.length >0 &&
                     <Comment 
                       feed={feed}
+                      group={group}
                      />
 
                   }
