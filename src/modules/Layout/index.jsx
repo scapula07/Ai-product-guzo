@@ -46,7 +46,7 @@ export default function Layout({children}) {
                    <SidePanel />
                 </div>
                 <div className=' border-r h-full w-4/5 '>
-                  {window.location.pathname.includes("/eco-profile")?
+                  {window.location.pathname.includes("/eco-profile") || window.location.pathname.includes("/posterprofile")?
                      <div className='w-full flex px-6 py-10'>
                               <button
                                 style={{background: "rgba(236, 235, 254, 1)"}}

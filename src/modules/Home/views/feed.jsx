@@ -106,17 +106,33 @@ const Feed=({feed,group})=>{
                   
                    <>
                      {feed?.shared_by?.type?.length>0?
-                         <img
-                         src={feed?.shared_by?.img}
-                         className="rounded-full h-8 w-8"
-                       />
-                        :
+                          <Link 
+                               to={`/posterprofile/${group?.id}`}
+                               state={{
+                                 group:feed?.shared_by
+                               
+                               }}
+                             >
+                                <img
+                                src={feed?.shared_by?.img}
+                                className="rounded-full h-8 w-8"
+                              />
+                            </Link>
+                             :
                         <>
                           {feed?.shared_by?.img?.length>0?
+                              <Link 
+                                  to={`/posterprofile/${group?.id}`}
+                                  state={{
+                                      group:feed?.shared_by
+                                  
+                                  }}
+                                >
                                <img
                                src={feed?.shared_by?.img}
                                className="rounded-full h-8 w-8"
                              />
+                            </Link>
                              :
                              <div className='rounded-full p-2 items-center justify-center flex border'
                                 >
