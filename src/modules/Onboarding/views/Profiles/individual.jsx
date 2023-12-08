@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useRef,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { createProfile } from '../../_api/createProfile'
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,10 @@ export default function Individual({currentUser}) {
     const [user]= useOutletContext();
 
     console.log(user?.id,"user")
+
+    useEffect(()=>{
+      setName(`${user?.firstName + " " + user?.lastName}`)
+    },[user])
     
 
     const [displayName,setName]=useState("")
@@ -49,11 +53,11 @@ export default function Individual({currentUser}) {
           setLoader(false);
           return;
         }
-        if (url?.length ===0) {
-          setErrorMsg( 'Image is required');
-          setLoader(false);
-          return;
-        }
+        // if (url?.length ===0) {
+        //   setErrorMsg( 'Image is required');
+        //   setLoader(false);
+        //   return;
+        // }
 
         try{
             const result =await createProfile.createUserProfile(user?.id,displayName,file)

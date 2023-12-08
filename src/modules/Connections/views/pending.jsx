@@ -101,10 +101,18 @@ const PendingCard=({eco,group})=>{
      return(
           <div className='flex flex-col bg-white py-4 px-4 rounded-lg'>
           <div className='flex flex-col items-center space-y-3'>
-              <img 
-                src={eco.img}
-                className="rounded-full lg:w-32 lg:h-32 w-20 h-20"
-              />
+                <Link 
+                   to={`/posterprofile/${eco?.id}`}
+                  state={{
+                    group:eco
+                  
+                  }}
+                > 
+                  <img 
+                    src={eco.img}
+                    className="rounded-full lg:w-32 lg:h-32 w-20 h-20"
+                  />
+              </Link>
               <h5 className=' text-center font-semibold text-sm lg:text-base '>{eco?.name}</h5>
               {eco?.type=="eco"?
                   <div className="flex items-center space-x-1">

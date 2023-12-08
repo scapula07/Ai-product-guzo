@@ -33,8 +33,7 @@ export default function Eco({currentUser}) {
     const [url,setUrl]=useState("")
 
     const hiddenFileInput = useRef()
-
-    const [country, setSelectedCountry] = useState("");
+    const [country, setSelectedCountry] = useState({label:"United States,USA"});
     const [city, setSelectedCity] = useState();
     const [countries, setCountries] = useState([]);
 
@@ -118,22 +117,22 @@ export default function Eco({currentUser}) {
             return;
           }
       
-          if (phoneNum?.length < 3) {
-            setErrorMsg(' Contact Phone number is required');
-            setLoader(false);
-            return;
-          }
+          // if (phoneNum?.length < 3) {
+          //   setErrorMsg(' Contact Phone number is required');
+          //   setLoader(false);
+          //   return;
+          // }
   
           if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(ecoEmail)){
               setErrorMsg( "E-mail is invalid" );
               setLoader(false);
           }
       
-          if (country?.length < 3 ) {
-            setErrorMsg(' Location is invalid ');
-            setLoader(false);
-            return;
-          }
+          // if (country?.length < 3 ) {
+          //   setErrorMsg(' Location is invalid ');
+          //   setLoader(false);
+          //   return;
+          // }
           
           if (url?.length ===0) {
               setErrorMsg( 'Image is required');
@@ -345,15 +344,9 @@ export default function Eco({currentUser}) {
 
 
 
-            <div className='flex flex-col w-full px-10'>  
+            {/* <div className='flex flex-col w-full px-10'>  
 
                 <label className='text-sm text-slate-600 font-semibold'>Descriptive Tags</label>
-                       {/* <ReactSelect 
-                         placeholder='Add tags separated by a comma...'
-                         styles={style}
-                         isMulti 
-                         onChange={handleTagChange} 
-                         options={options} /> */}
                     <input 
                         placeholder='Add tags separated by a comma...'
                         className=' py-2 px-4 w-full rounded-md text-sm outline-none'
@@ -362,7 +355,7 @@ export default function Eco({currentUser}) {
 
                     <h5 className='font-light text-slate-500 text-sm '>Tags help Guzo curate relevant connections and opportunities.</h5>
 
-           </div>
+           </div> */}
     </div>
     
     <div className='flex  items-center w-full justify-between'>

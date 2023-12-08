@@ -23,7 +23,7 @@ export default function EmailAuth() {
     const [lastName,setLast]=useState("")
     const [isLoading,setLoader]=useState(false)
     const [view,setView]=useState(false)
-    const [country, setSelectedCountry] = useState("");
+    const [country, setSelectedCountry] = useState({label:"United States,USA"});
     const [city, setSelectedCity] = useState();
     const [countries, setCountries] = useState([]);
 
@@ -63,11 +63,11 @@ export default function EmailAuth() {
        
         setErrorMsg(null)
         console.log(country,"country")
-        if (country?.length < 3) {
-          setErrorMsg(' Location is invalid ');
-          setLoader(false);
-          return;
-        }
+        // if (country?.label?.length < 3) {
+        //   setErrorMsg(' Location is invalid ');
+        //   setLoader(false);
+        //   return;
+        // }
 
         if (firstName.length < 3) {
           setErrorMsg( 'first name is invalid ');
@@ -249,7 +249,7 @@ export default function EmailAuth() {
                                    <div className="border-[1px] border-[rgba(242,242,242,0.6)] rounded-[8px] w-full">
                                         <ReactSelect
                                             styles={style}
-                                            placeholder='Country'
+                                            placeholder='United States,USA'
                                             options={
                                             countries &&
                                             countries?.map((item, index) => ({
@@ -326,7 +326,7 @@ export default function EmailAuth() {
                             <h5 className='h-0.5  w-1/3 text-black border '></h5>
                             <div className='flex flex-col space-y-2 items-center w-full'>
                             <h5>Already have an account?</h5>
-                            <Link to="/register/login">
+                            <Link to="/login">
                                 <button className='border border-blue-700 text-blue-700 rounded-full px-10 py-1'>Sign in</button>
                             </Link>
         

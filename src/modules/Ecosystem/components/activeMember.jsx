@@ -54,10 +54,18 @@ export default function ActiveMember({member,group}) {
     <div className='flex flex-col bg-white py-4 px-4 rounded-lg'>
         {member?.type?.length >0?
             <div className='flex flex-col items-center space-y-3'>
+                <Link 
+                   to={`/posterprofile/${member?.id}`}
+                  state={{
+                    group:member
+                  
+                  }}
+                > 
                 <img 
                     src={member?.img}
                     className="rounded-full w-32 h-32"
                 />
+                </Link>
                 <h5 className=' text-center font-semibold '>{member?.name}</h5>
                 {/* <h5 className='text-sm font-semibold text-slate-600'>
                     {member?.type==="eco"?
@@ -72,10 +80,18 @@ export default function ActiveMember({member,group}) {
             <>
              <div className='flex flex-col items-center space-y-3'>
                 {member?.img?.length >0?
-                   <img 
-                   src={member?.img}
-                   className="rounded-full w-32 h-32"
-                   />
+                      <Link 
+                      to={`/posterprofile/${member?.id}`}
+                      state={{
+                        group:member
+                      
+                      }}
+                    > 
+                    <img 
+                        src={member?.img}
+                        className="rounded-full w-32 h-32"
+                    />
+                    </Link>
 
                    :
                    <div className='rounded-full  w-32 h-32 items-center justify-center flex border'

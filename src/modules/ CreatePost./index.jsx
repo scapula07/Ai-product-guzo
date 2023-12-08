@@ -453,11 +453,13 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                     <div className='flex items-center space-x-4'>
                         <h5
                           className='text-blue-700 text-sm font-semibold rounded-full px-4 py-2'
+                          onClick={()=>setTrigger(false)}
                         
                         >
                           Close
                         </h5>
-                 
+                         {viewAll?.length >0?
+
                             <button
                                 style={{background: "rgba(236, 235, 254, 1)"}}
                                 className='text-blue-700 rounded-full px-8 text-sm py-1.5'
@@ -466,6 +468,27 @@ export default function CreatePosts ({group,currentUser,setTrigger}) {
                             >
                                 Save and continue
                             </button>
+                            :
+                            <>
+                             {isLoading?
+                                
+                                <ClipLoader 
+                                    color={"rgba(62, 51, 221, 1)"}
+                                    loading={isLoading}
+                                />
+                                :
+                                  <button
+                                      style={{background: "rgba(236, 235, 254, 1)"}}
+                                      className='text-blue-700 rounded-full px-8 text-sm py-1.5'
+                                      onClick={()=>makePost(group)}
+                                    
+                                  >
+                                      Post
+                                  </button>
+                                
+                                }
+                            </>
+                           }
                            
 
                     </div>

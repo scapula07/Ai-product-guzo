@@ -20,7 +20,6 @@ import remove from "../../assets/remove.png"
 import {MdArrowDropDown} from "react-icons/md"
 import { connectApi } from '../api'
 
-
 export default function Active() {
     const currentUser=useRecoilValue(userState)
     const group=useRecoilValue(groupState)
@@ -120,11 +119,18 @@ const ActiveCard=({eco,group})=>{
     {eco?.type?.length >0?
        <div className='flex flex-col items-center space-y-3'>
   
-
+               <Link 
+                  to={`/posterprofile/${eco?.id}`}
+                  state={{
+                    group:eco
+                  
+                  }}
+                > 
            <img 
               src={eco?.img}
              className="rounded-full w-32 h-32"
             />
+            </Link>
         
          <h5 className=' text-center font-semibold '>{eco?.name}</h5>
          {eco?.type=="eco"?

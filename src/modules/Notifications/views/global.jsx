@@ -101,7 +101,7 @@ export default function Global() {
 
                     {areNotification?.length >0&&
                       <div className='w-full flex justify-center py-10'>
-                          <h5 className="text-lg font-semibold">You dont have any notification</h5>
+                          <h5 className="text-lg font-semibold">You do not have any notifications.</h5>
                       </div>
 
                     }

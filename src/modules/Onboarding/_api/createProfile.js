@@ -9,16 +9,26 @@ export const createProfile= {
         console.log(displayName,"name")
         try{
             console.log(uid,"uid")
-            const storage = getStorage();
-            const fileId=Math.random().toString(36).substring(2,8+2);
-            const storageRef = ref(storage, `/${fileId}`);
             const userRef =doc(db,"users",uid)
-            const snapshot=await uploadBytes(storageRef, file)
-             console.log(snapshot,"shote")
+           let img=""
+            if(file?.name !=undefined){
+                const storage = getStorage();
+                const fileId=Math.random().toString(36).substring(2,8+2);
+                const storageRef = ref(storage, `/${fileId}`);
+               
+       
+                  const snapshot=await uploadBytes(storageRef, file)
+                 console.log(snapshot,"shote")
+
+                  img=`https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`
+       
+              }
+  
+        
 
              const individualSnap = await addDoc(collection(db, "individuals"),{
                  username:"john",
-                 img: `https://firebasestorage.googleapis.com/v0/b/${snapshot?.metadata?.bucket}/o/${snapshot?.metadata?.name}?alt=media`,
+                 img,
                  display:displayName,
                  connections:[],
                  pending:[]

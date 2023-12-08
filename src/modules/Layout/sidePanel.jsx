@@ -181,6 +181,7 @@ export default function SidePanel() {
                         <TeamTile 
                           group={group}
                           setGroup={setGroup}
+                          currentUser={currentUser}
                         />
                     </Link>
                   )
@@ -211,7 +212,7 @@ export default function SidePanel() {
 
 
 
-const TeamTile=({group,setGroup})=>{
+const TeamTile=({group,setGroup,currentUser})=>{
   const [img,setImg]=useState("")
   useEffect(()=>{
  
@@ -237,13 +238,34 @@ const TeamTile=({group,setGroup})=>{
      
     console.log(img,"imgggggggg")
    return(
+     <>
+          {img?.length >0?
     <div className='rounded-lg p-0.5 items-center justify-center flex border'>
-        <img 
-          src={img}
-          className="h-8 w-8 rounded-full"
-          onClick={()=>setGroup({...group,img:img})}
-        />
+
+                   <img 
+                   src={img}
+                   className="h-8 w-8 rounded-full"
+                   onClick={()=>setGroup({...group,img:img})}
+                 />
+           
+
+          
+
    </div>
+    :
+
+   <div className='rounded-lg p-1.5 items-center justify-center flex border'>
+        
+                 <h5 className='font-semibold text-lg'
+                     onClick={()=>setGroup({...group,img:img})}
+                 > {currentUser?.firstName?.slice(0,1) +currentUser?.lastName?.slice(0,1)}
+                 </h5>
+
+          
+
+     </div>
+     }
+   </>
 
    )
 }
