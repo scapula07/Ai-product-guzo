@@ -17,7 +17,7 @@ export default function PosterProfile() {
     
     const location =useLocation()
     const group=location?.state?.group
-    console.log(group,"group profile")
+    console.log(group,group?.id,"group profile herr>>>>>>>>>>>>>>>>>>")
     const [profile,setUpdate]=useState()
 
 
@@ -25,10 +25,7 @@ export default function PosterProfile() {
     
         useEffect(()=>{
       
-              // const response =await profileApi.fetchProfile(group)
-              // console.log(response,"res profile")
-              if(group?.id?.length >0){
-              // let collectionName="users"
+            if(group?.id?.length >0){
               let collectionName="individuals"
               if(group?.type?.length >0){
                 collectionName= group?.type=="eco"?"ecosystems":"organizations"
@@ -36,17 +33,14 @@ export default function PosterProfile() {
               }
 
               const unsub = onSnapshot(doc(db,collectionName,group?.id), (doc) => {
-                console.log("Current data: ", doc.data());
+                console.log("Current data: <<<<<<<<<< ", doc.data());
                 setUpdate(doc.data())
                });
               }
-            
-              // const profileRef =doc(db,collectionName,group?.id)
-              // const docSnap = await getDoc(profileRef);
-       
-              // return docSnap.data()
              })
- 
+    
+
+             console.log(profile,"here profile")
     
   return (
         <Layout>

@@ -63,6 +63,11 @@ import Local from "./Notifications/views/local";
 import Global from "./Notifications/views/global";
 import SpaceSettings from "./spaceSettings/views";
 import PosterProfile from "./Profile ";
+import AiChat from "./Aichat/views";
+import AiResources from "./AiResources/views";
+import AiProfile from "./Aiprofile/views";
+import Account from "./Account/views";
+import AiMessenger from "./AiMessenger /views";
 
 const NewRoutes = () => {
   const navigate =useNavigate()
@@ -73,10 +78,10 @@ const NewRoutes = () => {
   console.log(currentUser,"user")
   let authListner=null
   const user = localStorage.getItem("user");
-  // useEffect( ()=>{ 
-  //   console.log(JSON.parse(user),"user")
- 
-  // },[user])
+  useEffect( ()=>{ 
+    console.log(JSON.parse(user),"user")
+    setcurrentUser(JSON.parse(user))
+  },[user])
 
   useEffect( ()=>{
     if(group?.id?.length >0){
@@ -178,6 +183,13 @@ const NewRoutes = () => {
 
                 <Route path="/posterprofile/:id/*" element={<PosterProfile/>}>
                 </Route>
+
+
+                <Route path="/ai" element={<AiChat/>}></Route>
+                <Route path="/resources" element={<AiResources/>}></Route>
+                <Route path="/resource-profile/:id/*" element={<AiProfile/>} />
+                <Route path="/account" element={<Account currentUser={currentUser}/>}  />
+                <Route path="/ai-messenger" element={<AiMessenger/>}  />
               
             </Routes>
             </ErrorBoundary>

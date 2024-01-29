@@ -31,18 +31,12 @@ export default function SidePanel() {
   const individual=currentUser?.individual
   const [team,setTeam]=useState([])
   const { id} = useParams();
-   console.log(id,"iddd")
-    console.log(currentUser,"userr current")
 
     useEffect(()=>{
       if(currentUser?.id?.length >0){
        
         const unsub = onSnapshot(doc(db, "users",currentUser?.id), (doc) => {
           setTeam([])
-          console.log("Current data: ", doc.data());
-          // const group= [ ...doc.data()?.organizations,...doc.data()?.ecosystems]
-          // const group= [doc.data()?.individual,...doc.data()?.organizations,...doc.data()?.ecosystems]
-          // setTeam(group)
           if(doc.data()?.individual?.id?.length >0){
             console.log("top")
              const group= [doc.data()?.individual,...doc.data()?.organizations,...doc.data()?.ecosystems]
@@ -69,38 +63,24 @@ export default function SidePanel() {
      
 
    const isGroup= organizations?.length >0 || ecosystems?.length >0 || individual?.id?.length >0
-   console.log(isGroup,"isGroupp new")
+
 
      useEffect(()=>{
       const isGroup= organizations?.length >0 || ecosystems?.length >0 || individual?.id?.length >0
- 
-      //  isGroup&&setTeam([individual,...organizations,...ecosystems])
        if(individual?.id?.length >0){
-        console.log("top")
+
         isGroup&&setTeam([individual,...organizations,...ecosystems])
         isGroup&&setGroup([individual,...organizations,...ecosystems].find(group=>group?.id===id))
        
 
        }else{
-        console.log("bottom")
+     
         isGroup&&setTeam([...organizations,...ecosystems])
         isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
        
 
 
        }
-    
-       
-      // if(currentUser?.display?.length != undefined && isGroup==true){
-      //   console.log(currentUser?.id,"if block 1111")
-      //   isGroup&&setGroup([currentUser,...organizations,...ecosystems].find(group=>group?.id===id))
-      // }else if(currentUser?.display?.length != undefined && isGroup==false){
-      //    console.log(currentUser?.id,"if block 222")
-      //    setGroup([currentUser].find(group=>group?.id===id))
-      // }else{
-      //   console.log(currentUser?.id,"if block 33")
-      //   isGroup&&setGroup([...organizations,...ecosystems].find(group=>group?.id===id))
-      // }
     
       },[currentUser,isUpdate])
  
@@ -111,8 +91,7 @@ export default function SidePanel() {
 
       const currentPath = window.location.pathname;
       
-    console.log(team,"team ppppp")
-  console.log(currentUser,"user current lllll")
+
   return (
     <div className='lg:px-4 py-8  h-full overflow-y-scroll no-scrollbar'>
       <div className='flex flex-col space-y-4 items-center overflow-y-scroll no-scrollbar'>
@@ -151,33 +130,8 @@ export default function SidePanel() {
                   console.log(currentUser,"iddd")
                   console.log(isTeammateGroup,"side nav")
                   return(
-                  //   <>
-                  //   {isTeammateGroup==true&&
-                  //       <Link to={`/home/${group?.id}`}>
-                  //         {/* <div className='rounded-lg p-0.5 items-center justify-center flex border'>
-                  //             <img 
-                  //               src={group?.img}
-                  //               className="h-8 w-8 rounded-full"
-                  //               onClick={()=>setGroup(group)}
-                  //             />
-                  //         </div> */}
-                  //         <TeamTile 
-                  //           group={group}
-                  //           setGroup={setGroup}
-                  //         />
-                  //      </Link>
-                  //   }
-
-                    
-                  // </>
+           
                     <Link to={`/home/${group?.id}`}>
-                        {/* <div className='rounded-lg p-0.5 items-center justify-center flex border'>
-                            <img 
-                              src={group?.img}
-                              className="h-8 w-8 rounded-full"
-                              onClick={()=>setGroup(group)}
-                            />
-                        </div> */}
                         <TeamTile 
                           group={group}
                           setGroup={setGroup}
@@ -226,7 +180,6 @@ const TeamTile=({group,setGroup,currentUser})=>{
       }
       console.log(group?.id,collectionName,"iddddddddddddddd")
       const unsub = onSnapshot(doc(db,collectionName,group?.id), (doc) => {
-        console.log("Current data: ",doc.data(), doc.data()?.img)    
         setImg(doc.data()?.img)
         });
 
@@ -236,7 +189,7 @@ const TeamTile=({group,setGroup,currentUser})=>{
     
   },[])
      
-    console.log(img,"imgggggggg")
+
    return(
      <>
           {img?.length >0?

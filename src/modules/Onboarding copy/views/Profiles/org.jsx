@@ -11,10 +11,6 @@ import ReactSelect from "react-select";
 import axios from "axios"
 import { formatPhoneNumber } from '../../../Utils/formatPhoneNumber';
 import { countryCode } from '../../../Utils/countrydialingcodes';
-import { IoCloseOutline } from "react-icons/io5";
-import { IoIosAddCircle } from "react-icons/io";
-
-
 
 export default function Org({currentUser}) {
     console.log(currentUser,"indiv")
@@ -31,8 +27,7 @@ export default function Org({currentUser}) {
     const [tags,setTags]=useState([])
     const [errorMsg, setErrorMsg] = useState(null)
     const [isLoading,setLoader]=useState(false)
-    
-    const [tag,setTag]=useState("")
+
 
 
     const [file,setFile]=useState()
@@ -150,8 +145,7 @@ export default function Org({currentUser}) {
                 location:country?.label,
                  memberships:[],
                 invitees:[],
-                connections:[],
-                tags:tags
+                connections:[]
 
             }
             const result =await createProfile.createOrgProfile(payload,file,user)
@@ -161,7 +155,7 @@ export default function Org({currentUser}) {
             console.log(result,"result")
             setLoader(false)
             // result?.id?.length>0&& navigate(`/home/${result?.id}`)
-            result?.id?.length>0&& navigate(`/ai`)
+            result?.id?.length>0&& navigate(`/home/${result?.organizations[0]?.id}`)
           }catch(e){
             console.log(e)
             setLoader(false)
@@ -171,22 +165,6 @@ export default function Org({currentUser}) {
   
            
         }
-
-        const createTag=()=>{
-          setTags(prevArray => [...prevArray, tag]);
-          setTag("")
-
-        }
-
-        const remove=(indexToRemove)=>{
- 
-          const newArray = [...tags.slice(0, indexToRemove), ...tags.slice(indexToRemove + 1)];
-
-          // Update the array state
-          setTags(newArray);
-        }
-
-
   return (
     <div className='w-full flex flex-col  space-y-6  h-full' style={{background: "rgba(242, 242, 242, 0.6)"}}>
             <div className='w-full flex bg-white rounded-lg  border flex-col  space-y-8 py-4' style={{borderColor:" linear-gradient(0deg,rgba(130, 122, 247, 0.5), rgba(130, 122, 247, 0.5)),linear-gradient(0deg, #FFFFFF, #FFFFFF)"}}>
@@ -369,50 +347,18 @@ export default function Org({currentUser}) {
 
 
 
-                    <div className='flex flex-col w-full px-10'>  
+                    {/* <div className='flex flex-col w-full px-10'>  
 
                         <label className='text-sm text-slate-600 font-semibold'>Descriptive Tags</label>
-                           <div className='flex items-center space-x-4'>
-                              <input 
-                                    placeholder='Add tags separated by a comma...'
-                                    className=' py-2 px-4 w-full rounded-md text-sm outline-none'
-                                    style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
-                                    value={tag}
-                                    onChange={(e)=>setTag(e.target.value)}
-                                />
-
-                                <IoIosAddCircle
-                                    className='text-4xl  text-blue-500 hover:text-blue-300' 
-                                    onClick={()=>createTag()}
-                                 />
-
-                           </div>
-
-
-                            
+                            <input 
+                                placeholder='Add tags separated by a comma...'
+                                className=' py-2 px-4 w-full rounded-md text-sm outline-none'
+                                style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
+                            />
 
                             <h5 className='font-light text-slate-500 text-sm '>Tags help Guzo curate relevant connections and opportunities.</h5>
 
-                     </div>
-
-                     <div className='flex flex-wrap  justify-start items-center space-x-3 py-4 px-10'>
-                          
-                             {tags?.map((tword,index)=>{
-                                return(
-                                   <button className="rounded-lg py-0.5  px-2 border text-sm text-slate-600 font-light space-x-6 flex items-center justify-between ">
-                                     <span> {tword}</span>
-                                     <IoCloseOutline 
-                                       className='text-lg'
-                                       onClick={()=>remove(index)}
-                                     />
-
-                                    </button>
-                                )
-                             })
-
-                             }
-
-                        </div>
+                     </div> */}
             </div>
             
             <div className='flex  items-center w-full justify-between'>

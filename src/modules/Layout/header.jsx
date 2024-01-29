@@ -80,7 +80,7 @@ export default function Header({hover,setHover}) {
                      >
                     {currentUser?.firstName?.slice(0,1) +currentUser?.lastName?.slice(0,1)}
    
-                </h5>
+                 </h5>
 
                   
                     

@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useOutletContext } from 'react-router-dom'
 import { Alert, Avatar, Button, Divider, InputBase } from "@mui/material";
-import { IoCloseOutline } from "react-icons/io5";
-import { IoIosAddCircle } from "react-icons/io";
+
 
 export default function Individual({currentUser}) {
     console.log(currentUser,"indiv")
@@ -27,10 +26,6 @@ export default function Individual({currentUser}) {
     const [isLoading,setLoader]=useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
     const hiddenFileInput = useRef()
-
-    const [tags,setTags]=useState([])
-    const [tag,setTag]=useState("")
-
 
     const handleClick = event => {
          hiddenFileInput.current.click()
@@ -80,12 +75,7 @@ export default function Individual({currentUser}) {
           }
            
        }
-        
-       const createTag=(t)=>{
-             setTags(prevArray => [...prevArray, t]);
-             setTag(t)
 
-       }
 
   return (
     <div className='w-full flex flex-col  space-y-6 ' style={{background: "rgba(242, 242, 242, 0.6)"}}>
@@ -134,7 +124,7 @@ export default function Individual({currentUser}) {
 
                <div className='flex flex-col w-full px-10'>  
 
-                      <label className='text-sm text-slate-600 font-semibold'> Name*</label>
+                      <label className='text-sm text-slate-600 font-semibold'>Display Name*</label>
                         <input 
                             placeholder='Display Name'
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none'
@@ -160,56 +150,25 @@ export default function Individual({currentUser}) {
 
                    <div className='flex flex-col w-full px-10'>  
 
-                      <label className='text-sm text-slate-600 font-semibold'>Tags*</label>
+                      <label className='text-sm text-slate-600 font-semibold'>Display Name*</label>
                         <input 
-                            placeholder='Create a tag'
+                            placeholder='Display Name'
                             className=' py-2 px-4 w-full rounded-md text-sm outline-none'
                             style={{background: "linear-gradient(0deg, #F2F2F2, #F2F2F2),linear-gradient(0deg, rgba(242, 242, 242, 0.6), rgba(242, 242, 242, 0.6))"}}
                             name="displayName"
-                            value={tag}
-                            onChange={(e)=>createTag(e.target.value)}
+                            value={displayName}
+                            onChange={(e)=>setName(e.target.value)}
                         />
 
-              
-                         {/* {change?
-                             <h5 
-                               className='text-xs font-semibold'
-                               onClick={makeComment}
-                             >send</h5>
-                               :
-                             <IoCloseOutline 
-                               className='text-slate-400 '
-                               onMouseOver={()=>setChange(true)}
-                             />
-       
-                           } */}
-                
                         <h5 className='font-light text-slate-500 text-sm '>
                             {errorMsg ?
                               <span className='text-red-600'>{errorMsg}</span>
                                  :
 
-                              ""
+                              "This will be the name that displays for your personal persona."
                              }
                           
                         </h5>
-
-                        <div className='flex flex-wrap  justify-start items-center space-x-3 py-4'>
-                             {tags?.map((tword)=>{
-                                return(
-                                   <button className="rounded-sm py-0.5  px-4 border text-sm text-slate-600 font-light w-20 flex items-center space-x-4 ">
-                                     <span> {tword}</span>
-                                     <IoCloseOutline 
-                                       className='text-sm'
-                                     />
-
-                                    </button>
-                                )
-                             })
-
-                             }
-
-                        </div>
 
                    </div>
 
